@@ -1,0 +1,11 @@
+# http://localhost:5000/api/v1
+
+POST http://localhost:5000/api/v1/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "tzviki@gmail.com",
+    "password": "770770770"
+}
+
+###

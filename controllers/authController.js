@@ -1,30 +1,4 @@
-// this is a Schema for the user model:
-//  username: {
-//     type: String,
-//     required: [true, 'Please provide a username'],
-//     unique: true,
-//     trim: true,
-//     maxlength: [20, 'Username cannot be more than 20 characters']
-// },
-// password: {
-//     type: String,
-//     required: [true, 'Please provide a password'],
-//     minlength: [6, 'Password cannot be less than 6 characters'],
-//     maxlength: [20, 'Password cannot be more than 20 characters']
-// },
-// role: {
-//     type: String,
-//     required: [true, 'Please provide a role'],
-//     enum: ['admin', 'branch manager', 'Bookkeeping'],
-//     default: 'branch manager'
-// },
-// createdAt: {
-//     type: Date,
-//     default: Date.now
-// }
 const User = require('../models/Users.js')
-
-// TODO: JWT token in login and logout 
 
 const addUser = async (req, res) => {
     const { username, password, email, role } = req.body

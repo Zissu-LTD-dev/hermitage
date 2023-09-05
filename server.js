@@ -12,7 +12,6 @@ const cors = require('cors')
 
 // db connection
 const connectDB = require('./db/connect.js')
-const { constants } = require('buffer')
 
 // routes
 const { authRouter } = require('./routers/authRouter.js')
@@ -41,7 +40,7 @@ app.use('/api/v1/manager', authManager, branchRouter);
 app.get('/', (req, res) => res.send('Hello World!'))
 
 // server end db connection
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 5000
 
 const start = async () => {
     try {

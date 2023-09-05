@@ -10,8 +10,8 @@ const {
 
 
 authRouter.post("/login", login);
-authRouter.post("/addUser", addUser);
-authRouter.post("/updateUser", updateUser);
+authRouter.post("/addUser", addUser); // move to adminRouter
+authRouter.post("/updateUser", updateUser); // move to adminRouter
 authRouter.post("/logout", logout);
 
 exports.authRouter = authRouter;

@@ -10,7 +10,7 @@ const categorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
     }],
-    subcategories: [categorySchema]
+    subcategories: [this]
 })
 
 module.exports = mongoose.model('Category', categorySchema)

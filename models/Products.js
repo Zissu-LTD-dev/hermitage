@@ -25,7 +25,13 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please enter product sku'],
         trim: true,
-    }
+    },
+    status: {
+        type: String,
+        trim: true,
+        enum: ['active', 'inactive', 'inDestination'],
+        default: 'active',
+    },
 })
 
 module.exports = mongoose.model('Product', productSchema)

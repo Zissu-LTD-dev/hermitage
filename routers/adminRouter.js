@@ -16,10 +16,12 @@ adminRouter.get("/getObligations/:branchId", obligations.getObligations);
 adminRouter.put("/updateObligations/:branchId", obligations.updateObligations);
 
 // users
+//  -- get all users
+adminRouter.get("/getUsers", auth.getUsers);
 // -- add user
 adminRouter.post("/addUser", auth.addUser);
 // -- update user
-adminRouter.put("/updateUser", auth.updateUser);
+adminRouter.put("/updateUser/:userId", auth.updateUser);
 
 // branches
 // -- get all branches

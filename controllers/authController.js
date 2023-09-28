@@ -1,4 +1,5 @@
 const User = require("../models/Users.js");
+const jwt = require("jsonwebtoken");
 
 const getUsers = async (req, res) => {
   const users = await User.find({});
@@ -24,18 +25,19 @@ const addUser = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+  console.log('login');
 
   if (!email || !password)
     return res
       .status(400)
-      .json({ msg: "Please provide username and password" });
+      .json({ error: "Please provide username and password" });
 
   const user = await User.findOne({ email }).select("+password");
-  if (!user) return res.status(404).json({ msg: "The email is incorrect" });
+  if (!user) return res.status(404).json({ error: "The email is incorrect" });
 
   const isMatch = await user.checkPassword(password);
   if (!isMatch)
-    return res.status(404).json({ msg: " The password is incorrect " });
+    return res.status(404).json({ error: " The password is incorrect " });
 
   let token = "";
   if (user.role === "admin") {
@@ -45,7 +47,9 @@ const login = async (req, res) => {
   }
   res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
 
-  res.status(200).json({ user, token });
+  let { _id, username, role } = user;
+
+  res.status(200).json({ user: { _id, username, email, role } , token });
 };
 
 const updateUser = async (req, res) => {
@@ -66,8 +70,8 @@ const updateUser = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  res.clearCookie("jwt");
-  res.status(200).json({ msg: "logout successful !!!" });
+  res.clearCookie("jwt").status(200).json({ msg: "logout successful !!!" });
+  // res.status(200).json({ msg: "logout successful !!!" });
 };
 
 module.exports = { getUsers, login, addUser, updateUser, logout };

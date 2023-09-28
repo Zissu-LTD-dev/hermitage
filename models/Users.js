@@ -53,6 +53,11 @@ UserSchema.methods.checkPassword = async function (password) {
     return result
 }
 
+// veryfy token = const isVerify = await User.verifyToken(token);
+UserSchema.statics.verifyToken = function (token, secretKey) {
+    return jwt.verify(token, secretKey)
+}
+
 
 
 module.exports = mongoose.model('User', UserSchema)

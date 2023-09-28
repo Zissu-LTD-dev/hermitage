@@ -1,15 +1,37 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { Typography, Box, TextField, Button } from "@mui/material";
+import axios from "axios";
+const myAxios = axios.create({
+  baseURL: "http://localhost:5000/api/v1",
+  headers: {
+    "Content-type": "application/json",
+  },
+});
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("username: ", username);
-    console.log("password: ", password);
-    // handle form submit logic...
+
+    const response = await myAxios.post("/auth/login", { email, password, });
+    const { token, user } = response.data; 
+
+    document.cookie = `token=${token}`;
+    localStorage.setItem("user", JSON.stringify(user));
+
+    if (user.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/");
+    }
+
+    setEmail("");
+    setPassword("");
+
   };
 
   return (
@@ -29,10 +51,10 @@ function Login() {
       </Typography>
 
       <TextField
-        label="Username"
+        label="Email"
         variant="outlined"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         fullWidth
         required
         sx={{ mb: 2 }}

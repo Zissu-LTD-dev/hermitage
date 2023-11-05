@@ -1,37 +1,37 @@
 const mongoose = require('mongoose')
 
 const productSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, 'Please enter product name'],
-        trim: true,
+    barcode: {
+      type: Number,
+      unique: true
     },
-    description: {
-        type: String,
-        required: [true, 'Please enter product description'],
-        trim: true,
+    name: String,
+    image: String,
+    provider: {
+      type: Number,
+      ref: 'Providers'
     },
-    price: {
-        type: Number,
-        required: [true, 'Please enter product price'],
-        trim: true,
+    department: {
+      type: Number,
+      ref: 'Department'
     },
-    image: {
-        type: String,
-        required: [true, 'Please enter product image'],
-        trim: true,
+    category: {
+      type: Number, 
+      ref: 'Category'
     },
-    sku: {
-        type: String,
-        required: [true, 'Please enter product sku'],
-        trim: true,
-    },
-    status: {
-        type: String,
-        trim: true,
-        enum: ['active', 'inactive', 'inDestination'],
-        default: 'active',
-    },
+    columnNumber: Number,
+    columnName: String,
+    row: [{
+        branch: {
+          type: Number,
+          ref: 'BranchType'
+        },
+        number: Number
+    }],
+    branchType: { 
+      type: Number,
+      ref: 'BranchType'
+    }
 })
 
 module.exports = mongoose.model('Product', productSchema)

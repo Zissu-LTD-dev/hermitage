@@ -1,9 +1,14 @@
-import React from 'react'
+import ExcelUpload from '../components/ExcelUpload';
 
 function Admin() {
+
+  
   return (
-    <div>damin</div>
-  )
+    <>
+      <h1>Admin</h1>
+      <ExcelUpload />
+    </>
+  );
 }
 
-export default Admin
+export default Admin;

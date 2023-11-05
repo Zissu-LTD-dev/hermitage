@@ -2,7 +2,7 @@ import React from 'react'
 
 function Manager() {
   return (
-    <div>manager</div>
+    <h1>Manager</h1>
   )
 }
 

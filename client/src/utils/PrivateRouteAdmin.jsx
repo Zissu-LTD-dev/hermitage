@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
+const {REACT_APP_BACKEND_URL} = import.meta.env
 
 import cookie from "js-cookie";
 
 function PrivateRouteAdmin({ children }) {
+  if (!cookie.get("token")) return <Navigate to="/login" replace />;
+
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
 
   async function checkAuth() {
-    if (!cookie.get("token")) return setIsAuthenticated(false);
-    const res = await fetch("http://localhost:5000/api/v1/auth/verify", {
+      const res = await fetch(`${REACT_APP_BACKEND_URL}auth/verify`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -19,13 +21,12 @@ function PrivateRouteAdmin({ children }) {
       },
     });
     const data = await res.json();
-    console.log(data);
+
     if (data.success) {
       setRole(data.role);
       setIsAuthenticated(true);
       setLoading(false);
-    }
-    if (!data.success) {
+    }else{
       setRole(null);
       setIsAuthenticated(false);
       setLoading(false);

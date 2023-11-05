@@ -1,0 +1,150 @@
+.bgi {
+  /* background image 100% screen url = ../image/logo/Group96@2x.png */
+  background-image: url(../image/logo/Group96.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: #082a3a;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login {
+  width: 402px;
+  height: 486px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 100%;
+  height: 77px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.fields {
+  width: 100%;
+  height: 409px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fields form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background: #051F2A 0% 0% no-repeat padding-box;
+border: 1px solid #184B63;
+}
+
+.enterImg {
+  width: 31px;
+  height: 36px;
+  margin-top: 40px;
+}
+
+.title {
+  text-align: center;
+  font-size: 25px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 33px;
+  letter-spacing: 0px;
+  color: #ffffff;
+}
+
+.lineBrack {
+  width: 34px;
+  height: 8px;
+  background: #be955d 0% 0% no-repeat padding-box;
+  margin-bottom: 28px;
+}
+
+.input {
+  width: 286px;
+  height: 44px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  padding-right: 16px;
+  border: none;
+  margin-bottom: 8px;
+  text-align: right;
+  font-size: 16px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 20px;
+  letter-spacing: 0px;
+  color: #041f2b;
+}
+
+.input::placeholder {
+  text-align: right;
+  font: normal normal normal 16px/20px IBM Plex Sans Hebrew;
+  letter-spacing: 0px;
+  color: #041f2b;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.remember {
+  width: 286px;
+  height: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 11px;
+}
+
+.remember input[type="checkbox"] {
+  width: 13px;
+  height: 13px;
+  /* background: #FFFFFF 0% 0% no-repeat padding-box; */
+  background: #ffffff;
+  border-radius: 2px;
+  /* border: 1px solid #707070; */
+  /* margin-right: 8px; */
+
+  border: none;
+}
+
+.remember label {
+  /* height: 100%; */
+  text-align: right;
+  font-size: 16px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 20px;
+
+  letter-spacing: 0px;
+  color: #ffffff;
+  margin-right: 8px;
+}
+
+.btn {
+  width: 286px;
+  height: 44px;
+  border: none;
+  text-align: center;
+  font-size: 25px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 33px;
+  letter-spacing: 0px;
+  color: #ffffff;
+  background: #be955d 0% 0% no-repeat padding-box;
+}

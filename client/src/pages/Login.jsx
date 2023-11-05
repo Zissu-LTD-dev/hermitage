@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import { Typography, Box, TextField, Button } from "@mui/material";
-import axios from "axios";
-const myAxios = axios.create({
-  baseURL: "http://localhost:5000/api/v1",
-  headers: {
-    "Content-type": "application/json",
-  },
-});
+import { useNavigate } from "react-router-dom";
+import login from "../assets/css/login.module.css";
+
+import logo from "../assets/image/logo/logo.png";
+import enter from "../assets/image/logo/enter.svg";
+
+const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 function Login() {
   const navigate = useNavigate();
@@ -17,8 +15,13 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await myAxios.post("/auth/login", { email, password, });
-    const { token, user } = response.data; 
+    const response = await fetch(`${REACT_APP_BACKEND_URL}auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const { token, user } = await response.json();
 
     document.cookie = `token=${token}`;
     localStorage.setItem("user", JSON.stringify(user));
@@ -31,56 +34,50 @@ function Login() {
 
     setEmail("");
     setPassword("");
-
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        width: 300,
-        bgcolor: "background.paper",
-        p: 4,
-      }}
-    >
-      <Typography
-        sx={{ mb: 2, textAlign: "center" }}
-      >
-        <img src="https://www.hermitage.co.il/wp-content/uploads/2022/01/logo.png" alt="logo" />
-      </Typography>
-
-      <TextField
-        label="Email"
-        variant="outlined"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        fullWidth
-        required
-        sx={{ mb: 2 }}
-      />
-
-      <TextField
-        label="Password"
-        variant="outlined"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        fullWidth
-        required
-        sx={{ mb: 4 }}
-      />
-
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        size="large"
-        fullWidth
-      >
-        Login
-      </Button>
-    </Box>
+    <div className={login.bgi}>
+      <div className={login.login}>
+        <span className={login.logo}>
+          <img src={logo} alt="logo" />
+        </span>
+        <span className={login.fields}>
+          <form onSubmit={handleSubmit}>
+            <img className={login.enterImg} src={enter} alt="enter" />
+            <h2 className={login.title}>כניסה למערכת</h2>
+            <div className={login.lineBrack}></div>
+            {/* שם משתמש */}
+            <input
+              className={login.input}
+              type="email"
+              placeholder="שם משתמש"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+            {/* סיסמא */}
+            <input
+              className={login.input}
+              type="password"
+              placeholder="סיסמא"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+            />
+            {/* זכור אותי */}
+            <div className={login.remember}>
+              <label>זכור אותי</label>
+              <input type="checkbox" />
+            </div>
+            {/* כניסה */}
+            <button className={login.btn} type="submit">
+              כניסה
+            </button>
+          </form>
+        </span>
+      </div>
+    </div>
   );
 }
 

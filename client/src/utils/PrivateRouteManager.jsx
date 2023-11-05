@@ -4,12 +4,14 @@ import { Navigate } from "react-router-dom";
 import cookie from "js-cookie";
 
 function PrivateRouteManager({ children }) {
+  if (!cookie.get("token")) return <Navigate to="/login" replace />;
+
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
 
+  // TODO: להכניס את הקריאה ליוז פאטש או אקסיוס
   async function checkAuth() {
-    if (!cookie.get("token")) return setIsAuthenticated(false);
     const res = await fetch("http://localhost:5000/api/v1/auth/verify", {
       method: "GET",
       headers: {
@@ -24,11 +26,10 @@ function PrivateRouteManager({ children }) {
       setRole(data.role);
       setIsAuthenticated(true);
       setLoading(false);
-    }
-    if (!data.success) {
+    } else {
+      setLoading(false);
       setRole(null);
       setIsAuthenticated(false);
-      setLoading(false);
     }
   }
 
@@ -37,7 +38,9 @@ function PrivateRouteManager({ children }) {
   }, []);
 
   if (loading) return <h1>Loading...</h1>;
-  if (isAuthenticated && role == 'branch manager' ) return children;
+  if (isAuthenticated && role == "branch manager") return children;
+  if (isAuthenticated && role == "admin")
+    return <Navigate to="/admin" replace />;
   return <Navigate to="/login" replace />;
 }
 

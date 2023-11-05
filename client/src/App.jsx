@@ -30,7 +30,7 @@ function App() {
           ></Route>
 
           <Route path="/login" element={<Login />} exact />
-          <Route  path="*" element={<h1>Not Found 404 👀 </h1>} />
+          <Route path="*" element={<h1>Not Found 404 👀 </h1>} />
         </Routes>
       </Box>
     </BrowserRouter>

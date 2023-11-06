@@ -1,2 +1,0 @@
-# hermitage
-Branch management system

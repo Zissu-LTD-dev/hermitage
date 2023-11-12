@@ -1,9 +1,16 @@
 body {
   margin: 0;
   padding: 0;
+  font-family: "IBM Plex Sans Hebrew", sans-serif;
 }
 
 @font-face {
   font-family: "IBM Plex Sans Hebrew";
   src: url('./assets/fonts/IBM_Plex_Sans_Hebrew/IBMPlexSansHebrew-Bold.ttf');
+}
+
+/* normal */
+@font-face {
+  font-family: "IBM Plex Sans Hebrew";
+  src: url('./assets/fonts/IBM_Plex_Sans_Hebrew/IBMPlexSansHebrew-Regular.ttf');
 }

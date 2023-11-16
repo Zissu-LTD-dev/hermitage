@@ -74,19 +74,10 @@
   border-top: 1px solid #25607e9a;
 }
 
-/* 
-        <span>
-            <p>מחובר: <sapn className={sidebar.branch_name} > {branchName} </sapn> </p>
-            <a href="/login" className={sidebar.logout}>יציאה מהמערכת</a>
-          </span>        
-*/
 .sidebar .connectedBy div {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-right: 10px;
 }
 
 .sidebar .connectedBy div p {

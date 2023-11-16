@@ -1,0 +1,45 @@
+.main{
+  margin: 12px 0 0 21px;  
+}
+
+.doc__info {
+  position: fixed;
+  top: 12px;
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #be955d ;
+}
+
+.doc__info .doc__icon {
+    /* position: relative; */
+    width: 21px;
+    height: 26px;
+    background: transparent url("../../image/manager/document1.svg") 50% 50%
+    no-repeat padding-box;
+}
+
+.sub__icon {
+  position: relative;
+  left: 40px;
+  width: 23px;
+  background: #082a3a 0% 0% no-repeat padding-box;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.sub__icon span{
+  height: 23px;
+  font-size: 14px;
+  font-weight: normal;
+  font-family: IBM Plex Sans Hebrew;
+  line-height: 18px;
+  
+  letter-spacing: 0.28px;
+  color: #ffffff;
+
+}

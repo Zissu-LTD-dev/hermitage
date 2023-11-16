@@ -1,36 +1,19 @@
+import manager from "../assets/css/manager/manager.module.css";
 
+import DynamicContent from "../components/manager/DynamicContent";
 import Sidebar from "../components/manager/Sidebar";
-
-import ProductOrder from "../components/manager/ProductOrder";
-import ProductOrderSummary from "../components/manager/ProductOrderSummary";
-
-const productData = {
-  image: "",
-  details: 'Grey Goose 300 מ"ל ',
-  supplier: "אקרמן",
-  group: "וויסקי",
-  category: "סטנדים",
-  barcode: "36295223",
-  quantity: 20,
-};
-
-function onIncrease() {
-  console.log("increase");
-  productData.quantity++;
-}
-
-function onDecrease() {
-  console.log("decrease");
-  if(productData.quantity > 0) {
-    productData.quantity--;
-  }
-}
+import Navbar from "../components/general/Navbar";
 
 function Manager() {
   return (
     <>
-      <Sidebar branchName="סניף נהריה" />
-      <ProductOrder productData={productData} onIncrease={onIncrease} onDecrease={onDecrease} />
+      <div className={manager.main}>
+        <Sidebar branchName="סניף נהריה" />
+        <Navbar />
+        <div className={manager.content}>
+          <DynamicContent />
+        </div>
+      </div>
     </>
   );
 }

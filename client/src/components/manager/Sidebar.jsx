@@ -1,4 +1,5 @@
 import sidebar from "../../assets/css/manager/sidebar.module.css";
+
 import newOrder from "../../assets/image/manager/Layer68.svg";
 import waitingOrders from "../../assets/image/manager/clock.svg";
 import documents from "../../assets/image/manager/document.svg";
@@ -41,7 +42,7 @@ function Sidebar({ branchName }) {
             <img src={connectedBy} alt="connected by" />
           </div>
           <div>
-            <p>מחובר: <span className={sidebar.branch_name} > {branchName} </span> </p>
+            <p>מחובר: <span className={sidebar.branch_name}> {branchName} </span> </p>
             <a href="/login" className={sidebar.logout}>יציאה מהמערכת</a>
           </div>
         </div>

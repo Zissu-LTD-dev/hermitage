@@ -1,0 +1,62 @@
+.main{
+    position: absolute;
+    width: 1637px;
+    height: 851px;
+    top: 85px;
+    left: 0px;   
+    padding: 36px 43px auto auto;
+} 
+
+.title{
+    width: 230px;
+    height: 67px;
+    position: absolute;
+    top: 36px;
+    right: 43px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: IBM Plex Sans Hebrew;
+    font-style: normal;
+    font-weight: medium;
+    font-size: 28px;
+    line-height: 37px;
+    letter-spacing: 0px;
+    color: #082A3A;
+}
+
+.categories{
+    position: absolute;
+    width: 1285px;
+    height: auto;
+    min-height: 67px;
+    top: 36px;
+    right: 301px;
+}
+
+.products{
+    position: absolute;
+    width: 1541px;
+    height: auto;
+    max-height: 645px;
+    top: calc(67px * 2 + 36px + 27px);
+    right: 43px;
+    direction: rtl;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.wizard{
+    position: absolute;
+    width: 1635px;
+    height: 89px;
+    bottom: 0px;
+    left: 0px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px -3px 14px #082A3A36;
+    z-index: 2;
+}

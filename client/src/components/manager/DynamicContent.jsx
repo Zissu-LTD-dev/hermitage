@@ -1,6 +1,8 @@
 import { useState } from "react";
 import dynamicContent from "../../assets/css/manager/DynamicContent.module.css";
 import Categories from "./Categories";
+import Wizard from "./Wizard";
+import Column from "./Column";  
 
 function DynamicContent() {
     const [title, setTitle] = useState("יצירת הזמנה חדשה")
@@ -13,8 +15,12 @@ function DynamicContent() {
         <div className={dynamicContent.categories}> 
             <Categories />
         </div>
-        <div className={dynamicContent.products}> מוצרים</div>
-        <div className={dynamicContent.wizard}> אשף </div>
+        <div className={dynamicContent.products}> 
+          <Column />
+        </div>
+        <div className={dynamicContent.wizard}> 
+          <Wizard />
+        </div>
       </div>
     </>
   );

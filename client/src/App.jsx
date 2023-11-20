@@ -1,15 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login, Admin, Manager } from "./pages";
 import "./App.css";
-import { Box } from "@mui/material";
 import PrivateRouteAdmin from "./utils/PrivateRouteAdmin.jsx";
 import PrivateRouteManager from "./utils/PrivateRouteManager.jsx";
+
+import { ProductProvider } from "./context/orderContext/OrderContext.jsx";
+
 import PrivateRoute from "./utils/PrivateRoutes.jsx";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Box className="App">
+    <div className="App">
+      <BrowserRouter>
         <Routes>
           <Route
             path="/admin"
@@ -24,7 +26,9 @@ function App() {
             path="/"
             element={
               <PrivateRouteManager>
-                <Manager />
+                <ProductProvider>
+                  <Manager />
+                </ProductProvider>
               </PrivateRouteManager>
             }
           ></Route>
@@ -32,8 +36,8 @@ function App() {
           <Route path="/login" element={<Login />} exact />
           <Route path="*" element={<h1>Not Found page - 404 👀 </h1>} />
         </Routes>
-      </Box>
-    </BrowserRouter>
+      </BrowserRouter>
+    </div>
   );
 }
 export default App;

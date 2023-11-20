@@ -8,7 +8,7 @@ const Providers = require('./Providers.js')
 const Department = require('./Departments.js')
 const Category = require('./Categories.js')
 const column = require('./Columns.js') 
-const Product = require('./Products.js')
+const Products = require('./Products.js')
 
 
 module.exports = {
@@ -22,5 +22,5 @@ module.exports = {
     Department,
     Category,
     column,
-    Product
+    Products
 }

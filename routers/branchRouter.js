@@ -3,7 +3,8 @@ const {categories, notifications, orders, returns, products, providers} = requir
 const branchRouter = express.Router();
 
 branchRouter.get("/test", (req, res) => {
-    res.send("test branch");
+    // let user = req.user;
+    res.send({"test branch": "user"});
 });
 
 // categories

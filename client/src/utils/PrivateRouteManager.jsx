@@ -39,8 +39,7 @@ function PrivateRouteManager({ children }) {
 
   if (loading) return <h1>Loading...</h1>;
   if (isAuthenticated && role == "branch manager") return children;
-  if (isAuthenticated && role == "admin")
-    return <Navigate to="/admin" replace />;
+  if (isAuthenticated && role == "admin") return <Navigate to="/admin" replace />;
   return <Navigate to="/login" replace />;
 }
 

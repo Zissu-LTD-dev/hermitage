@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const productSchema = new mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
     barcode: {
       type: Number,
       unique: true
@@ -34,4 +34,6 @@ const productSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('Product', productSchema)
+
+
+module.exports = mongoose.model('Product', ProductSchema)

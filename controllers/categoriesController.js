@@ -11,8 +11,9 @@ const {
 
 // getCategories
 const getCategories = async (req, res) => {
-  if(req.params.branchId) return res.send(req.params.branchId + " getCategories");
-  res.send("getCategories");
+  console.log(req.params);
+  res.send('all Products');
+  
 };
 
 // addCategory

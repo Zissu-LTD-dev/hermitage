@@ -11,8 +11,15 @@ const {
 
 // getProducts
 const getProducts = async (req, res) => {
-  if(req.params.branchId) return res.send(req.params.branchId + " getProducts");
-  res.send("getProducts");
+  const branchId = req.params.branchId;
+  // Bring all products that a large or equal brunchtype 
+  const products = await Products.find({
+    branchType: {
+      $gte: branchId,
+    },
+  });
+  
+  res.status(200).json({ 'success': true, 'products': products });
 };
 
 // addProduct

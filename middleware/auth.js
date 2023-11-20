@@ -17,14 +17,15 @@ const authAdmin = async (req, res, next) => {
 };
 
 // authManager
-const authManager = async (req, res,) => {
-  const token = req.cookies.jwt;
+const authManager = async (req, res, next) => {
+  const token = req.headers.authorization ? req.headers.authorization.split(" ")[1] : null;
   if (!token) return res.status(401).json({ msg: "You are not authorized" });
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET_MANAGER);
     // console.log({decoded: decoded});
-    req.user = decoded;
+    req.user = decoded;  
+    next();
   } catch (error) {
     return res.status(401).json({ msg: "You are not authorized" });
   }

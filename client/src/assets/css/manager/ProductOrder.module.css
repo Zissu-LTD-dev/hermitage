@@ -1,29 +1,33 @@
 .product {
-  width: 139px;
-  height: 239px;
+  width: 170px;
+  height: 290px;
   background: #ffffff 0% 0% no-repeat padding-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   margin: 0 7.5px;
 }
 
 .product img {
-  width: 100%;
+  width: auto;
   height: 100px;
   background: transparent 0% 0% no-repeat padding-box;
 }
 
 .product h2 {
   margin: 0;
-  width: 95px;
-  height: 40px;
+  width: 90%;
+  height: 66px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-align: center;
   font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
   color: #082a3a;
 }
 
 .product p {
+  width: 90%;
   margin: 0;
   text-align: center;
   font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
@@ -31,7 +35,7 @@
 }
 
 .product div {
-  width: 111px;
+  width: 100%;
   height: 30px;
   display: flex;
   justify-content: space-between;
@@ -40,10 +44,13 @@
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #be955d;
 }
+.buttons{
+  /* margin: 8px 0; */
+}
 
 .product div button {
   width: 31px;
-  height: 30px;
+  height: 100%;
   background: #be955d 0% 0% no-repeat padding-box;
   border: none;
 }

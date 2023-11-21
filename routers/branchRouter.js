@@ -1,5 +1,5 @@
 const express = require("express");
-const {categories, notifications, orders, returns, products, providers} = require("../controllers");
+const {categories, notifications, orders, returns, products, providers, auth} = require("../controllers");
 const branchRouter = express.Router();
 
 branchRouter.get("/test", (req, res) => {

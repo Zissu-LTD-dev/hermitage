@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
 import column from "../../assets/css/manager/Column.module.css";
+import { useOrderContext } from "../../context/orderContext/OrderContext";
 import Row from "./Row";
+import ProductOrder from "./ProductOrder";
 
-function Column({name , num,  products }) {
+function Column({ name, num, products }) {
+  const { state, dispatch } = useOrderContext();
+
   const [open, setOpen] = useState(false);
+  const [activRow, setActivRow] = useState(false);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [state.activeDepartment]);
 
   return (
     <>
       {!open && (
         <div className={column.main} onClick={() => setOpen(true)}>
           <i className={column.main__icon}></i>
-          <div className={column.title}>{name}</div>
+          <div className={column.title}>עמודה: {name}</div>
           <i className={column.imaging}></i>
           <i className={column.opening__arrow}></i>
         </div>
@@ -21,16 +29,26 @@ function Column({name , num,  products }) {
         <div className={column.main__open}>
           <div className={column.main} onClick={() => setOpen(false)}>
             <i className={column.main__icon}></i>
-            <div className={column.title}>{name}</div>
+            <div className={column.title}>עמודה: {name}</div>
             <i className={column.imaging}></i>
             <i className={column.closing__arrow}></i>
           </div>
 
-          <div className={column.rows}>
-            {products.map((product) => (
-              <Row product={product} />
-            ))}
-          </div>
+          {activRow && (
+            <div className={column.rows}>
+              {products.map((product, i) => (
+                <Row key={i} product={product} />
+              ))}
+            </div>
+          )}
+
+          {!activRow && (
+            <div className={column.products}>
+              {products.map((product, i) => (
+                <ProductOrder key={i} productData={product} />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>

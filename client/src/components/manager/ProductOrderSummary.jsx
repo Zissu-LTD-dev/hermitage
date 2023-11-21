@@ -1,43 +1,39 @@
 import { useState } from "react";
+import { useOrderContext } from "../../context/orderContext/OrderContext";
 import product from "../../assets/css/manager/ProductOrderSummary.module.css";
 
 import imgProduct from "../../assets/image/manager/0007434_-12-.png";
 
-const ProductOrder = () => {
-  const [productData, setProductData] = useState({
-    image: "",
-    details: "מוצר נהדר",
-    supplier: "ספק מצויין",
-    category: "קטגוריה נהדרת",
-    group: "קבוצה נהדרת",
-    barcode: "123456789",
-    quantity: 0,
-  });
+const ProductOrder = ({productData}) => {
+  const { state, dispatch } = useOrderContext();
 
+    let { image, name, providerName, categoryName,  barcode, quantity } = productData;
   const onIncrease = () => {
-    setProductData({ ...productData, quantity: productData.quantity + 1 });
+    dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity + 1 } });
   }
 
   const onDecrease = () => {
-    if (productData.quantity > 0) {
-      setProductData({ ...productData, quantity: productData.quantity - 1 });
+    if (productData.quantity > 1) {
+      dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity - 1 } });
+    }else{
+      dispatch({ type: "REMOVE_ORDERED_PRODUCT", payload:  barcode  });
     }
   }
 
   return (
     <div className={product.product}>
-      <img src={productData.image ? productData.image : imgProduct} alt={productData.details} />
+      <img src={image ? image : imgProduct} alt="img" />
       <span className={product.details}>
-        <h2>{productData.details}</h2>
+        <h2>{name}</h2>
       </span>
-      <p>{productData.supplier}</p>
-      <p>{productData.group}</p>
-      <p>{productData.category}</p>
-      <p>{productData.barcode}</p>
+      <p>{providerName}</p>
+      {/* <p>{productData.group}</p> */}
+      <p>{categoryName}</p>
+      <p>{barcode}</p>
       <div>
-        <button className={product.decrease} onClick={ onDecrease}></button>
-        <span>{productData.quantity}</span>
-        <button className={product.increase} onClick={ onIncrease}></button>
+        <button className={product.decrease} onClick={ onIncrease}></button>
+        <span>{quantity}</span>
+        <button className={product.increase} onClick={ onDecrease}></button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 const xlsx = require("xlsx");
-const { Providers, Department, Category, Product } = require("../models");
+const { Providers, Department, Category, Products } = require("../models");
 
 // collection variables for excel file
 let providersCollection = [];
@@ -158,7 +158,7 @@ const addCategories = async () => {
 
 // get products from db and filter from productsCollection array end add to db only new products
 const addProducts = async () => {
-  const products = await Product.find({});
+  const products = await Products.find({});
   const productsNums = products.map(product => parseInt(product.barcode));
 
   let newProducts = productsCollection;
@@ -167,8 +167,11 @@ const addProducts = async () => {
     product.barcode = product["ברקוד"];
     product.name = product["שם מוצר"];
     product.provider = product["מס ספק"];
+    product.providerName = product["ספק"];
     product.department = product["מס מחלקה"];
+    product.departmentName = product["שם מחלקה"];
     product.category = product["מס קבוצת משנה"];
+    product.categoryName = product["שם קבוצת משנה"];
     product.columnNumber = product["מס עמודה "];
     product.columnName = product["שם עמודה"];
     product.row = [{
@@ -179,8 +182,11 @@ const addProducts = async () => {
     delete product["ברקוד"];
     delete product["שם מוצר"];
     delete product["מס ספק"];
+    delete product["ספק"];
     delete product["מס מחלקה"];
+    delete product["שם מחלקה"];
     delete product["מס קבוצת משנה"];
+    delete product["שם קבוצת משנה"];
     delete product["מס עמודה"];
     delete product["שם עמודה"];
     delete product["תת רשת"];
@@ -189,7 +195,7 @@ const addProducts = async () => {
   });
   // filter new products
   newProducts = newProducts.filter(product => !productsNums.includes(parseInt(product.barcode)));
-  await Product.insertMany(newProducts);
+  await Products.insertMany(newProducts);
 
   return newProducts;
 }

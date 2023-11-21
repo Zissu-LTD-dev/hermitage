@@ -1,18 +1,26 @@
 import { useState, useEffect } from "react";
+import {useOrderContext} from "../../context/orderContext/OrderContext"
 import wizard from "../../assets/css/manager/Wizard.module.css";
 
 function Wizard() {
+  const { state, dispatch } = useOrderContext();
+  
   const [step, setStep] = useState(2);
 
   const nextStep = () => {
     if (step == 5) return;
     setStep(step + 1);
+    let num = state.status.step + 1;
+    dispatch({ type: "SET_STATUS", payload: num });
   };
-
+  
   const prevStep = () => {
     if (step == 2) return;
     setStep(step - 1);
+    let num = state.status.step - 1;
+    dispatch({ type: "SET_STATUS", payload: num });
   };
+
 
   return (
     <>

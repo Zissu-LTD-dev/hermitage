@@ -30,10 +30,10 @@ function Departments() {
   return (
     <>
       <div className={departments.categories}>
-        {departmentsList.map((category) => (
-          <span onClick={() => changeActive(category.num)}> 
+        {departmentsList.map((category, i) => (
+          <span key={i} onClick={() => changeActive(category.num)}> 
             <Department
-              key={category.num}
+              key={i}
               num={category.num}
               name={category.name}
               icon={category.icon}

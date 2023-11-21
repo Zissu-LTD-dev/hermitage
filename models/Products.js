@@ -11,14 +11,17 @@ const ProductSchema = new mongoose.Schema({
       type: Number,
       ref: 'Providers'
     },
+    providerName: String,
     department: {
       type: Number,
       ref: 'Department'
     },
+    departmentName: String,
     category: {
       type: Number, 
       ref: 'Category'
     },
+    categoryName: String,
     columnNumber: Number,
     columnName: String,
     row: [{

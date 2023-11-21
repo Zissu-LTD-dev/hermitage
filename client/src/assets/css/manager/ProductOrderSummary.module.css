@@ -3,7 +3,7 @@
   height: 77px;
   background: #ffffff 0% 0% no-repeat padding-box;
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   margin: 0 0 12px 100px;
@@ -18,7 +18,7 @@
 .product .details {
   width: 983px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex;
 }
 
 .product h2 {

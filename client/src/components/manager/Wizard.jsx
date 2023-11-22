@@ -41,7 +41,7 @@ function Wizard() {
   };
   
   const prevStep = () => {
-    if (step == 2) return;
+    if (step == 2 || step == 5 ) return;
     setStep(step - 1);
     let num = state.status.step - 1;
     dispatch({ type: "SET_STATUS", payload: num });
@@ -59,7 +59,7 @@ function Wizard() {
         <div
           onClick={prevStep}
           className={
-            step == 2
+            step == 2 || step == 5 
               ? wizard.back + " " + wizard.button + " " + wizard.off
               : wizard.back + " " + wizard.button 
           }

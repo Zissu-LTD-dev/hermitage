@@ -1,0 +1,43 @@
+.main {
+  width: 1541px;
+  height: 86px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+  display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0 ;
+    margin:  0 0 14px 0;
+}
+
+.provider__name {
+    width: 775px;
+    text-align: right;
+font: normal normal 600 18px/23px IBM Plex Sans Hebrew;
+letter-spacing: 0px;
+color: #082A3A;
+}
+
+.sum__orders {
+    width: 150px;
+    text-align: right;
+font: normal normal normal 18px/23px IBM Plex Sans Hebrew;
+letter-spacing: 0px;
+color: #082A3A;
+}
+
+.sum__returns {
+    width: 150px;
+    text-align: right;
+font: normal normal normal 18px/23px IBM Plex Sans Hebrew;
+letter-spacing: 0px;
+color: #BE955D;
+}
+
+.sum__total {
+    width: 207px;
+    text-align: right;
+font: normal normal 600 18px/23px IBM Plex Sans Hebrew;
+letter-spacing: 0px;
+color: #082A3A;
+}

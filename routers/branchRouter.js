@@ -15,6 +15,12 @@ branchRouter.get("/getCategories/:branchId", categories.getCategories);
 // -- get all products for this branch
 branchRouter.get("/getProducts/:branchId", products.getProducts);
 
+// createOrder
+// -- create product
+branchRouter.post("/sendOrder", (req, res) => {
+    res.send({"sendOrder": req.body});
+});
+
 // providers
 // -- get all providers 
 branchRouter.get("/getProviders", providers.getProviders);

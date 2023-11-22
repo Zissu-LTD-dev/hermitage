@@ -1,14 +1,40 @@
 import { useState, useEffect } from "react";
 import {useOrderContext} from "../../context/orderContext/OrderContext"
 import wizard from "../../assets/css/manager/Wizard.module.css";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
+import cookie from "js-cookie";
+
 
 function Wizard() {
   const { state, dispatch } = useOrderContext();
   
   const [step, setStep] = useState(2);
 
+  const sendOrder = async () => {
+    try {
+      const res = await fetch(`${REACT_APP_BACKEND_URL}manager/sendOrder`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${cookie.get("token")}`,
+        },
+        body: JSON.stringify(state.summary),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   const nextStep = () => {
-    if (step == 5) return;
+    if (step == 5){
+      
+        sendOrder();
+        dispatch({ type: "CLEAR_ORDER" })  
+       return 
+      };
     setStep(step + 1);
     let num = state.status.step + 1;
     dispatch({ type: "SET_STATUS", payload: num });
@@ -21,6 +47,11 @@ function Wizard() {
     dispatch({ type: "SET_STATUS", payload: num });
   };
 
+  useEffect(() => {
+    if(step == 5) {
+      dispatch({ type: "SET_SUMMARY" });
+    }
+  }, [step]);
 
   return (
     <>
@@ -58,7 +89,8 @@ function Wizard() {
           </div>
         </div>
         <div onClick={nextStep} className={wizard.next + " " + wizard.button}>
-          <span>המשך לשלב הבא</span>
+          { step < 5  &&  <span>המשך לשלב הבא</span> }
+          { step == 5  &&  <span>שלח הזמנה</span> }
           <i></i>
         </div>
       </div>

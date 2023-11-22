@@ -11,6 +11,7 @@ export const initialState = {
   categories: [],
   orderedProducts: [],
   returnedProducts: [],
+  summary: [],
 };
 
 export const SET_USER_INFO = "SET_USER_INFO";
@@ -26,8 +27,11 @@ export const REMOVE_ORDERED_PRODUCT = "REMOVE_ORDERED_PRODUCT";
 export const ADD_RETURNED_PRODUCT = "ADD_RETURNED_PRODUCT";
 export const REMOVE_RETURNED_PRODUCT = "REMOVE_RETURNED_PRODUCT";
 
+export const SET_SUMMARY = "SET_SUMMARY";
+export const CLEAR_ORDER = "CLEAR_ORDER";
 
-export const orderReducer = (state, action) => {
+
+export const orderReducer =  (state, action) => {
   switch (action.type) {
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload };
@@ -89,10 +93,81 @@ export const orderReducer = (state, action) => {
       };
       
     case ADD_RETURNED_PRODUCT:
-      return {
-        ...state,
-        returnedProducts: [...state.returnedProducts, action.payload],
-      };
+      let returneProductExists = false;
+      let returnedProducts = state.returnedProducts.map((product) => {
+        if (product.barcode === action.payload.barcode) {
+          returneProductExists = true;
+          return { ...product, quantity: action.payload.quantity };
+        } else {
+          return product;
+        }
+      });
+      if (!returneProductExists) {
+        returnedProducts.push(action.payload);
+      }
+      return { ...state, returnedProducts: returnedProducts };
+      
+      case REMOVE_RETURNED_PRODUCT:
+        return {
+          ...state,
+          returnedProducts: state.returnedProducts.filter((product) => product.barcode !== action.payload),
+        };
+      
+
+
+      case SET_SUMMARY:
+         let summary = [];
+
+        state.orderedProducts.forEach((product) => {
+          let providerExists = false;
+          summary.forEach((provider) => {
+            if (provider.providerName === product.providerName) {
+              providerExists = true;
+              provider.productsOrder.push(product);
+              provider.sumOrder += product.quantity;  
+            }
+          });
+          if (!providerExists) {
+            summary.push({
+              providerName: product.providerName,
+              productsOrder: [product],
+              productsReturn: [],
+              sumOrder: product.quantity,  
+              sumReturn: 0,
+              sumTotal: 0,
+            });
+          }
+        });
+
+        state.returnedProducts.forEach((product) => {
+          let providerExists = false;
+          summary.forEach((provider) => {
+            if (provider.providerName === product.providerName) {
+              providerExists = true;
+              provider.productsReturn.push(product);
+              provider.sumReturn += product.quantity;  
+            }
+          });
+          if (!providerExists) {
+            summary.push({
+              providerName: product.providerName,
+              productsOrder: [],
+              productsReturn: [product],
+              sumOrder: 0,
+              sumReturn: product.quantity,  
+              sumTotal: 0,
+            });
+          }
+        });
+
+        summary.forEach((provider) => {
+          provider.sumTotal = provider.sumOrder - provider.sumReturn;
+        });
+
+        return { ...state, summary: summary };
+
+    case CLEAR_ORDER:
+      return { ...state, status: { title: "הזמנה נשלחה בהצלחה", step: 5 } , summary: [], orderedProducts: [], returnedProducts: [] };
     default:
       return state;
   }

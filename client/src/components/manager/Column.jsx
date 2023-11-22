@@ -3,8 +3,9 @@ import column from "../../assets/css/manager/Column.module.css";
 import { useOrderContext } from "../../context/orderContext/OrderContext";
 import Row from "./Row";
 import ProductOrder from "./ProductOrder";
+import ProductReturn from "./ProductReturn";
 
-function Column({ name, num, products }) {
+function Column({ isOrder, name, num, products }) {
   const { state, dispatch } = useOrderContext();
 
   const [open, setOpen] = useState(false);
@@ -44,8 +45,11 @@ function Column({ name, num, products }) {
 
           {!activRow && (
             <div className={column.products}>
-              {products.map((product, i) => (
-                <ProductOrder key={i} productData={product} />
+              { isOrder && products.map((product, i) => (
+                <ProductOrder key={i} productData={product} /> 
+              ))}
+              { !isOrder && products.map((product, i) => (
+                <ProductReturn key={i} productData={product} /> 
               ))}
             </div>
           )}

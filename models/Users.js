@@ -8,10 +8,7 @@ const UserSchema = new mongoose.Schema({
     email: String, 
     password: String,
     role: String,
-    branchId: {
-      type: Number,
-      ref: 'Branches'
-    }
+    branch: Object,
 })
 
 

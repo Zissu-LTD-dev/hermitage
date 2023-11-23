@@ -1,13 +1,27 @@
 const mongoose = require('mongoose')
 
 const returnSchema = new mongoose.Schema({
-    branch: String,
-    products: [{
-      barcode: Number,
-      quantity: Number,
-      reason: String
-    }],
-    status: String
+  returnNum:{
+    type: Number,
+    default: 0
+  },
+  branchID: String,
+  branchName: String,
+  provider: String,
+  products: Array,
+  totalOrders: Number,
+  totalReturns: Number,
+  totalPrice: Number,
+  status: {
+    type: String,
+    default: 'pending'
+  },
+  note: String,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    dateOnly: true
+  }
 })
 
 

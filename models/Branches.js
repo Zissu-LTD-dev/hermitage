@@ -3,12 +3,9 @@ const validator = require('validator')
 
 const branchSchema = new mongoose.Schema({
     name: String,
-    address: String,
-    storeIds: [Number], 
-    type: {
-      type: Number,
-      ref: 'BranchType'
-    }
+    city: String,
+    type: String,
+    typeNumber: Number,
 })
 
 module.exports = mongoose.model('Branch', branchSchema)

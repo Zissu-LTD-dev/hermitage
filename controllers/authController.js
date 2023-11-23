@@ -1,4 +1,4 @@
-const User = require("../models/Users.js");
+const {User} = require("../models");
 const jwt = require("jsonwebtoken");
 
 const getUsers = async (req, res) => {
@@ -25,15 +25,11 @@ const addUser = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log('login');
 
-  if (!email || !password)
-    return res
-      .status(400)
-      .json({ error: "Please provide username and password" });
+  if (!email || !password) return res.status(400).json({ error: "Please provide username and password" });
 
   const user = await User.findOne({ email }).select("+password");
-  if (!user) return res.status(404).json({ error: "The email is incorrect" });
+  if (!user) return res.status(401).json({ error: "The email is incorrect" });
 
   const isMatch = await user.checkPassword(password);
   if (!isMatch)
@@ -46,10 +42,12 @@ const login = async (req, res) => {
     token = user.createToken(process.env.JWT_SECRET_MANAGER);
   }
   res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
+  
+  user.password = undefined;
+  user.createdAt = undefined;
 
-  let { _id, username, role } = user;
 
-  res.status(200).json({ user: { _id, username, email, role } , token });
+  res.status(200).json({ user: user , token });
 };
 
 const updateUser = async (req, res) => {

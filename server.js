@@ -37,8 +37,6 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/admin', authAdmin , adminRouter);
 app.use('/api/v1/manager', authManager, branchRouter);
 
-app.get('/', (req, res) => res.send('Hello World!'))
-
 // server end db connection
 const port = process.env.PORT || 5000
 

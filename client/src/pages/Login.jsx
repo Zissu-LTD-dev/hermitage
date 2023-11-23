@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import login from "../assets/css/login.module.css";
+import { useOrderContext } from "../context/orderContext/OrderContext";
 
 import logo from "../assets/image/logo/logo.png";
 import enter from "../assets/image/logo/enter.svg";
@@ -8,6 +9,8 @@ import enter from "../assets/image/logo/enter.svg";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 function Login() {
+  const { state, dispatch } = useOrderContext();
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +28,7 @@ function Login() {
 
     document.cookie = `token=${token}`;
     localStorage.setItem("user", JSON.stringify(user));
+    dispatch({ type: "SET_USER_INFO", payload: user });
 
     if (user.role === "admin") {
       navigate("/admin");
@@ -35,6 +39,13 @@ function Login() {
     setEmail("");
     setPassword("");
   };
+
+  useEffect(() => {
+    dispatch({ type: "CLEAR_STATE" });
+    document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    localStorage.clear();
+  }, []);
+
 
   return (
     <div className={login.bgi}>

@@ -14,6 +14,8 @@ export const initialState = {
   summary: [],
 };
 
+export const CLEAR_STATE = "CLEAR_STATE";
+
 export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_STATUS = "SET_STATUS";
 
@@ -33,8 +35,11 @@ export const CLEAR_ORDER = "CLEAR_ORDER";
 
 export const orderReducer =  (state, action) => {
   switch (action.type) {
+    case CLEAR_STATE:
+      return initialState;
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload };
+      
     case SET_STATUS:
       if(action.payload === 1) return { ...state, status: { title: "יצירת הזמנה חדשה", step: action.payload } };
       if(action.payload === 2) return { ...state, status: { title: "סיכום ביניים", step: action.payload } };

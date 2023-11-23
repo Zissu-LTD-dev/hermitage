@@ -12,13 +12,16 @@ function Wizard() {
 
   const sendOrder = async () => {
     try {
-      const res = await fetch(`${REACT_APP_BACKEND_URL}manager/sendOrder`, {
+      let summary = state.summary;
+      let branch = state.userInfo.branch;
+      let order = { summary, branch };
+      const res = await fetch(`${REACT_APP_BACKEND_URL}manager/createOrder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           authorization: `Bearer ${cookie.get("token")}`,
         },
-        body: JSON.stringify(state.summary),
+        body: JSON.stringify(order),
       });
       const data = await res.json();
       console.log(data);

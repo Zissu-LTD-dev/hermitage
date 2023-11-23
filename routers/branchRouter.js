@@ -7,19 +7,23 @@ branchRouter.get("/test", (req, res) => {
     res.send({"test branch": "user"});
 });
 
-// categories
-// -- get all categories for this branch
-branchRouter.get("/getCategories/:branchId", categories.getCategories);
+
 
 // products
 // -- get all products for this branch
 branchRouter.get("/getProducts/:branchId", products.getProducts);
 
 // createOrder
-// -- create product
-branchRouter.post("/sendOrder", (req, res) => {
-    res.send({"sendOrder": req.body});
-});
+// -- create order
+branchRouter.post("/createOrder", orders.createOrder);
+
+
+
+
+
+// categories
+// -- get all categories for this branch
+branchRouter.get("/getCategories/:branchId", categories.getCategories);
 
 // providers
 // -- get all providers 
@@ -28,8 +32,6 @@ branchRouter.get("/getProviders", providers.getProviders);
 // orders
 // -- get all orders for this branch
 branchRouter.get("/getOrders/:branchId", orders.getOrders);
-// -- create order
-branchRouter.post("/createOrder", orders.createOrder);
 
 // return
 // -- get all returns for this branch

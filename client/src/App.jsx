@@ -4,10 +4,6 @@ import "./App.css";
 import PrivateRouteAdmin from "./utils/PrivateRouteAdmin.jsx";
 import PrivateRouteManager from "./utils/PrivateRouteManager.jsx";
 
-import { ProductProvider } from "./context/orderContext/OrderContext.jsx";
-
-import PrivateRoute from "./utils/PrivateRoutes.jsx";
-
 function App() {
   return (
     <div className="App">
@@ -26,9 +22,7 @@ function App() {
             path="/"
             element={
               <PrivateRouteManager>
-                <ProductProvider>
                   <Manager />
-                </ProductProvider>
               </PrivateRouteManager>
             }
           ></Route>

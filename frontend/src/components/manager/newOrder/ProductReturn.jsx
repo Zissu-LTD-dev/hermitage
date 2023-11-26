@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import product from '../../assets/css/manager/ProductOrder.module.css';
-import { useOrderContext } from '../../context/orderContext/OrderContext';
+import product from '../../../assets/css/manager/newOrder/ProductOrder.module.css';
+import { useOrderContext } from '../../../context/orderContext/OrderContext';
 
-import imgProduct from '../../assets/image/manager/0007434_-12-.png';
+import imgProduct from '../../../assets/image/manager/0007434_-12-.png';
 
 
-const ProductOrder = ({productData}) => {
+const ProductReturn = ({productData}) => {
   const { state, dispatch } = useOrderContext();
 
     let { image, name, providerName, categoryName,  barcode } = productData;
@@ -13,16 +13,16 @@ const ProductOrder = ({productData}) => {
     
       const onIncrease = () => {
         setQuantity(quantity + 1);
-        dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity + 1 } });
+        dispatch({ type: "ADD_RETURNED_PRODUCT", payload: { ...productData, quantity: quantity + 1 } });
       }
       
       const onDecrease = () => {
         if (quantity > 0) {
           setQuantity(quantity - 1);
           if(quantity > 1){
-            dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity - 1 } });
+            dispatch({ type: "ADD_RETURNED_PRODUCT", payload: { ...productData, quantity: quantity - 1 } });
           }else{
-          dispatch({ type: "REMOVE_ORDERED_PRODUCT", payload:  barcode  });
+          dispatch({ type: "REMOVE_RETURNED_PRODUCT", payload:  barcode  });
         }}
 
       }
@@ -43,4 +43,4 @@ const ProductOrder = ({productData}) => {
     );
 };
 
-export default ProductOrder;
+export default ProductReturn;

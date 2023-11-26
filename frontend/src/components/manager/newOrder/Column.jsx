@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import column from "../../assets/css/manager/Column.module.css";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
+import column from "../../../assets/css/manager/newOrder/Column.module.css";
+import { useOrderContext } from "../../../context/orderContext/OrderContext";
 import Row from "./Row";
 import ProductOrder from "./ProductOrder";
 import ProductReturn from "./ProductReturn";

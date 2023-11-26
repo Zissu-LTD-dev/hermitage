@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import summary from "../../assets/css/manager/OrderSummary.module.css";
+import summary from "../../../assets/css/manager/newOrder/OrderSummary.module.css";
 
 function OrderSummary({ providers }) {
   const { providerName, sumOrder, sumReturn, sumTotal } = providers;

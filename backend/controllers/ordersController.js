@@ -10,17 +10,7 @@ const {
   User,
 } = require("../models");
 
-// getOrders
-const getOrders = async (req, res) => {
-  if (req.params.branchId) return res.send(req.params.branchId + " getOrders");
-  res.send("getOrders");
-};
 
-// updateOrder
-const updateOrder = async (req, res) => {
-  if (req.params.orderId) return res.send(req.params.orderId + " updateOrder");
-  res.send("updateOrder");
-};
 
 // createOrder
 const createOrder = async (req, res) => {
@@ -64,6 +54,21 @@ returnNum = returnNum ? returnNum.returnNum + 1 : 1
   }
 
   res.status(200).json({message: 'The order was successfully sent'});
+};
+
+
+// getOrders
+const getOrders = async (req, res) => {
+  let branchName = req.params.branchName;
+  let orders = await Order.find({branchName: branchName, status: "pending"});
+  res.status(200).json({orders: orders});
+};
+
+
+// updateOrder
+const updateOrder = async (req, res) => {
+  if (req.params.orderId) return res.send(req.params.orderId + " updateOrder");
+  res.send("updateOrder");
 };
 
 

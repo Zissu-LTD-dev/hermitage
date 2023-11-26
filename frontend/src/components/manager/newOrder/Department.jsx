@@ -1,9 +1,9 @@
-import department from "../../assets/css/manager/Department.module.css";
-import barrel from  "../../assets/image/categories/barrel.svg"
-import snowflake from  "../../assets/image/categories/snowflake.svg"
-import food from  "../../assets/image/categories/11-food.svg"
-import sigar from  "../../assets/image/categories/Group39.svg"
-import shelves from  "../../assets/image/categories/Layer5.svg"
+import department from "../../../assets/css/manager/newOrder/Department.module.css";
+import barrel from  "../../../assets/image/categories/barrel.svg"
+import snowflake from  "../../../assets/image/categories/snowflake.svg"
+import food from  "../../../assets/image/categories/11-food.svg"
+import sigar from  "../../../assets/image/categories/Group39.svg"
+import shelves from  "../../../assets/image/categories/Layer5.svg"
 
 function Category( {num, name, icon, active, changeActive} ) {
   switch (num) {

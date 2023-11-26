@@ -1,24 +1,28 @@
 import { useState, useEffect } from "react";
-import dynamicContent from "../../assets/css/manager/DynamicContent.module.css";
+import newOrder from "../../assets/css/manager/NewOrder.module.css";
 import { useOrderContext } from "../../context/orderContext/OrderContext";
-import Departments from "./Departments";
-import Wizard from "./Wizard";
-import Column from "./Column";
-import ProductOrderSummary from "./ProductOrderSummary";
-import OrderSummary from "./OrderSummary";
+import Departments from "./newOrder/Departments";
+import Wizard from "./newOrder/Wizard";
+import Column from "./newOrder/Column";
+import ProductOrderSummary from "./newOrder/ProductOrderSummary";
+import OrderSummary from "./newOrder/OrderSummary";
 
 function DynamicContent() {
   const { state, dispatch } = useOrderContext();
 
+  useEffect(() => {
+    dispatch({ type: "SET_STATUS_ORDER", payload: 1 });
+  }, []);
+
   return (
     <>
-      <div className={dynamicContent.main}>
-        <div className={dynamicContent.title}>{state.status.title}</div>
-        <div className={dynamicContent.categories}>
+      <div className={newOrder.main}>
+        <div className={newOrder.title}>{state.statusOrder.title}</div>
+        <div className={newOrder.categories}>
           <Departments />
         </div>
-        <div className={dynamicContent.products}>
-          {state.status.step === 1 &&
+        <div className={newOrder.products}>
+          {state.statusOrder.step === 1 &&
             state.displayProducts.map((column, i) => (
               <Column
                 key={i}
@@ -27,11 +31,11 @@ function DynamicContent() {
                 products={column.products}
               />
             ))}
-          {state.status.step === 2 &&
+          {state.statusOrder.step === 2 &&
             state.orderedProducts.map((product, i) => (
               <ProductOrderSummary key={i} productData={product} />
             ))}
-          {state.status.step === 3 &&
+          {state.statusOrder.step === 3 &&
             state.displayProducts.map((column, i) => (
               <Column
                 key={i}
@@ -40,13 +44,13 @@ function DynamicContent() {
                 products={column.products}
               />
             ))}
-          {state.status.step === 4 && 
+          {state.statusOrder.step === 4 && 
             state.summary.map((provider, i) => (
               <OrderSummary key={i} providers={provider} />
             ))
           }
         </div>
-        <div className={dynamicContent.wizard}>
+        <div className={newOrder.wizard}>
           <Wizard />
         </div>
       </div>

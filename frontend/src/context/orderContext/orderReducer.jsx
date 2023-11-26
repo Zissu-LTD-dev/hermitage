@@ -1,6 +1,7 @@
 export const initialState = {
   userInfo: {},
-  status: {
+  status: "new order",
+  statusOrder: {
     title: "יצירת הזמנה חדשה",
     step: 1,
   },
@@ -18,6 +19,7 @@ export const CLEAR_STATE = "CLEAR_STATE";
 
 export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_STATUS = "SET_STATUS";
+export const SET_STATUS_ORDER = "SET_STATUS_ORDER";
 
 export const SET_ALL_PRODUCTS = "SET_ALL_PRODUCTS";
 export const SET_ACTIVE_DEPARTMENT = "SET_ACTIVE_DEPARTMENT";
@@ -39,12 +41,15 @@ export const orderReducer =  (state, action) => {
       return initialState;
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload };
-      
+
     case SET_STATUS:
-      if(action.payload === 1) return { ...state, status: { title: "יצירת הזמנה חדשה", step: action.payload } };
-      if(action.payload === 2) return { ...state, status: { title: "סיכום ביניים", step: action.payload } };
-      if(action.payload === 3) return { ...state, status: { title: "מוצרים להחזרה", step: action.payload } };
-      if(action.payload === 4) return { ...state, status: { title: "סיכום ואישור הזמנה", step: action.payload } };
+      return { ...state, status: action.payload };
+      
+    case SET_STATUS_ORDER:
+      if(action.payload === 1) return { ...state, statusOrder: { title: "יצירת הזמנה חדשה", step: action.payload } };
+      if(action.payload === 2) return { ...state, statusOrder: { title: "סיכום ביניים", step: action.payload } };
+      if(action.payload === 3) return { ...state, statusOrder: { title: "מוצרים להחזרה", step: action.payload } };
+      if(action.payload === 4) return { ...state, statusOrder: { title: "סיכום ואישור הזמנה", step: action.payload } };
 
     case SET_ALL_PRODUCTS:
       return { ...state, allProducts: action.payload };
@@ -172,7 +177,7 @@ export const orderReducer =  (state, action) => {
         return { ...state, summary: summary };
 
     case CLEAR_ORDER:
-      return { ...state, status: { title: "הזמנה נשלחה בהצלחה", step: 5 } , summary: [], orderedProducts: [], returnedProducts: [] };
+      return { ...state, statusOrder: { title: "הזמנה נשלחה בהצלחה", step: 5 } , summary: [], orderedProducts: [], returnedProducts: [] };
     default:
       return state;
   }

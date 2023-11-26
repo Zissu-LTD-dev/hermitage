@@ -1,6 +1,6 @@
 import { useState , useEffect } from "react";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
-import departments from "../../assets/css/manager/Departments.module.css";
+import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import departments from "../../../assets/css/manager/newOrder/Departments.module.css";
 import Department from "./Department";
 
 function Departments() {

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
-import product from "../../assets/css/manager/ProductOrderSummary.module.css";
+import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import product from "../../../assets/css/manager/newOrder/ProductOrderSummary.module.css";
 
-import imgProduct from "../../assets/image/manager/0007434_-12-.png";
+import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
 
 const ProductOrder = ({productData}) => {
   const { state, dispatch } = useOrderContext();

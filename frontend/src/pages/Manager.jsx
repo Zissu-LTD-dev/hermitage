@@ -6,7 +6,10 @@ import { useOrderContext } from "../context/orderContext/OrderContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
-import DynamicContent from "../components/manager/DynamicContent";
+import NewOrder from "../components/manager/NewOrder";
+import PendingOrders from "../components/manager/PendingOrders";
+import Document from "../components/manager/Document";
+
 import Sidebar from "../components/manager/Sidebar";
 import Navbar from "../components/general/Navbar";
 
@@ -49,7 +52,9 @@ function Manager() {
         <Sidebar branchName={loading ? "" : state.userInfo.branch.name} />
         <Navbar />
         <div className={manager.content}>
-          <DynamicContent />
+          {state.status == "new order"  && <NewOrder /> }
+          {state.status == "pending orders" && <PendingOrders />}
+          {state.status == "documents" && <Document />}
         </div>
       </div>
     </>

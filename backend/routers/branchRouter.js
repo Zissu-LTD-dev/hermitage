@@ -17,6 +17,10 @@ branchRouter.get("/getProducts/:branchId", products.getProducts);
 // -- create order
 branchRouter.post("/createOrder", orders.createOrder);
 
+// getOrders
+// -- get all orders for this branch
+branchRouter.get("/getOrders/:branchName", orders.getOrders);
+
 
 
 
@@ -28,10 +32,6 @@ branchRouter.get("/getCategories/:branchId", categories.getCategories);
 // providers
 // -- get all providers 
 branchRouter.get("/getProviders", providers.getProviders);
-
-// orders
-// -- get all orders for this branch
-branchRouter.get("/getOrders/:branchId", orders.getOrders);
 
 // return
 // -- get all returns for this branch

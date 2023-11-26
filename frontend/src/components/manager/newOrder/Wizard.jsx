@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import {useOrderContext} from "../../context/orderContext/OrderContext"
-import wizard from "../../assets/css/manager/Wizard.module.css";
+import {useOrderContext} from "../../../context/orderContext/OrderContext"
+import wizard from "../../../assets/css/manager/newOrder/Wizard.module.css";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 import cookie from "js-cookie";
 
@@ -39,15 +39,15 @@ function Wizard() {
        return 
       };
     setStep(step + 1);
-    let num = state.status.step + 1;
-    dispatch({ type: "SET_STATUS", payload: num });
+    let num = state.statusOrder.step + 1;
+    dispatch({ type: "SET_STATUS_ORDER", payload: num });
   };
   
   const prevStep = () => {
     if (step == 2 || step == 5 ) return;
     setStep(step - 1);
-    let num = state.status.step - 1;
-    dispatch({ type: "SET_STATUS", payload: num });
+    let num = state.statusOrder.step - 1;
+    dispatch({ type: "SET_STATUS_ORDER", payload: num });
   };
 
   useEffect(() => {

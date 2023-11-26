@@ -33,7 +33,7 @@ color: #082A3A;
     width: 20px;
     height: 20px;
     background: transparent
-    url("../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
     padding-box;
     cursor: pointer;
 }

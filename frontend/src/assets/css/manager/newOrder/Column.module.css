@@ -14,7 +14,7 @@
 .main__icon {
   width: 20px;
   height: 20px;
-  background: transparent url("../../image/manager/Group9.svg") 50% 50%
+  background: transparent url("../../../image/manager/Group9.svg") 50% 50%
     no-repeat padding-box;
 }
 
@@ -34,7 +34,7 @@
 .imaging {
   width: 35px;
   height: 35px;
-  background: transparent url("../../image/manager/Iconfeather-eye.svg") 50% 50%
+  background: transparent url("../../../image/manager/Iconfeather-eye.svg") 50% 50%
     no-repeat padding-box;
 }
 
@@ -43,7 +43,7 @@
   height: 25px;
   transform: rotate(180deg);
   background: transparent
-    url("../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
     padding-box;
  
 }
@@ -62,7 +62,7 @@
   width: 25px;
   height: 25px;
   background: transparent
-    url("../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
     padding-box;
 
 }

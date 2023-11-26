@@ -63,7 +63,7 @@
 /* decrease */
 .product div .decrease {
   width: 31px;
-  background-image: url("../../image/manager/Group13.svg");
+  background-image: url("../../../image/manager/Group13.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 31% 31%;
@@ -72,7 +72,7 @@
 /* increase */
 .product div .increase {
   width: 31px;
-  background-image: url("../../image/manager/Line21.svg");
+  background-image: url("../../../image/manager/Line21.svg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: 31% 31%;

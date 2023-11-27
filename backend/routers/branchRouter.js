@@ -1,5 +1,5 @@
 const express = require("express");
-const {categories, notifications, orders, returns, products, providers, auth} = require("../controllers");
+const {categories, notifications, orders, returns, products, providers, filters, auth} = require("../controllers");
 const branchRouter = express.Router();
 
 branchRouter.get("/test", (req, res) => {
@@ -20,6 +20,10 @@ branchRouter.post("/createOrder", orders.createOrder);
 // getOrders
 // -- get all orders for this branch
 branchRouter.get("/getOrders/:branchName", orders.getOrders);
+
+// getFilters
+// -- get all filters from provider end ctegories
+branchRouter.get("/getFilters", filters.getFilters);
 
 
 

@@ -8,6 +8,7 @@ const returns = require("./returnController.js");
 const products = require("./productsController.js");
 const providers = require("./providersController.js");
 const uploadFile = require("./uploadFile.js")
+const filters = require("./filtersController.js");
 
 
 
@@ -21,5 +22,6 @@ module.exports = {
     returns,
     products,
     providers,
-    uploadFile
+    uploadFile,
+    filters
 };

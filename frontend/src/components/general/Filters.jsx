@@ -1,31 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import filtersStyle from "../../assets/css/general/Filters.module.css";
+import { useOrderContext } from "../../context/orderContext/OrderContext";
+
+import cookie from "js-cookie";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 function Filters() {
-  const [active, setActive] = useState(false);
+  const { state, dispatch } = useOrderContext();
 
-  const filters = [
-    {
-      title: "ספק",
-      details: ["Bella1", "Bella2", "Bella3"],
-    },
-    {
-      title: "סוג",
-      details: ["Bella1", "Bella2", "Bella3"],
-    },
-    {
-      title: "סוג",
-      details: ["Bella1", "Bella2", "Bella3"],
-    },
-    {
-      title: "סוג",
-      details: ["Bella1", "Bella2", "Bella3"],
-    },
-    {
-      title: "סוג",
-      details: ["Bella1", "Bella2", "Bella3"],
-    },
-  ];
+  const [active, setActive] = useState(false);
+  const [filters, setFilters] = useState();
+
+  const getFilters = async () => {
+    try {
+      const res = await fetch(`${REACT_APP_BACKEND_URL}manager/getFilters`, {
+        headers: {
+          authorization : `Bearer ${cookie.get("token")}`,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+
+      setFilters(data.filters);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleFilter = (e) => {
+    console.log(e.target.value);
+  }
+
+  useEffect(() => {
+    getFilters();
+  }, []);
 
   return (
     <>
@@ -54,7 +62,7 @@ function Filters() {
                         key={i}
                       >
                         <input type="checkbox" name={detail+index+i} id={detail+index+i} />
-                        <label htmlFor={detail+index+i}>{detail}</label>
+                        <label htmlFor={detail+index+i}>{detail.name}</label>
                       </div>
                     ))}
                   </div>
@@ -62,7 +70,7 @@ function Filters() {
               ))}
             </div>
             
-            <div className={filtersStyle.list__submit}>סנן</div>
+            <div className={filtersStyle.list__submit} >סנן</div>
           </span>
         )}
       </div>

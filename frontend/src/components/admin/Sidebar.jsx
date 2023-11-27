@@ -1,10 +1,12 @@
-import sidebar from "../../assets/css/manager/sidebar.module.css";
+import sidebar from "../../assets/css/admin/sidebar.module.css";
 import { useOrderContext } from "../../context/orderContext/OrderContext";
 
-import newOrder from "../../assets/image/manager/Layer68.svg";
-import waitingOrders from "../../assets/image/manager/clock.svg";
-import documents from "../../assets/image/manager/document.svg";
-import branchLayout from "../../assets/image/manager/Iconfeather-eye-1.svg";
+import branchManagement from "../../assets/image/admin/shop.svg";
+import approvalsStatus from "../../assets/image/admin/clock.svg";
+import blockManagement from "../../assets/image/admin/block.svg";
+import documents from "../../assets/image/admin/document.svg";
+import addingProducts from "../../assets/image/admin/Iconfeather-plus-circle.svg";
+
 import connectedBy from "../../assets/image/manager/Layer3.svg";
 
 function Sidebar({ branchName }) {
@@ -12,7 +14,7 @@ function Sidebar({ branchName }) {
 
 
   const changeStatus = (status) => {
-    dispatch({ type: "SET_STATUS", payload: status });
+    dispatch({ type: "SET_STATUS_ADMIN", payload: status });
   };
 
   return (
@@ -20,17 +22,23 @@ function Sidebar({ branchName }) {
       <div className={sidebar.sidebar}>
         <div className={sidebar.logo}></div>
         <div className={sidebar.menu}>
-          <div onClick={() => changeStatus("new order")}>
+          <div onClick={() => changeStatus("branch management")}>
             <div className={sidebar.icon}>
-              <img src={newOrder} alt="new order" />
+              <img src={branchManagement} alt="branch management" />
             </div>
-            <span>הזמנה חדשה</span>
+            <span>ניהול סניפים</span>
           </div>
-          <div onClick={() => changeStatus("pending orders")}>
+          <div onClick={() => changeStatus("approvals status")}>
             <div className={sidebar.icon}>
-              <img src={waitingOrders} alt="waiting orders" />
+              <img src={approvalsStatus} alt="approvals status" />
             </div>
-            <span>הזמנות ממתינות</span>
+            <span>סטטוס אישורים</span>
+          </div>
+          <div onClick={() => changeStatus("block management")}>
+            <div className={sidebar.icon}>
+              <img src={blockManagement} alt="block management" />
+            </div>
+            <span>ניהול חסומים</span>
           </div>
           <div onClick={() => changeStatus("documents")}>
             <div className={sidebar.icon}>
@@ -38,11 +46,11 @@ function Sidebar({ branchName }) {
             </div>
             <span>מסמכים</span>
           </div>
-          <div>
+          <div onClick={() => changeStatus("adding products")}>
             <div className={sidebar.icon}>
-              <img src={branchLayout} alt="branchLayout" />
+              <img src={addingProducts} alt="adding products" />
             </div>
-            <span>פריסת הסניף</span>
+            <span>הוספת מוצרים</span>
           </div>
         </div>
         <div className={sidebar.connectedBy}>

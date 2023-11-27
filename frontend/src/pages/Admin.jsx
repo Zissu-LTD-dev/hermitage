@@ -1,12 +1,44 @@
-import ExcelUpload from '../components/ExcelUpload';
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
-function Admin() {
+import admin from "../assets/css/admin/admin.module.css";
+import { useOrderContext } from "../context/orderContext/OrderContext";
+import cookie from "js-cookie";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
+
+import Sidebar from "../components/admin/Sidebar";
+import Navbar from "../components/general/Navbar";
+
+import ApprovalsStatus from "../components/admin/ApprovalsStatus";
+
+function Admin() {  
+  const { state, dispatch } = useOrderContext();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if(localStorage.getItem("user")){
+      dispatch({ type: "SET_USER_INFO", payload: JSON.parse(localStorage.getItem("user")) });
+      setLoading(false);
+    }else{
+      Navigate("/login");
+    }
+  }, []);
 
   
   return (
     <>
-      <h1>Admin</h1>
-      <ExcelUpload />
+    <div className={admin.main} >
+      <Sidebar branchName="מנהל" />
+      <Navbar />
+      <div className={admin.content}>
+        {state.admin.status == "branch management" && <h1>branch management</h1>}
+        {state.admin.status == "approvals status" && <ApprovalsStatus />}
+        {state.admin.status == "block management" && <h1>block management</h1>}
+        {state.admin.status == "documents" && <h1>documents</h1>}
+        {state.admin.status == "adding products" && <h1>adding products</h1>}
+      </div>
+    </div>
     </>
   );
 }

@@ -64,6 +64,11 @@ const getOrders = async (req, res) => {
   res.status(200).json({orders: orders});
 };
 
+const getAllOrders = async (req, res) => {
+  let orders = await Order.find({});
+  res.status(200).json({orders: orders});
+};
+
 
 // updateOrder
 const updateOrder = async (req, res) => {
@@ -74,6 +79,7 @@ const updateOrder = async (req, res) => {
 
 module.exports = {
   getOrders,
+  getAllOrders,
   updateOrder,
   createOrder,
 };

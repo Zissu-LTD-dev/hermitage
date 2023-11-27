@@ -1,0 +1,15 @@
+.main{
+    background-color: #EFF2F3 ;
+}
+
+.content{
+    width: calc(100vw - 283px);
+    height: calc(100vh - 85px);
+    max-height: calc(100vh - 85px);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    position: relative;
+    top: 85px;
+    left: 0;
+    background: #EFF2F3 0% 0% no-repeat padding-box;
+}

@@ -1,5 +1,9 @@
 export const initialState = {
   userInfo: {},
+  admin: {
+    status: "",
+    confirmationOrders: [],
+  },
   status: "new order",
   statusOrder: {
     title: "יצירת הזמנה חדשה",
@@ -18,6 +22,12 @@ export const initialState = {
 export const CLEAR_STATE = "CLEAR_STATE";
 
 export const SET_USER_INFO = "SET_USER_INFO";
+
+// admin 👇
+export const SET_STATUS_ADMIN = "SET_STATUS_ADMIN";
+export const SET_CONFIRMATION_ORDERS = "SET_CONFIRMATION_ORDERS";
+
+// manager 👇
 export const SET_STATUS = "SET_STATUS";
 export const SET_STATUS_ORDER = "SET_STATUS_ORDER";
 
@@ -42,6 +52,14 @@ export const orderReducer =  (state, action) => {
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload };
 
+    // admin 👇
+    case SET_STATUS_ADMIN:
+      return { ...state, admin: { ...state.admin, status: action.payload } };
+    
+    case SET_CONFIRMATION_ORDERS:
+      return { ...state, admin: { ...state.admin, confirmationOrders: action.payload } };
+
+    // manager 👇
     case SET_STATUS:
       return { ...state, status: action.payload };
       

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
-import admin from "../assets/css/admin/admin.module.css";
+import admin from "../assets/css/admin/Admin.module.css";
 import { useOrderContext } from "../context/orderContext/OrderContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;

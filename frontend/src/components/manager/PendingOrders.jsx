@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import pendingOrders from "../../assets/css/manager/pendingOrders.module.css";
+import pendingOrders from "../../assets/css/manager/PendingOrders.module.css";
 import { useOrderContext } from "../../context/orderContext/OrderContext";
 import Provider from "./pendingOrders/Provider";
 

@@ -1,4 +1,4 @@
-import document from "../../assets/css/manager/document.module.css";
+import document from "../../assets/css/manager/Document.module.css";
 
 function Document() {
   return (

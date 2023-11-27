@@ -1,4 +1,4 @@
-import sidebar from "../../assets/css/manager/sidebar.module.css";
+import sidebar from "../../assets/css/manager/Sidebar.module.css";
 import { useOrderContext } from "../../context/orderContext/OrderContext";
 
 import newOrder from "../../assets/image/manager/Layer68.svg";

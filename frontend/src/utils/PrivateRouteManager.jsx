@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
+const {REACT_APP_BACKEND_URL} = import.meta.env
 
 import cookie from "js-cookie";
 
@@ -10,9 +11,8 @@ function PrivateRouteManager({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
 
-  // TODO: להכניס את הקריאה ליוז פאטש או אקסיוס
   async function checkAuth() {
-    const res = await fetch("http://localhost:5000/api/v1/auth/verify", {
+      const res = await fetch(`${REACT_APP_BACKEND_URL}auth/verify`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

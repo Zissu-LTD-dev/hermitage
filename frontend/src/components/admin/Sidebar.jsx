@@ -1,4 +1,4 @@
-import sidebar from "../../assets/css/admin/sidebar.module.css";
+import sidebar from "../../assets/css/admin/Sidebar.module.css";
 import { useOrderContext } from "../../context/orderContext/OrderContext";
 
 import branchManagement from "../../assets/image/admin/shop.svg";

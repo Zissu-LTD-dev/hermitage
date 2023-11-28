@@ -58,13 +58,17 @@
 }
 
 .decrease {
-  background: #be955d url("../../../image/admin/Group13.svg") 50% 50% no-repeat
+  background: #be955d url("../../../image/admin/Line21.svg") 50% 50% no-repeat
     padding-box;
+    cursor: pointer;
+
 }
 
 .increase {
-  background: #be955d url("../../../image/admin/Line21.svg") 50% 50% no-repeat
+  background: #be955d url("../../../image/admin/Group13.svg") 50% 50% no-repeat
     padding-box;
+    cursor: pointer;
+
 }
 
 .buttonDelete {
@@ -73,4 +77,6 @@
   background: transparent url("../../../image/admin/block-1.svg") 50% 50%
     no-repeat padding-box;
   margin: 0 0 0 21px;
+  cursor: pointer;
+
 }

@@ -26,6 +26,12 @@ export const SET_USER_INFO = "SET_USER_INFO";
 // admin 👇
 export const SET_STATUS_ADMIN = "SET_STATUS_ADMIN";
 export const SET_CONFIRMATION_ORDERS = "SET_CONFIRMATION_ORDERS";
+export const DELETE_PRODUCT_ADMIN = "DELETE_PRODUCT_ADMIN";
+export const DECREASE_PRODUCT_ADMIN = "DECREASE_PRODUCT_ADMIN";
+export const INCREASE_PRODUCT_ADMIN = "INCREASE_PRODUCT_ADMIN";
+export const CANCEL_ORDER_ADMIN = "CANCEL_ORDER_ADMIN";
+export const APPROVE_ORDER_ADMIN = "APPROVE_ORDER_ADMIN";
+
 
 // manager 👇
 export const SET_STATUS = "SET_STATUS";
@@ -44,8 +50,7 @@ export const REMOVE_RETURNED_PRODUCT = "REMOVE_RETURNED_PRODUCT";
 export const SET_SUMMARY = "SET_SUMMARY";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 
-
-export const orderReducer =  (state, action) => {
+export const orderReducer = (state, action) => {
   switch (action.type) {
     case CLEAR_STATE:
       return initialState;
@@ -55,19 +60,115 @@ export const orderReducer =  (state, action) => {
     // admin 👇
     case SET_STATUS_ADMIN:
       return { ...state, admin: { ...state.admin, status: action.payload } };
-    
+
     case SET_CONFIRMATION_ORDERS:
-      return { ...state, admin: { ...state.admin, confirmationOrders: action.payload } };
+      return {
+        ...state,
+        admin: { ...state.admin, confirmationOrders: action.payload },
+      };
+
+    case CANCEL_ORDER_ADMIN:
+      let newConfirmationOrdersCan = state.admin.confirmationOrders.map(
+        (order) => {
+          if (order._id == action.payload._id) {
+            return action.payload;
+          }
+          return order;
+        }
+      );
+      return {
+        ...state,
+        admin: { ...state.admin, confirmationOrders: newConfirmationOrdersCan },
+      };
+
+    case APPROVE_ORDER_ADMIN:
+      let newConfirmationOrdersApp = state.admin.confirmationOrders.map(
+        (order) => {
+          if (order._id == action.payload._id) {
+            return action.payload;
+          }
+          return order;
+        }
+      );
+      return {
+        ...state,
+        admin: { ...state.admin, confirmationOrders: newConfirmationOrdersApp },
+      };
+
+    case DELETE_PRODUCT_ADMIN:
+      let newConfirmationOrdersDel = state.admin.confirmationOrders.map(
+        (order) => {
+          if (order._id == action.payload._id) {
+            return action.payload;
+          }
+          return order;
+        }
+      );
+      return {
+        ...state,
+        admin: { ...state.admin, confirmationOrders: newConfirmationOrdersDel },
+      };
+
+    case DECREASE_PRODUCT_ADMIN:
+      let newConfirmationOrdersDE = state.admin.confirmationOrders.map(
+        (order) => {
+          if (order._id == action.payload._id) {
+            return action.payload;
+          }
+          return order;
+        }
+      );
+      return {
+        ...state,
+        admin: { ...state.admin, confirmationOrders: newConfirmationOrdersDE },
+      };
+
+    case INCREASE_PRODUCT_ADMIN:
+      let newConfirmationOrdersIN = state.admin.confirmationOrders.map(
+        (order) => {
+          if (order._id == action.payload._id) {
+            return action.payload;
+          }
+          return order;
+        }
+      );
+      return {
+        ...state,
+        admin: { ...state.admin, confirmationOrders: newConfirmationOrdersIN },
+      };
+
+
+
+
+
+
+
 
     // manager 👇
     case SET_STATUS:
       return { ...state, status: action.payload };
-      
+
     case SET_STATUS_ORDER:
-      if(action.payload === 1) return { ...state, statusOrder: { title: "יצירת הזמנה חדשה", step: action.payload } };
-      if(action.payload === 2) return { ...state, statusOrder: { title: "סיכום ביניים", step: action.payload } };
-      if(action.payload === 3) return { ...state, statusOrder: { title: "מוצרים להחזרה", step: action.payload } };
-      if(action.payload === 4) return { ...state, statusOrder: { title: "סיכום ואישור הזמנה", step: action.payload } };
+      if (action.payload === 1)
+        return {
+          ...state,
+          statusOrder: { title: "יצירת הזמנה חדשה", step: action.payload },
+        };
+      if (action.payload === 2)
+        return {
+          ...state,
+          statusOrder: { title: "סיכום ביניים", step: action.payload },
+        };
+      if (action.payload === 3)
+        return {
+          ...state,
+          statusOrder: { title: "מוצרים להחזרה", step: action.payload },
+        };
+      if (action.payload === 4)
+        return {
+          ...state,
+          statusOrder: { title: "סיכום ואישור הזמנה", step: action.payload },
+        };
 
     case SET_ALL_PRODUCTS:
       return { ...state, allProducts: action.payload };
@@ -75,7 +176,9 @@ export const orderReducer =  (state, action) => {
       return { ...state, activeDepartment: action.payload };
 
     case SET_DISPLAY_PRODUCTS:
-      let products = state.allProducts.filter((product) => product.department === state.activeDepartment);
+      let products = state.allProducts.filter(
+        (product) => product.department === state.activeDepartment
+      );
 
       let columnNumbers = [];
       let columnNames = [];
@@ -84,12 +187,19 @@ export const orderReducer =  (state, action) => {
       products.forEach((product) => {
         if (!columnNumbers.includes(product.columnNumber)) {
           columnNumbers.push(product.columnNumber);
-          columnNames.push({ columnName: product.columnName, number: product.columnNumber });
+          columnNames.push({
+            columnName: product.columnName,
+            number: product.columnNumber,
+          });
         }
       });
 
       columnNames.forEach((columnName) => {
-        let column = { columnName: columnName.columnName, number: columnName.number, products: [] };
+        let column = {
+          columnName: columnName.columnName,
+          number: columnName.number,
+          products: [],
+        };
         products.forEach((product) => {
           if (product.columnNumber === columnName.number) {
             column.products.push(product);
@@ -117,9 +227,11 @@ export const orderReducer =  (state, action) => {
     case REMOVE_ORDERED_PRODUCT:
       return {
         ...state,
-        orderedProducts: state.orderedProducts.filter((product) => product.barcode !== action.payload),
+        orderedProducts: state.orderedProducts.filter(
+          (product) => product.barcode !== action.payload
+        ),
       };
-      
+
     case ADD_RETURNED_PRODUCT:
       let returneProductExists = false;
       let returnedProducts = state.returnedProducts.map((product) => {
@@ -134,68 +246,74 @@ export const orderReducer =  (state, action) => {
         returnedProducts.push(action.payload);
       }
       return { ...state, returnedProducts: returnedProducts };
-      
-      case REMOVE_RETURNED_PRODUCT:
-        return {
-          ...state,
-          returnedProducts: state.returnedProducts.filter((product) => product.barcode !== action.payload),
-        };
-      
 
+    case REMOVE_RETURNED_PRODUCT:
+      return {
+        ...state,
+        returnedProducts: state.returnedProducts.filter(
+          (product) => product.barcode !== action.payload
+        ),
+      };
 
-      case SET_SUMMARY:
-         let summary = [];
+    case SET_SUMMARY:
+      let summary = [];
 
-        state.orderedProducts.forEach((product) => {
-          let providerExists = false;
-          summary.forEach((provider) => {
-            if (provider.providerName === product.providerName) {
-              providerExists = true;
-              provider.productsOrder.push(product);
-              provider.sumOrder += product.quantity;  
-            }
-          });
-          if (!providerExists) {
-            summary.push({
-              providerName: product.providerName,
-              productsOrder: [product],
-              productsReturn: [],
-              sumOrder: product.quantity,  
-              sumReturn: 0,
-              sumTotal: 0,
-            });
-          }
-        });
-
-        state.returnedProducts.forEach((product) => {
-          let providerExists = false;
-          summary.forEach((provider) => {
-            if (provider.providerName === product.providerName) {
-              providerExists = true;
-              provider.productsReturn.push(product);
-              provider.sumReturn += product.quantity;  
-            }
-          });
-          if (!providerExists) {
-            summary.push({
-              providerName: product.providerName,
-              productsOrder: [],
-              productsReturn: [product],
-              sumOrder: 0,
-              sumReturn: product.quantity,  
-              sumTotal: 0,
-            });
-          }
-        });
-
+      state.orderedProducts.forEach((product) => {
+        let providerExists = false;
         summary.forEach((provider) => {
-          provider.sumTotal = provider.sumOrder - provider.sumReturn;
+          if (provider.providerName === product.providerName) {
+            providerExists = true;
+            provider.productsOrder.push(product);
+            provider.sumOrder += product.quantity;
+          }
         });
+        if (!providerExists) {
+          summary.push({
+            providerName: product.providerName,
+            productsOrder: [product],
+            productsReturn: [],
+            sumOrder: product.quantity,
+            sumReturn: 0,
+            sumTotal: 0,
+          });
+        }
+      });
 
-        return { ...state, summary: summary };
+      state.returnedProducts.forEach((product) => {
+        let providerExists = false;
+        summary.forEach((provider) => {
+          if (provider.providerName === product.providerName) {
+            providerExists = true;
+            provider.productsReturn.push(product);
+            provider.sumReturn += product.quantity;
+          }
+        });
+        if (!providerExists) {
+          summary.push({
+            providerName: product.providerName,
+            productsOrder: [],
+            productsReturn: [product],
+            sumOrder: 0,
+            sumReturn: product.quantity,
+            sumTotal: 0,
+          });
+        }
+      });
+
+      summary.forEach((provider) => {
+        provider.sumTotal = provider.sumOrder - provider.sumReturn;
+      });
+
+      return { ...state, summary: summary };
 
     case CLEAR_ORDER:
-      return { ...state, statusOrder: { title: "הזמנה נשלחה בהצלחה", step: 5 } , summary: [], orderedProducts: [], returnedProducts: [] };
+      return {
+        ...state,
+        statusOrder: { title: "הזמנה נשלחה בהצלחה", step: 5 },
+        summary: [],
+        orderedProducts: [],
+        returnedProducts: [],
+      };
     default:
       return state;
   }

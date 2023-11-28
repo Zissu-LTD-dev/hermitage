@@ -72,8 +72,12 @@ const getAllOrders = async (req, res) => {
 
 // updateOrder
 const updateOrder = async (req, res) => {
-  if (req.params.orderId) return res.send(req.params.orderId + " updateOrder");
-  res.send("updateOrder");
+  let newOrder = req.body;
+  let order = await Order.findOne({_id: newOrder._id});
+  order.status = newOrder.status;
+  order.products = newOrder.products;
+  await order.save();
+  res.status(200).json({message: 'The order was successfully updated'});
 };
 
 

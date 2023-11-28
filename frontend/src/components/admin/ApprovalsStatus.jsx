@@ -40,7 +40,7 @@ function ApprovalsStatus() {
         <div className={approvalsStatus.main}>
             <div className={approvalsStatus.title} >סטטוס אישורים להזמנות</div>
             <div className={approvalsStatus.content} >
-                {loading ? state.admin.confirmationOrders.map((order) => <Order key={order._id} order={order} />) : <div>טוען...</div>}
+                {loading ? state.admin.confirmationOrders.map((order) => <Order key={order._id} orderData={order} />) : <div>טוען...</div>}
             </div>
         </div>
     </>

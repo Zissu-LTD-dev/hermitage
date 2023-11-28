@@ -1,10 +1,13 @@
+import { useState } from "react";
 import productStyle from "../../../assets/css/admin/approvalsStatus/Product.module.css";
 import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
 import { useOrderContext } from "../../../context/orderContext/OrderContext";
 
-function Product({product}) {
+function Product({productData, onDelete, onDecrease, onIncrease }) {
   const { state, dispatch } = useOrderContext();
-  let { name, categoryName, barcode, quantity } = product;
+  const [product, setProduct] = useState(productData);
+  let { _id , name, categoryName, barcode, quantity } = product;
+   
 
   return (
     <>
@@ -16,11 +19,11 @@ function Product({product}) {
         <div className={productStyle.category}>{categoryName}</div>
         <div className={productStyle.barcode}>{barcode}</div>
         <div className={productStyle.quantity}>
-          <button className={productStyle.decrease} ></button>
+          <button className={productStyle.decrease} onClick={()=>onDecrease(product)}></button>
           <span>{quantity}</span>
-          <button className={productStyle.increase} ></button>
+          <button className={productStyle.increase} onClick={()=>onIncrease(product)}></button>
         </div>
-        <div className={productStyle.buttonDelete}></div>
+        <div className={productStyle.buttonDelete} onClick={()=>onDelete(product)}></div>
       </div>
     </>
   );

@@ -16,5 +16,9 @@ adminRouter.post("/upload", multerUpload.single('file'),  uploadFile.upload );
 // /getOrders
 adminRouter.get("/getAllOrders", orders.getAllOrders);
 
+// updateOrder put
+adminRouter.put("/updateOrder", orders.updateOrder);
+
+
 
 exports.adminRouter = adminRouter;

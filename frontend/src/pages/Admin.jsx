@@ -29,7 +29,7 @@ function Admin() {
   return (
     <>
     <div className={admin.main} >
-      <Sidebar branchName="מנהל" />
+      <Sidebar branchName="כמנהל רשת" />
       <Navbar />
       <div className={admin.content}>
         {state.admin.status == "branch management" && <h1>branch management</h1>}

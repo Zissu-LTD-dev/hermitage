@@ -23,8 +23,8 @@ function ApprovalsStatus() {
                 }
             );
             const data = await res.json();
-            console.log(data);
-            dispatch({ type: "SET_CONFIRMATION_ORDERS", payload: data.orders });
+            let orders = data.orders.filter((order) => order.status != "canceled");
+            dispatch({ type: "SET_CONFIRMATION_ORDERS", payload: orders });
             setLoading(true);
         } catch (error) {
             console.log(error);

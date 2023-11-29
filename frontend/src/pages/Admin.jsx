@@ -10,6 +10,7 @@ import Sidebar from "../components/admin/Sidebar";
 import Navbar from "../components/general/Navbar";
 
 import ApprovalsStatus from "../components/admin/ApprovalsStatus";
+import BranchManagement from "../components/admin/BranchManagement";
 
 function Admin() {  
   const { state, dispatch } = useOrderContext();
@@ -32,7 +33,7 @@ function Admin() {
       <Sidebar branchName="כמנהל רשת" />
       <Navbar />
       <div className={admin.content}>
-        {state.admin.status == "branch management" && <h1>branch management</h1>}
+        {state.admin.status == "branch management" && <BranchManagement />}
         {state.admin.status == "approvals status" && <ApprovalsStatus />}
         {state.admin.status == "block management" && <h1>block management</h1>}
         {state.admin.status == "documents" && <h1>documents</h1>}

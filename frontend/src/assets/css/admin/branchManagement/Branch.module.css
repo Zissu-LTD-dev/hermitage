@@ -1,0 +1,106 @@
+.main {
+  width: 100%;
+  min-height: 80px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+  margin: 0 0 20px 0;
+  /* padding: 0 37px 0 30px; */
+  /* display: flex;
+  align-items: center; */
+}
+
+.header {
+  min-height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 37px 0 30px;
+}
+.titles {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  font: normal normal 600 18px/23px IBM Plex Sans Hebrew;
+  letter-spacing: 0px;
+  color: #082a3a;
+  border-left: 1px solid #70707054;
+  padding: 0 0 0 29px;
+}
+
+.nums {
+  font: normal normal normal 18px/23px IBM Plex Sans Hebrew;
+  letter-spacing: 0px;
+  color: #082a3a;
+  padding: 0 39px 0 29px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 0 0 25px;
+  background: transparent
+    url("../../../image/admin/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    padding-box;
+}
+
+.close {
+  transform: rotate(180deg);
+}
+
+.body {
+  margin: 0 37px 0 30px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 0 37px 0 30px;
+  padding: 21px 0 28px 0;
+}
+
+.selectAll {
+  display: flex;
+  align-items: center;
+  font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+
+input[type="checkbox"] {
+    width: 22px;
+height: 22px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #082A3A;
+    margin-left: 14px;
+}
+
+
+.buttons {
+  display: flex;
+}
+
+.noNeed,
+.need {
+  font: normal normal medium 14px/18px IBM Plex Sans Hebrew;
+  letter-spacing: 0px;
+  width: 309px;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.noNeed {
+  margin: 0 0 0 11px;
+  background: #be955d 0% 0% no-repeat padding-box;
+}
+
+.need {
+  background: #082a3a 0% 0% no-repeat padding-box;
+}

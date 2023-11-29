@@ -8,12 +8,20 @@ align-items: center;
 justify-content: space-between;
 }
 
-.selectProvider{
+.selectBranch{
     display: flex;
 align-items: center;
 font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
 letter-spacing: 0px;
 color: #082A3A;
+}
+
+.main input[type="checkbox"] {
+    width: 22px;
+height: 22px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #082A3A;
+    margin-left: 14px;
 }
 
 .button{

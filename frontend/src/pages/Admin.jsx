@@ -9,8 +9,9 @@ const { REACT_APP_BACKEND_URL } = import.meta.env;
 import Sidebar from "../components/admin/Sidebar";
 import Navbar from "../components/general/Navbar";
 
-import ApprovalsStatus from "../components/admin/ApprovalsStatus";
 import BranchManagement from "../components/admin/BranchManagement";
+import ApprovalsStatus from "../components/admin/ApprovalsStatus";
+import BlockManagement from "../components/admin/BlockManagement";
 
 function Admin() {  
   const { state, dispatch } = useOrderContext();
@@ -35,7 +36,7 @@ function Admin() {
       <div className={admin.content}>
         {state.admin.status == "branch management" && <BranchManagement />}
         {state.admin.status == "approvals status" && <ApprovalsStatus />}
-        {state.admin.status == "block management" && <h1>block management</h1>}
+        {state.admin.status == "block management" && <BlockManagement />}
         {state.admin.status == "documents" && <h1>documents</h1>}
         {state.admin.status == "adding products" && <h1>adding products</h1>}
       </div>

@@ -49,7 +49,6 @@ function BranchManagement() {
             <Branch />
             <Branch />
             <Branch />
-            <Branch />
           </>
         )}
       </div>

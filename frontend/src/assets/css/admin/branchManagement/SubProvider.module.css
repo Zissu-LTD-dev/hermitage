@@ -16,6 +16,14 @@ letter-spacing: 0px;
 color: #082A3A;
 }
 
+.main input[type="checkbox"] {
+    width: 22px;
+height: 22px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #082A3A;
+    margin-left: 14px;
+}
+
 .button{
     width: 167px;
     height: 33px;

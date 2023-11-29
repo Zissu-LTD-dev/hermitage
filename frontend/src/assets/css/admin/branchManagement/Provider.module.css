@@ -70,7 +70,7 @@
     color: #082a3a;
   }
   
-  input[type="checkbox"] {
+  .selectAll input[type="checkbox"] {
       width: 22px;
   height: 22px;
       background: #FFFFFF 0% 0% no-repeat padding-box;

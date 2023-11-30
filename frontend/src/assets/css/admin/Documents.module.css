@@ -1,0 +1,57 @@
+.main {
+    height: calc(100% - 61px);
+  direction: rtl;
+  margin: 50px 43px 0 53px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.title{
+    /* font: normal normal medium 28px/37px IBM Plex Sans Hebrew; */
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 37px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-style: normal;
+    color: #082A3A;
+}
+
+.button{
+    width: 205px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #BE955D 0% 0% no-repeat padding-box;
+    cursor: pointer;
+
+}
+
+.icon{
+    width: 20px;
+    height: 20px;
+    margin-left: 9px;
+    background: transparent url('../../image/admin/Iconfeather-upload-cloud.svg') 50% 50% no-repeat padding-box;
+}
+
+.text{
+    font: normal normal medium 14px/18px IBM Plex Sans Hebrew;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.body{
+    width: 100%;
+    height: calc(100% - 62px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.body::-webkit-scrollbar {
+    width: 0;
+}

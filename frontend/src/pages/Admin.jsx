@@ -12,6 +12,8 @@ import Navbar from "../components/general/Navbar";
 import BranchManagement from "../components/admin/BranchManagement";
 import ApprovalsStatus from "../components/admin/ApprovalsStatus";
 import BlockManagement from "../components/admin/BlockManagement";
+import Documents from "../components/admin/Documents";
+import AddingProducts from "../components/admin/AddingProducts";
 
 function Admin() {  
   const { state, dispatch } = useOrderContext();
@@ -37,8 +39,8 @@ function Admin() {
         {state.admin.status == "branch management" && <BranchManagement />}
         {state.admin.status == "approvals status" && <ApprovalsStatus />}
         {state.admin.status == "block management" && <BlockManagement />}
-        {state.admin.status == "documents" && <h1>documents</h1>}
-        {state.admin.status == "adding products" && <h1>adding products</h1>}
+        {state.admin.status == "documents" && <Documents />}
+        {state.admin.status == "adding products" && <AddingProducts />}
       </div>
     </div>
     </>

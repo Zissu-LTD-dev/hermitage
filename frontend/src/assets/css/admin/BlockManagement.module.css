@@ -73,8 +73,12 @@
     overflow-y: auto;
     overflow-x: hidden;
     flex-wrap: wrap;
-
 }
+
+.body::-webkit-scrollbar {
+    width: 0;
+}
+
 
 .footer {
 height: 61px;

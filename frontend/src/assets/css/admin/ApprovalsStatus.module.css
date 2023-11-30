@@ -1,6 +1,14 @@
-.main{
-    direction: rtl;
-    margin: 50px 43px 0 53px;
+.main {
+    height: calc(100% - 61px);
+  direction: rtl;
+  margin: 50px 43px 0 53px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
 .title{
@@ -13,15 +21,15 @@
     font-weight: 500;
     line-height: 37px;
     color: #082A3A;
-    margin-bottom: 25px;
 }
 
-.content{
-    max-height: calc(100vh - 196px);
+.body{
+    width: 100%;
+    height: calc(100% - 62px);
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.content::-webkit-scrollbar {
+.body::-webkit-scrollbar {
     width: 0;
 }

@@ -87,14 +87,18 @@ function Order({orderData}) {
     <>
       <div className={orderStyle.main}>
         <div className={orderStyle.head} onClick={handleOpen}  >
+          <span>
             <div className={orderStyle.orderNum}>הזמנה #{orderNum}</div>
             <div className={orderStyle.date}>{createdAt}</div>
             <div className={orderStyle.branchName}>{branchName}</div>
             <div className={orderStyle.providerName}>{provider}</div>
+          </span>
+          <span>
             {status == "pending" && <div className={ orderStyle.status + ' ' + orderStyle.statusPending}>ממתין לאישור</div>}
             {status == "approved" && <div className={ orderStyle.status + ' ' + orderStyle.statusApproved}>הזמנה אושרה</div>}
             {status == "canceled" && <div className={ orderStyle.status + ' ' + orderStyle.statusCanceled}>הזמנה בוטלה</div>}
             <div className={open ? orderStyle.iconArrow + ' ' + orderStyle.openiconArrow : orderStyle.iconArrow}></div>
+          </span>
         </div>
         {open && (
           <>

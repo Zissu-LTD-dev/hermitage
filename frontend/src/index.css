@@ -27,7 +27,7 @@ body {
 
 
 /* width scoling */
-/* 
+
 ::-webkit-scrollbar {
   height: 8px;
   width: 5px;
@@ -42,4 +42,4 @@ body {
 ::-webkit-scrollbar-track {
   background: #c7c5c5;
   border-radius: 10px;
-} */
+}

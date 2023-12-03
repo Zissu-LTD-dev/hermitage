@@ -51,7 +51,7 @@ function Sidebar({ branchName }) {
           </div>
           <div>
             <p>מחובר: <span className={sidebar.branch_name}> {branchName} </span> </p>
-            <a href="/login" className={sidebar.logout}>יציאה מהמערכת</a>
+            <a href="/" className={sidebar.logout}>יציאה מהמערכת</a>
           </div>
         </div>
       </div>

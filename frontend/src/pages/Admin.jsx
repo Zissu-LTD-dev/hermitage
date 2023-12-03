@@ -25,7 +25,7 @@ function Admin() {
       dispatch({ type: "SET_USER_INFO", payload: JSON.parse(localStorage.getItem("user")) });
       setLoading(false);
     }else{
-      Navigate("/login");
+      Navigate("/");
     }
   }, []);
 

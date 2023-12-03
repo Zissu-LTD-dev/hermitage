@@ -42,7 +42,7 @@ function Manager() {
       getAllProducts(branchId)
       setLoading(false);
     }else{
-      Navigate("/login");
+      Navigate("/");
     }
   }, []);
 

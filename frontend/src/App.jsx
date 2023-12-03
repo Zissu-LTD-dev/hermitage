@@ -19,7 +19,7 @@ function App() {
           ></Route>
 
           <Route
-            path="/"
+            path="/manager"
             element={
               <PrivateRouteManager>
                   <Manager />
@@ -27,7 +27,7 @@ function App() {
             }
           ></Route>
 
-          <Route path="/login" element={<Login />} exact />
+          <Route path="/" element={<Login />} exact />
           <Route path="*" element={<h1>Not Found page - 404 👀 </h1>} />
         </Routes>
       </BrowserRouter>

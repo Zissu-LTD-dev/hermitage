@@ -7,10 +7,17 @@ function OrderSummary({ providers }) {
   return (
     <>
       <div className={summary.main}>
-        <div className={summary.provider__name}>{providerName}</div>
-        <div className={summary.sum__orders}>{sumOrder} מוצרים להזמנה</div>
-        <div className={summary.sum__returns}>{sumReturn} מוצרים להחזרה</div>
-        <div className={summary.sum__total}> שווי כספי להזמנה  {sumTotal} ₪ </div>
+        <span>
+          <div className={summary.provider__name}>{providerName}</div>
+        </span>
+        <span>
+          <div className={summary.sum__orders}>{sumOrder} מוצרים להזמנה</div>
+          <div className={summary.sum__returns}>{sumReturn} מוצרים להחזרה</div>
+          <div className={summary.sum__total}>
+            {" "}
+            שווי כספי להזמנה {sumTotal} ₪{" "}
+          </div>
+        </span>
       </div>
     </>
   );

@@ -19,20 +19,28 @@ function Column({ isOrder, name, num, products }) {
     <>
       {!open && (
         <div className={column.main} onClick={() => setOpen(true)}>
-          <i className={column.main__icon}></i>
-          <div className={column.title}>עמודה: {name}</div>
-          <i className={column.imaging}></i>
-          <i className={column.opening__arrow}></i>
+          <span>
+            <i className={column.main__icon}></i>
+            <div className={column.title}>עמודה: {name}</div>
+          </span>
+          <span>
+            <i className={column.imaging}></i>
+            <i className={column.opening__arrow}></i>
+          </span>
         </div>
       )}
 
       {open && (
         <div className={column.main__open}>
           <div className={column.main} onClick={() => setOpen(false)}>
-            <i className={column.main__icon}></i>
-            <div className={column.title}>עמודה: {name}</div>
-            <i className={column.imaging}></i>
-            <i className={column.closing__arrow}></i>
+            <span>
+              <i className={column.main__icon}></i>
+              <div className={column.title}>עמודה: {name}</div>
+            </span>
+            <span>
+              <i className={column.imaging}></i>
+              <i className={column.closing__arrow}></i>
+            </span>
           </div>
 
           {activRow && (
@@ -45,12 +53,14 @@ function Column({ isOrder, name, num, products }) {
 
           {!activRow && (
             <div className={column.products}>
-              { isOrder && products.map((product, i) => (
-                <ProductOrder key={i} productData={product} /> 
-              ))}
-              { !isOrder && products.map((product, i) => (
-                <ProductReturn key={i} productData={product} /> 
-              ))}
+              {isOrder &&
+                products.map((product, i) => (
+                  <ProductOrder key={i} productData={product} />
+                ))}
+              {!isOrder &&
+                products.map((product, i) => (
+                  <ProductReturn key={i} productData={product} />
+                ))}
             </div>
           )}
         </div>

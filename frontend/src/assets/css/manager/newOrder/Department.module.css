@@ -1,10 +1,10 @@
 .main {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-border-right: 1px solid #be965d00;
-border-bottom: 1px solid #be965d00;
+border-left: 1px solid #be965d00;
+/* border-bottom: 1px solid #be965d00; */
   width: 256px;
   height: 67px;
   background: #082a3a 0% 0% no-repeat padding-box;

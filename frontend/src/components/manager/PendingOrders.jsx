@@ -34,17 +34,18 @@ function PendingOrders() {
     getPendingOrders();
   }, []);
 
-
   return (
     <>
       <div className={pendingOrders.main}>
-        <div className={pendingOrders.title}>
-          <h1>הזמנות ממתינות</h1>
+        <div className={pendingOrders.header}>
+          <div className={pendingOrders.title}>
+            <h1>הזמנות ממתינות</h1>
+          </div>
         </div>
         <div className={pendingOrders.content}>
           {orders.map((order) => (
             <Provider order={order} />
-          ))}            
+          ))}
         </div>
       </div>
     </>

@@ -1,63 +1,75 @@
-.main{
-    position: absolute;
-    width: 1637px;
-    height: 851px;
-    top: 85px;
-    left: 0px;   
-    padding: 36px 43px auto auto;
-} 
 
-.title{
-    width: 230px;
-    height: 67px;
-    position: absolute;
-    top: 36px;
-    right: 43px;
-    text-align: right;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: IBM Plex Sans Hebrew;
-    font-style: normal;
-    font-weight: medium;
-    font-size: 28px;
-    line-height: 37px;
-    letter-spacing: 0px;
-    color: #082A3A;
+.main {
+  height: calc(100% - 38px);
+  direction: rtl;
+  margin: 36px 43px 0 53px;
 }
 
-.categories{
-    position: absolute;
-    width: 1285px;
-    height: auto;
-    min-height: 67px;
-    top: 36px;
-    right: 301px;
+.header {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-.products{
-    position: absolute;
-    width: 1541px;
-    height: auto;
-    max-height: 560px;
-    top: calc(67px * 2 + 36px + 27px);
-   
-    right: 43px;
-    direction: rtl;
-    overflow-y: scroll;
+.title {
+    width: 268px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 37px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+  margin-left: 32px;
+}
+
+.categories {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.categories::-webkit-scrollbar {
+  width: 0;
+}
+
+.body {
+  height: calc(100% - 200px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.body::-webkit-scrollbar {
+  width: 0;
+}
+
+/* .products{
+    width: 100%;
+    overflow-y: auto;
     overflow-x: hidden;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    height: 100%;
+} */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+  height: 69px;
 }
 
-.wizard{
-    position: absolute;
-    width: 1635px;
-    height: 89px;
-    bottom: 0px;
-    left: 0px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px -3px 14px #082A3A36;
-    z-index: 2;
+.wizard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 89px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px -3px 14px #082a3a36;
+  z-index: 2;
 }

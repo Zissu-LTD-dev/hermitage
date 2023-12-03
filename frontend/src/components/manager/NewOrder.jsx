@@ -17,41 +17,48 @@ function DynamicContent() {
   return (
     <>
       <div className={newOrder.main}>
-        <div className={newOrder.title}>{state.statusOrder.title}</div>
-        <div className={newOrder.categories}>
-          <Departments />
+        <div className={newOrder.header}>
+          <div className={newOrder.title}>{state.statusOrder.title}</div>
+          {state.statusOrder.step === 1 || state.statusOrder.step === 3  ? (
+            <div className={newOrder.categories}>
+              <Departments />
+            </div>
+          ): null }  
         </div>
-        <div className={newOrder.products}>
-          {state.statusOrder.step === 1 &&
-            state.displayProducts.map((column, i) => (
-              <Column
-                key={i}
-                isOrder={true}
-                name={column.columnName ? column.columnName : i + 1}
-                products={column.products}
-              />
-            ))}
-          {state.statusOrder.step === 2 &&
-            state.orderedProducts.map((product, i) => (
-              <ProductOrderSummary key={i} productData={product} />
-            ))}
-          {state.statusOrder.step === 3 &&
-            state.displayProducts.map((column, i) => (
-              <Column
-                key={i}
-                isOrder={false}
-                name={column.columnName ? column.columnName : i + 1}
-                products={column.products}
-              />
-            ))}
-          {state.statusOrder.step === 4 && 
-            state.summary.map((provider, i) => (
-              <OrderSummary key={i} providers={provider} />
-            ))
-          }
+        <div className={newOrder.body}>
+          <div className={newOrder.products}>
+            {state.statusOrder.step === 1 &&
+              state.displayProducts.map((column, i) => (
+                <Column
+                  key={i}
+                  isOrder={true}
+                  name={column.columnName ? column.columnName : i + 1}
+                  products={column.products}
+                />
+              ))}
+            {state.statusOrder.step === 2 &&
+              state.orderedProducts.map((product, i) => (
+                <ProductOrderSummary key={i} productData={product} />
+              ))}
+            {state.statusOrder.step === 3 &&
+              state.displayProducts.map((column, i) => (
+                <Column
+                  key={i}
+                  isOrder={false}
+                  name={column.columnName ? column.columnName : i + 1}
+                  products={column.products}
+                />
+              ))}
+            {state.statusOrder.step === 4 &&
+              state.summary.map((provider, i) => (
+                <OrderSummary key={i} providers={provider} />
+              ))}
+          </div>
         </div>
-        <div className={newOrder.wizard}>
-          <Wizard />
+        <div className={newOrder.footer}>
+          <div className={newOrder.wizard}>
+            <Wizard />
+          </div>
         </div>
       </div>
     </>

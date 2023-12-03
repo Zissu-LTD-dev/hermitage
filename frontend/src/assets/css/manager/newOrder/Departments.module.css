@@ -1,5 +1,22 @@
 .categories{
     display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
+    flex-direction: row;
+    overflow-x: auto;
+}
+
+/* width scoling */
+.categories::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+  background: #c7c5c5;
+}
+
+.categories::-webkit-scrollbar-thumb {
+  background: #082a3a;
+  border-radius: 10px;
+}
+
+.categories::-webkit-scrollbar-track {
+  background: #c7c5c5;
+  border-radius: 10px;
 }

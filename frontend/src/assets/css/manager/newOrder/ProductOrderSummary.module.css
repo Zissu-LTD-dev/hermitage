@@ -1,12 +1,19 @@
 .product {
-  width: 1541px;
+  /* width: 1541px; */
   height: 77px;
   background: #ffffff 0% 0% no-repeat padding-box;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 12px 0;
+}
+
+.product span{
+  display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 0 0 12px 100px;
+
 }
 
 .product img {
@@ -16,13 +23,13 @@
 }
 
 .product .details {
-  width: 983px;
+  /* width: 983px; */
   display: flex;
   justify-content: flex;
 }
 
 .product h2 {
-  width: 90px;
+  /* width: 90px; */
   text-align: right;
   font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
   letter-spacing: 0px;
@@ -30,7 +37,7 @@
 }
 
 .product p {
-  width: 70px;
+  width: 150px;
   text-align: center;
   font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
   letter-spacing: 0px;
@@ -38,9 +45,10 @@
   color: #9EAAAF;
 }
 
-.product div {
+.product .buttons {
   width: 111px;
   height: 30px;
+  margin-left: 21px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,20 +56,20 @@
   border: 1px solid #be955d;
 }
 
-.product div button {
+.product .buttons button {
   width: 31px;
   height: 30px;
   background: #be955d 0% 0% no-repeat padding-box;
   border: none;
 }
 
-.product div span {
+.product .buttons .quantityNum {
   color: #082a3a;
   font: normal normal normal 14px/18px IBM Plex Sans Hebrew;
 }
 
 /* decrease */
-.product div .decrease {
+.product .buttons .decrease {
   width: 31px;
   background-image: url("../../../image/manager/Group13.svg");
   background-position: center;
@@ -70,7 +78,7 @@
 }
 
 /* increase */
-.product div .increase {
+.product .buttons .increase {
   width: 31px;
   background-image: url("../../../image/manager/Line21.svg");
   background-position: center;

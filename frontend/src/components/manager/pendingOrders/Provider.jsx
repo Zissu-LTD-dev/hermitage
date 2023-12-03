@@ -16,21 +16,29 @@ function Provider({ order }) {
     <>
       {!open && (
         <div className={providerC.main} onClick={handleOpen}>
-          <div className={providerC.orderNum}>הזמנה #{number}</div>
-          <div className={providerC.date}>{date}</div>
-          <div className={providerC.provider}>{provider}</div>
-          <div className={providerC.status}>הזמנה ממתינה</div>
-          <div className={providerC.icon + " " + providerC.close__icon}></div>
+          <span>
+            <div className={providerC.orderNum}>הזמנה #{number}</div>
+            <div className={providerC.date}>{date}</div>
+            <div className={providerC.provider}>{provider}</div>
+          </span>
+          <span>
+            <div className={providerC.status}>הזמנה ממתינה</div>
+            <div className={providerC.icon + " " + providerC.close__icon}></div>
+          </span>
         </div>
       )}
       {open && (
         <div className={providerC.main__open}>
           <div className={providerC.main} onClick={handleOpen}>
-            <div className={providerC.orderNum}>הזמנה #{number}</div>
-            <div className={providerC.date}>{date}</div>
-            <div className={providerC.provider}>{provider}</div>
-            <div className={providerC.status}>הזמנה ממתינה</div>
-            <div className={providerC.icon}></div>
+            <span>
+              <div className={providerC.orderNum}>הזמנה #{number}</div>
+              <div className={providerC.date}>{date}</div>
+              <div className={providerC.provider}>{provider}</div>
+            </span>
+            <span>
+              <div className={providerC.status}>הזמנה ממתינה</div>
+              <div className={providerC.icon}></div>
+            </span>
           </div>
           <div className={providerC.products}>
             {products.map((product) => (

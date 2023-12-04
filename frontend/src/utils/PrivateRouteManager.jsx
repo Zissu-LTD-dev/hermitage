@@ -5,7 +5,7 @@ const {REACT_APP_BACKEND_URL} = import.meta.env
 import cookie from "js-cookie";
 
 function PrivateRouteManager({ children }) {
-  if (!cookie.get("token")) return <Navigate to="/login" replace />;
+  if (!cookie.get("token")) return <Navigate to="/" replace />;
 
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -40,7 +40,7 @@ function PrivateRouteManager({ children }) {
   if (loading) return <h1>Loading...</h1>;
   if (isAuthenticated && role == "branch manager") return children;
   if (isAuthenticated && role == "admin") return <Navigate to="/admin" replace />;
-  return <Navigate to="/login" replace />;
+  return <Navigate to="/" replace />;
 }
 
 export default PrivateRouteManager;

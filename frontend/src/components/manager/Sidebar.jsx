@@ -10,6 +10,12 @@ import connectedBy from "../../assets/image/manager/Layer3.svg";
 function Sidebar({ branchName }) {
   const { state, dispatch } = useOrderContext();
 
+  const logoutHandler = () => {
+    dispatch({ type: "CLEAR_STATE" });
+    document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    localStorage.clear();
+    window.location.href = "/";
+  };
 
   const changeStatus = (status) => {
     dispatch({ type: "SET_STATUS", payload: status });
@@ -51,7 +57,7 @@ function Sidebar({ branchName }) {
           </div>
           <div>
             <p>מחובר: <span className={sidebar.branch_name}> {branchName} </span> </p>
-            <a href="/" className={sidebar.logout}>יציאה מהמערכת</a>
+            <a onClick={logoutHandler} className={sidebar.logout}>יציאה מהמערכת</a>
           </div>
         </div>
       </div>

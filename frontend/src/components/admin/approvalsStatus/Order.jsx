@@ -1,13 +1,13 @@
 import { useState } from "react";
 import orderStyle from "../../../assets/css/admin/approvalsStatus/Order.module.css";
-import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 import Product from "./Product";
 
 function Order({orderData}) {
-  const { state, dispatch } = useOrderContext();
+  const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [open, setOpen] = useState(false);
   let { orderNum, createdAt, branchName, provider, status, products } = orderData;
 
@@ -36,13 +36,13 @@ function Order({orderData}) {
 
     const handleCancelOrder = () => {
       let newOrder = { ...orderData, status: "canceled" };
-      dispatch({ type: "CANCEL_ORDER_ADMIN", payload: newOrder });
+      dispatchAdmin({ type: "CANCEL_ORDER_ADMIN", payload: newOrder });
       updateOrder(newOrder);
     }
 
     const handleApproveOrder = () => {
       let newOrder = { ...orderData, status: "approved" };
-      dispatch({ type: "APPROVE_ORDER_ADMIN", payload: newOrder });
+      dispatchAdmin({ type: "APPROVE_ORDER_ADMIN", payload: newOrder });
       updateOrder(newOrder);
     }
 
@@ -56,7 +56,7 @@ function Order({orderData}) {
         return p;
       });
       let newOrder = { ...orderData, products: newProducts };
-      dispatch({ type: "DECREASE_PRODUCT_ADMIN", payload: newOrder });
+      dispatchAdmin({ type: "DECREASE_PRODUCT_ADMIN", payload: newOrder });
     }
   
     const handleIncrease = (product) => {
@@ -68,13 +68,13 @@ function Order({orderData}) {
         return p;
       });
       let newOrder = { ...orderData, products: newProducts };
-      dispatch({ type: "INCREASE_PRODUCT_ADMIN", payload: newOrder });
+      dispatchAdmin({ type: "INCREASE_PRODUCT_ADMIN", payload: newOrder });
     }
   
     const handleDelete = (product) => {
       let newProducts = products.filter((p) => p._id != product._id);
       let newOrder = { ...orderData, products: newProducts };
-      dispatch({ type: "DELETE_PRODUCT_ADMIN", payload: newOrder });
+      dispatchAdmin({ type: "DELETE_PRODUCT_ADMIN", payload: newOrder });
     }
   
 

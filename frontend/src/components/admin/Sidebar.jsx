@@ -1,5 +1,6 @@
 import sidebar from "../../assets/css/admin/Sidebar.module.css";
 import { useOrderContext } from "../../context/orderContext/OrderContext";
+import { useAdminContext } from "../../context/adminContext/AdminContext";
 
 import branchManagement from "../../assets/image/admin/shop.svg";
 import approvalsStatus from "../../assets/image/admin/clock.svg";
@@ -11,6 +12,7 @@ import connectedBy from "../../assets/image/manager/Layer3.svg";
 
 function Sidebar({ branchName }) {
   const { state, dispatch } = useOrderContext();
+  const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
 
   const logoutHandler = () => {
     dispatch({ type: "CLEAR_STATE" });
@@ -20,7 +22,7 @@ function Sidebar({ branchName }) {
   };
 
   const changeStatus = (status) => {
-    dispatch({ type: "SET_STATUS_ADMIN", payload: status });
+    dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
   };
 
   return (

@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import admin from "../assets/css/admin/Admin.module.css";
 import { useOrderContext } from "../context/orderContext/OrderContext";
+import { useAdminContext } from "../context/adminContext/AdminContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
@@ -17,6 +18,7 @@ import AddingProducts from "../components/admin/AddingProducts";
 
 function Admin() {  
   const { state, dispatch } = useOrderContext();
+  const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
 
   const [loading, setLoading] = useState(true);
 
@@ -36,11 +38,11 @@ function Admin() {
       <Sidebar branchName="כמנהל רשת" />
       <Navbar />
       <div className={admin.content}>
-        {state.admin.status == "branch management" && <BranchManagement />}
-        {state.admin.status == "approvals status" && <ApprovalsStatus />}
-        {state.admin.status == "block management" && <BlockManagement />}
-        {state.admin.status == "documents" && <Documents />}
-        {state.admin.status == "adding products" && <AddingProducts />}
+        {stateAdmin.status == "branch management" && <BranchManagement />}
+        {stateAdmin.status == "approvals status" && <ApprovalsStatus />}
+        {stateAdmin.status == "block management" && <BlockManagement />}
+        {stateAdmin.status == "documents" && <Documents />}
+        {stateAdmin.status == "adding products" && <AddingProducts />}
       </div>
     </div>
     </>

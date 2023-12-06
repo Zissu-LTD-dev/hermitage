@@ -5,6 +5,8 @@ import PrivateRouteAdmin from "./utils/PrivateRouteAdmin.jsx";
 import PrivateRouteManager from "./utils/PrivateRouteManager.jsx";
 import PrivateRoute from "./utils/PrivateRoutes.jsx";
 
+import { AdminProvider } from "./context/adminContext/AdminContext.jsx";
+
 function App() {
   return (
     <div className="App">
@@ -14,7 +16,9 @@ function App() {
             path="/admin"
             element={
               <PrivateRouteAdmin>
-                <Admin />
+                <AdminProvider>
+                  <Admin />
+                </AdminProvider>
               </PrivateRouteAdmin>
             }
           ></Route>

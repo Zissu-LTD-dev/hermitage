@@ -8,7 +8,7 @@ import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 import Sidebar from "../components/admin/Sidebar";
-import Navbar from "../components/general/Navbar";
+import Navbar from "../components/navbar/Navbar";
 
 import BranchManagement from "../components/admin/BranchManagement";
 import ApprovalsStatus from "../components/admin/ApprovalsStatus";

@@ -8,15 +8,22 @@ export const initialState = {
   allProducts: [],
   activeDepartment: 1,
   displayProducts: [],
+
+  filters: [],
+  displayFilters: [],
+
+  search: "",
+  searchResults: [],
+
   providers: [],
   categories: [],
+  
   orderedProducts: [],
   returnedProducts: [],
   summary: [],
 };
 
 export const CLEAR_STATE = "CLEAR_STATE";
-
 export const SET_USER_INFO = "SET_USER_INFO";
 
 // manager 👇
@@ -26,6 +33,12 @@ export const SET_STATUS_ORDER = "SET_STATUS_ORDER";
 export const SET_ALL_PRODUCTS = "SET_ALL_PRODUCTS";
 export const SET_ACTIVE_DEPARTMENT = "SET_ACTIVE_DEPARTMENT";
 export const SET_DISPLAY_PRODUCTS = "SET_DISPLAY_PRODUCTS";
+
+export const SET_FILTERS = "SET_FILTERS";
+export const SET_ACTIVE_FILTERS = "SET_ACTIVE_FILTERS";
+
+export const SET_SEARCH = "SET_SEARCH";
+export const SET_SEARCH_RESULTS = "SET_SEARCH_RESULTS";
 
 export const ADD_ORDERED_PRODUCT = "ADD_ORDERED_PRODUCT";
 export const REMOVE_ORDERED_PRODUCT = "REMOVE_ORDERED_PRODUCT";
@@ -37,6 +50,10 @@ export const SET_SUMMARY = "SET_SUMMARY";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 
 export const orderReducer = (state, action) => {
+
+
+
+
   switch (action.type) {
     case CLEAR_STATE:
       return initialState;
@@ -109,6 +126,20 @@ export const orderReducer = (state, action) => {
       });
 
       return { ...state, displayProducts: columns };
+
+    
+    case SET_FILTERS:
+      return { ...state, filters: action.payload };
+
+    case SET_ACTIVE_FILTERS:
+      return { ...state, displayFilters: action.payload };
+
+    case SET_SEARCH:
+      return { ...state, search: action.payload };
+
+    case SET_SEARCH_RESULTS:
+      return { ...state, searchResults: action.payload };
+
 
     case ADD_ORDERED_PRODUCT:
       let productExists = false;

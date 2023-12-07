@@ -36,6 +36,7 @@ function Wizard() {
       
         sendOrder();
         dispatch({ type: "CLEAR_ORDER" })  
+        setStep(step + 1);
        return 
       };
     setStep(step + 1);
@@ -44,13 +45,16 @@ function Wizard() {
   };
   
   const prevStep = () => {
-    if (step == 2 || step == 5 ) return;
+    if (step == 2 || step > 5 ) return;
     setStep(step - 1);
     let num = state.statusOrder.step - 1;
     dispatch({ type: "SET_STATUS_ORDER", payload: num });
   };
 
   useEffect(() => {
+    // clear filters end search results
+    dispatch({ type: "SET_SEARCH", payload: '' });
+    dispatch({ type: "SET_ACTIVE_FILTERS", payload: [] });
     if(step == 5) {
       dispatch({ type: "SET_SUMMARY" });
     }
@@ -62,7 +66,7 @@ function Wizard() {
         <div
           onClick={prevStep}
           className={
-            step == 2 || step == 5 
+            step == 2 || step > 5 
               ? wizard.back + " " + wizard.button + " " + wizard.off
               : wizard.back + " " + wizard.button 
           }
@@ -93,7 +97,7 @@ function Wizard() {
         </div>
         <div onClick={nextStep} className={wizard.next + " " + wizard.button}>
           { step < 5  &&  <span>המשך לשלב הבא</span> }
-          { step == 5  &&  <span>שלח הזמנה</span> }
+          { step >= 5  &&  <span>שלח הזמנה</span> }
           <i></i>
         </div>
       </div>

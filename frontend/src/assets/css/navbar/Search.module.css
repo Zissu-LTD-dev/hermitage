@@ -23,6 +23,7 @@
   font-style: normal;
   letter-spacing: 0.36px;
   color: #082a3a;
+  direction: rtl;
 }
 
 .search input::placeholder {

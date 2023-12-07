@@ -11,7 +11,6 @@ import PendingOrders from "../components/manager/PendingOrders";
 import Document from "../components/manager/Document";
 
 import Sidebar from "../components/manager/Sidebar";
-import Navbar from "../components/general/Navbar";
 
 function Manager() {
   const { state, dispatch } = useOrderContext();
@@ -50,7 +49,6 @@ function Manager() {
     <>
       <div className={manager.main}>
         <Sidebar branchName={loading ? "" : state.userInfo.branch.name} />
-        <Navbar />
         <div className={manager.content}>
           {state.status == "new order"  && <NewOrder /> }
           {state.status == "pending orders" && <PendingOrders />}

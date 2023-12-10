@@ -6,9 +6,10 @@ import { useOrderContext } from "../context/orderContext/OrderContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
+import Navbar from "../components/navbar/Navbar";
 import NewOrder from "../components/manager/NewOrder";
 import PendingOrders from "../components/manager/PendingOrders";
-import Document from "../components/manager/Document";
+import Documents from "../components/manager/Documents";
 
 import Sidebar from "../components/manager/Sidebar";
 
@@ -49,10 +50,11 @@ function Manager() {
     <>
       <div className={manager.main}>
         <Sidebar branchName={loading ? "" : state.userInfo.branch.name} />
+        <Navbar />
         <div className={manager.content}>
           {state.status == "new order"  && <NewOrder /> }
           {state.status == "pending orders" && <PendingOrders />}
-          {state.status == "documents" && <Document />}
+          {state.status == "documents" && <Documents />}
         </div>
       </div>
     </>

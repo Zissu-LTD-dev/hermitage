@@ -5,7 +5,6 @@ import { useOrderContext } from "../../context/orderContext/OrderContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
-import Navbar from "../navbar/Navbar";
 import Departments from "./newOrder/Departments";
 import Wizard from "./newOrder/Wizard";
 import Column from "./newOrder/Column";
@@ -50,7 +49,6 @@ function DynamicContent() {
 
   return (
     <>
-      <Navbar />
       <div className={newOrder.main}>
         <div className={newOrder.header}>
           <div className={newOrder.title}>{state.statusOrder.title}</div>

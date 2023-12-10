@@ -12,6 +12,7 @@ import Column from "./newOrder/Column";
 import ProductOrderSummary from "./newOrder/ProductOrderSummary";
 import OrderSummary from "./newOrder/OrderSummary";
 import OrderFilterProduct from "./newOrder/OrderFilterProduct";
+import ReturnFilterProduct from "./newOrder/ReturnFilterProduct";
 
 function DynamicContent() {
   const { state, dispatch } = useOrderContext();
@@ -74,19 +75,19 @@ function DynamicContent() {
             {state.statusOrder.step === 1 && activeFiltersSearch && (
               <OrderFilterProduct />
             )}
+
+
             {state.statusOrder.step === 2 &&
               state.orderedProducts.map((product, i) => (
                 <ProductOrderSummary key={i} productData={product} />
               ))}
+
+
             {state.statusOrder.step === 3 &&
-              state.displayProducts.map((column, i) => (
-                <Column
-                  key={i}
-                  isOrder={false}
-                  name={column.columnName ? column.columnName : i + 1}
-                  products={column.products}
-                />
-              ))}
+                <ReturnFilterProduct />
+              }
+
+
             {state.statusOrder.step === 4 &&
               state.summary.map((provider, i) => (
                 <OrderSummary key={i} providers={provider} />

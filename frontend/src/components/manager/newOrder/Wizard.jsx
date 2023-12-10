@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import {useOrderContext} from "../../../context/orderContext/OrderContext"
-import wizard from "../../../assets/css/manager/newOrder/Wizard.module.css";
+import wizardStyle from "../../../assets/css/manager/newOrder/Wizard.module.css";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 import cookie from "js-cookie";
 
@@ -62,40 +62,40 @@ function Wizard() {
 
   return (
     <>
-      <div className={wizard.main}>
+      <div className={wizardStyle.main}>
         <div
           onClick={prevStep}
           className={
             step == 2 || step > 5 
-              ? wizard.back + " " + wizard.button + " " + wizard.off
-              : wizard.back + " " + wizard.button 
+              ? wizardStyle.back + " " + wizardStyle.button + " " + wizardStyle.off
+              : wizardStyle.back + " " + wizardStyle.button 
           }
         >
           <i></i>
           <span>חזור אחורה</span>
         </div>
-        <div className={wizard.wizard}>
-          <div className={wizard.add}>
-            {step < 2 ? <i>1</i> : <i className={wizard.done}>1</i>}
+        <div className={wizardStyle.wizard}>
+          <div className={wizardStyle.add}>
+            {step < 2 ? <i>1</i> : <i className={step == 2 ? wizardStyle.now_here : wizardStyle.done }>{step == 2 ? 1 : null}</i>}
             <span>הוספת מוצרים</span>
           </div>
-          <div className={wizard.summary}>
-            <div className={wizard.line + " " + step > 1 ? wizard.lineActive : null }></div>
-            {step < 3 ? <i>2</i> : <i className={wizard.done}>2</i>}
+          <div className={wizardStyle.summary}>
+            <div className={step > 2 ? wizardStyle.line + " " + wizardStyle.lineActive : wizardStyle.line }></div>
+            {step < 3 ? <i>2</i> : <i className={step == 3 ? wizardStyle.now_here : wizardStyle.done }>{step == 3 ? 2 : null}</i>}
             <span>סיכום ביניים</span>
           </div>
-          <div className={wizard.returns}>
-            <div className={wizard.line + " " + step > 2 ? wizard.lineActive : null }></div>
-            {step < 4 ? <i>3</i> : <i className={wizard.done}>3</i>}
+          <div className={wizardStyle.returns}>
+            <div className={step > 3 ? wizardStyle.line + " " + wizardStyle.lineActive : wizardStyle.line }></div>
+            {step < 4 ? <i>3</i> : <i className={step == 4 ? wizardStyle.now_here : wizardStyle.done }>{step == 4 ? 3 : null}</i>}
             <span>מוצרים להחזרה</span>
           </div>
-          <div className={wizard.end}>
-            <div className={wizard.line + " " + step > 3 ? wizard.lineActive : null }></div>
-            {step < 5 ? <i>4</i> : <i className={wizard.done}>4</i>}
+          <div className={wizardStyle.end}>
+            <div className={step > 4 ? wizardStyle.line + " " + wizardStyle.lineActive : wizardStyle.line }></div>
+            {step < 5 ? <i>4</i> : <i className={step == 5 ? wizardStyle.now_here : wizardStyle.done }>{step == 5 ? 4 : null}</i>}
             <span>סיכום ואישור</span>
           </div>
         </div>
-        <div onClick={nextStep} className={wizard.next + " " + wizard.button}>
+        <div onClick={nextStep} className={wizardStyle.next + " " + wizardStyle.button}>
           { step < 5  &&  <span>המשך לשלב הבא</span> }
           { step >= 5  &&  <span>שלח הזמנה</span> }
           <i></i>

@@ -1,0 +1,116 @@
+.main{
+    height: 77px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+}
+
+.main span{
+    display: flex;
+    align-items: center;
+}
+
+.main span img{
+    width: 95px;
+    height: 68px;
+    margin: 5px;
+}
+
+.main span h2{
+    /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    font-family: 'IBM Plex Sans Hebrew';
+    display: flex;
+    align-items: center;
+    letter-spacing: 0px;
+    color: #082A3A;
+}
+
+.main span p{
+    min-width: 90px;
+    text-align: center;
+    font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
+    letter-spacing: 0px;
+    color: #9EAAAF;
+    margin-left: 45px;
+}
+
+.btn{
+    width: 167px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: normal normal normal 14px/18px IBM Plex Sans Hebrew;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    background: #082A3A 0% 0% no-repeat padding-box;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+.activeBtn{
+    background: #BE955D 0% 0% no-repeat padding-box;
+}
+
+
+.activeBtnIcon{
+    width: 15px;
+    height: 15px;
+    margin-right: 15px;
+    background: transparent url('../../../image/manager/Group81.svg') 50% 50% no-repeat padding-box;
+}
+
+.activeBtnText{
+    margin-left: 15px;
+}
+
+
+.btnIcon{
+    width: 15px;
+    height: 15px;
+    margin-right: 15px;
+    background: transparent url('../../../image/manager/Group82.svg') 50% 50% no-repeat padding-box;
+}
+
+.btnText{
+    margin-left: 15px;
+}
+
+.buttons{
+    width: 111px;
+    height: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 0 21px;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #be955d;
+}
+
+.buttons button{
+    width: 31px;
+    height: 100%;
+    /* background: #be955d 0% 0% no-repeat padding-box; */
+    border: none;
+}
+
+.decrease{
+    background:  #be955d url('../../../image/manager/Group13.svg') 50% 50% no-repeat padding-box;
+}
+
+.quantity{
+    color: #082a3a;
+    font: normal normal normal 14px/18px IBM Plex Sans Hebrew;
+}
+
+.increase{
+    background: #be955d url('../../../image/manager/Line21.svg') 50% 50% no-repeat padding-box;
+}
+
+.disabled{
+    opacity: 0.5;
+}

@@ -5,10 +5,9 @@ const providerSchema = new mongoose.Schema({
     name: String,
     phone: String,
     email: String,
-    status: {
-        type: String,
-        enum: ['active', 'inactive'],
-        default: 'active'
+    blocked: {
+        type: Boolean,
+        default: false
     },
     updatedAt: {
         type: Date,

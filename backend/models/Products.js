@@ -34,7 +34,11 @@ const ProductSchema = new mongoose.Schema({
     branchType: { 
       type: Number,
       ref: 'BranchType'
-    }
+    },
+    blocked: {
+      type: Boolean,
+      default: false
+    },
 })
 
 

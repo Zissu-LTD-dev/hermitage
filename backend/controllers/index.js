@@ -1,4 +1,7 @@
 const auth = require("./authController.js");
+
+const admin = require("./adminController.js");
+
 const branches = require("./branchesController.js");
 const categories = require("./categoriesController.js");
 const notifications = require("./notificationsController.js");
@@ -14,6 +17,7 @@ const filters = require("./filtersController.js");
 
 module.exports = {
     auth,
+    admin,
     branches,
     categories,
     notifications,

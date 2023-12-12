@@ -1,4 +1,4 @@
-import navbar from "../../assets/css/navbar/Navbar.module.css";
+import navbar from "../../../assets/css/navbar/Navbar.module.css";
 
 import Filters from "./Filters";
 import Search from "./Search";

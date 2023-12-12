@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import filtersStyle from "../../assets/css/navbar/Filters.module.css";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
+import filtersStyle from "../../../assets/css/navbar/Filters.module.css";
+import { useOrderContext } from "../../../context/orderContext/OrderContext";
 
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;

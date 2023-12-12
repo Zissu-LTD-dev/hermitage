@@ -6,7 +6,7 @@ import { useOrderContext } from "../context/orderContext/OrderContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/manager/navbar/Navbar";
 import NewOrder from "../components/manager/NewOrder";
 import PendingOrders from "../components/manager/PendingOrders";
 import Documents from "../components/manager/Documents";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import subBranch from "../../../assets/css/admin/branchManagement/SubBranch.module.css"
 
-function SubBranch() {
+function SubBranch({ branch, branches }) {
   const [approved, setApproved] = useState(false);
 
   return (
@@ -9,7 +9,7 @@ function SubBranch() {
       <div className={subBranch.main}>
         <div className={subBranch.selectBranch}>
           <input type="checkbox" />
-          <div>שם סניף</div>
+          <div>{branch.name}</div>
         </div>
         {/* button */}
         <div className={approved  ? subBranch.button + " " + subBranch.approved : subBranch.button + " " + subBranch.notApproved}

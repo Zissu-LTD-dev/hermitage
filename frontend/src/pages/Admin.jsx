@@ -4,11 +4,14 @@ import { Navigate } from "react-router-dom";
 import admin from "../assets/css/admin/Admin.module.css";
 import { useOrderContext } from "../context/orderContext/OrderContext";
 import { useAdminContext } from "../context/adminContext/AdminContext";
+import useFetch from "../hooks/useFetch";
+
+
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 import Sidebar from "../components/admin/Sidebar";
-import Navbar from "../components/navbar/Navbar";
+import Navbar from "../components/admin/navbar/Navbar";
 
 import BranchManagement from "../components/admin/BranchManagement";
 import ApprovalsStatus from "../components/admin/ApprovalsStatus";
@@ -19,6 +22,7 @@ import AddingProducts from "../components/admin/AddingProducts";
 function Admin() {  
   const { state, dispatch } = useOrderContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
+  const { data: dataInitialData, loading: loadingInitialData } = useFetch("admin/initialData");
 
   const [loading, setLoading] = useState(true);
 
@@ -30,6 +34,12 @@ function Admin() {
       Navigate("/");
     }
   }, []);
+
+  useEffect(() => {
+    if(dataInitialData){
+      dispatchAdmin({ type: "SET_INITIAL_DATA", payload: dataInitialData });
+    }
+  }, [loadingInitialData]);
 
   
   return (

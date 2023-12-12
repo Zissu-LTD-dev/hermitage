@@ -78,8 +78,8 @@ function Login() {
             />
             {/* זכור אותי */}
             <div className={login.remember}>
-              <label>זכור אותי</label>
-              <input type="checkbox" />
+              <label htmlFor="remember" >זכור אותי</label>
+              <input name="remember" id="remember" type="checkbox" />
             </div>
             {/* כניסה */}
             <button className={login.btn} type="submit">

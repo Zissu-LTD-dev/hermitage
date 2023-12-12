@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
 
 const branchSchema = new mongoose.Schema({
     name: String,

@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import branchManagement from "../../assets/css/admin/BranchManagement.module.css";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
+import { useAdminContext } from "../../context/adminContext/AdminContext";
+import useFetch from "../../hooks/useFetch";
 
 import Provider from "./branchManagement/Provider";
 import Branch from "./branchManagement/Branch";
 
 function BranchManagement() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useAdminContext();
   const [active, setActive] = useState("byProvider");
+
+  useEffect(() => {
+    if (state.providers) {
+      dispatch({
+        type: "SET_FILTERS",
+        payload: [
+          {
+            title: "ספקים",
+            details: state.providers,
+          },
+        ],
+      });
+    }
+  }, [state.providers]);
 
   return (
     <div className={branchManagement.main}>
@@ -37,18 +52,15 @@ function BranchManagement() {
       <div className={branchManagement.body}>
         {active == "byProvider" ? (
           <>
-            <Provider />
-            <Provider />
-            <Provider />
-            <Provider />
+            {state.providers.map((provider, i) => {
+              return <Provider providerData={provider} key={i} />; 
+            })}
           </>
         ) : (
           <>
-            <Branch />
-            <Branch />
-            <Branch />
-            <Branch />
-            <Branch />
+            {state.branches.map((branch, i) => {
+              return <Branch branchData={branch} key={i} />;
+            })}
           </>
         )}
       </div>

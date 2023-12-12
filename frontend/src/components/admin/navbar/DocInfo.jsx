@@ -1,4 +1,4 @@
-import docInfo from "../../assets/css/navbar/DocInfo.module.css";
+import docInfo from "../../../assets/css/navbar/DocInfo.module.css";
 
 function DocInfo() {
   const docNum = 4;

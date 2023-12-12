@@ -1,33 +1,37 @@
-// useFetch with axios and async/await end optional params
-import { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState, useEffect } from 'react';
 
-// config axios with base url and headers
-axios.defaults.baseURL = 'http://localhost:5000/api/v1/'
-axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.headers.post['Accept'] = 'application/json'
+import cookie from "js-cookie";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
 
-export const useFetch = (url, options) => {
-    const [response, setResponse] = useState(null)
-    const [error, setError] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
-    const [isSuccess, setIsSuccess] = useState(false)
+const useFetch = (url, method = "GET", body = null) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            setIsLoading(true)
-            try {
-                const res = await axios(url, options)
-                const json = await res.data
-                setResponse(json)
-                setIsSuccess(true)
-            } catch (error) {
-                setError(error)
-            }
-            setIsLoading(false)
-        }
-        fetchData()
-    }, [options, url])
+  useEffect(() => {
+    body = body ? JSON.stringify(body) : null;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${REACT_APP_BACKEND_URL}${url}`, {
+          method,
+          headers: {
+                Authorization: `Bearer ${cookie.get("token")}`,
+            },
+            body: body  
+            });
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return { response, error, isLoading, isSuccess }
-}
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error };
+};
+
+export default useFetch;

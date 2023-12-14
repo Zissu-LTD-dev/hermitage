@@ -9,6 +9,7 @@ import Branch from "./branchManagement/Branch";
 function BranchManagement() {
   const { state, dispatch } = useAdminContext();
   const [active, setActive] = useState("byProvider");
+  const [filtersProviders, setFiltersProviders] = useState([]);
 
   useEffect(() => {
     if (state.providers) {
@@ -23,6 +24,25 @@ function BranchManagement() {
       });
     }
   }, [state.providers]);
+
+  useEffect(() => {
+    if (state.displayFilters["ספקים"]) {
+      setFiltersProviders([]);
+      
+      state.providers.filter((provider) => {
+        state.displayFilters["ספקים"].map((filter) => {
+          if (provider.number == filter) {
+            setFiltersProviders((filtersProviders) => [
+              ...filtersProviders,
+              provider,
+            ]);
+          }
+        });
+      });
+    } else {
+      setFiltersProviders([]);
+    }
+  }, [state.displayFilters]);
 
   return (
     <div className={branchManagement.main}>
@@ -52,14 +72,24 @@ function BranchManagement() {
       <div className={branchManagement.body}>
         {active == "byProvider" ? (
           <>
-            {state.providers.map((provider, i) => {
-              return <Provider providerData={provider} key={i} />; 
-            })}
+            {filtersProviders && filtersProviders.length != 0
+              ? filtersProviders.map((provider, i) => {
+                  return <Provider providerData={provider} key={i} />;
+                })
+              : state.providers.map((provider, i) => {
+                  return <Provider providerData={provider} key={i} />;
+                })}
           </>
         ) : (
           <>
             {state.branches.map((branch, i) => {
-              return <Branch branchData={branch} key={i} />;
+              return (
+                <Branch
+                  branchData={branch}
+                  filtersProviders={filtersProviders}
+                  key={i}
+                />
+              );
             })}
           </>
         )}

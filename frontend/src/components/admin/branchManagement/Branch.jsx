@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import branchStyle from "../../../assets/css/admin/branchManagement/Branch.module.css";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import SubProvider from "./SubProvider";
 
-function Branch(branchData) {
+function Branch({branchData, filtersProviders}) {
   const { state, dispatch } = useAdminContext();
 
+  const [isFiltered, setIsFiltered] = useState(false);
   const [open, setOpen] = useState(false);
-  let {_id, name, blockedProviders } = branchData.branchData;
+  let { _id, name, blockedProviders } = branchData;
   let providersNum = state.providers.length;
+
+  useEffect(() => {
+    if (filtersProviders.length > 0) {
+      setIsFiltered(true);
+    } else {
+      setIsFiltered(false);
+    }
+  }, [filtersProviders]);
 
   return (
     <>
@@ -18,21 +27,39 @@ function Branch(branchData) {
             <div className={branchStyle.name}>{name}</div>
             <div className={branchStyle.nums}>{providersNum} ספקים</div>
           </span>
-          <div className={ !open ? branchStyle.close + " " + branchStyle.icon : branchStyle.icon}></div>
+          <div
+            className={
+              !open
+                ? branchStyle.close + " " + branchStyle.icon
+                : branchStyle.icon
+            }
+          ></div>
         </div>
         {open && (
           <>
             <div className={branchStyle.body}>
-              {state.providers.map((provider, i) => {
-                return (
-                  <SubProvider
-                    key={i}
-                    branchId={_id}
-                    provider={provider}
-                    blockedProviders={blockedProviders}
-                  />
-                );
-              })}
+              {isFiltered &&  filtersProviders.map((provider, i) => {
+                  return (
+                    <SubProvider
+                      key={i}
+                      branchId={_id}
+                      provider={provider}
+                      blockedProviders={blockedProviders}
+                    />
+                  );
+                }) 
+              }
+              {!isFiltered &&
+                state.providers.map((provider, i) => {
+                  return (
+                    <SubProvider
+                      key={i}
+                      branchId={_id}
+                      provider={provider}
+                      blockedProviders={blockedProviders}
+                    />
+                  );
+                })}
             </div>
             <div className={branchStyle.footer}>
               {/* בחר הכול  */}

@@ -6,7 +6,7 @@ import SubBranch from "./SubBranch";
 function Provider(providerData) {
   const { state, dispatch } = useAdminContext();
   const [open, setOpen] = useState(false);
-  let { name, branches } = providerData.providerData;
+  let { name, number } = providerData.providerData;
   let branchesNum = state.branches.length;
 
 
@@ -27,8 +27,8 @@ function Provider(providerData) {
                 return (
                   <SubBranch
                     key={i}
-                    branch={branch}
-                    branches={branches}
+                    branchData={branch}
+                    providerNumber={number}
                   />
                 )
               })}

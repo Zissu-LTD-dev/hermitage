@@ -1,13 +1,76 @@
 import { useState } from "react";
+import apiRequest from "../../../services/api.js"; //endpoint, method = "GET", payload = null
 import providerStyle from "../../../assets/css/admin/branchManagement/Provider.module.css"
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import SubBranch from "./SubBranch";
 
-function Provider(providerData) {
+function Provider({providerData}) {
   const { state, dispatch } = useAdminContext();
   const [open, setOpen] = useState(false);
-  let { name, number } = providerData.providerData;
+  const [isChecked, setIsChecked] = useState(false);
+  const [branchesList, setBranchesList] = useState([]);
+
+  let { name, number } = providerData;
   let branchesNum = state.branches.length;
+
+  const added = (branchID) => {
+    if (!branchesList.includes(branchID)) setBranchesList((branchesList) => [...branchesList, branchID]);
+  }
+
+  const removed = (branchID) => {
+    if (branchesList.includes(branchID)) setBranchesList((branchesList) => branchesList.filter((branch) => branch != branchID));
+  }
+
+  const blockedProviders = async() => {
+    let res = await apiRequest("admin/updateBlockedProvidersByProvider", "PUT", {
+      providerNumber: number,
+      branchesList: branchesList,
+      blocked: true
+    });
+    if(res) {
+      console.log("blocked");
+    } else {  
+      console.log("not blocked"); 
+    }
+
+    if(branchesList.length) {
+      dispatch({
+        type: "SET_BLOCKED_PROVIDERS_BY_PROVIDER",
+        payload: {
+          providerNumber: number,
+          branchesList: branchesList
+        }
+      });
+      setIsChecked(false);
+    }
+  }
+
+  const unblockedProviders = async() => {
+    let res = await apiRequest("admin/updateBlockedProvidersByProvider", "PUT", {
+      providerNumber: number,
+      branchesList: branchesList,
+      blocked: false
+    });
+    if(res) {
+      console.log("unblocked");
+    } else {
+      console.log("not unblocked");
+    }
+
+    if(branchesList.length) {
+      dispatch({
+        type: "SET_UNBLOCKED_PROVIDERS_BY_PROVIDER",
+        payload: {
+          providerNumber: number,
+          branchesList: branchesList
+        }
+      });
+      setIsChecked(false);
+    }
+  }
+
+
+
 
 
   return (
@@ -29,6 +92,9 @@ function Provider(providerData) {
                     key={i}
                     branchData={branch}
                     providerNumber={number}
+                    isChecked={isChecked}
+                    added={added}
+                    removed={removed}
                   />
                 )
               })}
@@ -36,14 +102,14 @@ function Provider(providerData) {
             <div className={providerStyle.footer}>
               {/* בחר הכול  */}
               <div className={providerStyle.selectAll}>
-                <input type="checkbox" />
+                <input type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
                 <div>בחר הכול</div>
               </div>
               <div className={providerStyle.buttons}>
-                <div className={providerStyle.noNeed}>
+                <div className={providerStyle.noNeed} onClick={() => unblockedProviders()}>
                   הגדר סניפים שנבחרו כלא צריכים אישור להזמנה
                 </div>
-                <div className={providerStyle.need}>
+                <div className={providerStyle.need} onClick={() => blockedProviders()}>
                   הגדר סניפים שנבחרו כצריכים אישור להזמנה
                 </div>
               </div>

@@ -13,6 +13,11 @@ adminRouter.get("/test", (req, res)=>{
 // InitialData
 adminRouter.get("/initialData", admin.initialData);
 
+// updateBlockedProvidersByProvider
+adminRouter.put("/updateBlockedProvidersByProvider", admin.updateBlockedProvidersByProvider);
+
+
+
 // upload excel file
 adminRouter.post("/upload", multerUpload.single('file'),  uploadFile.upload );
 

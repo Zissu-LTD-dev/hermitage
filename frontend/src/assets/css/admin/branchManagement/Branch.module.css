@@ -53,6 +53,14 @@
 
 .body {
   margin: 0 37px 0 30px;
+  max-height: 402px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+
+.body::-webkit-scrollbar {
+  width: 5px;
 }
 
 .footer {

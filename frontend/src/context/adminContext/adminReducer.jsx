@@ -31,10 +31,10 @@ export const SET_ACTIVE_FILTERS = "SET_ACTIVE_FILTERS";
 export const SET_SEARCH = "SET_SEARCH";
 export const SET_SEARCH_RESULTS = "SET_SEARCH_RESULTS";
 
-export const SET_BLOCKED_PROVIDERS_BY_PROVIDER =
-  "SET_BLOCKED_PROVIDERS_BY_PROVIDER";
-export const SET_UNBLOCKED_PROVIDERS_BY_PROVIDER =
-  "SET_UNBLOCKED_PROVIDERS_BY_PROVIDER";
+export const SET_BLOCKED_PROVIDERS_BY_PROVIDER = "SET_BLOCKED_PROVIDERS_BY_PROVIDER";
+export const SET_UNBLOCKED_PROVIDERS_BY_PROVIDER = "SET_UNBLOCKED_PROVIDERS_BY_PROVIDER";
+export const SET_BLOCKED_PROVIDERS_BY_BRANCH = "SET_BLOCKED_PROVIDERS_BY_BRANCH";
+export const SET_UNBLOCKED_PROVIDERS_BY_BRANCH = "SET_UNBLOCKED_PROVIDERS_BY_BRANCH";
 
 export const adminReducer = (state, action) => {
   switch (action.type) {
@@ -135,11 +135,35 @@ export const adminReducer = (state, action) => {
         }
         return branch;
       });
-      // let resUn = apiRequest("/admin/branch", "PUT", {branches: newBranchesUn});
-      // if(resUn.status == 200) {
-      //   return { ...state, branches: newBranchesUn };
-      // }
-      // return state;
       return { ...state, branches: newBranchesUn };
+
+    case SET_BLOCKED_PROVIDERS_BY_BRANCH:
+      let newBranchesBl = state.branches.map((branch) => {
+        if (branch._id == action.payload.branchId) {
+          action.payload.providersList.map((provider) => {
+            if (!branch.blockedProviders.includes(provider)) {
+              branch.blockedProviders.push(provider);
+            }
+          });
+        }
+        return branch;
+      });
+      return { ...state, branches: newBranchesBl };
+
+    case SET_UNBLOCKED_PROVIDERS_BY_BRANCH:
+      let newBranchesUnBl = state.branches.map((branch) => {
+        if (branch._id == action.payload.branchId) {
+          action.payload.providersList.map((provider) => {
+            if (branch.blockedProviders.includes(provider)) {
+              branch.blockedProviders = branch.blockedProviders.filter(
+                (prov) => prov != provider
+              );
+            }
+          });
+        }
+        return branch;
+      });
+      return { ...state, branches: newBranchesUnBl };
+
   }
 };

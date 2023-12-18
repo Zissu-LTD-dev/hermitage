@@ -27,10 +27,8 @@ function Provider({providerData}) {
       branchesList: branchesList,
       blocked: true
     });
-    if(res) {
-      console.log("blocked");
-    } else {  
-      console.log("not blocked"); 
+    if(!res) {
+      return console.log("not blocked");
     }
 
     if(branchesList.length) {
@@ -51,10 +49,8 @@ function Provider({providerData}) {
       branchesList: branchesList,
       blocked: false
     });
-    if(res) {
-      console.log("unblocked");
-    } else {
-      console.log("not unblocked");
+    if(!res) {
+      return console.log("not unblocked");
     }
 
     if(branchesList.length) {
@@ -106,7 +102,7 @@ function Provider({providerData}) {
                 <div>בחר הכול</div>
               </div>
               <div className={providerStyle.buttons}>
-                <div className={providerStyle.noNeed} onClick={() => unblockedProviders()}>
+                <div className={providerStyle.noNeed} onClick={() => unblockedProviders()} >
                   הגדר סניפים שנבחרו כלא צריכים אישור להזמנה
                 </div>
                 <div className={providerStyle.need} onClick={() => blockedProviders()}>

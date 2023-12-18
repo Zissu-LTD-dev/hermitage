@@ -59,9 +59,42 @@ const updateBlockedProvidersByProvider = async (req, res) => {
   }
 };
 
+// updateBlockedProvidersByBranch
+const updateBlockedProvidersByBranch = async (req, res) => {
+  let {branchId, providersList, blocked } = req.body;
+  try {
+    const branch = await Branch.findById(branchId);
+
+    if (blocked) {
+      providersList.forEach(async (provider) => {
+        if (!branch.blockedProviders.includes(provider)) {
+          branch.blockedProviders.push(provider);
+        }
+      });
+      await branch.save();
+    } else {
+      providersList.forEach(async (provider) => {
+        if (branch.blockedProviders.includes(provider)) {
+          branch.blockedProviders = branch.blockedProviders.filter(
+            (prov) => prov !== provider
+          );
+        }
+      });
+      await branch.save();
+    }
+    res.status(200).json({ message: "Updated Successfully" });
+  }
+  catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+
+}
+
 
 
 module.exports = {
   initialData,
   updateBlockedProvidersByProvider,
+  updateBlockedProvidersByBranch,
 };

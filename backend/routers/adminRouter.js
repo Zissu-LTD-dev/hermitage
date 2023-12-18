@@ -16,6 +16,9 @@ adminRouter.get("/initialData", admin.initialData);
 // updateBlockedProvidersByProvider
 adminRouter.put("/updateBlockedProvidersByProvider", admin.updateBlockedProvidersByProvider);
 
+// updateBlockedProvidersByBranch
+adminRouter.put("/updateBlockedProvidersByBranch", admin.updateBlockedProvidersByBranch);
+
 
 
 // upload excel file

@@ -91,10 +91,35 @@ const updateBlockedProvidersByBranch = async (req, res) => {
 
 }
 
+// updateBlockedProducts
+const updateBlockedProducts = async (req, res) => {
+  let {productsBarcodeList, blocked } = req.body;
+  try {
+    if(blocked){
+      productsBarcodeList.forEach(async (barcode) => {
+        const prod = await Products.findOne({ barcode: barcode });
+        prod.blocked = true;
+        await prod.save();
+      });
+    }else{
+      productsBarcodeList.forEach(async (barcode) => {
+        const prod = await Products.findOne({ barcode: barcode });
+        prod.blocked = false;
+        await prod.save();
+      });
+    }
+    res.status(200).json({ message: "Updated Successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
 
 
 module.exports = {
   initialData,
   updateBlockedProvidersByProvider,
   updateBlockedProvidersByBranch,
+  updateBlockedProducts
 };

@@ -62,7 +62,13 @@ function Filters() {
   useEffect(() => {
     dispatch({ type: "SET_ACTIVE_FILTERS", payload: [] });
     setFiltersList({});
-  }, [state.statusOrder]);
+  }, [state.status]);
+
+  useEffect(() => {
+    if (state.searchResults != []) {
+      setCheckedList({});
+    }
+  }, [state.searchResults]);
 
   useEffect(() => {
     if (state.displayFilters.length != 0) {

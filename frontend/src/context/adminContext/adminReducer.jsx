@@ -36,6 +36,9 @@ export const SET_UNBLOCKED_PROVIDERS_BY_PROVIDER = "SET_UNBLOCKED_PROVIDERS_BY_P
 export const SET_BLOCKED_PROVIDERS_BY_BRANCH = "SET_BLOCKED_PROVIDERS_BY_BRANCH";
 export const SET_UNBLOCKED_PROVIDERS_BY_BRANCH = "SET_UNBLOCKED_PROVIDERS_BY_BRANCH";
 
+export const SET_BLOCKED_PRODUCTS = "SET_BLOCKED_PRODUCTS";
+export const SET_UNBLOCKED_PRODUCTS = "SET_UNBLOCKED_PRODUCTS";
+
 export const adminReducer = (state, action) => {
   switch (action.type) {
     case SET_STATUS_ADMIN:
@@ -165,5 +168,24 @@ export const adminReducer = (state, action) => {
       });
       return { ...state, branches: newBranchesUnBl };
 
+    case SET_BLOCKED_PRODUCTS:
+      let newProductsBl = state.products.map((product) => {
+        if (action.payload.includes(product.barcode)) {
+          product.blocked = true;
+        }
+        return product;
+      });
+      return { ...state, products: newProductsBl };
+
+    case SET_UNBLOCKED_PRODUCTS:
+      let newProductsUnBl = state.products.map((product) => {
+        if (action.payload.includes(product.barcode)) {
+          product.blocked = false;
+        }
+        return product;
+      });
+      return { ...state, products: newProductsUnBl };
+
+      
   }
 };

@@ -27,13 +27,13 @@ function Search() {
   
 
   useEffect(() => {
-    setAllProducts(state.allProducts);
-  }, [state.allProducts]);
+    setAllProducts(state.products);
+  }, [state.products]);
 
   useEffect(() => {
     dispatch({ type: "SET_SEARCH", payload: "" });   
     dispatch({ type: "SET_SEARCH_RESULTS", payload: [] });
-  }, [state.statusOrder]);
+  }, [state.status]);
 
   return (
     <>

@@ -5,11 +5,15 @@ import Row from "./Row";
 import ProductOrder from "./ProductOrder";
 import ProductReturn from "./ProductReturn";
 
-function Column({ isOrder, name, num, products }) {
+function Column({ name, num, products }) {
   const { state, dispatch } = useOrderContext();
 
   const [open, setOpen] = useState(false);
-  const [activRow, setActivRow] = useState(false);
+  const [activeRow, setActiveRow] = useState(false);
+
+  const [arrowRight, setArrowRight] = useState(false);
+  const [arrowLeft, setArrowLeft] = useState(false);
+
 
   useEffect(() => {
     setOpen(false);
@@ -43,7 +47,7 @@ function Column({ isOrder, name, num, products }) {
             </span>
           </div>
 
-          {activRow && (
+          {activeRow && (
             <div className={column.rows}>
               {products.map((product, i) => (
                 <Row key={i} product={product} />
@@ -51,17 +55,18 @@ function Column({ isOrder, name, num, products }) {
             </div>
           )}
 
-          {!activRow && (
-            <div className={column.products}>
-              {isOrder &&
-                products.map((product, i) => (
+          {!activeRow && (
+            <>
+              <div className={column.products_list}>
+                {products.map((product, i) => (
                   <ProductOrder key={i} productData={product} />
                 ))}
-              {!isOrder &&
-                products.map((product, i) => (
-                  <ProductReturn key={i} productData={product} />
-                ))}
-            </div>
+              </div>
+
+              <div className={column.arrow_right}>
+                <i className={column.arrow_icon_right}></i>
+              </div>
+            </>
           )}
         </div>
       )}

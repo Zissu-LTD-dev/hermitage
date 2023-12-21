@@ -65,7 +65,6 @@ function DynamicContent() {
               state.displayProducts.map((column, i) => (
                 <Column
                   key={i}
-                  isOrder={true}
                   name={column.columnName ? column.columnName : i + 1}
                   products={column.products}
                 />

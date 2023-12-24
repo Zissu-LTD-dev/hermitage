@@ -25,7 +25,6 @@ function DynamicContent() {
         },
       });
       const data = await res.json();
-      console.log(data);
 
       dispatch({ type: "SET_FILTERS", payload: data.filters });
     } catch (error) {

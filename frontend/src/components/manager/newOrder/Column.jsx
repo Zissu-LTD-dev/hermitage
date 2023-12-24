@@ -16,6 +16,26 @@ function Column({ name, num, products }) {
 
   const productListRef = useRef(null);
 
+  const handleRightClick = () => {
+    const { scrollLeft, clientWidth } = productListRef.current;
+    const newScrollPosition = scrollLeft + clientWidth - 400 > 0 ? 0 : scrollLeft + clientWidth - 400;
+    
+    productListRef.current.scrollTo({
+      left: newScrollPosition,
+      behavior: 'smooth'
+    });
+  };
+
+  const handleLeftClick = () => {
+    const { scrollLeft, clientWidth } = productListRef.current;
+    const newScrollPosition = scrollLeft - clientWidth + 400;
+
+    productListRef.current.scrollTo({
+      left: newScrollPosition,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const { scrollWidth,  scrollLeft,  clientWidth,  } = productListRef.current;
@@ -30,8 +50,6 @@ function Column({ name, num, products }) {
         setArrowLeft(true);
         setArrowRight(true);
       }
-
-      
     };  
       if(productListRef.current){
 
@@ -97,12 +115,12 @@ function Column({ name, num, products }) {
               </div>
 
               {arrowRight && 
-                <div className={column.arrow_right}>
+                <div className={column.arrow_right} onClick={handleRightClick}>
                   <i className={column.arrow_icon_right}></i>
                 </div>
               }
               {arrowLeft && 
-                <div className={arrowLeft && arrowRight ? column.arrow_left + " " + column.arrow_up : column.arrow_left}>
+                <div className={arrowLeft && arrowRight ? column.arrow_left + " " + column.arrow_up : column.arrow_left} onClick={handleLeftClick}>
                   <i className={column.arrow_icon_left}></i>
                 </div>
               }

@@ -20,7 +20,7 @@ function Column({ name, num, products }) {
     const handleScroll = () => {
       const { scrollWidth,  scrollLeft,  clientWidth,  } = productListRef.current;
 
-      if(Math.abs(scrollLeft) + clientWidth === scrollWidth){
+      if(Math.abs(scrollLeft) + clientWidth +2 >= scrollWidth){
         setArrowLeft(false);
         setArrowRight(true);
       } else if(scrollLeft === 0 && scrollWidth - scrollLeft > clientWidth){

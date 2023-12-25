@@ -1,5 +1,5 @@
 import sidebar from "../../assets/css/admin/Sidebar.module.css";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
+import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
 
 import branchManagement from "../../assets/image/admin/shop.svg";
@@ -11,7 +11,7 @@ import addingProducts from "../../assets/image/admin/Iconfeather-plus-circle.svg
 import connectedBy from "../../assets/image/manager/Layer3.svg";
 
 function Sidebar({ branchName }) {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
 
   const logoutHandler = () => {

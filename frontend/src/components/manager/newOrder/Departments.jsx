@@ -1,11 +1,11 @@
 import { useState , useEffect } from "react";
-import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import departments from "../../../assets/css/manager/newOrder/Departments.module.css";
 import Department from "./Department";
 
 function Departments() {
 
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
 
   const [departmentsList, setDepartmentsList] = useState([
     { num: 1, name: "א.ח הרמיטאז",              icon: "", active: true },

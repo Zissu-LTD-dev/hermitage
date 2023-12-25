@@ -1,10 +1,10 @@
 import { useState } from "react";
 import productStyle from "../../../assets/css/admin/approvalsStatus/Product.module.css";
 import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
-import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 
 function Product({ productData, onDelete, onDecrease, onIncrease }) {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   const [product, setProduct] = useState(productData);
   let { _id, name, categoryName, barcode, quantity } = product;
 

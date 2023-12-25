@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import login from "../assets/css/login.module.css";
-import { useOrderContext } from "../context/orderContext/OrderContext";
+import { useMainContext } from "../context/mainContext/MainContext.jsx";
+import apiRequest from "../services/api";
 
 import logo from "../assets/image/logo/logo.png";
 import enter from "../assets/image/logo/enter.svg";
 
-const { REACT_APP_BACKEND_URL } = import.meta.env;
-
 function Login() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -18,13 +17,10 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const response = await fetch(`${REACT_APP_BACKEND_URL}auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    // validate email and password
+    
 
-    const { token, user } = await response.json();
+    const { token, user } = await apiRequest("auth/login", "POST", { email, password });
 
     document.cookie = `token=${token}`;
     localStorage.setItem("user", JSON.stringify(user));

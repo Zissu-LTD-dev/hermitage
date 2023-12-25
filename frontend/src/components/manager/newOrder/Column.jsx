@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import column from "../../../assets/css/manager/newOrder/Column.module.css";
-import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import Row from "./Row";
 import ProductOrder from "./ProductOrder";
 import ProductReturn from "./ProductReturn";
 
 function Column({ name, num, products }) {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
 
   const [open, setOpen] = useState(false);
   const [activeRow, setActiveRow] = useState(false);

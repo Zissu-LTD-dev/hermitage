@@ -49,7 +49,7 @@ export const REMOVE_RETURNED_PRODUCT = "REMOVE_RETURNED_PRODUCT";
 export const SET_SUMMARY = "SET_SUMMARY";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 
-export const orderReducer = (state, action) => {
+export const mainReducer = (state, action) => {
 
 
 

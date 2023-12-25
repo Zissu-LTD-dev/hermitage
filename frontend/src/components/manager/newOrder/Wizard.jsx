@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import {useOrderContext} from "../../../context/orderContext/OrderContext"
+import {useMainContext} from "../../../context/mainContext/MainContext"
 import wizardStyle from "../../../assets/css/manager/newOrder/Wizard.module.css";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 import cookie from "js-cookie";
 
 
 function Wizard() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   
   const [step, setStep] = useState(2);
 

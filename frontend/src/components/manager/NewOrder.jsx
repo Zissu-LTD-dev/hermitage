@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import newOrder from "../../assets/css/manager/NewOrder.module.css";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
+import { useMainContext } from "../../context/mainContext/MainContext";
 
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
@@ -14,7 +14,7 @@ import OrderFilterProduct from "./newOrder/OrderFilterProduct";
 import ReturnFilterProduct from "./newOrder/ReturnFilterProduct";
 
 function DynamicContent() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   const [activeFiltersSearch, setActiveFiltersSearch] = useState(false);
 
   const getFilters = async () => {

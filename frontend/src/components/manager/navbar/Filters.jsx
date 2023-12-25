@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import filtersStyle from "../../../assets/css/navbar/Filters.module.css";
-import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 function Filters() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
 
   const [active, setActive] = useState(false);
   const [filters, setFilters] = useState();

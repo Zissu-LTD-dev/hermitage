@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 import manager from "../assets/css/manager/Manager.module.css";
-import { useOrderContext } from "../context/orderContext/OrderContext";
+import { useMainContext } from "../context/mainContext/MainContext";
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
@@ -14,7 +14,7 @@ import Documents from "../components/manager/Documents";
 import Sidebar from "../components/manager/Sidebar";
 
 function Manager() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   const [loading, setLoading] = useState(true);
 
 

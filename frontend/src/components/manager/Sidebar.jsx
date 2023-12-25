@@ -1,5 +1,5 @@
 import sidebar from "../../assets/css/manager/Sidebar.module.css";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
+import { useMainContext } from "../../context/mainContext/MainContext";
 
 import newOrder from "../../assets/image/manager/Layer68.svg";
 import waitingOrders from "../../assets/image/manager/clock.svg";
@@ -8,7 +8,7 @@ import branchLayout from "../../assets/image/manager/Iconfeather-eye-1.svg";
 import connectedBy from "../../assets/image/manager/Layer3.svg";
 
 function Sidebar({ branchName }) {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
 
   const logoutHandler = () => {
     dispatch({ type: "CLEAR_STATE" });

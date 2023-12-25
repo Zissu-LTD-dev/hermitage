@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 import admin from "../assets/css/admin/Admin.module.css";
-import { useOrderContext } from "../context/orderContext/OrderContext";
+import { useMainContext } from "../context/mainContext/MainContext";
 import { useAdminContext } from "../context/adminContext/AdminContext";
 import useFetch from "../hooks/useFetch";
 
@@ -20,7 +20,7 @@ import Documents from "../components/admin/Documents";
 import AddingProducts from "../components/admin/AddingProducts";
 
 function Admin() {  
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const { data: dataInitialData, loading: loadingInitialData } = useFetch("admin/initialData");
 

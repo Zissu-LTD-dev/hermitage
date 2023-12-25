@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import searchStyle from "../../../assets/css/navbar/Search.module.css";
-import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 
 function Search() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   const [allProducts, setAllProducts] = useState([]);
   
 

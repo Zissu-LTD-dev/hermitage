@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { useOrderContext } from "../../../context/orderContext/OrderContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import filterProductStyle from "../../../assets/css/manager/newOrder/OrderFilterProduct.module.css";
 import ProductOrder from "./ProductOrder";
 
 function OrderFilterProduct() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
   const [products, setProducts] = useState([]);
 
   const filterProducts = () => {

@@ -7,7 +7,7 @@ const { REACT_APP_BACKEND_URL } = import.meta.env;
  * @param {*} endpoint 
  * @param {*} method default is GET
  * @param {*} payload default is null
- * @returns 
+ * @returns {Promise} 
  */
 const apiRequest = async (endpoint, method = "GET", payload = null) => {
   const token = cookie.get("token");

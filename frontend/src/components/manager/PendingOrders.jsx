@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import pendingOrders from "../../assets/css/manager/PendingOrders.module.css";
-import { useOrderContext } from "../../context/orderContext/OrderContext";
+import { useMainContext } from "../../context/mainContext/MainContext";
 import Provider from "./pendingOrders/Provider";
 
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 function PendingOrders() {
-  const { state, dispatch } = useOrderContext();
+  const { state, dispatch } = useMainContext();
 
   const [branch, setBranch] = useState(state.userInfo.branch.name);
   const [orders, setOrders] = useState([]);

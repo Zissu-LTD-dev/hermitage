@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import {useMainContext} from "../../../context/mainContext/MainContext"
 import wizardStyle from "../../../assets/css/manager/newOrder/Wizard.module.css";
-const { REACT_APP_BACKEND_URL } = import.meta.env;
-import cookie from "js-cookie";
-
+import apiRequest from "../../../services/api";
 
 function Wizard() {
   const { state, dispatch } = useMainContext();
@@ -11,23 +9,12 @@ function Wizard() {
   const [step, setStep] = useState(2);
 
   const sendOrder = async () => {
-    try {
-      let summary = state.summary;
-      let branch = state.userInfo.branch;
-      let order = { summary, branch };
-      const res = await fetch(`${REACT_APP_BACKEND_URL}manager/createOrder`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${cookie.get("token")}`,
-        },
-        body: JSON.stringify(order),
-      });
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    let summary = state.summary;
+    let branch = state.userInfo.branch;
+    let order = { summary, branch };
+
+    const data = await apiRequest("manager/createOrder", "POST", order);
+
   };
 
 

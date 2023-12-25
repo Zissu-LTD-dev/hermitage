@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import pendingOrders from "../../assets/css/manager/PendingOrders.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 import Provider from "./pendingOrders/Provider";
-
-import cookie from "js-cookie";
-const { REACT_APP_BACKEND_URL } = import.meta.env;
+import apiRequest from "../../services/api";
 
 function PendingOrders() {
   const { state, dispatch } = useMainContext();
@@ -13,21 +11,8 @@ function PendingOrders() {
   const [orders, setOrders] = useState([]);
 
   const getPendingOrders = async () => {
-    try {
-      const res = await fetch(
-        `${REACT_APP_BACKEND_URL}manager/getOrders/${branch}`,
-        {
-          headers: {
-            authorization: `Bearer ${cookie.get("token")}`,
-          },
-        }
-      );
-      const data = await res.json();
-      console.log(data);
-      setOrders(data.orders);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await apiRequest(`manager/getOrders/${branch}`);
+    setOrders(data.orders);
   };
 
   useEffect(() => {

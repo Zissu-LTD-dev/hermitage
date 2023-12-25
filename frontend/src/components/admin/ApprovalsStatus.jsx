@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import approvalsStatus from "../../assets/css/admin/ApprovalsStatus.module.css";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
-import cookie from "js-cookie";
-const { REACT_APP_BACKEND_URL } = import.meta.env;
+import apiRequest from "../../services/api";
 
 import Order from "./approvalsStatus/Order";
 
@@ -11,19 +10,11 @@ function ApprovalsStatus() {
   const [loading, setLoading] = useState(false);
 
   const getOrders = async () => {
-    try {
-      const res = await fetch(`${REACT_APP_BACKEND_URL}admin/getAllOrders`, {
-        headers: {
-          authorization: `Bearer ${cookie.get("token")}`,
-        },
-      });
-      const data = await res.json();
-      let orders = data.orders.filter((order) => order.status != "canceled");
-      dispatchAdmin({ type: "SET_CONFIRMATION_ORDERS", payload: orders });
-      setLoading(true);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await apiRequest("admin/getAllOrders");
+    let orders = data.orders.filter((order) => order.status != "canceled");
+    dispatchAdmin({ type: "SET_CONFIRMATION_ORDERS", payload: orders });
+    setLoading(true);
+
   };
 
   useEffect(() => {

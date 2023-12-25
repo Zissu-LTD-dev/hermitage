@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigate, json } from "react-router-dom";
+import apiRequest from "../services/api";
 
 const {REACT_APP_BACKEND_URL} = import.meta.env
 import cookie from "js-cookie";
@@ -10,18 +11,10 @@ function PrivateRoute({ children}) {
 //   useState for role 
   const [role, setRole] = useState(null);
 
-  async function checkAuth() {
+  const checkAuth = async () => {
     let user = localStorage.getItem("user") ? localStorage.getItem("user") : null;
-    const res = await fetch(`${REACT_APP_BACKEND_URL}auth/verify`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookie.get("token")}`,
-        role: JSON.parse(user).role,
-      },
-    });
-    const data = await res.json();
-    console.log(data);
+
+    const data = await apiRequest("auth/verify", "GET", null, JSON.parse(user).role);
     if (data.success) {
         setRole(data.role);
       setIsAuthenticated(true);

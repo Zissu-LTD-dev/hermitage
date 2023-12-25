@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import branchManagement from "../../assets/css/admin/BranchManagement.module.css";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
-import useFetch from "../../hooks/useFetch";
 
 import Provider from "./branchManagement/Provider";
 import Branch from "./branchManagement/Branch";

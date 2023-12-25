@@ -3,8 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import manager from "../assets/css/manager/Manager.module.css";
 import { useMainContext } from "../context/mainContext/MainContext";
-import cookie from "js-cookie";
-const { REACT_APP_BACKEND_URL } = import.meta.env;
+import apiRequest from "../services/api";
 
 import Navbar from "../components/manager/navbar/Navbar";
 import NewOrder from "../components/manager/NewOrder";
@@ -19,20 +18,9 @@ function Manager() {
 
 
   const getAllProducts = async (branchId) => {
-    try {
-      const res = await fetch(`${REACT_APP_BACKEND_URL}manager/getProducts/${branchId}`, {
-        headers: {
-          authorization : `Bearer ${cookie.get("token")}`,
-        },
-      });
-      const data = await res.json();
-      console.log(data);
-
-      await dispatch({ type: "SET_ALL_PRODUCTS", payload: data.products });
-      await dispatch({ type: "SET_DISPLAY_PRODUCTS" });
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await apiRequest(`manager/getProducts/${branchId}`);
+    await dispatch({ type: "SET_ALL_PRODUCTS", payload: data.products });
+    await dispatch({ type: "SET_DISPLAY_PRODUCTS" });
   };
 
   useEffect(() => {

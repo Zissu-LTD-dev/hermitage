@@ -1,8 +1,7 @@
 import { useState } from "react";
 import orderStyle from "../../../assets/css/admin/approvalsStatus/Order.module.css";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
-import cookie from "js-cookie";
-const { REACT_APP_BACKEND_URL } = import.meta.env;
+import apiRequest from "../../../services/api";
 
 import Product from "./Product";
 
@@ -15,23 +14,7 @@ function Order({orderData}) {
   createdAt = createdAt.split("T")[0].split("-").reverse().join("/"); 
 
   const updateOrder = async (newOrder) => {
-    try {
-      const res = await fetch(
-        `${REACT_APP_BACKEND_URL}admin/updateOrder`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${cookie.get("token")}`,
-          },
-          body: JSON.stringify(newOrder),
-        }
-      );
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    const data = await apiRequest("admin/updateOrder", "PUT", newOrder);
   }
 
     const handleCancelOrder = () => {

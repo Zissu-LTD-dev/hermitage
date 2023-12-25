@@ -1,4 +1,6 @@
 import { useState } from "react";
+import apiRequest from "../services/api";
+
 import cookie from "js-cookie";
 
 function ExcelUpload() {
@@ -14,29 +16,34 @@ function ExcelUpload() {
       return;
     }
 
-    try {
-      const res = await fetch(
-        "http://localhost:5000/api/v1/admin/upload",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${cookie.get("token")}`,
-            role: `admin`,
-          },
-          body: formData,
-        }
-      );
+    // try {
+    //   const res = await fetch(
+    //     "http://localhost:5000/api/v1/admin/upload",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         Authorization: `Bearer ${cookie.get("token")}`,
+    //         role: `admin`,
+    //       },
+    //       body: formData,
+    //     }
+    //   );
 
-      if (res.ok) {
-        console.log("file uploaded successfully");
-        let data = await res.json();
-        console.log(data);
-      } else {
-        console.log("error uploading file");
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (res.ok) {
+    //     console.log("file uploaded successfully");
+    //     let data = await res.json();
+    //     console.log(data);
+    //   } else {
+    //     console.log("error uploading file");
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
+
+    const data = await apiRequest("admin/upload", "POST", formData, 'admin');
+    console.log(data);
+    
+
   };
 
   return (

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-const {REACT_APP_BACKEND_URL} = import.meta.env
+import apiRequest from "../services/api";
 
 import cookie from "js-cookie";
 
@@ -11,17 +11,8 @@ function PrivateRouteAdmin({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
 
-  async function checkAuth() {
-      const res = await fetch(`${REACT_APP_BACKEND_URL}auth/verify`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookie.get("token")}`,
-        role: `admin`,
-      },
-    });
-    const data = await res.json();
-
+  const checkAuth = async () => {
+    const data = await apiRequest("auth/verify", "GET", null, "admin");
     if (data.success) {
       setRole(data.role);
       setIsAuthenticated(true);

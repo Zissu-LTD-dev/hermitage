@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import newOrder from "../../assets/css/manager/NewOrder.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
-
-import cookie from "js-cookie";
-const { REACT_APP_BACKEND_URL } = import.meta.env;
+import apiRequest from "../../services/api";
 
 import Departments from "./newOrder/Departments";
 import Wizard from "./newOrder/Wizard";
@@ -18,18 +16,9 @@ function DynamicContent() {
   const [activeFiltersSearch, setActiveFiltersSearch] = useState(false);
 
   const getFilters = async () => {
-    try {
-      const res = await fetch(`${REACT_APP_BACKEND_URL}manager/getFilters`, {
-        headers: {
-          authorization: `Bearer ${cookie.get("token")}`,
-        },
-      });
-      const data = await res.json();
+    const data = await apiRequest("manager/getFilters");
+    dispatch({ type: "SET_FILTERS", payload: data.filters });
 
-      dispatch({ type: "SET_FILTERS", payload: data.filters });
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   useEffect(() => {

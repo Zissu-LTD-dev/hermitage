@@ -4,6 +4,8 @@ import login from "../assets/css/login.module.css";
 import { useMainContext } from "../context/mainContext/MainContext.jsx";
 import apiRequest from "../services/api";
 
+import { SuccessPopup, ErrorPopup, WarningPopup, LoaderPopup } from "../components/popups";
+
 import logo from "../assets/image/logo/logo.png";
 import enter from "../assets/image/logo/enter.svg";
 
@@ -16,8 +18,6 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // validate email and password
     
 
     const { token, user } = await apiRequest("auth/login", "POST", { email, password });

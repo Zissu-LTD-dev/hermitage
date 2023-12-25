@@ -28,7 +28,7 @@ function PrivateRouteAdmin({ children }) {
     checkAuth();
   }, []);
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return 
   if (isAuthenticated && role == "admin") return children;
   return <Navigate to="/" replace />;
 }

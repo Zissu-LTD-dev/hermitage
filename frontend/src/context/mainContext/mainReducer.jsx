@@ -1,5 +1,19 @@
 export const initialState = {
   userInfo: {},
+  showLoader: false,
+  showError: {
+    show: false,
+    message: "",
+  },
+  showSuccess: {
+    show: false,
+    message: "",
+  },
+  showWarning: {
+    show: false,
+    message: "",
+  },
+
   status: "new order",
   statusOrder: {
     title: "יצירת הזמנה חדשה",
@@ -24,6 +38,12 @@ export const initialState = {
 };
 
 export const CLEAR_STATE = "CLEAR_STATE";
+
+export const SET_SHOW_LOADER = "SET_SHOW_LOADER";
+export const SET_SHOW_ERROR = "SET_SHOW_ERROR";
+export const SET_SHOW_SUCCESS = "SET_SHOW_SUCCESS";
+export const SET_SHOW_WARNING = "SET_SHOW_WARNING";
+
 export const SET_USER_INFO = "SET_USER_INFO";
 
 // manager 👇
@@ -57,6 +77,16 @@ export const mainReducer = (state, action) => {
   switch (action.type) {
     case CLEAR_STATE:
       return initialState;
+    
+    case SET_SHOW_LOADER:
+      return { ...state, showLoader: action.payload };
+    case SET_SHOW_ERROR:
+      return { ...state, showError: action.payload };
+    case SET_SHOW_SUCCESS:
+      return { ...state, showSuccess: action.payload };
+    case SET_SHOW_WARNING:
+      return { ...state, showWarning: action.payload };
+      
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload };
 

@@ -4,7 +4,7 @@ import login from "../assets/css/login.module.css";
 import { useMainContext } from "../context/mainContext/MainContext.jsx";
 import apiRequest from "../services/api";
 
-import { SuccessPopup, ErrorPopup, WarningPopup, LoaderPopup } from "../components/popups";
+import { ErrorPopup, LoaderPopup } from "../components/popups";
 
 import logo from "../assets/image/logo/logo.png";
 import enter from "../assets/image/logo/enter.svg";
@@ -15,12 +15,22 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showLoader, setShowLoader] = useState(false);
+  const [showError, setShowError] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     
+    setShowLoader(true);
+    const data = await apiRequest("auth/login", "POST", { email, password });
 
-    const { token, user } = await apiRequest("auth/login", "POST", { email, password });
+    if (!data) {
+      setShowLoader(false);
+      setShowError(true);
+      return;
+    }
+
+    const { token, user } = data;
 
     document.cookie = `token=${token}`;
     localStorage.setItem("user", JSON.stringify(user));
@@ -32,6 +42,7 @@ function Login() {
       navigate("/manager");
     }
 
+    setShowLoader(false);
     setEmail("");
     setPassword("");
   };
@@ -45,6 +56,8 @@ function Login() {
 
   return (
     <div className={login.bgi}>
+      {showLoader && <LoaderPopup isShow={showLoader} />}
+      {showError && <ErrorPopup isShow={showError} />}
       <div className={login.login}>
         <span className={login.logo}>
           <img src={logo} alt="logo" />

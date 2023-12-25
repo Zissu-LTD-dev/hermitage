@@ -5,6 +5,8 @@ import manager from "../assets/css/manager/Manager.module.css";
 import { useMainContext } from "../context/mainContext/MainContext";
 import apiRequest from "../services/api";
 
+import { ErrorPopup, SuccessPopup, WarningPopup, LoaderPopup } from "../components/popups";
+
 import Navbar from "../components/manager/navbar/Navbar";
 import NewOrder from "../components/manager/NewOrder";
 import PendingOrders from "../components/manager/PendingOrders";
@@ -36,6 +38,11 @@ function Manager() {
 
   return (
     <>
+      {state.showLoader && <LoaderPopup isShow={state.showLoader }/>}
+      {state.showError && <ErrorPopup isShow={state.showError.show} message={state.showError.message} />}
+      {state.showSuccess && <SuccessPopup isShow={state.showSuccess.show} message={state.showSuccess.message} />}
+      {state.showWarning && <WarningPopup isShow={state.showWarning.show} message={state.showWarning.message} />}
+      
       <div className={manager.main}>
         <Sidebar branchName={loading ? "" : state.userInfo.branch.name} />
         <Navbar />

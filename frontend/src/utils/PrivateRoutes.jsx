@@ -28,7 +28,7 @@ function PrivateRoute({ children}) {
   }
 
   useEffect(() => {
-    if (  !cookie.get("token")) {
+    if (!cookie.get("token") || cookie.get("token") === "undefined") {
       setIsAuthenticated(false);
       setLoading(false);
       return;
@@ -36,7 +36,7 @@ function PrivateRoute({ children}) {
     checkAuth();
   }, []);
 
-  if (loading && !isAuthenticated) return <h1>Loading...</h1>;
+  if (loading && !isAuthenticated) return 
   if (isAuthenticated) {
     if (role == "admin") return <Navigate to="/admin" replace />;
     if (role == "branch manager") return <Navigate to="/manager" replace />;

@@ -32,14 +32,16 @@ const apiRequest = async (endpoint, method = "GET", payload = null, role = null)
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      throw new Error("API request failed");
+      return response.ok;
+      // throw new Error("API request failed");
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
     console.error(error);
-    throw error;
+    // throw error;
+    return false;
   }
 };
 

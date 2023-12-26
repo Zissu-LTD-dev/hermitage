@@ -11,8 +11,8 @@ function SubProvider({ provider, branchId, isChecked, added, removed }) {
   const [checked, setChecked] = useState(false);
 
   //   blockedProviders
-  const blockedProviders =  () => {
-    let res = apiRequest("admin/updateBlockedProvidersByBranch", "PUT", {
+  const blockedProviders = async () => {
+    let res = await apiRequest("admin/updateBlockedProvidersByBranch", "PUT", {
       branchId: branchId,
       providersList: [provider.number],
       blocked: true,
@@ -32,8 +32,8 @@ function SubProvider({ provider, branchId, isChecked, added, removed }) {
   };
 
   // unblockedProviders
-  const unblockedProviders =  () => {
-    let res = apiRequest("admin/updateBlockedProvidersByBranch", "PUT", {
+  const unblockedProviders = async () => {
+    let res = await apiRequest("admin/updateBlockedProvidersByBranch", "PUT", {
       branchId: branchId,
       providersList: [provider.number],
       blocked: false,

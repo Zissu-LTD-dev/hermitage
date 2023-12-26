@@ -11,8 +11,15 @@ function PendingOrders() {
   const [orders, setOrders] = useState([]);
 
   const getPendingOrders = async () => {
+    dispatch({ type: "SET_SHOW_LOADER", payload: true });
     const data = await apiRequest(`manager/getOrders/${branch}`);
-    setOrders(data.orders);
+    dispatch({ type: "SET_SHOW_LOADER", payload: false });
+    if(data){
+      dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "ההזמנות נטענו בהצלחה" } });
+      setOrders(data.orders);
+    }else{
+      dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בטעינת ההזמנות" } });
+    }
   };
 
   useEffect(() => {

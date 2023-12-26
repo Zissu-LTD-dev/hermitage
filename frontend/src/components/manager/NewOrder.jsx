@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import newOrder from "../../assets/css/manager/NewOrder.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
-import apiRequest from "../../services/api";
 
 import Departments from "./newOrder/Departments";
 import Wizard from "./newOrder/Wizard";
@@ -15,15 +14,8 @@ function DynamicContent() {
   const { state, dispatch } = useMainContext();
   const [activeFiltersSearch, setActiveFiltersSearch] = useState(false);
 
-  const getFilters = async () => {
-    const data = await apiRequest("manager/getFilters");
-    dispatch({ type: "SET_FILTERS", payload: data.filters });
-
-  };
-
   useEffect(() => {
     dispatch({ type: "SET_STATUS_ORDER", payload: 1 });
-    getFilters();
   }, []);
 
   useEffect(() => {

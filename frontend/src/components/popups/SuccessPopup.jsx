@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
+import { useMainContext } from "../../context/mainContext/MainContext";
 import popups from "../../assets/css/popups/popups.module.css";
 
 function SuccessPopup({ isShow, message = "עבר בהצלחה" }) {
+  const { state, dispatch } = useMainContext();
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
-      setShow(false);
-    }, 7000);
+      dispatch({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: false, message: "" },
+      });
+    }, 4000);
   }, []);
 
   useEffect(() => {
@@ -18,10 +23,8 @@ function SuccessPopup({ isShow, message = "עבר בהצלחה" }) {
     <>
       {show && (
         <div className={popups.main + " " + popups.success}>
-          {/* <div className={popups.content}> */}
-            <div className={popups.title}>Success</div>
-            <div className={popups.message}>{message}</div>
-          {/* </div> */}
+          {/* <div className={popups.title}>Success</div> */}
+          <div className={popups.message}>{message}</div>
           <div className={popups.icon}></div>
         </div>
       )}

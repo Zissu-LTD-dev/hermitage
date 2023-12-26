@@ -5,7 +5,7 @@ import apiRequest from "../services/api";
 import cookie from "js-cookie";
 
 function PrivateRouteAdmin({ children }) {
-  if (!cookie.get("token")) return <Navigate to="/" replace />;
+  if (!cookie.get("token") || !cookie.get("token") == "undefined") return <Navigate to="/" replace />;
 
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);

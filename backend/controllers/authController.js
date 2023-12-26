@@ -24,7 +24,7 @@ const addUser = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, remember } = req.body;
 
   if (!email || !password) return res.status(400).json({ error: "Please provide username and password" });
 
@@ -36,10 +36,11 @@ const login = async (req, res) => {
     return res.status(404).json({ error: " The password is incorrect " });
 
   let token = "";
+  let expiresIn = remember ? '30d' : process.env.JWT_EXPIRE ;
   if (user.role === "admin") {
-    token = user.createToken(process.env.JWT_SECRET_ADMIN);
+    token = user.createToken(process.env.JWT_SECRET_ADMIN, expiresIn );
   } else if (user.role === "branch manager") {
-    token = user.createToken(process.env.JWT_SECRET_MANAGER);
+    token = user.createToken(process.env.JWT_SECRET_MANAGER, expiresIn );
   }
   res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });
   

@@ -20,8 +20,8 @@ UserSchema.pre('save', async function () {
 });
 
 // create jwt token
-UserSchema.methods.createToken = function (secretKey) {
-    return jwt.sign({ _id: this._id , role: this.role }, secretKey , { expiresIn: process.env.JWT_EXPIRE })
+UserSchema.methods.createToken = function (secretKey, expiresIn) {
+    return jwt.sign({ _id: this._id , role: this.role }, secretKey , {expiresIn})
 }
 
 // check password

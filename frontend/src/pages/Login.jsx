@@ -15,6 +15,8 @@ function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
+
   const [showLoader, setShowLoader] = useState(false);
   const [showError, setShowError] = useState(false);
 
@@ -22,7 +24,7 @@ function Login() {
     event.preventDefault();
     
     setShowLoader(true);
-    const data = await apiRequest("auth/login", "POST", { email, password });
+    const data = await apiRequest("auth/login", "POST", { email, password, remember});
 
     if (!data) {
       setShowLoader(false);
@@ -88,7 +90,7 @@ function Login() {
             {/* זכור אותי */}
             <div className={login.remember}>
               <label htmlFor="remember" >זכור אותי</label>
-              <input name="remember" id="remember" type="checkbox" />
+              <input name="remember" id="remember" type="checkbox" checked={remember} onChange={() => setRemember(!remember)} />
             </div>
             {/* כניסה */}
             <button className={login.btn} type="submit">

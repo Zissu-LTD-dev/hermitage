@@ -29,7 +29,7 @@ function Provider({providerData}) {
       branchesList: branchesList,
       blocked: true
     });
-    if(!res) dispatchMain({ type: "SET_SHOW_ERROR", payload: {show: true, message: "הגדרת הסניפים לא נשמרה"}});
+    if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: {show: true, message: "הגדרת הסניפים לא נשמרה"}});
     if(branchesList.length) {
       dispatchMain({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הגדרת הסניפים בוצע"}})
       dispatch({
@@ -49,7 +49,7 @@ function Provider({providerData}) {
       branchesList: branchesList,
       blocked: false
     });
-    if(!res) dispatchMain({ type: "SET_SHOW_ERROR", payload: {show: true, massage: "הגדרת הסניפים לא נשמרה"}});
+    if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: {show: true, massage: "הגדרת הסניפים לא נשמרה"}});
 
     if(branchesList.length) {
       dispatchMain({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הגדרת הסניפים בוצע"}})

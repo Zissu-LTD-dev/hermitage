@@ -17,20 +17,26 @@ function Order({orderData}) {
 
   const updateOrder = async (newOrder) => {
     const data = await apiRequest("admin/updateOrder", "PUT", newOrder);
-    if (!data) return dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בעדכון ההזמנה" } });
+    if (!data){ 
+      dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בעדכון ההזמנה" } });
+      return false;
+    } 
     dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "ההזמנה עודכנה בהצלחה" } });
+    return true;
   }
 
-    const handleCancelOrder = () => {
+    const handleCancelOrder = async () => {
       let newOrder = { ...orderData, status: "canceled" };
+      let update = await updateOrder(newOrder);
+      if (!update) return;
       dispatchAdmin({ type: "CANCEL_ORDER_ADMIN", payload: newOrder });
-      updateOrder(newOrder);
     }
 
-    const handleApproveOrder = () => {
+    const handleApproveOrder =async () => {
       let newOrder = { ...orderData, status: "approved" };
+      let update = await updateOrder(newOrder);
+      if (!update) return;
       dispatchAdmin({ type: "APPROVE_ORDER_ADMIN", payload: newOrder });
-      updateOrder(newOrder);
     }
 
     const handleDecrease = (product) => {

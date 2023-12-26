@@ -31,8 +31,8 @@ function SubBranch({ branchData, providerNumber, isChecked, added, removed }) {
     setApproved(true);
   };
 
-  const unblockedProviders = () => {
-    let res = apiRequest("admin/updateBlockedProvidersByProvider", "PUT", {
+  const unblockedProviders = async () => {
+    let res = await apiRequest("admin/updateBlockedProvidersByProvider", "PUT", {
       providerNumber: providerNumber,
       branchesList: [_id],
       blocked: false,

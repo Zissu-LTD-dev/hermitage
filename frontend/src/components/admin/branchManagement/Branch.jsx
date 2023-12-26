@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import branchStyle from "../../../assets/css/admin/branchManagement/Branch.module.css";
 import apiRequest from "../../../services/api.js"; //endpoint, method = "GET", payload = null
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import SubProvider from "./SubProvider";
 
 function Branch({branchData, filtersProviders}) {
+  const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
 
   const [isFiltered, setIsFiltered] = useState(false);
@@ -30,7 +32,9 @@ const blockedProviders = async() => {
     providersList: providersList,
     blocked: true,
   });
+  if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בחסימת הספקים" } });
 
+    dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הספקים חוסמו" } });
     dispatch({ type: "SET_BLOCKED_PROVIDERS_BY_BRANCH", 
       payload: {
         branchId: _id,
@@ -47,7 +51,9 @@ const unblockedProviders = async() => {
     providersList: providersList,
     blocked: false,
   });
+  if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בהוצאת הספקים מהחסימה" } });
 
+  dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הספקים הוצאו מהחסימה" } });
   dispatch({ type: "SET_UNBLOCKED_PROVIDERS_BY_BRANCH", 
     payload: {
       branchId: _id,

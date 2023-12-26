@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import apiRequest from "../../services/api.js"; //endpoint, method = "GET", payload = null
 import blockManagement from "../../assets/css/admin/BlockManagement.module.css";
+import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
 import Product from "./blockManagement/Product";
 
 function BlockManagement() {
+  const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
   const [showProducts, setShowProducts] = useState([]);
   const [checkedAll, setCheckedAll] = useState(false);
@@ -23,7 +25,9 @@ function BlockManagement() {
       productsBarcodeList: blockedList,
       blocked: true,
     });
+    if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בחסימת הפריטים" } });
 
+    dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הפריטים חוסמו" } });
     dispatch({ type: "SET_BLOCKED_PRODUCTS", payload: blockedList });
     
     setBlockedList([]);
@@ -35,7 +39,9 @@ function BlockManagement() {
       productsBarcodeList: blockedList,
       blocked: false,
     });
+    if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בהוצאת הפריטים מהחסימה" } });
 
+    dispatchMain({ type: "SET_SHOW_SUCCESS", payload:  { show: true, message: "הפריטים הוצאו מהחסימה" } });
     dispatch({ type: "SET_UNBLOCKED_PRODUCTS", payload: blockedList });
     
     setBlockedList([]);

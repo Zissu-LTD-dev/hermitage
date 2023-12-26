@@ -6,9 +6,7 @@ import { useMainContext } from "../context/mainContext/MainContext";
 import { useAdminContext } from "../context/adminContext/AdminContext";
 import useFetch from "../hooks/useFetch";
 
-
-import cookie from "js-cookie";
-const { REACT_APP_BACKEND_URL } = import.meta.env;
+import { ErrorPopup, SuccessPopup, WarningPopup, LoaderPopup } from "../components/popups";
 
 import Sidebar from "../components/admin/Sidebar";
 import Navbar from "../components/admin/navbar/Navbar";
@@ -44,17 +42,22 @@ function Admin() {
   
   return (
     <>
-    <div className={admin.main} >
-      <Sidebar branchName="כמנהל רשת" />
-      <Navbar />
-      <div className={admin.content}>
-        {stateAdmin.status == "branch management" && <BranchManagement />}
-        {stateAdmin.status == "approvals status" && <ApprovalsStatus />}
-        {stateAdmin.status == "block management" && <BlockManagement />}
-        {stateAdmin.status == "documents" && <Documents />}
-        {stateAdmin.status == "adding products" && <AddingProducts />}
+      {state.showLoader && <LoaderPopup isShow={state.showLoader }/>}
+      {state.showError.show && <ErrorPopup isShow={state.showError.show} message={state.showError.message} />}
+      {state.showSuccess.show && <SuccessPopup isShow={state.showSuccess.show} message={state.showSuccess.message} />}
+      {state.showWarning.show && <WarningPopup isShow={state.showWarning.show} message={state.showWarning.message} />}
+      
+      <div className={admin.main} >
+        <Sidebar branchName="כמנהל רשת" />
+        <Navbar />
+        <div className={admin.content}>
+          {stateAdmin.status == "branch management" && <BranchManagement />}
+          {stateAdmin.status == "approvals status" && <ApprovalsStatus />}
+          {stateAdmin.status == "block management" && <BlockManagement />}
+          {stateAdmin.status == "documents" && <Documents />}
+          {stateAdmin.status == "adding products" && <AddingProducts />}
+        </div>
       </div>
-    </div>
     </>
   );
 }

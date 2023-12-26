@@ -1,10 +1,12 @@
 import { useState } from "react";
 import apiRequest from "../../../services/api.js"; //endpoint, method = "GET", payload = null
 import providerStyle from "../../../assets/css/admin/branchManagement/Provider.module.css"
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import SubBranch from "./SubBranch";
 
 function Provider({providerData}) {
+  const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
   const [open, setOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -27,11 +29,9 @@ function Provider({providerData}) {
       branchesList: branchesList,
       blocked: true
     });
-    if(!res) {
-      return console.log("not blocked");
-    }
-
+    if(!res) dispatchMain({ type: "SET_SHOW_ERROR", payload: {show: true, message: "הגדרת הסניפים לא נשמרה"}});
     if(branchesList.length) {
+      dispatchMain({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הגדרת הסניפים בוצע"}})
       dispatch({
         type: "SET_BLOCKED_PROVIDERS_BY_PROVIDER",
         payload: {
@@ -49,11 +49,10 @@ function Provider({providerData}) {
       branchesList: branchesList,
       blocked: false
     });
-    if(!res) {
-      return console.log("not unblocked");
-    }
+    if(!res) dispatchMain({ type: "SET_SHOW_ERROR", payload: {show: true, massage: "הגדרת הסניפים לא נשמרה"}});
 
     if(branchesList.length) {
+      dispatchMain({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הגדרת הסניפים בוצע"}})
       dispatch({
         type: "SET_UNBLOCKED_PROVIDERS_BY_PROVIDER",
         payload: {

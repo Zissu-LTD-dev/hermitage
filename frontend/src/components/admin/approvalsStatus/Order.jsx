@@ -1,11 +1,13 @@
 import { useState } from "react";
 import orderStyle from "../../../assets/css/admin/approvalsStatus/Order.module.css";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import apiRequest from "../../../services/api";
 
 import Product from "./Product";
 
 function Order({orderData}) {
+  const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [open, setOpen] = useState(false);
   let { orderNum, createdAt, branchName, provider, status, products } = orderData;
@@ -15,6 +17,8 @@ function Order({orderData}) {
 
   const updateOrder = async (newOrder) => {
     const data = await apiRequest("admin/updateOrder", "PUT", newOrder);
+    if (!data) return dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בעדכון ההזמנה" } });
+    dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "ההזמנה עודכנה בהצלחה" } });
   }
 
     const handleCancelOrder = () => {

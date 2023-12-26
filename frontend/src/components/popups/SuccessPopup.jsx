@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useMainContext } from "../../context/mainContext/MainContext";
 import popups from "../../assets/css/popups/popups.module.css";
 
-function SuccessPopup({ isShow, message = "עבר בהצלחה" }) {
+function SuccessPopup({ isShow, message }) {
   const { state, dispatch } = useMainContext();
   const [show, setShow] = useState(true);
 

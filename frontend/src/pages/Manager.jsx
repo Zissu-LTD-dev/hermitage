@@ -58,9 +58,9 @@ function Manager() {
   return (
     <>
       {state.showLoader && <LoaderPopup isShow={state.showLoader }/>}
-      {state.showError && <ErrorPopup isShow={state.showError.show} message={state.showError.message} />}
-      {state.showSuccess && <SuccessPopup isShow={state.showSuccess.show} message={state.showSuccess.message} />}
-      {state.showWarning && <WarningPopup isShow={state.showWarning.show} message={state.showWarning.message} />}
+      {state.showError.show && <ErrorPopup isShow={state.showError.show} message={state.showError.message} />}
+      {state.showSuccess.show && <SuccessPopup isShow={state.showSuccess.show} message={state.showSuccess.message} />}
+      {state.showWarning.show && <WarningPopup isShow={state.showWarning.show} message={state.showWarning.message} />}
       
       <div className={manager.main}>
         <Sidebar branchName={loading ? "" : state.userInfo.branch.name} />

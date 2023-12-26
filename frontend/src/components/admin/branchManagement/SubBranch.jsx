@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import apiRequest from "../../../services/api.js"; //endpoint, method = "GET", payload = null
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import subBranch from "../../../assets/css/admin/branchManagement/SubBranch.module.css";
 
 function SubBranch({ branchData, providerNumber, isChecked, added, removed }) {
+  const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
   const [approved, setApproved] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -15,7 +17,9 @@ function SubBranch({ branchData, providerNumber, isChecked, added, removed }) {
       branchesList: [_id],
       blocked: true,
     });
+    if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בחסימת הסניף" } });
 
+    dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הסניף נחסם" } });
     dispatch({
       type: "SET_BLOCKED_PROVIDERS_BY_PROVIDER",
       payload: {
@@ -28,12 +32,14 @@ function SubBranch({ branchData, providerNumber, isChecked, added, removed }) {
   };
 
   const unblockedProviders = () => {
-    apiRequest("admin/updateBlockedProvidersByProvider", "PUT", {
+    let res = apiRequest("admin/updateBlockedProvidersByProvider", "PUT", {
       providerNumber: providerNumber,
       branchesList: [_id],
       blocked: false,
     });
+    if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בביטול חסימת הסניף" } });
     
+    dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הסניף בוטל מחסימה" } });
     dispatch({
       type: "SET_UNBLOCKED_PROVIDERS_BY_PROVIDER",
       payload: {

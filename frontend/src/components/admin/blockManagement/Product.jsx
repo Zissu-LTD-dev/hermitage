@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import apiRequest from "../../../services/api.js"; //endpoint, method = "GET", payload = null
 import productStyle from "../../../assets/css/admin/blockManagement/Product.module.css";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import img from "../../../assets/image/manager/0007434_-12-.png";
 
 function Product({ product, block,  checkedAll, added, removed }) {
+  const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
 
   const [checked, setChecked] = useState(false);
@@ -16,7 +18,9 @@ function Product({ product, block,  checkedAll, added, removed }) {
         productsBarcodeList: [barcode],
         blocked: true,
       });
-  
+      if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בחסימת הפריט" } });
+
+      dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הפריט חסום" } });
       dispatch({ type: "SET_BLOCKED_PRODUCTS", payload: [barcode] });      
       setChecked(false)
     }
@@ -27,7 +31,9 @@ function Product({ product, block,  checkedAll, added, removed }) {
         productsBarcodeList: [barcode],
         blocked: false,
       });
+      if(!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בהוצאת הפריט מהחסימה" } });
   
+      dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הפריט הוצא מהחסימה" } });
       dispatch({ type: "SET_UNBLOCKED_PRODUCTS", payload: [barcode] });
       setChecked(false)
     }

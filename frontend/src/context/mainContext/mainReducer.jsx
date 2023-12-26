@@ -270,7 +270,7 @@ export const mainReducer = (state, action) => {
     case CLEAR_ORDER:
       return {
         ...state,
-        statusOrder: { title: "הזמנה נשלחה בהצלחה", step: 5 },
+        statusOrder: { title: "יצירת הזמנה חדשה", step: 1, },
         summary: [],
         orderedProducts: [],
         returnedProducts: [],

@@ -29,7 +29,7 @@ function Wizard() {
       if (!send) return;
 
       dispatch({ type: "CLEAR_ORDER" });
-      setStep(step + 1);
+      setStep(1);
       return;
     }
     setStep(step + 1);

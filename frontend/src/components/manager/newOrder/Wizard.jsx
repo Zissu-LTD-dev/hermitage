@@ -18,20 +18,15 @@ function Wizard() {
     dispatch({ type: "SET_SHOW_LOADER", payload: false });
     if (data) {
       dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "ההזמנה נשלחה בהצלחה" } });
+      dispatch({ type: "CLEAR_ORDER" });
+      setStep(1);
     } else {
       dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בשליחת ההזמנה" } });
     }
   };
 
   const nextStep = () => {
-    if (step == 5) {
-      let send = sendOrder();
-      if (!send) return;
-
-      dispatch({ type: "CLEAR_ORDER" });
-      setStep(1);
-      return;
-    }
+    if (step == 5) return sendOrder() 
     setStep(step + 1);
     let num = state.statusOrder.step + 1;
     dispatch({ type: "SET_STATUS_ORDER", payload: num });

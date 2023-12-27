@@ -220,7 +220,7 @@ const addDataToDb = async () => {
 // upload pdf file
 const uploadPdf = async (req, res) => {
   console.log(req.file);
-  res.json({message: "success"});
+  res.json({message: "success", file: req.file});
 }
 
 

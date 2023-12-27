@@ -1,5 +1,5 @@
 import { useState } from "react";
-import apiRequest from "../services/api";
+import apiRequestForForm from "../services/apiForForm";
 
 import cookie from "js-cookie";
 
@@ -40,7 +40,7 @@ function ExcelUpload() {
     //   console.error(error);
     // }
 
-    const data = await apiRequest("admin/upload", "POST", formData, 'admin');
+    const data = await apiRequestForForm("admin/upload", "POST", formData, 'admin');
     console.log(data);
     
 

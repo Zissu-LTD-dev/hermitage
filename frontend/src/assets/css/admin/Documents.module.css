@@ -22,7 +22,7 @@
 }
 
 .button{
-    width: 205px;
+    min-width: 205px;
     height: 33px;
     display: flex;
     justify-content: center;
@@ -33,8 +33,8 @@
 }
 
 .icon{
-    width: 20px;
-    height: 20px;
+    width: 33px;
+    height: 30px;
     margin-left: 9px;
     background: transparent url('../../image/admin/Iconfeather-upload-cloud.svg') 50% 50% no-repeat padding-box;
 }
@@ -42,7 +42,23 @@
 .text{
     font: normal normal medium 14px/18px IBM Plex Sans Hebrew;
     letter-spacing: 0px;
+    text-align: center;
     color: #FFFFFF;
+    cursor: pointer;
+}
+
+.send_file{
+    padding: 0 20px;
+}
+
+.inputFile{
+    width: 205px;
+    height: 33px;
+    position: absolute;
+    top: 55px;
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
 }
 
 .body{

@@ -3,7 +3,7 @@ const {
   Category,
   Notifications,
   Obligations,
-  Orders,
+  Order,
   Products,
   Providers,
   User,
@@ -115,11 +115,28 @@ const updateBlockedProducts = async (req, res) => {
   }
 }
 
+// getAllOrders
+const getAllOrders = async (req, res) => {
+  let orders = await Order.find({});
+  res.status(200).json({orders: orders});
+};
+
+// updateOrder
+const updateOrder = async (req, res) => {
+  let newOrder = req.body;
+  let order = await Order.findOne({_id: newOrder._id});
+  order.status = newOrder.status;
+  order.products = newOrder.products;
+  await order.save();
+  res.status(200).json({message: 'The order was successfully updated'});
+};
 
 
 module.exports = {
   initialData,
   updateBlockedProvidersByProvider,
   updateBlockedProvidersByBranch,
-  updateBlockedProducts
+  updateBlockedProducts,
+  getAllOrders,
+  updateOrder,
 };

@@ -217,8 +217,14 @@ const addDataToDb = async () => {
   return result;
 }
 
+// upload pdf file
+const uploadPdf = async (req, res) => {
+  console.log(req.file);
+  res.json({message: "success"});
+}
 
 
 module.exports = {
   upload,
+  uploadPdf,
 };

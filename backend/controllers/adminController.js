@@ -3,6 +3,7 @@ const {
   Category,
   Notifications,
   Obligations,
+  Document,
   Order,
   Products,
   Providers,
@@ -131,6 +132,36 @@ const updateOrder = async (req, res) => {
   res.status(200).json({message: 'The order was successfully updated'});
 };
 
+// getAllDocuments
+const getAllDocuments = async (req, res) => {
+  let documents = await Document.find({});
+  res.status(200).json({documents: documents});
+};
+
+// download document
+const downloadDocument = async (req, res) => {
+  let documentId = req.params.id;
+  let document = await Document.findById(documentId);
+  res.download(document.link);
+};
+
+// updateDocument
+const updateDocument = async (req, res) => {
+  let documentId = req.params.id;
+  let document = await Document.findById(documentId);
+  document.forTo = [req.body.branchId];
+  await document.save();
+  res.status(200).json({message: 'The document was successfully updated'});
+};
+
+// delete document
+const deleteDocument = async (req, res) => {
+  let documentId = req.params.id;
+  let document = await Document.findById(documentId);
+  await document.deleteOne();
+  res.status(200).json({message: 'The document was successfully deleted'});
+};
+
 
 module.exports = {
   initialData,
@@ -139,4 +170,8 @@ module.exports = {
   updateBlockedProducts,
   getAllOrders,
   updateOrder,
+  getAllDocuments,
+  downloadDocument,
+  updateDocument,
+  deleteDocument,
 };

@@ -1,15 +1,35 @@
-import document from "../../../assets/css/manager/documents/Document.module.css";
+import documentStyle from "../../../assets/css/manager/documents/Document.module.css";
 
-function Document() {
+import cookie from "js-cookie";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
+
+function Document({document}) {
+  let {name, date, link} = document;
+
+  date = date.split("T")[0].split("-").reverse().join(".");
+
+  const handleDownload = async () => {
+    let res = await fetch(`${REACT_APP_BACKEND_URL}manager/downloadDocument/${document._id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${cookie.get("token")}`
+      },
+    });
+    
+    let blob = await res.blob();
+    let url = await window.URL.createObjectURL(blob);
+    window.open(url);
+  }
+
   return (
     <>
-      <div className={document.main}>
+      <div className={documentStyle.main}>
         <span>
-          <div className={document.name}>קובץ חדש</div>
-          <div className={document.date}>12.12.12</div>
+          <div className={documentStyle.name}>{name}</div>
+          <div className={documentStyle.date}>{date}</div>
         </span>
         <span>
-          <div className={document.download}></div>
+          <div className={documentStyle.download} onClick={handleDownload}></div>
         </span>
       </div>
     </>

@@ -17,6 +17,7 @@
 }
 
 .name {
+  width: 150px;
   font: normal normal 600 16px/20px IBM Plex Sans Hebrew;
   letter-spacing: 0px;
   margin-left: 64px;

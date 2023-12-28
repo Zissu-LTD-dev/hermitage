@@ -35,6 +35,8 @@ export const initialState = {
   orderedProducts: [],
   returnedProducts: [],
   summary: [],
+
+  documents: [],
 };
 
 export const CLEAR_STATE = "CLEAR_STATE";
@@ -69,10 +71,9 @@ export const REMOVE_RETURNED_PRODUCT = "REMOVE_RETURNED_PRODUCT";
 export const SET_SUMMARY = "SET_SUMMARY";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 
+export const SET_DOCUMENTS = "SET_DOCUMENTS";
+
 export const mainReducer = (state, action) => {
-
-
-
 
   switch (action.type) {
     case CLEAR_STATE:
@@ -275,6 +276,11 @@ export const mainReducer = (state, action) => {
         orderedProducts: [],
         returnedProducts: [],
       };
+
+    case SET_DOCUMENTS:
+      return { ...state, documents: action.payload };
+
+      
     default:
       return state;
   }

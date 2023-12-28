@@ -1,5 +1,5 @@
 const xlsx = require("xlsx");
-const { Providers, Department, Category, Products } = require("../models");
+const { Providers, Department, Category, Products, Document } = require("../models");
 
 // collection variables for excel file
 let providersCollection = [];
@@ -219,8 +219,18 @@ const addDataToDb = async () => {
 
 // upload pdf file
 const uploadPdf = async (req, res) => {
-  console.log(req.file);
-  res.json({message: "success", file: req.file});
+  let {destination, filename, originalname } = req.file;
+  const document = new Document({
+    name: originalname.split('.')[0],
+    link: `${destination}/${filename}`
+  });
+
+  await document.save();
+
+  // get last document from db 
+  const lastDocument = await Document.findOne({}).sort({_id: -1}).limit(1);
+
+  res.json({message: "success", file: lastDocument});
 }
 
 

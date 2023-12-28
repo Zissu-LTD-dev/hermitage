@@ -1,11 +1,15 @@
-import { useState } from "react";
-import documents from "../../assets/css/admin/Documents.module.css";
+import { useState, useEffect} from "react";
 import { useMainContext } from "../../context/mainContext/MainContext";
+import { useAdminContext } from "../../context/adminContext/AdminContext";
+import useFetch from "../../hooks/useFetch";
+import documents from "../../assets/css/admin/Documents.module.css";
 import apiRequestForForm from "../../services/apiForForm";
 import Document from "./documents/Document";
 
 function Documents() {
   const { state, dispatch } = useMainContext();
+  const { state: adminState, dispatch: adminDispatch } = useAdminContext();
+  const { data, loading, error } = useFetch("admin/allDocuments");
 
   const [upload, setUpload] = useState(false);
   const [file, setFile] = useState(null);
@@ -43,11 +47,19 @@ function Documents() {
       type: "SET_SHOW_SUCCESS",
       payload: { show: true, message: "הקובץ הועלה בהצלחה" },
     });
+    
+    adminDispatch({ type: "ADD_DOCUMENT", payload: res.file });
 
     setUpload(false);
     setFile(null);
     setFileName("");
   };
+
+  useEffect(() => {
+    if (data){
+      adminDispatch({ type: "SET_DOCUMENTS", payload: data.documents });
+    }
+  }, [data]);
 
   return (
     <>
@@ -81,11 +93,11 @@ function Documents() {
           </span>
         </div>
         <div className={documents.body}>
-          <Document />
-          <Document />
-          <Document />
-          <Document />
-          <Document />
+          {data && 
+            adminState.documents.map((document, i) => (
+              <Document key={i} document={document} />
+            ))
+          }
         </div>
       </div>
     </>

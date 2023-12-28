@@ -12,6 +12,7 @@ export const initialState = {
   providers: [],
   categories: [],
   branches: [],
+  documents: [],
 };
 
 export const SET_STATUS_ADMIN = "SET_STATUS_ADMIN";
@@ -38,6 +39,11 @@ export const SET_UNBLOCKED_PROVIDERS_BY_BRANCH = "SET_UNBLOCKED_PROVIDERS_BY_BRA
 
 export const SET_BLOCKED_PRODUCTS = "SET_BLOCKED_PRODUCTS";
 export const SET_UNBLOCKED_PRODUCTS = "SET_UNBLOCKED_PRODUCTS";
+
+export const SET_DOCUMENTS = "SET_DOCUMENTS";
+export const ADD_DOCUMENT = "ADD_DOCUMENT";
+export const UPDATE_DOCUMENT = "UPDATE_DOCUMENT";
+export const DELETE_DOCUMENT = "DELETE_DOCUMENT";
 
 export const adminReducer = (state, action) => {
   switch (action.type) {
@@ -185,6 +191,28 @@ export const adminReducer = (state, action) => {
         return product;
       });
       return { ...state, products: newProductsUnBl };
+
+
+    case SET_DOCUMENTS:
+      return { ...state, documents: action.payload };
+
+    case ADD_DOCUMENT:
+      return { ...state, documents: [...state.documents, action.payload] };
+
+    case UPDATE_DOCUMENT:
+      let newDocumentsUp = state.documents.map((document) => {
+        if (document._id == action.payload.documentId) {
+          return document = { ...document, forTo: action.payload.branchId};
+        }
+        return document;
+      });
+      return { ...state, documents: newDocumentsUp };
+
+    case DELETE_DOCUMENT:
+      let newDocumentsDel = state.documents.filter(
+        (document) => document._id != action.payload
+      );
+      return { ...state, documents: newDocumentsDel };
 
       
   }

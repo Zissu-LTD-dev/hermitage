@@ -4,20 +4,22 @@ const branchRouter = express.Router();
 
 
 // products
-// -- get all products for this branch
 branchRouter.get("/getProducts/:branchId", branch.getProducts);
 
 // getFilters
-// -- get all filters from provider end ctegories
 branchRouter.get("/getFilters", branch.getFilters);
 
 // createOrder
-// -- create order
 branchRouter.post("/createOrder", branch.createOrder);
 
 // getOrders
-// -- get all orders for this branch
 branchRouter.get("/getOrders/:branchName", branch.getOrders);
+
+// allDocuments
+branchRouter.get("/allDocuments/:branchId", branch.allDocuments);
+
+// downloadDocument
+branchRouter.get("/downloadDocument/:documentId", branch.downloadDocument);
 
 
 exports.branchRouter = branchRouter;

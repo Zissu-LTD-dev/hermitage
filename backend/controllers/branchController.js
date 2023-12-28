@@ -3,6 +3,7 @@ const {
     Category,
     Notifications,
     Obligations,
+    Document,
     Order,
     Return,
     Products,
@@ -98,10 +99,28 @@ const getOrders = async (req, res) => {
     res.status(200).json({orders: orders});
   };
 
+  // allDocuments
+const allDocuments = async (req, res) => {
+    let branchId = req.params.branchId;
+
+    // Bring all documents that forTo is this branch id or all branches
+    let documents = await Document.find({forTo: {$in: [branchId, "all"]}});
+    res.status(200).json({documents: documents});
+  };
+
+  // downloadDocument
+const downloadDocument = async (req, res) => {
+    let documentId = req.params.documentId;
+    let document = await Document.findById(documentId);
+    res.download(document.link);
+  };
+
 
   module.exports = {
     getProducts,
     getFilters,
     createOrder,
     getOrders,
+    allDocuments,
+    downloadDocument
   };

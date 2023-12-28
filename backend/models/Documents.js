@@ -1,16 +1,15 @@
 const mongoose = require('mongoose')
 
 const documentSchema = new mongoose.Schema({
-    title: String,
-    link: String,
+    name: String,
     date: {
         type: Date,
         default: Date.now
     },
-    status: String,
-    Branch: {
-        type: Number || String,
-        default: 'All Branches'
+    link: String,
+    forTo: {
+        type: Array,
+        default: ['all']
     }
 });
 

@@ -52,6 +52,18 @@ adminRouter.get("/getAllOrders", admin.getAllOrders);
 // updateOrder put
 adminRouter.put("/updateOrder", admin.updateOrder);
 
+// get all documents
+adminRouter.get("/allDocuments", admin.getAllDocuments);
+
+// download document
+adminRouter.get("/downloadDocument/:id", admin.downloadDocument);
+
+// updateDocument
+adminRouter.put("/updateDocument/:id", admin.updateDocument);
+
+// delete document
+adminRouter.delete("/deleteDocument/:id", admin.deleteDocument);
+
 
 
 // upload excel file

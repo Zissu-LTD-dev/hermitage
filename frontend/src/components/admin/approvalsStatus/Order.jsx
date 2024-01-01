@@ -10,7 +10,7 @@ function Order({orderData}) {
   const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [open, setOpen] = useState(false);
-  let { orderNum, createdAt, branchName, provider, status, products } = orderData;
+  let { orderNum, createdAt, branchName, provider, providerName, status, products } = orderData;
 
   orderNum = orderNum.toString().padStart(3, "0");
   createdAt = createdAt.split("T")[0].split("-").reverse().join("/"); 
@@ -84,7 +84,7 @@ function Order({orderData}) {
             <div className={orderStyle.orderNum}>הזמנה #{orderNum}</div>
             <div className={orderStyle.date}>{createdAt}</div>
             <div className={orderStyle.branchName}>{branchName}</div>
-            <div className={orderStyle.providerName}>{provider}</div>
+            <div className={orderStyle.providerName}>{providerName}</div>
           </span>
           <span>
             {status == "pending" && <div className={ orderStyle.status + ' ' + orderStyle.statusPending}>ממתין לאישור</div>}

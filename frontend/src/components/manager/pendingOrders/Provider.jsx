@@ -4,7 +4,7 @@ import providerC from "../../../assets/css/manager/pendingOrders/Provider.module
 
 function Provider({ order }) {
   const [open, setOpen] = useState(false);
-  let { orderNum, createdAt, provider, products } = order;
+  let { orderNum, createdAt, providerName, products } = order;
   const number = orderNum.toString().padStart(3, "0");
   const date = createdAt.split("T")[0].split("-").reverse().join("/");
 
@@ -19,7 +19,7 @@ function Provider({ order }) {
           <span>
             <div className={providerC.orderNum}>הזמנה #{number}</div>
             <div className={providerC.date}>{date}</div>
-            <div className={providerC.provider}>{provider}</div>
+            <div className={providerC.provider}>{providerName}</div>
           </span>
           <span>
             <div className={providerC.status}>הזמנה ממתינה</div>
@@ -33,7 +33,7 @@ function Provider({ order }) {
             <span>
               <div className={providerC.orderNum}>הזמנה #{number}</div>
               <div className={providerC.date}>{date}</div>
-              <div className={providerC.provider}>{provider}</div>
+              <div className={providerC.provider}>{providerName}</div>
             </span>
             <span>
               <div className={providerC.status}>הזמנה ממתינה</div>

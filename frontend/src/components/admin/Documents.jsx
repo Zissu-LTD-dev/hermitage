@@ -61,6 +61,10 @@ function Documents() {
     }
   }, [data]);
 
+  useEffect(() => {
+    adminDispatch({ type: "SET_FILTERS", payload: [] }); 
+  }, []);
+
   return (
     <>
       <div className={documents.main}>

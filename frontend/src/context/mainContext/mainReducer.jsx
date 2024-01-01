@@ -231,6 +231,7 @@ export const mainReducer = (state, action) => {
         });
         if (!providerExists) {
           summary.push({
+            provider: product.provider,
             providerName: product.providerName,
             productsOrder: [product],
             productsReturn: [],
@@ -252,6 +253,7 @@ export const mainReducer = (state, action) => {
         });
         if (!providerExists) {
           summary.push({
+            provider: product.provider,
             providerName: product.providerName,
             productsOrder: [],
             productsReturn: [product],

@@ -10,6 +10,7 @@ function ApprovalsStatus() {
   const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [loading, setLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
 
   const getOrders = async () => {
     dispatch({ type: "SET_SHOW_LOADER", payload: true })
@@ -20,6 +21,9 @@ function ApprovalsStatus() {
       return;
     }
     let orders = data.orders.filter((order) => order.status != "canceled");
+    orders.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
     dispatchAdmin({ type: "SET_CONFIRMATION_ORDERS", payload: orders });
     dispatch({ type: "SET_SHOW_LOADER", payload: false })
     dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "ההזמנות נטענו בהצלחה" } });
@@ -28,8 +32,76 @@ function ApprovalsStatus() {
   };
 
   useEffect(() => {
+    if (stateAdmin.providers != [] && stateAdmin.branches != []) {
+      dispatchAdmin({
+        type: "SET_FILTERS",
+        payload: [
+          {
+            title: "סניפים",
+            details: stateAdmin.branches,
+          },
+          {
+            title: "ספקים",
+            details: stateAdmin.providers,
+          },
+        ],
+      });
+    }
+  }, [stateAdmin.providers, stateAdmin.branches]);
+
+  useEffect(() => {
     getOrders();
   }, []);
+
+  useEffect(() => {
+    if (stateAdmin.confirmationOrders.length > 0) {
+      setLoading(true);
+      setOrders(stateAdmin.confirmationOrders);
+    }
+  }, [stateAdmin.confirmationOrders]);
+
+
+  useEffect(() => {
+    if(stateAdmin.displayFilters["סניפים"] && stateAdmin.displayFilters["ספקים"]) {
+      setOrders([]);
+      stateAdmin.confirmationOrders.filter((order) => {
+        stateAdmin.displayFilters["סניפים"].map((filter) => {
+          if (order.branchID == filter) {
+            stateAdmin.displayFilters["ספקים"].map((filter) => {
+              if (order.provider == filter) {
+                setOrders((orders) => [...orders, order]);
+              }
+            });
+          }
+        });
+      });
+      return;
+    }
+    if (stateAdmin.displayFilters["ספקים"]) {
+      setOrders([]);
+      stateAdmin.confirmationOrders.filter((order) => {
+        stateAdmin.displayFilters["ספקים"].map((filter) => {
+          if (order.provider == filter) {
+            setOrders((orders) => [...orders, order]);
+          }
+        });
+      });
+      return;
+    }
+    if (stateAdmin.displayFilters["סניפים"]) {
+      setOrders([]);
+      stateAdmin.confirmationOrders.filter((order) => {
+        stateAdmin.displayFilters["סניפים"].map((filter) => {
+          if (order.branchID == filter) {
+            setOrders((orders) => [...orders, order]);
+          }
+        });
+      });
+      return;
+    } 
+    setOrders(stateAdmin.confirmationOrders);
+  }, [stateAdmin.displayFilters]);
+
 
   return (
     <>
@@ -39,7 +111,7 @@ function ApprovalsStatus() {
         </div>
         <div className={approvalsStatus.body}>
           {loading ? (
-            stateAdmin.confirmationOrders.map((order) => (
+            orders.map((order) => (
               <Order key={order._id} orderData={order} />
             ))
           ) : (

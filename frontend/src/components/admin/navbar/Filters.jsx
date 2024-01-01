@@ -109,10 +109,12 @@ function Filters() {
                         <input
                           {...(checkedList[filter.title] &&
                             checkedList[filter.title].includes(
-                              detail.number
+                              detail.number || detail._id
                             ) && { checked: true })}
 
                           onClick={() =>
+                            filter.title == "סניפים" ? 
+                            addFilterToList(filter.title, detail._id) :
                             addFilterToList(filter.title, detail.number)
                           }
                           type="checkbox"

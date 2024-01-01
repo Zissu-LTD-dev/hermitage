@@ -12,6 +12,24 @@ function ApprovalsStatus() {
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
 
+  const handleOrderBy = (orderBy) => {
+    let newOrders = stateAdmin.confirmationOrders;
+    switch (orderBy) {
+      case "panding":
+        newOrders = newOrders.filter((order) => order.status != "canceled" && order.status != "approved");
+        break;
+      case "canceled":
+        newOrders = newOrders.filter((order) => order.status == "canceled");
+        break;
+      case "approved":
+        newOrders = newOrders.filter((order) => order.status == "approved");
+        break;
+      default:
+        break;
+    }
+    setOrders(newOrders);
+  }
+
   const getOrders = async () => {
     dispatch({ type: "SET_SHOW_LOADER", payload: true })
     const data = await apiRequest("admin/getAllOrders");
@@ -20,7 +38,7 @@ function ApprovalsStatus() {
       dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בעת טעינת ההזמנות" } });
       return;
     }
-    let orders = data.orders.filter((order) => order.status != "canceled");
+    let orders = data.orders; 
     orders.sort((a, b) => {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
@@ -56,7 +74,8 @@ function ApprovalsStatus() {
   useEffect(() => {
     if (stateAdmin.confirmationOrders.length > 0) {
       setLoading(true);
-      setOrders(stateAdmin.confirmationOrders);
+      let newOrders = stateAdmin.confirmationOrders.filter((order) => order.status != "canceled" && order.status != "approved");
+      setOrders(newOrders);
     }
   }, [stateAdmin.confirmationOrders]);
 
@@ -108,6 +127,11 @@ function ApprovalsStatus() {
       <div className={approvalsStatus.main}>
         <div className={approvalsStatus.header}>
           <div className={approvalsStatus.title}>סטטוס אישורים להזמנות</div>
+          <div className={approvalsStatus.filter_buttons}>
+              <div className={approvalsStatus.pending_button} onClick={() => handleOrderBy("panding")} >הזמנות ממתינות לאישור</div>
+              <div className={approvalsStatus.canceled_button} onClick={() => handleOrderBy("canceled")}>הזמנות מבוטלות</div>
+              <div className={approvalsStatus.approved_button} onClick={() => handleOrderBy("approved")} >הזמנות מאושרות</div>
+          </div>
         </div>
         <div className={approvalsStatus.body}>
           {loading ? (

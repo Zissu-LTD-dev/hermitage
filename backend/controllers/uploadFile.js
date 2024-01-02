@@ -8,8 +8,22 @@ let categoriesCollection = [];
 let productsCollection = [];
 
 // upload excel file
-const upload = async (req, res) => {
+const uploadExcel = async (req, res) => {
   const workbook = xlsx.readFile(req.file.path);
+
+  const columnsToCheck = ["מס ספק", "ספק", "מס מחלקה", "שם מחלקה", "מס קבוצת משנה", "שם קבוצת משנה", 'ברקוד'];
+
+  for (let i = 0; i < workbook.SheetNames.length; i++) {
+    const sheetName = workbook.SheetNames[i];
+    const sheet = workbook.Sheets[sheetName];
+
+    const data = xlsx.utils.sheet_to_json(sheet, {header: 1});
+    const headers = data[0]; // The first row is the headers
+
+    if (!columnsToCheck.every(column => headers.includes(column))) {
+      return res.status(400).json({ error: 'Some columns are missing' });
+    }
+  }
 
   let sheetData = [];
 
@@ -235,6 +249,6 @@ const uploadPdf = async (req, res) => {
 
 
 module.exports = {
-  upload,
+  uploadExcel,
   uploadPdf,
 };

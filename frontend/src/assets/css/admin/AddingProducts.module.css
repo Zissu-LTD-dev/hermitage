@@ -56,6 +56,8 @@ color: #FFFFFF;
 .uploadProducts{
     width: 255px;
 height: 40px;
+cursor: pointer;
+
 background: #082A3A 0% 0% no-repeat padding-box;
 }
 
@@ -71,6 +73,16 @@ background: #082A3A 0% 0% no-repeat padding-box;
     font: normal normal medium 16px/20px IBM Plex Sans Hebrew;
     letter-spacing: 0px;
     color: #FFFFFF;
+}
+
+.inputFile{
+    width: 255px;
+    height: 33px;
+    position: absolute;
+    top: 55px;
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
 }
 
 .body{

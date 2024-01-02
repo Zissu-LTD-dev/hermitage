@@ -36,17 +36,23 @@ color: #082A3A;
 }
 
 .productDetails{
+    width: 120px;
     display: flex;
-    justify-content:center;
+    justify-content:right;
     align-items: center;
-    margin: 40px;
+    margin: 15px;
+}
+
+.providerName{
+    width: 150px;
 }
 
 .Icon{
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 25px;
     margin-left: 9px;
     background: transparent url('../../../image/admin/Iconfeather-edit.svg') 50% 50% no-repeat padding-box;
+    cursor: pointer;
 }
 
 .Text{
@@ -60,4 +66,5 @@ color: #9EAAAF;
     height: 25px;
     margin-left: 30px;
     background: transparent url('../../../image/admin/Iconfeather-trash-2.svg') 50% 50% no-repeat padding-box;
+    cursor: pointer;
 }

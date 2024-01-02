@@ -67,7 +67,7 @@ adminRouter.delete("/deleteDocument/:id", admin.deleteDocument);
 
 
 // upload excel file
-adminRouter.post("/upload", uploadXLSX.single('file'),  uploadFile.upload );
+adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.uploadExcel );
 
 // upload pdf file
 adminRouter.post("/uploadPdf", uploadPDF.single('pdfFile'),  uploadFile.uploadPdf );

@@ -202,7 +202,7 @@ export const adminReducer = (state, action) => {
     case UPDATE_DOCUMENT:
       let newDocumentsUp = state.documents.map((document) => {
         if (document._id == action.payload.documentId) {
-          return document = { ...document, forTo: action.payload.branchId};
+          return document = { ...document, forTo: [action.payload.branchId]};
         }
         return document;
       });

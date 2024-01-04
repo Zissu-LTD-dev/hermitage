@@ -1,9 +1,6 @@
 # hermitage
 ## branch management system
 
-users login to the system
-branch manager:
-
 ## user 1 : 
 - user name : test1
 - password : test1

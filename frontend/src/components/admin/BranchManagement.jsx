@@ -9,6 +9,7 @@ function BranchManagement() {
   const { state, dispatch } = useAdminContext();
   const [active, setActive] = useState("byProvider");
   const [filtersProviders, setFiltersProviders] = useState([]);
+  const [showBlocked, setShowBlocked] = useState(false);
 
   useEffect(() => {
     if (state.providers) {
@@ -43,30 +44,43 @@ function BranchManagement() {
     }
   }, [state.displayFilters]);
 
+  useEffect(() => {
+    if (showBlocked) {
+      setActive("byBranch");
+    }
+  }, [showBlocked])
+
+  useEffect(() => {
+    setShowBlocked(false);
+  }, [active])
+
   return (
     <div className={branchManagement.main}>
       <div className={branchManagement.header}>
-        <div className={branchManagement.title}>ניהול סניפים</div>
-        <div className={branchManagement.headerButtons}>
-          <div
-            className={branchManagement.byProvider}
-            onClick={() => setActive("byProvider")}
-          >
-            לפי ספק
-            {active == "byProvider" && (
-              <div className={branchManagement.byProviderActive}></div>
-            )}
+        <span>
+          <div className={branchManagement.title}>ניהול סניפים</div>
+          <div className={branchManagement.headerButtons}>
+            <div
+              className={branchManagement.byProvider}
+              onClick={() => setActive("byProvider")}
+            >
+              לפי ספק
+              {active == "byProvider" && (
+                <div className={branchManagement.byProviderActive}></div>
+              )}
+            </div>
+            <div
+              className={branchManagement.byBranch}
+              onClick={() => setActive("byBranch")}
+            >
+              לפי סניף
+              {active == "byBranch" && (
+                <div className={branchManagement.byBranchActive}></div>
+              )}
+            </div>
           </div>
-          <div
-            className={branchManagement.byBranch}
-            onClick={() => setActive("byBranch")}
-          >
-            לפי סניף
-            {active == "byBranch" && (
-              <div className={branchManagement.byBranchActive}></div>
-            )}
-          </div>
-        </div>
+        </span>
+        <div className={branchManagement.blocked} onClick={() => setShowBlocked(!showBlocked)}>{showBlocked ? "הצג הכול" : "הצג חסומים"}</div>
       </div>
       <div className={branchManagement.body}>
         {active == "byProvider" ? (
@@ -86,6 +100,7 @@ function BranchManagement() {
                 <Branch
                   branchData={branch}
                   filtersProviders={filtersProviders}
+                  showBlocked={showBlocked}
                   key={i}
                 />
               );

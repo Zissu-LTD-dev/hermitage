@@ -5,7 +5,7 @@ import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import SubProvider from "./SubProvider";
 
-function Branch({branchData, filtersProviders}) {
+function Branch({branchData, filtersProviders, showBlocked}) {
   const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
 
@@ -95,7 +95,7 @@ const unblockedProviders = async() => {
         {open && (
           <>
             <div className={branchStyle.body}>
-              {isFiltered &&  filtersProviders.map((provider, i) => {
+              {(isFiltered && !showBlocked) &&  filtersProviders.map((provider, i) => {
                   return (
                     <SubProvider
                       key={i}
@@ -109,7 +109,7 @@ const unblockedProviders = async() => {
                   );
                 }) 
               }
-              {!isFiltered &&
+              {(!isFiltered && !showBlocked) && 
                 state.providers.map((provider, i) => {
                   return (
                     <SubProvider
@@ -123,6 +123,22 @@ const unblockedProviders = async() => {
                     />
                   );
                 })}
+                { showBlocked &&  
+                  state.providers.map((provider, i) => {
+                    if(blockedProvidersList.includes(provider.number)) {
+                      return (
+                        <SubProvider
+                          key={i}
+                          branchId={_id}
+                          provider={provider}
+                          blockedProviders={blockedProviders}
+                          isChecked={isChecked}
+                        added={added}
+                        removed={removed}    
+                        />
+                      );
+                    }})
+                }
             </div>
             <div className={branchStyle.footer}>
               {/* בחר הכול  */}

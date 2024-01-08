@@ -5,9 +5,13 @@
 
 .header{
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
+}
+
+.header span{
+    display: flex;
 }
 
 .title{
@@ -89,6 +93,24 @@ cursor: pointer;
         border-width: 10px 10px 10px 10px;
         border-color:  #082A3A transparent transparent transparent;
     }
+}
+
+.blocked{
+    width: 205px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 23px;
+    font-family: 'IBM Plex Sans Hebrew';
+    font-style: normal;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    background: #082A3A 0% 0% no-repeat padding-box;
+    margin-left: 9px;
+    cursor: pointer;
 }
 
 .body{

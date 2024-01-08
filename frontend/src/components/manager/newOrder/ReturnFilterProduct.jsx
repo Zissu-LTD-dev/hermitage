@@ -38,6 +38,10 @@ function ReturnFilterProduct() {
     useEffect(() => {
       if (state.displayFilters.length != 0) filterProducts();
       if (state.search != '' ) searchProducts();
+
+      if(state.search == '' && state.displayFilters.length == 0) {
+        setProducts([]);
+      }
     }, [state.displayFilters, state.search]);
   
   

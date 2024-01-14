@@ -37,6 +37,12 @@ const ProductReturn = ({ productData }) => {
     if(!active){
       dispatch({ type: "REMOVE_RETURNED_PRODUCT", payload: barcode });
       setQuantity(0);
+    }else{
+      setQuantity(1);
+      dispatch({
+        type: "ADD_RETURNED_PRODUCT",
+        payload: { ...productData, quantity: quantity + 1 },
+      });
     }
   }, [active]);
 

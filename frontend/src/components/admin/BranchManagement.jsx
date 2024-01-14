@@ -51,7 +51,9 @@ function BranchManagement() {
   }, [showBlocked])
 
   useEffect(() => {
-    setShowBlocked(false);
+    if( showBlocked && active == "byProvider" ) {
+      setShowBlocked(false);
+    }
   }, [active])
 
   return (

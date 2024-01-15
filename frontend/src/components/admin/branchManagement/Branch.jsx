@@ -13,9 +13,9 @@ function Branch({branchData, filtersProviders, showBlocked}) {
   const [open, setOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [providersList, setProvidersList] = useState([]);
+  const [providersNum, setProvidersNum] = useState(state.providers.length);
 
   let { _id, name, blockedProviders: blockedProvidersList } = branchData;
-  let providersNum = state.providers.length;
 
   const added = (providerNumber) => {
     if (!providersList.includes(providerNumber)) setProvidersList((providersList) => [...providersList, providerNumber]);
@@ -65,8 +65,10 @@ const unblockedProviders = async() => {
 
   useEffect(() => {
     if (filtersProviders.length > 0) {
+      setProvidersNum(filtersProviders.length);
       setIsFiltered(true);
     } else {
+      setProvidersNum(state.providers.length);
       setIsFiltered(false);
     }
   }, [filtersProviders]);
@@ -75,6 +77,14 @@ const unblockedProviders = async() => {
     setIsChecked(false);
     setProvidersList([]);
   }, [isFiltered]);
+
+  useEffect(() => {
+    if (showBlocked) {
+      setProvidersNum(blockedProvidersList.length);
+    } else {
+      setProvidersNum(state.providers.length);
+    }
+  }, [showBlocked, blockedProvidersList]);
 
   return (
     <>

@@ -8,8 +8,8 @@ const ProductReturn = ({ productData }) => {
   const { state, dispatch } = useMainContext();
 
   let { image, name, providerName, categoryName, barcode } = productData;
-  const [active, setActive] = useState(false);
-  const [quantity, setQuantity] = useState(0);
+  const [active, setActive] = useState(productData.quantity ? true : false);
+  const [quantity, setQuantity] = useState(productData.quantity ? productData.quantity : 1);
 
   const onIncrease = () => {
     setQuantity(quantity + 1);
@@ -36,15 +36,26 @@ const ProductReturn = ({ productData }) => {
   useEffect(() => {
     if(!active){
       dispatch({ type: "REMOVE_RETURNED_PRODUCT", payload: barcode });
-      setQuantity(0);
-    }else{
       setQuantity(1);
+    }
+    if(active){
       dispatch({
         type: "ADD_RETURNED_PRODUCT",
-        payload: { ...productData, quantity: quantity + 1 },
+        payload: { ...productData, quantity: quantity },
       });
     }
   }, [active]);
+
+  useEffect(() => {
+    if (state.returnedProducts.length != []) {
+      state.returnedProducts.forEach((product) => {
+        if (product.barcode === barcode) {
+          setQuantity(product.quantity);
+          setActive(true);
+        }
+      });
+    }
+  }, [state.displayFilters, state.searchResults]);
 
   return (
     <div className={product.main}>

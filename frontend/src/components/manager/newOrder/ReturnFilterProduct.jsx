@@ -47,13 +47,24 @@ function ReturnFilterProduct() {
   
     return (
       <>
+      {products.length > 0 && 
         <div className={filterProductStyle.main}>
-          {products.map((product, i) => (
+          {products.map((product) => (
             <div className={filterProductStyle.product}>
-                <ProductReturn key={i} productData={product} />
+                <ProductReturn key={product.barcode} productData={product} />
             </div>
           ))}
         </div>
+      }
+      { (!state.displayFilters.length && !state.search) &&
+        <div className={filterProductStyle.main}>
+        {state.returnedProducts.map((product) => (
+          <div className={filterProductStyle.product}>
+              <ProductReturn key={product.barcode} productData={product} />
+          </div>
+        ))}
+      </div>
+      }
       </>
     );
   }

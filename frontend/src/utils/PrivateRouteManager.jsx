@@ -18,6 +18,8 @@ function PrivateRouteManager({ children }) {
       setIsAuthenticated(true);
       setLoading(false);
     } else {
+      // delete cookie
+      cookie.remove("token");
       setLoading(false);
       setRole(null);
       setIsAuthenticated(false);

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import column from "../../../assets/css/manager/newOrder/Column.module.css";
 import { useMainContext } from "../../../context/mainContext/MainContext";
+import ImagingColumn from "../ImagingColumn/ImagingColumn";
 import Row from "./Row";
 import ProductOrder from "./ProductOrder";
 import ProductReturn from "./ProductReturn";
@@ -8,6 +9,7 @@ import ProductReturn from "./ProductReturn";
 function Column({ name, num, products }) {
   const { state, dispatch } = useMainContext();
 
+  const [showImaging, setShowImaging] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeRow, setActiveRow] = useState(false);
 
@@ -73,28 +75,32 @@ function Column({ name, num, products }) {
   return (
     <>
       {!open && (
-        <div className={column.main} onClick={() => setOpen(true)}>
-          <span>
+        <div className={column.main} >
+          <span onClick={() => setOpen(true)} >
             <i className={column.main__icon}></i>
             <div className={column.title}>עמודה: {name}</div>
           </span>
           <span>
-            <i className={column.imaging}></i>
-            <i className={column.opening__arrow}></i>
+            <i className={column.imaging} onClick={() => setShowImaging(true)}>
+              <ImagingColumn name={name} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} />
+            </i>
+            <i className={column.opening__arrow} onClick={() => setOpen(true)}></i>
           </span>
         </div>
       )}
 
       {open && (
         <div className={column.main__open} >
-          <div className={column.main} onClick={() => setOpen(false)}>
-            <span>
+          <div className={column.main} >
+            <span onClick={() => setOpen(false)}>
               <i className={column.main__icon}></i>
               <div className={column.title}>עמודה: {name}</div>
             </span>
             <span>
-              <i className={column.imaging}></i>
-              <i className={column.closing__arrow}></i>
+              <i className={column.imaging} onClick={() => setShowImaging(true)}>
+                <ImagingColumn name={name} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} />
+              </i>
+              <i className={column.closing__arrow} onClick={() => setOpen(false)} ></i>
             </span>
           </div>
 

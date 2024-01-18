@@ -8,11 +8,11 @@ function Navbar() {
   return (
     <>
       <div className={navbar.navbar}>
-        <span>
+        <span className={navbar.navbar__right} >
           <Filters />
           <Search />
         </span>
-        <span>
+        <span className={navbar.navbar__left} >
           <DocInfo />
         </span>
       </div>

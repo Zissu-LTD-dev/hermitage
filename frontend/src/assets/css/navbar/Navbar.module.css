@@ -10,15 +10,16 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 3;
+    z-index: 10;
 }
 
-.navbar span:nth-child(1){
+.navbar .navbar__right{
+    max-width: calc(100% - 100px);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.navbar span:nth-child(2){
+.navbar .navbar__left{
     height: 100%;
 }

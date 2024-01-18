@@ -1,7 +1,16 @@
+import { useEffect, useState } from "react";
 import docInfo from "../../../assets/css/navbar/DocInfo.module.css";
+import useFetch from "../../../hooks/useFetch";
 
 function DocInfo() {
-  const docNum = 4;
+  const { data, loading, error } = useFetch("admin/allDocuments");
+  const [docNum, setDocNum] = useState(0);
+
+  useEffect(() => {
+
+    if (!data) return;
+    setDocNum(data.documents.length);
+  }, [data]);
 
   return (
     <>

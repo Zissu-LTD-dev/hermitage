@@ -18,6 +18,7 @@ function Sidebar({ branchName }) {
   };
 
   const changeStatus = (status) => {
+    if(status == "new order") dispatch({ type: "CLEAR_ORDER" });
     dispatch({ type: "SET_STATUS", payload: status });
   };
 

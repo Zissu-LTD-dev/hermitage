@@ -48,6 +48,12 @@ function Wizard() {
     }
   }, [step]);
 
+  useEffect(() => {
+    if (state.statusOrder.step === 1) {
+      setStep(2);
+    }
+  }, [state.statusOrder]);
+
   return (
     <>
       <div className={wizardStyle.main}>

@@ -50,8 +50,8 @@ function ReturnFilterProduct() {
       {products.length > 0 && 
         <div className={filterProductStyle.main}>
           {products.map((product) => (
-            <div className={filterProductStyle.product}>
-                <ProductReturn key={product.barcode} productData={product} />
+            <div key={product._id} className={filterProductStyle.product}>
+                <ProductReturn  productData={product} />
             </div>
           ))}
         </div>
@@ -59,8 +59,8 @@ function ReturnFilterProduct() {
       { (!state.displayFilters.length && !state.search) &&
         <div className={filterProductStyle.main}>
         {state.returnedProducts.map((product) => (
-          <div className={filterProductStyle.product}>
-              <ProductReturn key={product.barcode} productData={product} />
+          <div key={product._id} className={filterProductStyle.product}>
+              <ProductReturn  productData={product} />
           </div>
         ))}
       </div>

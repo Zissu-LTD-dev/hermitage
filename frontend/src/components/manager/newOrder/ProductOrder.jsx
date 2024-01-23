@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import product from '../../../assets/css/manager/newOrder/ProductOrder.module.css';
 import { useMainContext } from '../../../context/mainContext/MainContext';
 
@@ -26,6 +26,14 @@ const ProductOrder = ({productData}) => {
         }}
 
       }
+
+    useEffect(() => {
+      state.orderedProducts.forEach((product) => {
+        if (product.barcode === barcode) {
+          setQuantity(product.quantity);
+        }
+      });
+    }, [productData]);
     
     return (
         <div className={product.product}>

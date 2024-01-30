@@ -31,6 +31,9 @@ function Category( {num, name, icon, active, changeActive} ) {
     case 8:
       icon = snowflake;
       break;
+    case 9:
+      icon = shelves;
+      break;
      }
 
   return (

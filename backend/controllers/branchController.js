@@ -10,6 +10,18 @@ const {
     Providers,
     User,
   } = require("../models");
+const { sendMail, verify } = require("../functions/sendMail");
+
+const sendOrderMail = async (branch, provider, productsOrder) => {
+    let subject = `הזמנה חדשה מסניף ${branch.name}, עבור : ${provider}`;
+    let data = {
+        branch,
+        provider,
+        productsOrder
+    }
+    let info = await sendMail(subject, data);
+    return info;
+}
 
 // getProducts
 const getProducts = async (req, res) => {
@@ -51,7 +63,9 @@ const getFilters = async (req, res) => {
   // createOrder
 const createOrder = async (req, res) => {
     let {branch, summary} = req.body;
-  
+  // get blockedProviders from branch 
+  let blockedProviders = await Branch.findById(branch.idNumber, {blockedProviders: 1, _id: 0});
+
   let orderNum = await Order.findOne().sort("-orderNum")
   let returnNum = await Return.findOne().sort("-returnNum")
   orderNum = orderNum ? orderNum.orderNum + 1 : 1
@@ -73,6 +87,7 @@ const createOrder = async (req, res) => {
           totalPrice: order.sumTotal,
         });
         await orderEntity.save();
+        await sendOrderMail(branch, order.providerName, order.productsOrder);
       }
   
       if(order.productsReturn.length){

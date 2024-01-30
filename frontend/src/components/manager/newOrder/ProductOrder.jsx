@@ -9,6 +9,7 @@ const ProductOrder = ({productData}) => {
   const { state, dispatch } = useMainContext();
 
     let { image, name, providerName, categoryName,  barcode } = productData;
+    let QuantityPerCase = 2; // TODO: get from API
     const [quantity, setQuantity] = useState(0);
     
       const onIncrease = () => {
@@ -39,6 +40,7 @@ const ProductOrder = ({productData}) => {
         <div className={product.product}>
             <img src={image ? image : imgProduct } alt={name} />
             <h2>{name}</h2>
+            {QuantityPerCase ? <p>כמות באריזה: {QuantityPerCase}</p> : null}
             <p>{providerName}</p>
             <p>{categoryName}</p>
             <p>{barcode}</p>

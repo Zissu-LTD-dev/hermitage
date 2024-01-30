@@ -16,6 +16,7 @@ function Departments() {
     { num: 6, name: "מקרר",                     icon: "", active: false },
     { num: 7, name: "מזון",                     icon: "", active: false },
     { num: 8, name: "מחלקות + אביזרים נלווים", icon: "", active: false },
+    { num: 9, name: "מחלקות + אביזרים נלווים", icon: "", active: false },
   ]);
 
   const changeActive = (num) => {

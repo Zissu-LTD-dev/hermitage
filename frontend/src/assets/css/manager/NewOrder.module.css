@@ -8,12 +8,12 @@
 .header {
   display: flex;
   /* justify-content: space-between; */
-  align-items: center;
+  /* align-items: center; */
   margin-bottom: 25px;
 }
 
 .title {
-    width: 268px;
+    width: 410px;
   font-size: 28px;
   font-weight: 500;
   line-height: 37px;
@@ -25,10 +25,12 @@
 }
 
 .categories {
+  /* min-height: 140px; */
+  height: auto;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  align-items: center;
+  /* align-items: center; */
   justify-content: flex-end;
   overflow-x: hidden;
   overflow-y: hidden;

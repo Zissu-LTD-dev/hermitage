@@ -4,9 +4,9 @@
   justify-content: center;
   align-items: center;
 border-left: 1px solid #be965d00;
-/* border-bottom: 1px solid #be965d00; */
-  width: 256px;
-  height: 67px;
+border-bottom: 1px solid #be965d00;
+  width: 255px;
+  height: 70px;
   background: #082a3a 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #082a3a05;
     cursor: pointer;

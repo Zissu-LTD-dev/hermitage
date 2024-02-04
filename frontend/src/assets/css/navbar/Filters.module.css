@@ -80,6 +80,8 @@
 .list__filter h5 {
   width: 100%;
   height: 29px;
+  display: flex;
+  justify-content: space-between;
   margin: 0 0 9.5px 0;
   text-align: right;
   font-size: 22px;
@@ -88,11 +90,25 @@
   font-stretch: normal;
   font-style: normal;
   margin: 15px 0 0 0;
+  padding: 0 0 10px 0 ;
   letter-spacing: 0.44px;
   color: #082a3a;
+  border-bottom: 1px solid #7070705e;
+  cursor: pointer;
+}
+.list__filter__icon{
+  width: 40px;
+  height: 40px;
+  background: transparent url("../../image/manager/Iconionic-ios-arrow-back.svg") 50%
+    50% no-repeat padding-box;
+  margin: 0 0 0 10px;
+  transform: rotate(180deg);
+}
+.list__filter__icon_open{
+  transform: rotate(0deg);
 }
 
-.list__filter .list__filter__detail {
+.list__filter__detail {
   height: 38px;
   padding: 7.5px 0;
   border-top: 1px solid #7070705e;
@@ -158,4 +174,53 @@
 
 .cancel{
   background: #082a3a 0% 0% no-repeat padding-box;
+}
+
+
+.list__search{
+  width: 100%;
+  min-height: 42px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 9.5px 0;
+  text-align: right;
+  font-size: 22px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: medium;
+  font-stretch: normal;
+  font-style: normal;
+  margin: 15px 0 0 0;
+  padding: 0 0 10px 0 ;
+  letter-spacing: 0.44px;
+  color: #082a3a;
+  border-bottom: 1px solid #7070705e;
+  cursor: pointer;
+}
+.list__search input{
+  width: 100%;
+  height: 100%;
+  background: #F4F6F7 0% 0% no-repeat padding-box;
+  border: 1px solid #707070;
+  border-radius: 3px;
+  opacity: 1;
+  padding: 0 10px;
+  font-size: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 0.36px;
+  color: #082a3a;
+}
+
+.list__search__icon{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 0;
+  background: transparent url("../../image/manager/Iconfeather-search.svg") 50%
+    50% no-repeat padding-box;
+  margin: 0 0 0 10px;
 }

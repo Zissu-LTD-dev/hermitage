@@ -99,7 +99,7 @@ function Documents() {
         <div className={documents.body}>
           {data && 
             adminState.documents.map((document, i) => (
-              <Document key={i} document={document} />
+              <Document key={i} dataDocument={document} />
             ))
           }
         </div>

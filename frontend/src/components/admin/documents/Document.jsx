@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import documentStyle from "../../../assets/css/admin/documents/Document.module.css";
 import apiRequest from "../../../services/api";
 import { useMainContext } from "../../../context/mainContext/MainContext";
@@ -9,44 +9,91 @@ const { REACT_APP_BACKEND_URL } = import.meta.env;
 
 
 
-function Document({document}) {
+function Document({dataDocument}) {
   const { state, dispatch } = useMainContext();
   const { state: adminState, dispatch: adminDispatch } = useAdminContext();
   const [branches, setBranches] = useState([]); 
-  const [forTo, setForTo] = useState("all");
+  const [forTo, setForTo] = useState(["all"]);
+  const [openChooseBranch, setOpenChooseBranch] = useState(false);
+  const [shoeBranchesList, setShowBranchesList] = useState(false);
+  const [branchChecked, setBranchChecked] = useState([]);
+
  
-  let {name, date, link} = document;
+  let {name, date, link} = dataDocument;
 
   date = date.split("T")[0].split("-").reverse().join(".");
 
-  const handleBranchChange = async (e) => {
+  const handleBranchChange = (e) => {
     let branchId = e.target.value;
-    let res = await apiRequest(`admin/updateDocument/${document._id}`, "PUT", {branchId});
+    let checked = e.target.checked;
+    if(branchId == "all"){
+      if(checked){
+        setBranchChecked(["all"]);
+      }else{
+        setBranchChecked([]);
+      }
+    }else{
+      console.log('branchId', branchId);
+      if(branchChecked.includes("all")){
+        let newBranchChecked = branches.map((branch) => branch._id);
+        if(newBranchChecked.includes(branchId)){
+          newBranchChecked = newBranchChecked.filter((branch) => branch !== branchId);
+        }else{
+          newBranchChecked.push(branchId);
+        }
+        setBranchChecked(newBranchChecked);
+      }else{
+        if(checked){
+          setBranchChecked([...branchChecked, branchId]);
+        }else{
+          let newBranchChecked = branchChecked.filter((branch) => branch !== branchId);
+          setBranchChecked(newBranchChecked);
+        }
+      }
+    }
+  }
+
+  const handleSend = async () => {
+    if(branchChecked.length === 0){
+      dispatch({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "יש לבחור לפחות סניף אחד" },
+      });
+      setOpenChooseBranch(false);
+      return;
+    }
+    let branchId = branchChecked;
+    let res = await apiRequest(`admin/updateDocument/${dataDocument._id}`, "PUT", {branchId});
     if (!res) {
       dispatch({
         type: "SET_SHOW_ERROR",
         payload: { show: true, message: "העדכון נכשל" },
       });
+      setOpenChooseBranch(false);
       return;
     }
     dispatch({
       type: "SET_SHOW_SUCCESS",
       payload: { show: true, message: "העדכון בוצע בהצלחה" },
     });
-    adminDispatch({ type: "UPDATE_DOCUMENT", payload: {documentId: document._id, branchId} });
-    
-    branches.map((branch) => {
-      if(branchId == "all"){
-        setForTo("כל הסניפים");
-      }else if (branch._id == branchId) {
-        setForTo(branch.name);
-      }
-    });
-    
+    adminDispatch({ type: "UPDATE_DOCUMENT", payload: {documentId: dataDocument._id, branchId: branchChecked} });
+    setOpenChooseBranch(false);
+    setForTo(branchChecked.includes("all") ? ["כל הסניפים"] : branchChecked.map((branch) => {
+      let activeBranch = [];
+      branches.map((b) => {
+        if(b._id == branch){
+          activeBranch.push(b.name);
+        }
+      });
+      return activeBranch;
+    }));
   }
 
+
+
+
   const handleDownload = async () => {
-    let res = await fetch(`${REACT_APP_BACKEND_URL}admin/downloadDocument/${document._id}`, {
+    let res = await fetch(`${REACT_APP_BACKEND_URL}admin/downloadDocument/${dataDocument._id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${cookie.get("token")}`
@@ -58,8 +105,8 @@ function Document({document}) {
   }
 
   const handleDelete = async () => {
-    // delete document from db
-    let res = await apiRequest(`admin/deleteDocument/${document._id}`, "DELETE");
+    // delete dataDocument from db
+    let res = await apiRequest(`admin/deleteDocument/${dataDocument._id}`, "DELETE");
 
     if (!res) {
       dispatch({
@@ -72,7 +119,7 @@ function Document({document}) {
       type: "SET_SHOW_SUCCESS",
       payload: { show: true, message: "המחיקה בוצעה בהצלחה" },
     });
-    adminDispatch({ type: "DELETE_DOCUMENT", payload: document._id });
+    adminDispatch({ type: "DELETE_DOCUMENT", payload: dataDocument._id });
 
   }
 
@@ -80,15 +127,23 @@ function Document({document}) {
     if (adminState.branches.length > 0) {
       setBranches(adminState.branches);
     }
-  }, []);
+  }, [adminState.branches]);
 
   useEffect(() => {
     if (branches.length === 0) return;
-    if(document.forTo != "all") {
-      let branchName = branches.find(branch => branch._id === document.forTo[0]);
-      setForTo(branchName.name);
+    if(dataDocument.forTo != "all") {
+      let activeBranch = [];
+      let checkedBranches = [];
+      branches.map((branch) => {
+        if(dataDocument.forTo.includes(branch._id)){
+          activeBranch.push(branch.name);
+          checkedBranches.push(branch._id);
+        }
+      });
+      setForTo(activeBranch);
+      setBranchChecked(checkedBranches);
     }else{
-      setForTo("כל הסניפים");
+      setForTo(["כל הסניפים"]);
     }
   }, [branches]);
 
@@ -98,15 +153,55 @@ function Document({document}) {
         <span>
           <div className={documentStyle.name}>{name}</div>
           <div className={documentStyle.date}>{date}</div>
+          {forTo.includes("כל הסניפים") && <div className={documentStyle.forTo} >כל הסניפים</div> }
+          {!forTo.includes("כל הסניפים") && 
+            <div className={documentStyle.show_main_branch}>
+              <div className={documentStyle.show_branch} onClick={() => setShowBranchesList(!shoeBranchesList)}>
+                לסניפים
+                <div className={!shoeBranchesList ? documentStyle.arrow_down + " " + documentStyle.arrow : documentStyle.arrow}></div>
+              </div>
+              {shoeBranchesList &&
+                <div className={documentStyle.list_branches}>
+                  {forTo.map((branch, index) => {
+                    return <div key={index}>{branch}</div>
+                  })}
+                </div>
+              }
+            </div>
+          }
         </span>
         <span>
-          <select className={documentStyle.select_branch} value={forTo} onChange={handleBranchChange} >
-            {forTo != "all" && <option disabled value={forTo}>{forTo}</option> }
-            <option value="all">כל הסניפים</option>
-            {branches.map((branch) => {
-              return <option key={branch._id} value={branch._id}>{branch.name}</option>;
-            })}
-          </select>
+        <div className={documentStyle.select_branch} >
+          <div className={documentStyle.choose_branch} onClick={() => setOpenChooseBranch(!openChooseBranch)}>
+            בחר סניפים
+            <div className={!openChooseBranch ? documentStyle.arrow_down + " " + documentStyle.arrow : documentStyle.arrow}></div>
+          </div>
+          {openChooseBranch && 
+            <>
+            <div className={documentStyle.branches}>
+              <div >
+                <input onChange={handleBranchChange} type="checkbox" id="all" name="all" value="all"
+                checked={branchChecked.includes("all") ? true : false}
+                />
+                <label htmlFor="all">כל הסניפים</label>
+              </div>
+              {branches.map((branch, index) => {
+                return (
+                  <div key={index} >
+                    <input onChange={handleBranchChange} type="checkbox" id={branch._id} name={branch._id} value={branch._id}
+                    checked={branchChecked.includes("all") || branchChecked.includes(branch._id) ? true : false}
+                    />
+                    <label htmlFor={branch._id}>{branch.name}</label>
+                  </div>
+                );
+              })}
+              <div className={documentStyle.send} onClick={handleSend}>
+                <button>שלח</button>
+              </div>
+            </div>
+            </>
+          }
+        </div>
           <div className={documentStyle.download} onClick={handleDownload}></div>
           <div className={documentStyle.delete} onClick={handleDelete}></div>
         </span>

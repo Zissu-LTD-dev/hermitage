@@ -149,7 +149,7 @@ const downloadDocument = async (req, res) => {
 const updateDocument = async (req, res) => {
   let documentId = req.params.id;
   let document = await Document.findById(documentId);
-  document.forTo = [req.body.branchId];
+  document.forTo = req.body.branchId ;
   await document.save();
   res.status(200).json({message: 'The document was successfully updated'});
 };

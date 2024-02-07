@@ -35,7 +35,12 @@
 
 .orderNum {
   text-align: right;
-  font: normal normal 600 18px/23px IBM Plex Sans Hebrew;
+  /* font: normal normal 600 18px/23px IBM Plex Sans Hebrew; */
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 23px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
   letter-spacing: 0px;
   color: #082a3a;
   height: 29px;
@@ -47,7 +52,12 @@
 
 .date {
   text-align: right;
-  font: normal normal normal 18px/23px IBM Plex Sans Hebrew;
+  /*font: normal normal normal 18px/23px IBM Plex Sans Hebrew;*/
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
   letter-spacing: 0px;
   height: 29px;
   padding: 0 35px ;
@@ -57,7 +67,12 @@
 
 .provider {
   padding: 0 35px ;
-  font: normal normal normal 18px/23px IBM Plex Sans Hebrew;
+  /*font: normal normal normal 18px/23px IBM Plex Sans Hebrew;*/
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
   letter-spacing: 0px;
   color: #082a3a;
 }
@@ -72,7 +87,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font: normal normal normal 15px/19px IBM Plex Sans Hebrew;
+  /*font: normal normal normal 15px/19px IBM Plex Sans Hebrew;*/
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
   letter-spacing: 0px;
   color: #ffffff;
   background: #cc7752 0% 0% no-repeat padding-box;

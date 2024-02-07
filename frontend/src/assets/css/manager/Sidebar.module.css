@@ -59,7 +59,11 @@
 
 .sidebar .menu div span {
   text-align: right;
-  font: normal normal normal 18px/23px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 18px/23px IBM Plex Sans Hebrew; */
+  font-size: 18px;
+  font-weight: normal;
+  font-family: "IBM Plex Sans Hebrew";
+  line-height: 23px;
   letter-spacing: 0.36px;
   color: #ffffff;
 }
@@ -83,7 +87,11 @@
 
 .sidebar .connectedBy div p {
   text-align: right;
-  font: normal normal normal 15px/19px IBM Plex Sans Hebrew;
+  /*font: normal normal normal 15px/19px IBM Plex Sans Hebrew;*/
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "IBM Plex Sans Hebrew";
+  line-height: 19px;
   letter-spacing: 0.3px;
   color: #ffffff;
   margin: 0;
@@ -91,7 +99,11 @@
 
 .sidebar .connectedBy div p .branch_name {
   text-align: right;
-  font: normal normal bold 15px/19px IBM Plex Sans Hebrew;
+  /*font: normal normal bold 15px/19px IBM Plex Sans Hebrew;*/
+  font-size: 15px;
+  font-weight: bold;
+  font-family: "IBM Plex Sans Hebrew";
+  line-height: 19px;
   letter-spacing: 2px;
   color: #ffffff;
 }
@@ -99,7 +111,11 @@
 .sidebar .connectedBy div a {
     text-align: right;
     text-decoration: underline;
-    font: normal normal normal 13px/17px IBM Plex Sans Hebrew;
+    /*font: normal normal normal 13px/17px IBM Plex Sans Hebrew;*/
+    font-size: 13px;
+    font-weight: normal;
+    font-family: "IBM Plex Sans Hebrew";
+    line-height: 17px;
     letter-spacing: 0.5px;
     color: #BE955D; 
     cursor: pointer;

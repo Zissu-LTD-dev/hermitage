@@ -22,7 +22,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
-  font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
+  /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
   color: #082a3a;
 }
 
@@ -30,7 +34,11 @@
   width: 90%;
   margin: 0;
   text-align: center;
-  font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew; */
+  font-size: 11px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  line-height: 14px;
   color: #9eaaaf;
 }
 
@@ -57,7 +65,11 @@
 
 .product div span {
   color: #082a3a;
-  font: normal normal normal 14px/18px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  line-height: 18px;
 }
 
 /* decrease */

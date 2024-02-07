@@ -48,9 +48,13 @@ background: #BE955D 0% 0% no-repeat padding-box;
 }
 
 .addProductText{
-    font: normal normal medium 16px/20px IBM Plex Sans Hebrew;
-letter-spacing: 0px;
-color: #FFFFFF;
+    /* font: normal normal medium 16px/20px IBM Plex Sans Hebrew; */
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
 }
 
 .uploadProducts{
@@ -70,7 +74,11 @@ background: #082A3A 0% 0% no-repeat padding-box;
 }
 
 .uploadProductsText{
-    font: normal normal medium 16px/20px IBM Plex Sans Hebrew;
+    /* font: normal normal medium 16px/20px IBM Plex Sans Hebrew; */
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
     letter-spacing: 0px;
     color: #FFFFFF;
 }

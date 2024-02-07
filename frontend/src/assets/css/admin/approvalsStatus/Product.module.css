@@ -30,12 +30,21 @@
 }
 
 .name {
-  font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
+  /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
   color: #082a3a;
 }
 
 .category , .barcode {
-  font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew;   */
+  font-size: 11px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  line-height: 14px;
   margin-left: 42px;
   color: #9eaaaf;
 }
@@ -58,7 +67,11 @@
 }
 
 .quantityNum {
-  font: normal normal normal 14px/18px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  line-height: 18px;
   color: #082a3a;
 }
 

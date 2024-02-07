@@ -24,7 +24,12 @@
   .name {
     width: 315px;
     height: 35px;
-    font: normal normal 600 18px/23px IBM Plex Sans Hebrew;
+    /* font: normal normal 600 18px/23px IBM Plex Sans Hebrew; */
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 23px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-style: normal;
     letter-spacing: 0px;
     color: #082a3a;
     border-left: 1px solid #70707054;
@@ -32,7 +37,11 @@
   }
   
   .nums {
-    font: normal normal normal 18px/23px IBM Plex Sans Hebrew;
+    /* font: normal normal normal 18px/23px IBM Plex Sans Hebrew; */
+    font-size: 18px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 23px;
     letter-spacing: 0px;
     color: #082a3a;
     padding: 0 39px 0 29px;
@@ -67,7 +76,12 @@
   .selectAll {
     display: flex;
     align-items: center;
-    font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
+    /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 18px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-style: normal;
     letter-spacing: 0px;
     color: #082a3a;
   }
@@ -87,7 +101,11 @@
   
   .noNeed,
   .need {
-    font: normal normal medium 14px/18px IBM Plex Sans Hebrew;
+    /* font: normal normal medium 14px/18px IBM Plex Sans Hebrew; */
+    font-size: 14px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 18px;
     letter-spacing: 0px;
     width: 309px;
     height: 33px;

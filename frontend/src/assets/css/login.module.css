@@ -91,7 +91,11 @@ border: 1px solid #184B63;
 
 .input::placeholder {
   text-align: right;
-  font: normal normal normal 16px/20px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 16px/20px IBM Plex Sans Hebrew;*/
+  font-size: 16px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 20px;
   letter-spacing: 0px;
   color: #041f2b;
 }

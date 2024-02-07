@@ -56,9 +56,13 @@ color: #082A3A;
 }
 
 .Text{
-    font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
-letter-spacing: 0px;
-color: #9EAAAF;
+    /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew; */
+    font-size: 11px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 14px;
+    letter-spacing: 0px;
+    color: #9EAAAF;
 }
 
 .productDelete{

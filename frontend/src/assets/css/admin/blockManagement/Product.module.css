@@ -44,7 +44,12 @@
 }
 
 .name {
-  font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
+  /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
   letter-spacing: 0px;
   color: #082a3a;
 }
@@ -52,7 +57,11 @@
 .provider,
 .category,
 .barcode {
-  font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew; */
+  font-size: 11px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  line-height: 14px;
   letter-spacing: 0px;
   color: #9eaaaf;
   margin-left: 45px;

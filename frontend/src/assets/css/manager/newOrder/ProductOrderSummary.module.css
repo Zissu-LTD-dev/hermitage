@@ -31,7 +31,12 @@
 .product h2 {
   /* width: 90px; */
   text-align: right;
-  font: normal normal 600 14px/18px IBM Plex Sans Hebrew;
+  /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
   letter-spacing: 0px;
   color: #082a3a;
 }
@@ -39,7 +44,12 @@
 .product p {
   width: 150px;
   text-align: center;
-  font: normal normal normal 11px/14px IBM Plex Sans Hebrew;
+  /*font: normal normal normal 11px/14px IBM Plex Sans Hebrew;*/
+  font-size: 11px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 14px;
   letter-spacing: 0px;
   margin: 0 21px;
   color: #9EAAAF;
@@ -65,7 +75,12 @@
 
 .product .buttons .quantityNum {
   color: #082a3a;
-  font: normal normal normal 14px/18px IBM Plex Sans Hebrew;
+  /*font: normal normal normal 14px/18px IBM Plex Sans Hebrew;*/
+  font-size: 14px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 18px;
 }
 
 /* decrease */

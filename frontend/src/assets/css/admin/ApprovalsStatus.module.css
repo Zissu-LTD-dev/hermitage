@@ -47,7 +47,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font: normal normal normal 15px/19px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
+  font-size: 15px;
+  font-family: 'IBM Plex Sans Hebrew';
+  font-weight: normal;
+  line-height: 19px;
   letter-spacing: 0px;
   color: #FFFFFF;
   background: #cc7752 0% 0% no-repeat padding-box;
@@ -60,7 +64,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font: normal normal normal 15px/19px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
+  font-size: 15px;
+  font-family: 'IBM Plex Sans Hebrew';
+  font-weight: normal;
+  line-height: 19px;
   letter-spacing: 0px;
   color: #FFFFFF;
   background: #79B551 0% 0% no-repeat padding-box;
@@ -74,7 +82,11 @@
   justify-content: center;
   align-items: center;
   background: #082A3A 0% 0% no-repeat padding-box;
-  font: normal normal normal 15px/19px IBM Plex Sans Hebrew;
+  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
+  font-size: 15px;
+  font-family: 'IBM Plex Sans Hebrew';
+  font-weight: normal;
+  line-height: 19px;
   letter-spacing: 0px;
   color: #FFFFFF;
   cursor: pointer;

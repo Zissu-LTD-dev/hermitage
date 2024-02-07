@@ -124,6 +124,12 @@ function BlockManagement() {
     }
   }, [state.providers, state.categories]);
 
+  useEffect(() => {
+    if(showProducts.length == 0 && state.search == "" ){
+      showBlockedProducts();
+    }
+  }, [showProducts]);
+
   return (
     <>
       <div className={blockManagement.main}>
@@ -144,7 +150,7 @@ function BlockManagement() {
             })
           }
         </div>
-        {showProducts.length != [] && (
+        {showProducts.length !== 0  && (
           <div className={blockManagement.footer}>
             <div className={blockManagement.selectAll}>
               <input type="checkbox" onChange={() => setCheckedAll(!checkedAll)} checked={checkedAll}/>

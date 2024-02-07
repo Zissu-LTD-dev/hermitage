@@ -23,6 +23,7 @@ function PrivateRouteManager({ children }) {
       setLoading(false);
       setRole(null);
       setIsAuthenticated(false);
+      return <Navigate to="/" replace />;
     }
   }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import apiRequest from "../../../services/api.js"; //endpoint, method = "GET", payload = null
 import providerStyle from "../../../assets/css/admin/branchManagement/Provider.module.css"
 import { useMainContext } from "../../../context/mainContext/MainContext";
@@ -11,9 +11,9 @@ function Provider({providerData}) {
   const [open, setOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [branchesList, setBranchesList] = useState([]);
-
+  const [branchesNum, setBranchesNum] = useState(state.branches.length);
+  
   let { name, number } = providerData;
-  let branchesNum = state.branches.length;
 
   const added = (branchID) => {
     if (!branchesList.includes(branchID)) setBranchesList((branchesList) => [...branchesList, branchID]);

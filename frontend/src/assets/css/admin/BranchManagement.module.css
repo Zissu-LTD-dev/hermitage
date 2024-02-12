@@ -113,6 +113,10 @@ cursor: pointer;
     cursor: pointer;
 }
 
+.blockedByProvider{
+    opacity: 0.7;
+}
+
 .body{
     max-height: calc(100vh - 196px);
     overflow-y: auto;

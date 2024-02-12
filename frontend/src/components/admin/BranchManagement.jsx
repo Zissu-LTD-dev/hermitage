@@ -44,11 +44,11 @@ function BranchManagement() {
     }
   }, [state.displayFilters]);
 
-  useEffect(() => {
-    if (showBlocked) {
-      setActive("byBranch");
-    }
-  }, [showBlocked])
+  // useEffect(() => {
+  //   if (showBlocked) {
+  //     setActive("byBranch");
+  //   }
+  // }, [showBlocked])
 
   useEffect(() => {
     if( showBlocked && active == "byProvider" ) {
@@ -82,7 +82,11 @@ function BranchManagement() {
             </div>
           </div>
         </span>
-        <div className={branchManagement.blocked} onClick={() => setShowBlocked(!showBlocked)}>{showBlocked ? "הצג הכול" : "הצג חסומים"}</div>
+        <div 
+          className={active == 'byBranch' ? branchManagement.blocked : branchManagement.blocked + " " + branchManagement.blockedByProvider } 
+          onClick={() => setShowBlocked(active == 'byBranch' ? !showBlocked : null )}>
+            {showBlocked ? "הצג הכול" : "הצג חסומים"}
+        </div>
       </div>
       <div className={branchManagement.body}>
         {active == "byProvider" ? (

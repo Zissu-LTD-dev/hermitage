@@ -15,6 +15,7 @@ const connectDB = require('./db/connect.js')
 
 // routes
 const { authRouter } = require('./routers/authRouter.js')
+const { fileUploadRouter } = require('./routers/fileUploadRouter.js')
 const { adminRouter } = require('./routers/adminRouter.js')
 const { branchRouter } = require('./routers/branchRouter.js')
 
@@ -34,6 +35,8 @@ app.use(cors())
 
 
 app.use('/api/v1/auth', authRouter);
+// TODO: add authAdmin middleware
+app.use('/api/v1/admin/file-upload', fileUploadRouter);
 app.use('/api/v1/admin', authAdmin , adminRouter);
 app.use('/api/v1/manager', authManager, branchRouter);
 

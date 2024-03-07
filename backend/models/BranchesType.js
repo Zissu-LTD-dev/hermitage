@@ -1,12 +1,12 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const branchTypeSchema = new mongoose.Schema({
-    typeId: {
-        type: Number, 
-        enum: [1,2,3,4]
-      },
-      name: String,
-      color: String
-})
+  typeId: {
+    type: Number,
+    unique: true,
+  },
+  name: String,
+  color: String,
+});
 
-module.exports = mongoose.model('BranchType', branchTypeSchema)
+module.exports = mongoose.model("BranchType", branchTypeSchema);

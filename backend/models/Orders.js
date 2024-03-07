@@ -1,28 +1,40 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-    orderNum: {
-      type: Number,
-      default: 0
+  orderNumber: Number,
+  branchNumber: Number,
+  branchName: String,
+  providerNumber: Number,
+  providerName: String,
+  orderLines: [
+    {
+      product: Object,
+      quantity: Number,
     },
-    branchID: String,
-    branchName: String,
-    provider: Number || String,
-    providerName: String,
-    products: Array,
-    totalOrders: Number,
-    totalReturns: Number,
-    totalPrice: Number,
-    status: {
-      type: String,
-      default: 'pending'
+  ],
+  returnLines: [
+    {
+      product: Object,
+      quantity: Number,
     },
-    note: String,
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      dateOnly: true
-    }
-})
+  ],
+  totalOrderQty: Number,
+  totalReturnQty: Number,
+  totalOrderAmount: Number,
+  totalReturnAmount: Number,
+  orderStatus: {
+    type: String,
+    enum: ["pending", "approved", "canceled"],
+  },
+  returnStatus: {
+    type: String,
+    enum: ["pending", "approved", "canceled"],
+  },
+  notes: String,
+  createdDate: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-module.exports = mongoose.model('Order', orderSchema) 
+module.exports = mongoose.model("Order", orderSchema);

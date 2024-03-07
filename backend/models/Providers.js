@@ -1,18 +1,24 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const providerSchema = new mongoose.Schema({
-    number: Number,
-    name: String,
-    phone: String,
-    email: String,
-    blocked: {
-        type: Boolean,
-        default: false
+  number: {
+    type: Number,
+    unique: true,
+  },
+  name: String,
+  phone: String,
+  email: String,
+  isBlocked: {
+    type: Boolean,
+    default: false,
+  },
+  branchEmails: [
+    {
+      branchNumber: Number,
+      branchName: String,
+      emails: Array,
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now()
-    }
-})
+  ],
+});
 
-module.exports = mongoose.model('Provider', providerSchema)
+module.exports = mongoose.model("Provider", providerSchema);

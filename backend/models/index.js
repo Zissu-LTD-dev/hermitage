@@ -1,28 +1,26 @@
-const User = require('./Users.js')
 const Branch = require('./Branches.js')
 const BranchType = require('./BranchesType.js')
-const Message = require('./Messages.js')
-const Document = require('./Documents.js')
-const Order = require('./Orders.js')
-const Return = require('./Returns.js')
-const Providers = require('./Providers.js')
-const Department = require('./Departments.js')
 const Category = require('./Categories.js')
-const column = require('./Columns.js') 
-const Products = require('./Products.js')
-
+const Document = require('./Documents.js')
+// const LocationProductsConfig = require('./LocationProductsConfig.js')
+const LocationProductsConfig_row = require('./LocationProductsConfig_row.js')
+const Message = require('./Messages.js')
+const Order = require('./Orders.js')
+const Product = require('./Products.js')
+const Provider = require('./Providers.js')
+const SubGroup = require('./SubGroups.js')
+const User = require('./Users.js')
 
 module.exports = {
-    User,
     Branch,
     BranchType,
-    Message,
-    Document,
-    Order,
-    Return,
-    Providers,
-    Department,
     Category,
-    column,
-    Products
+    Document,
+    LocationProductsConfig_row,
+    Message,
+    Order,
+    Product,
+    Provider,
+    SubGroup,
+    User
 }

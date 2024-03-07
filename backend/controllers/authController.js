@@ -39,7 +39,7 @@ const login = async (req, res) => {
   let expiresIn = remember ? '30d' : process.env.JWT_EXPIRE ;
   if (user.role === "admin") {
     token = user.createToken(process.env.JWT_SECRET_ADMIN, expiresIn );
-  } else if (user.role === "branch manager") {
+  } else if (user.role === "manager") {
     token = user.createToken(process.env.JWT_SECRET_MANAGER, expiresIn );
   }
   res.cookie("jwt", token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 });

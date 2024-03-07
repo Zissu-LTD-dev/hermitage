@@ -12,7 +12,7 @@ function PrivateRouteManager({ children }) {
   const [role, setRole] = useState(null);
 
   const checkAuth = async () => {
-    const data = await apiRequest("auth/verify", "GET", null, "branch manager");
+    const data = await apiRequest("auth/verify", "GET", null, "manager");
     if (data.success) {
       setRole(data.role);
       setIsAuthenticated(true);
@@ -32,7 +32,7 @@ function PrivateRouteManager({ children }) {
   }, []);
 
   if (loading) return
-  if (isAuthenticated && role == "branch manager") return children;
+  if (isAuthenticated && role == "manager") return children;
   if (isAuthenticated && role == "admin") return <Navigate to="/admin" replace />;
   return <Navigate to="/" replace />;
 }

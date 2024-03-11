@@ -31,14 +31,14 @@ function Login() {
       setShowError(true);
       return;
     }
-
+    console.log(data);
     const { token, user, branch } = data;
 
     user.branch = branch;
 
     document.cookie = `token=${token}`;
-    localStorage.setItem("user", JSON.stringify(user));
-    dispatch({ type: "SET_USER_INFO", payload: user });
+    await localStorage.setItem("user", JSON.stringify(user));
+    await dispatch({ type: "SET_USER_INFO", payload: user });
 
     if (user.role === "admin") {
       navigate("/admin");

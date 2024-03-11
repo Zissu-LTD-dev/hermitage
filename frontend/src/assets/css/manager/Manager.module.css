@@ -2,6 +2,7 @@
     background-color: #EFF2F3 ;
 }
 
+
 .content{
     width: calc(100vw - 283px);
     height: calc(100vh - 85px);
@@ -12,4 +13,14 @@
     top: 85px;
     left: 0;
     background: #EFF2F3 0% 0% no-repeat padding-box;
+}
+
+.update{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    direction: rtl;
 }

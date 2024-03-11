@@ -1,5 +1,6 @@
 export const initialState = {
   userInfo: {},
+  branchType: null,
   showLoader: false,
   showError: {
     show: false,
@@ -19,9 +20,13 @@ export const initialState = {
     title: "יצירת הזמנה חדשה",
     step: 1,
   },
+
   allProducts: [],
   activeCategory: 1,
+  locationProductsConfig: [],
+
   displayProducts: [],
+  displayProductsConfig: [],
 
   filters: [],
   displayFilters: [],
@@ -30,7 +35,6 @@ export const initialState = {
   searchResults: [],
 
   providers: [],
-  locationProductsConfig: [],
 
   categories: [],
   subGroups: [],
@@ -95,7 +99,11 @@ export const mainReducer = (state, action) => {
       return { ...state, showWarning: action.payload };
 
     case SET_USER_INFO:
-      return { ...state, userInfo: action.payload };
+      return {
+        ...state,
+        userInfo: action.payload,
+        branchType: action.payload.branch.branchTypeNumber,
+      };
 
     // manager 👇
     case SET_STATUS:
@@ -131,19 +139,38 @@ export const mainReducer = (state, action) => {
     case SET_ALL_PRODUCTS:
       return { ...state, allProducts: action.payload };
     case SET_CONFIG_PRODUCTS:
-      return { ...state, locationProductsConfig: action.payload };
+      // סינון לפי סוג הסניף שמחובר
+      let currentTypeBranch = `branchType${state.branchType}`;
+      let newProductsConfig = action.payload.map((config) => {
+        let newConfig = {};
+        for (let key in config) {
+          if (!key.startsWith("branchType")) {
+            newConfig[key] = config[key];
+          }else if (key === currentTypeBranch){
+            newConfig['currentBranch'] = config[key];
+          }
+        }
+        return newConfig;
+      });
+      return { ...state, locationProductsConfig: newProductsConfig };
 
     case SET_ACTIVE_CATEGORY:
       return { ...state, activeCategory: action.payload };
 
     case SET_DISPLAY_PRODUCTS:
-      let typeBranch = state.userInfo.branch;
-      let products = [];
-      // פה צריך לפלטר ולבנות מערך חדש של מוצרים שמתאימים לסוג סניף 
-      // TODO: לסנן את המוצרים לפי סניף
-        
-      console.log(products);
-      return { ...state, displayProducts: products };
+      let products = state.allProducts.filter(
+        (product) => product.category === state.activeCategory
+      );
+
+      let config = state.locationProductsConfig.filter(
+        (config) => config.categoryNumber === state.activeCategory
+      );
+
+      return {
+        ...state,
+        displayProducts: products,
+        displayProductsConfig: config,
+      };
 
     case SET_FILTERS:
       return { ...state, filters: action.payload };

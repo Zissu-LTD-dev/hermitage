@@ -6,10 +6,6 @@ const MainContext = createContext();
 const MainProvider = ({ children }) => {
   const [state, dispatch] = useReducer(mainReducer, initialState);
 
-  useEffect(() => {
-    dispatch({ type: "SET_DISPLAY_PRODUCTS" });
-  }, [state.activeCategory]);
-
   return (
     <MainContext.Provider value={{ state, dispatch }}>
       {children}

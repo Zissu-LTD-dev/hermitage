@@ -7,24 +7,12 @@ function Categories() {
   const { state, dispatch } = useMainContext();
 
   const [categoryList, setCategoryList] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const changeActive = (num) => {
     dispatch({ type: "SET_ACTIVE_CATEGORY", payload: num });
-    setCategoryList(
-      categoryList.map((item) =>
-        item.num === num
-          ? { ...item, active: true }
-          : { ...item, active: false }
-      )
-    );
     dispatch({ type: "SET_DISPLAY_PRODUCTS" });
   };
-
-  useEffect(() => {
-    changeActive(state.activeCategory);
-  }, [isLoaded]);
-
+  
   useEffect(() => {
     if (state.categories.length > 0) {
       let newCategories = state.categories.filter((category) => category.number !== 10);
@@ -37,7 +25,7 @@ function Categories() {
       // sort categories by number
       newCategories.sort((a, b) => a.num - b.num);
       setCategoryList(newCategories);
-      if(categoryList.length > 0) setIsLoaded(true);
+      changeActive(1);
     }
   }, [state.categories]);
 
@@ -51,7 +39,6 @@ function Categories() {
               num={category.num}
               name={category.name}
               icon={category.icon}
-              active={category.active}
             />
           </span>
         ))}

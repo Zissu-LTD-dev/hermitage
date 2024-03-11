@@ -8,7 +8,7 @@ const MainProvider = ({ children }) => {
 
   useEffect(() => {
     dispatch({ type: "SET_DISPLAY_PRODUCTS" });
-  }, [state.activeDepartment]);
+  }, [state.activeCategory]);
 
   return (
     <MainContext.Provider value={{ state, dispatch }}>

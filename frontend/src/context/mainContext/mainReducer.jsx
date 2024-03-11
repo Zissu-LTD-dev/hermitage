@@ -20,7 +20,7 @@ export const initialState = {
     step: 1,
   },
   allProducts: [],
-  activeDepartment: 1,
+  activeCategory: 1,
   displayProducts: [],
 
   filters: [],
@@ -30,8 +30,11 @@ export const initialState = {
   searchResults: [],
 
   providers: [],
+  locationProductsConfig: [],
+
   categories: [],
-  
+  subGroups: [],
+
   orderedProducts: [],
   returnedProducts: [],
   summary: [],
@@ -52,8 +55,12 @@ export const SET_USER_INFO = "SET_USER_INFO";
 export const SET_STATUS = "SET_STATUS";
 export const SET_STATUS_ORDER = "SET_STATUS_ORDER";
 
+export const SET_CATEGORY = "SET_CATEGORY";
+export const SET_SUB_GROUPS = "SET_SUB_GROUPS";
+
 export const SET_ALL_PRODUCTS = "SET_ALL_PRODUCTS";
-export const SET_ACTIVE_DEPARTMENT = "SET_ACTIVE_DEPARTMENT";
+export const SET_CONFIG_PRODUCTS = "SET_CONFIG_PRODUCTS";
+export const SET_ACTIVE_CATEGORY = "SET_ACTIVE_CATEGORY";
 export const SET_DISPLAY_PRODUCTS = "SET_DISPLAY_PRODUCTS";
 
 export const SET_FILTERS = "SET_FILTERS";
@@ -74,11 +81,10 @@ export const CLEAR_ORDER = "CLEAR_ORDER";
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
 
 export const mainReducer = (state, action) => {
-
   switch (action.type) {
     case CLEAR_STATE:
       return initialState;
-    
+
     case SET_SHOW_LOADER:
       return { ...state, showLoader: action.payload };
     case SET_SHOW_ERROR:
@@ -87,10 +93,9 @@ export const mainReducer = (state, action) => {
       return { ...state, showSuccess: action.payload };
     case SET_SHOW_WARNING:
       return { ...state, showWarning: action.payload };
-      
+
     case SET_USER_INFO:
       return { ...state, userInfo: action.payload };
-
 
     // manager 👇
     case SET_STATUS:
@@ -118,47 +123,28 @@ export const mainReducer = (state, action) => {
           statusOrder: { title: "סיכום ואישור הזמנה", step: action.payload },
         };
 
+    case SET_CATEGORY:
+      return { ...state, categories: action.payload };
+    case SET_SUB_GROUPS:
+      return { ...state, subGroups: action.payload };
+
     case SET_ALL_PRODUCTS:
       return { ...state, allProducts: action.payload };
-    case SET_ACTIVE_DEPARTMENT:
-      return { ...state, activeDepartment: action.payload };
+    case SET_CONFIG_PRODUCTS:
+      return { ...state, locationProductsConfig: action.payload };
+
+    case SET_ACTIVE_CATEGORY:
+      return { ...state, activeCategory: action.payload };
 
     case SET_DISPLAY_PRODUCTS:
-      let products = state.allProducts.filter(
-        (product) => product.department === state.activeDepartment
-      );
+      let typeBranch = state.userInfo.branch;
+      let products = [];
+      // פה צריך לפלטר ולבנות מערך חדש של מוצרים שמתאימים לסוג סניף 
+      // TODO: לסנן את המוצרים לפי סניף
+        
+      console.log(products);
+      return { ...state, displayProducts: products };
 
-      let columnNumbers = [];
-      let columnNames = [];
-      let columns = [];
-
-      products.forEach((product) => {
-        if (!columnNumbers.includes(product.columnNumber)) {
-          columnNumbers.push(product.columnNumber);
-          columnNames.push({
-            columnName: product.columnName,
-            number: product.columnNumber,
-          });
-        }
-      });
-
-      columnNames.forEach((columnName) => {
-        let column = {
-          columnName: columnName.columnName,
-          number: columnName.number,
-          products: [],
-        };
-        products.forEach((product) => {
-          if (product.columnNumber === columnName.number) {
-            column.products.push(product);
-          }
-        });
-        columns.push(column);
-      });
-
-      return { ...state, displayProducts: columns };
-
-    
     case SET_FILTERS:
       return { ...state, filters: action.payload };
 
@@ -170,7 +156,6 @@ export const mainReducer = (state, action) => {
 
     case SET_SEARCH_RESULTS:
       return { ...state, searchResults: action.payload };
-
 
     case ADD_ORDERED_PRODUCT:
       let productExists = false;
@@ -273,7 +258,7 @@ export const mainReducer = (state, action) => {
     case CLEAR_ORDER:
       return {
         ...state,
-        statusOrder: { title: "יצירת הזמנה חדשה", step: 1, },
+        statusOrder: { title: "יצירת הזמנה חדשה", step: 1 },
         summary: [],
         orderedProducts: [],
         returnedProducts: [],
@@ -282,7 +267,6 @@ export const mainReducer = (state, action) => {
     case SET_DOCUMENTS:
       return { ...state, documents: action.payload };
 
-      
     default:
       return state;
   }

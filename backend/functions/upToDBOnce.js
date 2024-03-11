@@ -458,6 +458,7 @@ const productsUpdate = async (sheet1, sheet2) => {
         subGroupNumber: row["מס קבוצת משנה"],
         subGroupName: subGroupName,
         packQuantity: row["תאור - כמות בארגז"],
+        category: row["מס קטגוריה "],
         price: row["תאור - עלות קניה"],
         branchTypeConfig: [],
         isBlocked: row['חסום להזמנות - 1 חסום , 2 פתוח'] == 1 ? true : false
@@ -472,7 +473,6 @@ const productsUpdate = async (sheet1, sheet2) => {
           branchTypeConfig.push({
             branchType: row[`סוג סניף`],
             location: {
-              category: row[`מס קטגוריה `],
               column: row[`מס עמודה`],
               shelf: row[`מס מדף`],
               index: row[`מס סידור`],
@@ -484,7 +484,6 @@ const productsUpdate = async (sheet1, sheet2) => {
             branchTypeConfig.push({
               branchType: row[`סוג סניף_${i}`],
               location: {
-                category: row[`מס קטגוריה _${i}`],
                 column: row[`מס עמודה_${i}`],
                 shelf: row[`מס מדף_${i}`],
                 index: row[`מס סידור_${i}`],

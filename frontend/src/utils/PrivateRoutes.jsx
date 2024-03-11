@@ -19,11 +19,13 @@ function PrivateRoute({ children}) {
         setRole(data.role);
       setIsAuthenticated(true);
       setLoading(false);
+      return;
     }
     if (!data.success) {
         setRole(null);
       setIsAuthenticated(false);
       setLoading(false);
+      return Navigate("/");
     }
   }
 

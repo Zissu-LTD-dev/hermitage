@@ -66,11 +66,11 @@ function Column({ name, num, products }) {
           productListElement.removeEventListener("scroll", handleScroll);
         };
       }
-  }, [open, state.activeDepartment]);
+  }, [open, state.activeCategory]);
 
   useEffect(() => {
     setOpen(false);
-  }, [state.activeDepartment]);
+  }, [state.activeCategory]);
 
   return (
     <>

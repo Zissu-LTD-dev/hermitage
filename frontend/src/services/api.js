@@ -32,7 +32,7 @@ const apiRequest = async (endpoint, method = "GET", payload = null, role = null)
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      return response.ok;
+      return false;
       // throw new Error("API request failed");
     }
 

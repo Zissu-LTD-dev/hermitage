@@ -32,7 +32,9 @@ function Login() {
       return;
     }
 
-    const { token, user } = data;
+    const { token, user, branch } = data;
+
+    user.branch = branch;
 
     document.cookie = `token=${token}`;
     localStorage.setItem("user", JSON.stringify(user));

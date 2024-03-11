@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import sidebar from "../../assets/css/manager/Sidebar.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 
@@ -7,8 +8,9 @@ import documents from "../../assets/image/manager/document.svg";
 import branchLayout from "../../assets/image/manager/Iconfeather-eye-1.svg";
 import connectedBy from "../../assets/image/manager/Layer3.svg";
 
-function Sidebar({ branchName }) {
+function Sidebar() {
   const { state, dispatch } = useMainContext();
+  const [branchName, setBranchName] = useState("");
 
   const logoutHandler = () => {
     dispatch({ type: "CLEAR_STATE" });
@@ -21,6 +23,12 @@ function Sidebar({ branchName }) {
     if(status == "new order") dispatch({ type: "CLEAR_ORDER" });
     dispatch({ type: "SET_STATUS", payload: status });
   };
+
+  useEffect(() => {
+    if (state.userInfo.branch) {
+      setBranchName(state.userInfo.branch.name);
+    }
+  } , [state.userInfo]);
 
   return (
     <>

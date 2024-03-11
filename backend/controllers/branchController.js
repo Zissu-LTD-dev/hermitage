@@ -1,13 +1,15 @@
 const {
     Branch,
     Category,
+    SubGroup,
     Notifications,
     Obligations,
     Document,
     Order,
     Return,
-    Products,
-    Providers,
+    Product,
+    LocationProductsConfig_row,
+    Provider,
     User,
   } = require("../models");
 const { sendMail, verify } = require("../functions/sendMail");
@@ -25,34 +27,33 @@ const sendOrderMail = async (branch, provider, productsOrder) => {
 
 // getProducts
 const getProducts = async (req, res) => {
-    const branchId = req.params.branchId;
     // Bring all products that a large or equal brunchtype 
-    const products = await Products.find({
-        $and: [
-            {
-                branchType: {
-                    $gte: branchId
-                }
-            },
-            {
-                blocked: {
-                    $ne: true
-                }
-            }
-        ]
-    });
+    const products = await Product.find({});
+    const locationProductsConfig = await LocationProductsConfig_row.find({});
     
-    res.status(200).json({ 'success': true, 'products': products });
+    res.status(200).json({ 'success': true, 'products': products, 'locationProductsConfig': locationProductsConfig });
+  };
+
+// getCategory  
+const getCategory = async (req, res) => {
+    const category = await Category.find({});
+    res.status(200).json({ category });
+  };
+
+// getSubGroups
+const getSubGroups = async (req, res) => {
+    const subGroups = await SubGroup.find({});
+    res.status(200).json({ subGroups });
   };
 
 
   // getFilters
 const getFilters = async (req, res) => {
-    let categories = await Category.find({}, {name: 1, number: 1, _id: 0});
-    let providers = await Providers.find({status: "active"}, {name: 1, number: 1, _id: 0});
+    let subGroups = await SubGroup.find({}, {name: 1, number: 1, _id: 0});
+    let providers = await Provider.find({isBlocked: false}, {name: 1, number: 1, _id: 0});
 
     let filters = [
-        {title: "קבוצת משנה", details: categories},
+        {title: "קבוצת משנה", details: subGroups},
         {title: "ספק", details: providers}
     ]
 
@@ -135,6 +136,8 @@ const downloadDocument = async (req, res) => {
 
   module.exports = {
     getProducts,
+    getCategory,
+    getSubGroups,
     getFilters,
     createOrder,
     getOrders,

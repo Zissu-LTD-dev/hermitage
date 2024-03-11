@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import newOrder from "../../assets/css/manager/NewOrder.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 
-import Departments from "./newOrder/Departments";
+import Categories from "./newOrder/Categories";
 import Wizard from "./newOrder/Wizard";
 import Column from "./newOrder/Column";
 import ProductOrderSummary from "./newOrder/ProductOrderSummary";
@@ -19,7 +19,6 @@ function DynamicContent() {
   }, []);
 
   useEffect(() => {
-    console.log(state.displayFilters.length);
     if (state.search != "" || state.displayFilters.length != 0) {
       setActiveFiltersSearch(true);
     } else {
@@ -34,7 +33,7 @@ function DynamicContent() {
           <div className={newOrder.title}>{state.statusOrder.title}</div>
           {state.statusOrder.step === 1 && !activeFiltersSearch && (
             <div className={newOrder.categories}>
-              <Departments />
+              <Categories />
             </div>
           )}
         </div>

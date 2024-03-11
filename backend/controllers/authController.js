@@ -1,4 +1,4 @@
-const {User} = require("../models");
+const {User, Branch} = require("../models");
 const jwt = require("jsonwebtoken");
 
 const getUsers = async (req, res) => {
@@ -47,8 +47,12 @@ const login = async (req, res) => {
   user.password = undefined;
   user.createdAt = undefined;
 
+  
+  let branch = await Branch.findOne({ number: user.branch });
 
-  res.status(200).json({ user: user , token });
+  
+
+  res.status(200).json({ user: user , branch, token });
 };
 
 const updateUser = async (req, res) => {

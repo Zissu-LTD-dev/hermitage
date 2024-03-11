@@ -19,13 +19,27 @@ function Manager() {
   const [loading, setLoading] = useState(true);
 
 
-  const getAllProducts = async (branchId) => {
-    const data = await apiRequest(`manager/getProducts/${branchId}`);
+  const getAllProducts = async () => {
+    const data = await apiRequest(`manager/getProducts`);
     if(!data) return false;
     await dispatch({ type: "SET_ALL_PRODUCTS", payload: data.products });
-    await dispatch({ type: "SET_DISPLAY_PRODUCTS" });
+    await dispatch({ type: "SET_CONFIG_PRODUCTS", payload: data.locationProductsConfig });
     return true;
   };
+
+  const getCategory = async () => {
+    const data = await apiRequest("manager/getCategory");
+    if(!data) return false;
+    dispatch({ type: "SET_CATEGORY", payload: data.category });
+    return true;
+  }
+
+  const getSubGroups = async () => {
+    const data = await apiRequest("manager/getSubGroups");
+    if(!data) return false;
+    dispatch({ type: "SET_SUB_GROUPS", payload: data.subGroups });
+    return true;
+  }
 
   const getFilters = async () => {
     const data = await apiRequest("manager/getFilters");
@@ -38,12 +52,14 @@ function Manager() {
     dispatch({ type: "SET_SHOW_LOADER", payload: true });
     if(localStorage.getItem("user")){
       dispatch({ type: "SET_USER_INFO", payload: JSON.parse(localStorage.getItem("user")) });
-      let branchId = JSON.parse(localStorage.getItem("user")).branch.typeNumber;
-      let allProducts = getAllProducts(branchId)
+      // let branchId = JSON.parse(localStorage.getItem("user")).branch.branchTypeNumber ;
+      let allProducts = getAllProducts()
+      let category = getCategory();
+      let subGroups = getSubGroups();
       let filters = getFilters();
-      Promise.all([allProducts, filters]).then((values) => {
+      Promise.all([allProducts, category, subGroups, filters]).then((values) => {
         dispatch({ type: "SET_SHOW_LOADER", payload: false });
-        if(values[0] && values[1]){
+        if(values.every((value) => value)){
           setLoading(false);
           dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הנתונים נטענו בהצלחה" } });
         }else{
@@ -63,7 +79,7 @@ function Manager() {
       {state.showWarning.show && <WarningPopup isShow={state.showWarning.show} message={state.showWarning.message} />}
       
       <div className={manager.main}>
-        <Sidebar branchName={loading ? "" : state.userInfo.branch.name} />
+        <Sidebar />
         <Navbar />
         <div className={manager.content}>
           {state.status == "new order"  && <NewOrder /> }

@@ -5,7 +5,7 @@ import apiRequest from "../../../services/api";
 
 function DocInfo() {
   const { state, dispatch } = useMainContext();
-  const [docNum, setDocNum] = useState(0);
+  const [docNum, setDocNum] = useState(4);
 
     const getDocuments = async (branchId) => {
       let res = await apiRequest(`manager/allDocuments/${branchId}`);
@@ -17,8 +17,8 @@ function DocInfo() {
 
   useEffect(() => {
     if (!state.userInfo.branch) return;
-    let branchId = state.userInfo.branch.idNumber;
-    getDocuments(branchId);
+    // let branchId = state.userInfo.branch.idNumber;
+    // getDocuments(branchId);
   }, [state.userInfo]);
 
   return (

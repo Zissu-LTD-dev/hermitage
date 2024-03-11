@@ -12,11 +12,11 @@ const ProductSchema = new mongoose.Schema({
   subGroupNumber: Number, 
   subGroupName: String,  
   packQuantity: Number,
+  category: Number,
   price: Number,
   branchTypeConfig: [{ 
     branchType: Number,
     location: {
-      category: Number,
       column: Number,
       shelf: Number,
       index: Number  

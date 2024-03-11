@@ -1,4 +1,4 @@
-import department from "../../../assets/css/manager/newOrder/Department.module.css";
+import department from "../../../assets/css/manager/newOrder/Category.module.css";
 import barrel from  "../../../assets/image/categories/barrel.svg"
 import snowflake from  "../../../assets/image/categories/snowflake.svg"
 import food from  "../../../assets/image/categories/11-food.svg"
@@ -29,7 +29,7 @@ function Category( {num, name, icon, active, changeActive} ) {
       icon = food;
       break;
     case 8:
-      icon = snowflake;
+      icon = shelves;
       break;
     case 9:
       icon = shelves;
@@ -42,7 +42,7 @@ function Category( {num, name, icon, active, changeActive} ) {
         <div className={department.icon}>
           <img src={icon} />
         </div>
-        <div className={department.name}>{name}</div>
+        <div className={department.name}>{name ? name : `קטגוריה ${num}`}</div>
       </div>
     </>
   );

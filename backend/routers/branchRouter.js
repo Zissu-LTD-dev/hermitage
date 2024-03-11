@@ -4,7 +4,13 @@ const branchRouter = express.Router();
 
 
 // products
-branchRouter.get("/getProducts/:branchId", branch.getProducts);
+branchRouter.get("/getProducts", branch.getProducts);
+
+// getCategory
+branchRouter.get("/getCategory", branch.getCategory);
+
+// getSubGroups
+branchRouter.get("/getSubGroups", branch.getSubGroups);
 
 // getFilters
 branchRouter.get("/getFilters", branch.getFilters);

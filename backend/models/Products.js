@@ -16,6 +16,7 @@ const ProductSchema = new mongoose.Schema({
   price: Number,
   branchTypeConfig: [{ 
     branchType: Number,
+    available: Boolean,
     location: {
       column: Number,
       shelf: Number,

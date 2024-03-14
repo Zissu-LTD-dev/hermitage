@@ -41,11 +41,10 @@ function DynamicContent() {
           <div className={newOrder.products}>
             {state.statusOrder.step === 1 &&
               !activeFiltersSearch &&
-              state.displayProducts.map((column, i) => (
-                <Column
-                  key={i}
-                  name={column.columnName ? column.columnName : i + 1}
-                  products={column.products}
+              state.displayProductsConfig.map((column, i) => (
+                <Column 
+                  key={i} 
+                  details={column}
                 />
               ))}
             {state.statusOrder.step === 1 && activeFiltersSearch && (

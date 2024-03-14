@@ -146,8 +146,8 @@ export const mainReducer = (state, action) => {
         for (let key in config) {
           if (!key.startsWith("branchType")) {
             newConfig[key] = config[key];
-          }else if (key === currentTypeBranch){
-            newConfig['currentBranch'] = config[key];
+          } else if (key === currentTypeBranch) {
+            newConfig["currentBranch"] = config[key];
           }
         }
         return newConfig;
@@ -165,11 +165,58 @@ export const mainReducer = (state, action) => {
       let config = state.locationProductsConfig.filter(
         (config) => config.categoryNumber === state.activeCategory
       );
+      // תוסיף לconfig shelves שזה יהיה מערך , ואז לעבור על הכול ושבסוף יהיה לי רק עמודות עם אותו מספר להכניס את המדפים
+      let newColumns = [];
+      config.forEach((column) => {
+        if (
+          newColumns.some(
+            (newColumn) => newColumn.columnsNumber === column.columnsNumber
+          )
+        )
+          return;
+        newColumns.push({
+          columnsName: state.activeCategory == 5 ? `מקרר ${column.columnsNumber}` : column.columnsName,
+          columnsNumber: column.columnsNumber,
+          shelves: [],
+        });
+      });
+      // עכשיו תעבור שוב על fonfig ותוסיף לכל עמודה את המדפים
+      config.forEach((column) => {
+        newColumns.forEach((newColumn) => {
+          if (newColumn.columnsNumber === column.columnsNumber) {
+            // תבדוק אם column.shelvesNumber שונה מ"פתוח" או שהגולד של הסטרינג גדול מ1
+            if (
+              column.shelvesNumber !== "פתוח" &&
+              column.shelvesNumber.length > 1
+            ) {
+              let numShelves = column.currentBranch
+                ? column.currentBranch.split(" ")[0]
+                : column.shelvesNumber.split(",").pop();
+                
+              numShelves = parseInt(numShelves);
+              
+              for (let i = 1; i <= numShelves; i++) {
+                newColumn.shelves.push({
+                  shelvesName: `מדף ${i}`,
+                  shelvesNumber: i,
+                  currentBranch: column.currentBranch,
+                });
+              }
+            } else {
+              newColumn.shelves.push({
+                shelvesName: column.shelvesName,
+                shelvesNumber:  column.shelvesNumber,
+                currentBranch: column.currentBranch,
+              });
+            }
+          }
+        });
+      });
 
       return {
         ...state,
         displayProducts: products,
-        displayProductsConfig: config,
+        displayProductsConfig: newColumns,
       };
 
     case SET_FILTERS:

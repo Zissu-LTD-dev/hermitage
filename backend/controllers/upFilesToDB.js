@@ -12,7 +12,7 @@ const {
 
 
 const mainUpload = async (req, res) => {
-  let { action, tabName } = req.body;
+  let { action, tabName, tabName2 } = req.body;
   let file = req.file;
 
   // read the file
@@ -28,7 +28,7 @@ const mainUpload = async (req, res) => {
 
   switch (action) {
     case "סוגי סניף":
-      tabName = tabName ? tabName : "תת רשת + סניפים + קטגוריות";
+      tabName = tabName ? tabName : "תת רשת + סניפים + קטגוריות ";
       let result = await branchTypeUpload(sheet[tabName]);
       result
         ? res.json({
@@ -42,7 +42,7 @@ const mainUpload = async (req, res) => {
       break;
 
     case "הוספת סניפים":
-      tabName = tabName ? tabName : "תת רשת + סניפים + קטגוריות";
+      tabName = tabName ? tabName : "תת רשת + סניפים + קטגוריות ";
       let result2 = await branchsUpload(sheet[tabName]);
       result2
         ? res.json({
@@ -129,9 +129,11 @@ const mainUpload = async (req, res) => {
       break;
 
     case "מוצרים עדכון":
+      tabName = tabName ? tabName : "עדכון - פריט";
+      tabName2 = tabName2 ? tabName2 : "עדכון קטגוריות > עמודות > מדף";
       let result8 = await productsUpdate(
-        sheet["עדכון - פריט"],
-        sheet["עדכון קטגוריות > עמודות > מדף"]
+        sheet[tabName],
+        sheet[tabName2]
       );
       result8
         ? res.json({

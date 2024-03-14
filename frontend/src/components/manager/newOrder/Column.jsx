@@ -6,8 +6,10 @@ import Row from "./Row";
 import ProductOrder from "./ProductOrder";
 import ProductReturn from "./ProductReturn";
 
-function Column({ name, num, products }) {
+function Column({ details }) {
   const { state, dispatch } = useMainContext();
+
+  let { columnsNumber, columnsName, shelves } = details;
 
   const [showImaging, setShowImaging] = useState(false);
   const [open, setOpen] = useState(false);
@@ -78,7 +80,7 @@ function Column({ name, num, products }) {
         <div className={column.main} >
           <span onClick={() => setOpen(true)} >
             <i className={column.main__icon}></i>
-            <div className={column.title}>עמודה: {name}</div>
+            <div className={column.title}>{columnsName}</div>
           </span>
           <span>
             <i className={column.imaging} onClick={() => setShowImaging(true)}>
@@ -94,30 +96,33 @@ function Column({ name, num, products }) {
           <div className={column.main} >
             <span onClick={() => setOpen(false)}>
               <i className={column.main__icon}></i>
-              <div className={column.title}>עמודה: {name}</div>
+              <div className={column.title}>{columnsName}</div>
             </span>
             <span>
               <i className={column.imaging} onClick={() => setShowImaging(true)}>
-                <ImagingColumn name={name} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} />
+                {/* <ImagingColumn name={name} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} /> */}
               </i>
               <i className={column.closing__arrow} onClick={() => setOpen(false)} ></i>
             </span>
           </div>
 
-          {activeRow && (
+          { !activeRow && (
             <div className={column.rows}>
-              {products.map((product, i) => (
-                <Row key={i} product={product} />
+              {shelves.map((shelf, i) => (
+                shelf.shelvesNumber == "פתוח" ? 
+                  <h2>open</h2> :
+                  <Row key={i} details={shelf} />
               ))}
             </div>
           )}
 
-          {!activeRow && (
+          {/* {activeRow && (
             <>
               <div className={column.products_list} ref={productListRef}>
                 {products.map((product, i) => (
                   <ProductOrder key={i} productData={product} />
                 ))}
+                <h1>פתוח</h1>
               </div>
 
               {arrowRight && 
@@ -131,7 +136,7 @@ function Column({ name, num, products }) {
                 </div>
               }
             </>
-          )}
+          )} */}
         </div>
       )}
     </>

@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import row from "../../../assets/css/manager/newOrder/Row.module.css";
 import ProductOrder from "./ProductOrder.jsx";
 
-function Row() {
+function Row({details}) {
   const [open, setOpen] = useState(false);
+
+  let {currentBranch, shelvesNumber, shelvesName} = details;
 
   const productData = [
     {
@@ -20,7 +22,7 @@ function Row() {
       {!open && (
         <div className={row.main} onClick={()=>setOpen(true)}>
           <div className={row.title}>
-            <div className={row.title__text}>שורה מס : 1</div>
+            <div className={row.title__text}>{shelvesName}</div>
             <div
               className={row.title__arrow + " " + row.title__arrow__close}
             ></div>
@@ -31,7 +33,7 @@ function Row() {
       {open && (
         <div className={row.main} >
           <div className={row.title} onClick={()=>setOpen(false)} >
-            <div className={row.title__text}>שורה מס : 1</div>
+            <div className={row.title__text}>{shelvesName}</div>
             <div className={row.title__arrow}></div>
           </div>
           <div className={row.products}>

@@ -18,19 +18,19 @@ function Category( {num, name, icon, changeActive} ) {
       icon = sigar;
       break;
     case 3:
-      icon = sigar;
+      icon = barrel;
       break;
     case 4:
       icon = barrel;
       break;
     case 5:
-      icon = shelves;
-      break;
-    case 6:
       icon = snowflake;
       break;
-    case 7:
+    case 6:
       icon = food;
+      break;
+    case 7:
+      icon = shelves;
       break;
     case 8:
       icon = shelves;

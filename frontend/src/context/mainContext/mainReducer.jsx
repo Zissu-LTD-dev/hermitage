@@ -137,7 +137,28 @@ export const mainReducer = (state, action) => {
       return { ...state, subGroups: action.payload };
 
     case SET_ALL_PRODUCTS:
-      return { ...state, allProducts: action.payload };
+      let newProducts = action.payload.map((product) => {
+        let newConfig = {};
+        let location = {};
+        let avilable = true;
+        
+        product.branchTypeConfig.forEach((config) => {
+          if (config.branchType === state.branchType) {
+            if(!config.available) return avilable = false;
+            location = config.location;
+            newConfig = config;
+          }
+        });
+        
+        if(!avilable) return false;
+
+        return { ...product, location: location, branchTypeConfig: newConfig };
+      });
+
+      newProducts = newProducts.filter((row) => row);
+
+      return { ...state, allProducts: newProducts };
+
     case SET_CONFIG_PRODUCTS:
       // סינון לפי סוג הסניף שמחובר
       let currentTypeBranch = `branchType${state.branchType}`;
@@ -165,26 +186,25 @@ export const mainReducer = (state, action) => {
       let config = state.locationProductsConfig.filter(
         (config) => config.categoryNumber === state.activeCategory
       );
-      // תוסיף לconfig shelves שזה יהיה מערך , ואז לעבור על הכול ושבסוף יהיה לי רק עמודות עם אותו מספר להכניס את המדפים
+      
       let newColumns = [];
       config.forEach((column) => {
-        if (
-          newColumns.some(
-            (newColumn) => newColumn.columnsNumber === column.columnsNumber
-          )
-        )
-          return;
+        if ( newColumns.some( (newColumn) => newColumn.columnsNumber === column.columnsNumber ) ) return;
+        
         newColumns.push({
-          columnsName: state.activeCategory == 5 ? `מקרר ${column.columnsNumber}` : column.columnsName,
+          columnsName:
+            state.activeCategory == 5
+              ? `מקרר ${column.columnsNumber}`
+              : column.columnsName,
           columnsNumber: column.columnsNumber,
           shelves: [],
         });
       });
-      // עכשיו תעבור שוב על fonfig ותוסיף לכל עמודה את המדפים
+      
       config.forEach((column) => {
         newColumns.forEach((newColumn) => {
           if (newColumn.columnsNumber === column.columnsNumber) {
-            // תבדוק אם column.shelvesNumber שונה מ"פתוח" או שהגולד של הסטרינג גדול מ1
+            
             if (
               column.shelvesNumber !== "פתוח" &&
               column.shelvesNumber.length > 1
@@ -192,9 +212,9 @@ export const mainReducer = (state, action) => {
               let numShelves = column.currentBranch
                 ? column.currentBranch.split(" ")[0]
                 : column.shelvesNumber.split(",").pop();
-                
+
               numShelves = parseInt(numShelves);
-              
+
               for (let i = 1; i <= numShelves; i++) {
                 newColumn.shelves.push({
                   shelvesName: `מדף ${i}`,
@@ -205,7 +225,7 @@ export const mainReducer = (state, action) => {
             } else {
               newColumn.shelves.push({
                 shelvesName: column.shelvesName,
-                shelvesNumber:  column.shelvesNumber,
+                shelvesNumber: column.shelvesNumber,
                 currentBranch: column.currentBranch,
               });
             }
@@ -213,6 +233,7 @@ export const mainReducer = (state, action) => {
         });
       });
 
+      newColumns.sort((a, b) => a.columnsNumber - b.columnsNumber);
       return {
         ...state,
         displayProducts: products,

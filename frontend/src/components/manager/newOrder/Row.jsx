@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import row from "../../../assets/css/manager/newOrder/Row.module.css";
 import ProductOrder from "./ProductOrder.jsx";
 
-function Row({details}) {
+function Row({details, productsList}) {
   const [open, setOpen] = useState(false);
 
   let {currentBranch, shelvesNumber, shelvesName} = details;

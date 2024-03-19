@@ -8,6 +8,7 @@ const {
   locationProductsConfigUploadRow,
   productsUpload,
   productsUpdate,
+  productsUpdateDetailed
 } = require("../functions/upToDBOnce.js");
 
 
@@ -26,10 +27,11 @@ const mainUpload = async (req, res) => {
     });
   });
 
+  sheet = Object.values(sheet);
+
   switch (action) {
     case "סוגי סניף":
-      tabName = tabName ? tabName : "תת רשת + סניפים + קטגוריות ";
-      let result = await branchTypeUpload(sheet[tabName]);
+      let result = await branchTypeUpload(sheet[7]);
       result
         ? res.json({
             status: "ok",
@@ -42,8 +44,7 @@ const mainUpload = async (req, res) => {
       break;
 
     case "הוספת סניפים":
-      tabName = tabName ? tabName : "תת רשת + סניפים + קטגוריות ";
-      let result2 = await branchsUpload(sheet[tabName]);
+      let result2 = await branchsUpload(sheet[7]);
       result2
         ? res.json({
             status: "ok",
@@ -56,8 +57,7 @@ const mainUpload = async (req, res) => {
       break;
 
     case "קטגוריות":
-      tabName = tabName ? tabName : "תת רשת + סניפים + קטגוריות ";
-      let result3 = await catergoryUpload(sheet[tabName]);
+      let result3 = await catergoryUpload(sheet[7]);
       result3
         ? res.json({
             status: "ok",
@@ -70,8 +70,7 @@ const mainUpload = async (req, res) => {
       break;
 
     case "הוספת ספקים":
-      tabName = tabName ? tabName : "ספקים + מיילים";
-      let result4 = await providerUpload(sheet[tabName]);
+      let result4 = await providerUpload(sheet[6]);
       result4
         ? res.json({
             status: "ok",
@@ -84,8 +83,7 @@ const mainUpload = async (req, res) => {
       break;
 
     case "הוספת קבוצת משנה":
-      tabName = tabName ? tabName : "קבוצת משנה";
-      let result5 = await subGroupUpload(sheet[tabName]);
+      let result5 = await subGroupUpload(sheet[4]);
       result5
         ? res.json({
             status: "ok",
@@ -98,9 +96,7 @@ const mainUpload = async (req, res) => {
       break;
 
     case "הגדרת עמודים ומדפים":
-      tabName = tabName ? tabName : "קטגוריה > עמודה > מדף - מפורט";
-      // let result6 = await locationProductsConfigUpload(sheet[tabName]);
-      let result6 = await locationProductsConfigUploadRow(sheet[tabName]);
+      let result6 = await locationProductsConfigUploadRow(sheet[5]);
       result6
         ? res.json({
             status: "ok",
@@ -113,9 +109,8 @@ const mainUpload = async (req, res) => {
           });
       break;
 
-    case "מוצרים הקמה":
-      tabName = tabName ? tabName : "הקמה - פריט ";
-      let result7 = await productsUpload(sheet[tabName]);
+    case "הקמת מוצרים":
+      let result7 = await productsUpload(sheet[0]);
       result7
         ? res.json({
             status: "ok",
@@ -128,13 +123,8 @@ const mainUpload = async (req, res) => {
           });
       break;
 
-    case "מוצרים עדכון":
-      tabName = tabName ? tabName : "עדכון - פריט";
-      tabName2 = tabName2 ? tabName2 : "עדכון קטגוריות > עמודות > מדף";
-      let result8 = await productsUpdate(
-        sheet[tabName],
-        sheet[tabName2]
-      );
+    case "עדכון מוצרים":
+      let result8 = await productsUpdate( sheet[2]);
       result8
         ? res.json({
             status: "ok",
@@ -145,6 +135,25 @@ const mainUpload = async (req, res) => {
             status: "error",
             massage: `הקובץ ${file.originalname} לא נטען בהצלחה`,
           });
+      break;
+
+    case "עדכון מוצרים מפורט":
+      let result9 = await productsUpdateDetailed( sheet[3]);
+      result9
+        ? res.json({
+            status: "ok",
+            massage: `הקובץ ${file.originalname} נטען בהצלחה`,
+            data: result9,
+          })
+        : res.json({
+            status: "error",
+            massage: `הקובץ ${file.originalname} לא נטען בהצלחה`,
+          });
+    break;
+
+    case "מחיקת פריטים":
+      // TODO: add the function to delete the items
+          res.json({ sheet: sheet[1] });
       break;
 
     default:

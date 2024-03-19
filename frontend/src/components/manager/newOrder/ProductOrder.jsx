@@ -29,6 +29,7 @@ const ProductOrder = ({productData}) => {
       }
 
     useEffect(() => {
+      console.log('productData', productData);
       state.orderedProducts.forEach((product) => {
         if (product.barcode === barcode) {
           setQuantity(product.quantity);

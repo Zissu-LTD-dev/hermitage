@@ -14,6 +14,7 @@ function Column({ details }) {
   const [showImaging, setShowImaging] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeRow, setActiveRow] = useState(false);
+  const [products, setProducts] = useState([]);
 
   const [arrowRight, setArrowRight] = useState(false);
   const [arrowLeft, setArrowLeft] = useState(false);
@@ -22,11 +23,12 @@ function Column({ details }) {
 
   const handleRightClick = () => {
     const { scrollLeft, clientWidth } = productListRef.current;
-    const newScrollPosition = scrollLeft + clientWidth - 400 > 0 ? 0 : scrollLeft + clientWidth - 400;
-    
+    const newScrollPosition =
+      scrollLeft + clientWidth - 400 > 0 ? 0 : scrollLeft + clientWidth - 400;
+
     productListRef.current.scrollTo({
       left: newScrollPosition,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
@@ -36,49 +38,62 @@ function Column({ details }) {
 
     productListRef.current.scrollTo({
       left: newScrollPosition,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      const { scrollWidth,  scrollLeft,  clientWidth,  } = productListRef.current;
+      const { scrollWidth, scrollLeft, clientWidth } = productListRef.current;
 
-      if(Math.abs(scrollLeft) + clientWidth +2 >= scrollWidth){
+      if (Math.abs(scrollLeft) + clientWidth + 2 >= scrollWidth) {
         setArrowLeft(false);
         setArrowRight(true);
-      } else if(scrollLeft === 0 && scrollWidth - scrollLeft > clientWidth){
+      } else if (scrollLeft === 0 && scrollWidth - scrollLeft > clientWidth) {
         setArrowLeft(true);
         setArrowRight(false);
       } else {
         setArrowLeft(true);
         setArrowRight(true);
       }
-    };  
-      if(productListRef.current){
+    };
+    if (productListRef.current) {
+      productListRef.current.scrollWidth > productListRef.current.clientWidth
+        ? setArrowLeft(true)
+        : setArrowLeft(false);
+      setArrowRight(false);
 
-        productListRef.current.scrollWidth > productListRef.current.clientWidth ? setArrowLeft(true) : setArrowLeft(false);
-        setArrowRight(false);
-        
+      const productListElement = productListRef.current;
+      productListElement.addEventListener("scroll", handleScroll);
 
-        const productListElement = productListRef.current;
-        productListElement.addEventListener("scroll", handleScroll);
-        
-        return () => {
-          productListElement.removeEventListener("scroll", handleScroll);
-        };
-      }
+      return () => {
+        productListElement.removeEventListener("scroll", handleScroll);
+      };
+    }
   }, [open, state.activeCategory]);
 
+  const filterProductsToColumn = (products) => {
+    let newProducts = products.filter(
+      (product) => product.location.column == columnsNumber
+    );
+    return newProducts;
+  };
+
   useEffect(() => {
-    setOpen(false);
+    let newProducts = filterProductsToColumn(state.displayProducts);
+    setProducts(newProducts);
+    if (shelves[0].shelvesNumber === "פתוח") {
+      setActiveRow(true);
+    } else {
+      setOpen(false);
+    }
   }, [state.activeCategory]);
 
   return (
     <>
       {!open && (
-        <div className={column.main} >
-          <span onClick={() => setOpen(true)} >
+        <div className={column.main}>
+          <span onClick={() => setOpen(true)}>
             <i className={column.main__icon}></i>
             <div className={column.title}>{columnsName}</div>
           </span>
@@ -86,57 +101,54 @@ function Column({ details }) {
             <i className={column.imaging} onClick={() => setShowImaging(true)}>
               {/* <ImagingColumn name={name} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} /> */}
             </i>
-            <i className={column.opening__arrow} onClick={() => setOpen(true)}></i>
+            <i
+              className={column.opening__arrow}
+              onClick={() => setOpen(true)}
+            ></i>
           </span>
         </div>
       )}
 
       {open && (
-        <div className={column.main__open} >
-          <div className={column.main} >
+        <div className={column.main__open}>
+          <div className={column.main}>
             <span onClick={() => setOpen(false)}>
               <i className={column.main__icon}></i>
               <div className={column.title}>{columnsName}</div>
             </span>
             <span>
-              <i className={column.imaging} onClick={() => setShowImaging(true)}>
+              <i
+                className={column.imaging}
+                onClick={() => setShowImaging(true)}
+              >
                 {/* <ImagingColumn name={name} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} /> */}
               </i>
-              <i className={column.closing__arrow} onClick={() => setOpen(false)} ></i>
+              <i
+                className={column.closing__arrow}
+                onClick={() => setOpen(false)}
+              ></i>
             </span>
           </div>
 
-          { !activeRow && (
+          {!activeRow && (
             <div className={column.rows}>
-              {shelves.map((shelf, i) => (
-                shelf.shelvesNumber == "פתוח" ? 
-                  <h2>open</h2> :
-                  <Row key={i} details={shelf} />
+              {shelves.map((row, i) => (
+                <Row key={i} details={row}  productsList={products} />
               ))}
             </div>
           )}
 
-          {/* {activeRow && (
-            <>
-              <div className={column.products_list} ref={productListRef}>
-                {products.map((product, i) => (
-                  <ProductOrder key={i} productData={product} />
-                ))}
-                <h1>פתוח</h1>
-              </div>
-
-              {arrowRight && 
-                <div className={column.arrow_right} onClick={handleRightClick}>
-                  <i className={column.arrow_icon_right}></i>
-                </div>
-              }
-              {arrowLeft && 
-                <div className={arrowLeft && arrowRight ? column.arrow_left + " " + column.arrow_up : column.arrow_left} onClick={handleLeftClick}>
-                  <i className={column.arrow_icon_left}></i>
-                </div>
-              }
-            </>
-          )} */}
+          {activeRow && (
+            <div className={column.products_list}>
+              {products.length > 0 ? (
+                products.map((product, i) => {
+                  return <ProductOrder key={i} productData={product} />;
+                })
+              ) : (
+                <h2>אין מוצרים במדף</h2>
+              )}
+            </div>
+          )}
         </div>
       )}
     </>

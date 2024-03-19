@@ -197,12 +197,23 @@ const productsUpload = async (sheet) => {
 
     let products = sheet.map((row) => {
       row = Object.values(row);
-      let providerName = providers.find(
-        (provider) => provider.number === row[0]
-      ).name;
-      let subGroupName = subGroups.find(
-        (subGroup) => subGroup.number === row[2]
-      ).name;
+
+      
+      let providerName ;
+      let subGroupName ;
+       
+      if (providers.find((provider) => provider.number === row[0])){
+        providerName = providers.find((provider) => provider.number === row[0]).name;
+      } else {
+        return false;
+      }
+
+      if(subGroups.find((subGroup) => subGroup.number === row[2])) {
+        subGroupName = subGroups.find((subGroup) => subGroup.number === row[2]).name;
+      } else {
+        return false;
+      }
+
 
       return {
         barcode: row[3], // "מס ברקוד (ראשי)"
@@ -218,6 +229,8 @@ const productsUpload = async (sheet) => {
       };
     });
 
+    products = products.filter((row) => row);
+
     let result = await addOrUpdateOneProduct(products);
 
     return result;
@@ -228,119 +241,154 @@ const productsUpload = async (sheet) => {
 };
 
 // update product 
-const productsUpdate = async (sheet1, sheet2) => {
+const productsUpdate = async (sheet) => {
   try {
     let providers = await Provider.find();
     let subGroups = await SubGroup.find();
 
-    let products = sheet1.map((row) => {
+    let products = sheet.map((row) => {
       row = Object.values(row);
-      let providerName = providers.find(
-        (provider) => provider.number == row[1]
-      ).name;
-      let subGroupName = subGroups.find(
-        (subGroup) => subGroup.number == row[3]
-      ).name;
 
-      return {
-        barcode: row[4], // "מס ברקוד (ראשי)"
-        name: row[5], // "תאור - שם פריט"
-        providerNumber: row[1], // "מס ספק"
-        providerName: providerName, // "שם ספק"
-        subGroupNumber: row[3], // "מס קבוצת משנה"
-        subGroupName: subGroupName, // "שם קבוצת משנה"
-        packQuantity: row[6], // "תאור - כמות בארגז"
-        category: row[2], // "מס קטגוריה "
-        price: row[7], // "תאור - עלות קניה"
-        branchTypeConfig: [], 
-        isBlocked: row[0] == 1 ? true : false // "חסום להזמנות - 1 חסום , 2 פתוח"
-      };
-    });
+      let newProduct = {};
 
-    sheet2.map((row) => {
-      row = Object.values(row);
-      let product = products.find((product) => product.barcode === row[0]);
-      if (product) {
-        let branchTypeConfig = [];  
-        if(row[1]){ // "סוג סניף 1"
-          branchTypeConfig.push({
-            branchType: row[1], // "סוג סניף 1"
-            available: row[5] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-            location: {
-              column: row[2], // "מס עמודה"
-              shelf: row[3], // "מס מדף"
-              index: row[4], // "מס סידור"
-            },
-          });
-        }
-        if(row[6]){ // "סוג סניף 2"
-          branchTypeConfig.push({
-            branchType: row[6], // "סוג סניף 2"
-            available: row[10] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-            location: {
-              column: row[7], // "מס עמודה"
-              shelf: row[8], // "מס מדף"
-              index: row[9], // "מס סידור"
-            },
-          });
-        }
-        if(row[11]){ // "סוג סניף 3"
-          branchTypeConfig.push({
-            branchType: row[11], // "סוג סניף 3"
-            available: row[15] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-            location: {
-              column: row[12], // "מס עמודה"
-              shelf: row[13], // "מס מדף"
-              index: row[14], // "מס סידור"
-            },
-          });
-        }
-        if(row[16]){ // "סוג סניף 4"
-          branchTypeConfig.push({
-            branchType: row[16], // "סוג סניף 4"
-            available: row[20] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-            location: {
-              column: row[17], // "מס עמודה"
-              shelf: row[18], // "מס מדף"
-              index: row[19], // "מס סידור"
-            },
-          });
-        }
-        if(row[21]){ // "סוג סניף 5"
-          branchTypeConfig.push({
-            branchType: row[21], // "סוג סניף 5"
-            available: row[25] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-            location: {
-              column: row[22], // "מס עמודה"
-              shelf: row[23], // "מס מדף"
-              index: row[24], // "מס סידור"
-            },
-          });
-        }
-        if(row[26]){ // "סוג סניף 6"
-          branchTypeConfig.push({
-            branchType: row[26], // "סוג סניף 6"
-            available: row[30] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-            location: {
-              column: row[27], // "מס עמודה"
-              shelf: row[28], // "מס מדף"
-              index: row[29], // "מס סידור"
-            },
-          });
-        }
+      let providerName = null ;
+      let subGroupName  = null;
+       
+      if (providers.find((provider) => provider.number === row[0])){
+        providerName = providers.find((provider) => provider.number === row[0]).name;
+      } 
+      
 
-        product.branchTypeConfig = branchTypeConfig;
+      if(subGroups.find((subGroup) => subGroup.number === row[2])) {
+        subGroupName = subGroups.find((subGroup) => subGroup.number === row[2]).name;
       }
       
+      newProduct.barcode = row[4]; // "מס ברקוד (ראשי)"
+      newProduct.name = row[5] ?  row[5] : null ; // "תאור - שם פריט"
+      newProduct.providerNumber = row[1] ? row[1] : null; // "מס ספק"
+      newProduct.providerName = providerName ? providerName : null; // "שם ספק"
+      newProduct.subGroupNumber = row[3] ? row[3] : null; // "מס קבוצת משנה"
+      newProduct.subGroupName = subGroupName ? subGroupName : null; // "שם קבוצת משנה"
+      newProduct.packQuantity = row[6] ? row[6] : null; // "תאור - כמות בארגז"
+      newProduct.category = row[2] ? row[2] : null; // "מס קטגוריה "
+      newProduct.price = row[7] ? row[7] : null; // "תאור - עלות קניה"
+      newProduct.isBlocked = row[0] == 1 ? true : false; // "חסום להזמנות - 1 חסום , 2 פתוח"
+      
+      // clear the empty fields
+      Object.keys(newProduct).forEach((key) => {
+        if (newProduct[key] === null || newProduct[key] === undefined) {
+          delete newProduct[key];
+        }
+      });
+
+      return {
+        newProduct 
+      };
+    });
+    
+    products.map(async (product) => {
+      return await Product.findOneAndUpdate(
+        { barcode: product.newProduct.barcode },
+        product.newProduct
+      );
     });
 
-    let result = await addOrUpdateOneProduct(products);
-
-    return result;
+    return products;
   } catch (error) {
     console.log("error", error);
     return false;
   }
+}
+
+// productsUpdateDetailed
+const productsUpdateDetailed = async (sheet) => {
+
+  let products = sheet.map((row) => {
+    row = Object.values(row);
+
+    let newProduct = {};
+    
+    newProduct.barcode = row[0]; // "מס ברקוד (ראשי)"
+    newProduct.branchTypeConfig = [];
+
+    if(row[1]){ // "סוג סניף 1"
+      newProduct.branchTypeConfig.push({
+        branchType: row[1], // "סוג סניף 1"
+        available: row[5] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
+        location: {
+          column: row[2], // "מס עמודה"
+          shelf: row[3], // "מס מדף"
+          index: row[4], // "מס סידור"
+        },
+      });
+    }
+    if(row[6]){ // "סוג סניף 2"
+      newProduct.branchTypeConfig.push({
+        branchType: row[6], // "סוג סניף 2"
+        available: row[10] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
+        location: {
+          column: row[7], // "מס עמודה"
+          shelf: row[8], // "מס מדף"
+          index: row[9], // "מס סידור"
+        },
+      });
+    }
+    if(row[11]){ // "סוג סניף 3"
+      newProduct.branchTypeConfig.push({
+        branchType: row[11], // "סוג סניף 3"
+        available: row[15] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
+        location: {
+          column: row[12], // "מס עמודה"
+          shelf: row[13], // "מס מדף"
+          index: row[14], // "מס סידור"
+        },
+      });
+    }
+    if(row[16]){ // "סוג סניף 4"
+      newProduct.branchTypeConfig.push({
+        branchType: row[16], // "סוג סניף 4"
+        available: row[20] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
+        location: {
+          column: row[17], // "מס עמודה"
+          shelf: row[18], // "מס מדף"
+          index: row[19], // "מס סידור"
+        },
+      });
+    }
+    if(row[21]){ // "סוג סניף 5"
+      newProduct.branchTypeConfig.push({
+        branchType: row[21], // "סוג סניף 5"
+        available: row[25] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
+        location: {
+          column: row[22], // "מס עמודה"
+          shelf: row[23], // "מס מדף"
+          index: row[24], // "מס סידור"
+        },
+      });
+    }
+    if(row[26]){ // "סוג סניף 6"
+      newProduct.branchTypeConfig.push({
+        branchType: row[26], // "סוג סניף 6"
+        available: row[30] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
+        location: {
+          column: row[27], // "מס עמודה"
+          shelf: row[28], // "מס מדף"
+          index: row[29], // "מס סידור"
+        },
+      });
+    }
+    
+    return newProduct ;
+  });
+
+  products.map(async (product) => {
+    return await Product.findOneAndUpdate(
+      { barcode: product.barcode },
+      product
+    );
+  });
+  
+  return products;
 }
 
 module.exports = {
@@ -352,4 +400,5 @@ module.exports = {
   locationProductsConfigUploadRow,
   productsUpload,
   productsUpdate,
+  productsUpdateDetailed
 };

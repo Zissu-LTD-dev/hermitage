@@ -43,7 +43,7 @@ function DynamicContent() {
               !activeFiltersSearch &&
               state.displayProductsConfig.map((column, i) => (
                 <Column 
-                  key={i} 
+                  key={`${state.activeCategory}-${i}`}
                   details={column}
                 />
               ))}

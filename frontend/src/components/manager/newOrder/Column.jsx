@@ -133,7 +133,7 @@ function Column({ details }) {
           {!activeRow && (
             <div className={column.rows}>
               {shelves.map((row, i) => (
-                <Row key={i} details={row}  productsList={products} />
+                <Row key={`${state.activeCategory}-${columnsNumber}-${i}`} details={row}  productsList={products} />
               ))}
             </div>
           )}
@@ -142,7 +142,7 @@ function Column({ details }) {
             <div className={column.products_list}>
               {products.length > 0 ? (
                 products.map((product, i) => {
-                  return <ProductOrder key={i} productData={product} />;
+                  return <ProductOrder key={product.barcode} productData={product} />;
                 })
               ) : (
                 <h2>אין מוצרים במדף</h2>

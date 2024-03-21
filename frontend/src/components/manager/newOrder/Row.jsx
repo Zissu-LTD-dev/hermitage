@@ -4,18 +4,19 @@ import ProductOrder from "./ProductOrder.jsx";
 
 function Row({details, productsList}) {
   const [open, setOpen] = useState(false);
+  const [products, setProducts] = useState([]);
 
   let {currentBranch, shelvesNumber, shelvesName} = details;
 
-  const productData = [
-    {
-      image: "", details: "מוצר נהדר", supplier: "ספק מצויין", category: "קטגוריה נהדרת", group: "קבוצה נהדרת", barcode: "123456789", quantity: 0,
-    },
-    {
-        image: "", details: "מוצר נהדר", supplier: "ספק מצויין", category: "קטגוריה נהדרת", group: "קבוצה נהדרת", barcode: "123456789", quantity: 0,
-      }
-
-  ];
+  useEffect(() => {
+    let shelfNum = parseInt(details.shelvesNumber);
+    let newProducts = productsList.filter((product) => {
+        if (product.location.shelf === shelfNum) {
+          return product;
+        }
+      });
+    setProducts(newProducts);
+  }, []);
 
   return (
     <>
@@ -37,8 +38,8 @@ function Row({details, productsList}) {
             <div className={row.title__arrow}></div>
           </div>
           <div className={row.products}>
-            {productData.map((item) => (
-              <ProductOrder productData={item} />
+            {products.map((item) => (
+              <ProductOrder key={item.barcode}   productData={item} />
             ))}
           </div>
         </div>

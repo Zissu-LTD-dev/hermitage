@@ -1,12 +1,9 @@
 .main{
-width: 1499px;
 display: flex;
 flex-direction: column;
 background: #F4F6F7 0% 0% no-repeat padding-box;
 margin-bottom: 11px;
 padding: 0 7.5px 0 0 ;
-overflow: auto;
-/* overflow: hidden;    */
 }
 
 .title{
@@ -24,9 +21,8 @@ overflow: auto;
     font-weight: 600;
     font-family: IBM Plex Sans Hebrew;
     line-height: 20px;
-    
-letter-spacing: 0px;
-color: #082A3A;
+    letter-spacing: 0px;
+    color: #082A3A;
 }
 
 .title__arrow{
@@ -45,5 +41,5 @@ color: #082A3A;
 .products{
     display: flex;
     flex-direction: row;
-    /* flex-wrap: wrap;     */
+    overflow: auto;
 }

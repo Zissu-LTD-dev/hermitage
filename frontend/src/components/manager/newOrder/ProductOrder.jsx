@@ -8,8 +8,9 @@ import imgProduct from '../../../assets/image/manager/0007434_-12-.png';
 const ProductOrder = ({productData}) => {
   const { state, dispatch } = useMainContext();
 
-    let { image, name, providerName, categoryName,  barcode } = productData;
-    let QuantityPerCase = 2; // TODO: get from API
+    let { image, name, providerName, subGroupName,  barcode, packQuantity, price } = productData;
+    let QuantityPerCase = packQuantity ? packQuantity : 1;
+    let fixPrice = price ? price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ₪' : 'אין מחיר זמין';
     const [quantity, setQuantity] = useState(0);
     
       const onIncrease = () => {
@@ -40,9 +41,10 @@ const ProductOrder = ({productData}) => {
         <div className={product.product}>
             <img src={image ? image : imgProduct } alt={name} />
             <h2>{name}</h2>
-            {QuantityPerCase ? <p>כמות באריזה: {QuantityPerCase}</p> : null}
+            <p>כמות באריזה: {QuantityPerCase} </p>
             <p>{providerName}</p>
-            <p>{categoryName}</p>
+            <p>{subGroupName}</p>
+            <p>{fixPrice}</p>
             <p>{barcode}</p>
             <div className={product.buttons}>
                 <button className={product.decrease} onClick={onIncrease}></button>

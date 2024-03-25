@@ -27,8 +27,7 @@ const sendOrderMail = async (branch, provider, productsOrder) => {
 
 // getProducts
 const getProducts = async (req, res) => {
-    // Bring all products that a large or equal brunchtype 
-    const products = await Product.find({});
+    const products = await Product.find({ isBlocked: false });
     const locationProductsConfig = await LocationProductsConfig_row.find({});
     
     res.status(200).json({ 'success': true, 'products': products, 'locationProductsConfig': locationProductsConfig });

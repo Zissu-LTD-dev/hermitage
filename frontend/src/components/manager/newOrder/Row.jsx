@@ -3,7 +3,7 @@ import row from "../../../assets/css/manager/newOrder/Row.module.css";
 import ProductOrder from "./ProductOrder.jsx";
 
 function Row({details, productsList}) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [products, setProducts] = useState([]);
 
   let {currentBranch, shelvesNumber, shelvesName} = details;
@@ -20,17 +20,6 @@ function Row({details, productsList}) {
 
   return (
     <>
-      {!open && (
-        <div className={row.main} onClick={()=>setOpen(true)}>
-          <div className={row.title}>
-            <div className={row.title__text}>{shelvesName}</div>
-            <div
-              className={row.title__arrow + " " + row.title__arrow__close}
-            ></div>
-          </div>
-        </div>
-      )}
-
       {open && (
         <div className={row.main} >
           <div className={row.title} onClick={()=>setOpen(false)} >
@@ -40,7 +29,18 @@ function Row({details, productsList}) {
           <div className={row.products}>
             {products.map((item) => (
               <ProductOrder key={item.barcode}   productData={item} />
-            ))}
+              ))}
+          </div>
+        </div>
+      )}
+
+      {!open && (
+        <div className={row.main} onClick={()=>setOpen(true)}>
+          <div className={row.title}>
+            <div className={row.title__text}>{shelvesName}</div>
+            <div
+              className={row.title__arrow + " " + row.title__arrow__close}
+            ></div>
           </div>
         </div>
       )}

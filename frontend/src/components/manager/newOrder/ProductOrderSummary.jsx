@@ -7,8 +7,8 @@ import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
 const ProductOrder = ({ productData }) => {
   const { state, dispatch } = useMainContext();
 
-  let { image, name, providerName, categoryName, barcode, quantity } =
-    productData;
+  let { image, name, providerName, subGroupName,  barcode, packQuantity, price, quantity } = productData;
+
   const onIncrease = () => {
     dispatch({
       type: "ADD_ORDERED_PRODUCT",
@@ -23,7 +23,10 @@ const ProductOrder = ({ productData }) => {
         payload: { ...productData, quantity: quantity - 1 },
       });
     } else {
-      dispatch({ type: "REMOVE_ORDERED_PRODUCT", payload: barcode });
+      dispatch({
+        type: "ADD_ORDERED_PRODUCT",
+        payload: { ...productData, quantity: 0 },
+      });
     }
   };
 
@@ -35,11 +38,12 @@ const ProductOrder = ({ productData }) => {
           <h2>{name}</h2>
         </span>
       </span>
-      <span>
+      <span className={product.moreDetails}>
         <p>{providerName}</p>
         {/* <p>{productData.group}</p> */}
-        <p>{categoryName}</p>
+        <p>{subGroupName}</p>
         <p>{barcode}</p>
+        <p>{price ? `${price}₪` : "אין מחיר זמין"}</p>
         <div className={product.buttons}>
           <button className={product.decrease} onClick={onIncrease}></button>
           <span className={product.quantityNum}>{quantity}</span>

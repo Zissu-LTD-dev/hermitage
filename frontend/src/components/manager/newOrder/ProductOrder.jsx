@@ -10,7 +10,7 @@ const ProductOrder = ({productData}) => {
 
     let { image, name, providerName, subGroupName,  barcode, packQuantity, price } = productData;
     let QuantityPerCase = packQuantity ? packQuantity : 1;
-    let fixPrice = price ? price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') + ' ₪' : 'אין מחיר זמין';
+    let fixPrice = price ?`${price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}₪`: 'אין מחיר זמין';
     const [quantity, setQuantity] = useState(0);
     
       const onIncrease = () => {

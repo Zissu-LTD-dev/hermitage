@@ -15,13 +15,13 @@ function ReturnFilterProduct() {
       for (let i = 0; i < allProducts.length; i++) {
         if (
           displayFilters["קבוצת משנה"] &&
-          displayFilters["קבוצת משנה"].includes(allProducts[i]["category"])
+          displayFilters["קבוצת משנה"].includes(allProducts[i]["subGroupNumber"])
         ) {
           newProducts.push(allProducts[i]);
         }
         if (
           displayFilters["ספק"] &&
-          displayFilters["ספק"].includes(allProducts[i]["provider"])
+          displayFilters["ספק"].includes(allProducts[i]["providerNumber"])
         ) {
           if (!newProducts.includes(allProducts[i])) {
             newProducts.push(allProducts[i]);

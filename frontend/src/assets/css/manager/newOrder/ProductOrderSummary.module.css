@@ -16,6 +16,13 @@
 
 }
 
+.product .moreDetails{
+  width: 55%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .product img {
   width: 95px;
   height: 68px;
@@ -42,7 +49,8 @@
 }
 
 .product p {
-  width: 150px;
+  /* max-width: 150px; */
+  width: 70px;
   text-align: center;
   /*font: normal normal normal 11px/14px IBM Plex Sans Hebrew;*/
   font-size: 11px;
@@ -56,7 +64,7 @@
 }
 
 .product .buttons {
-  width: 111px;
+  min-width: 111px;
   height: 30px;
   margin-left: 21px;
   display: flex;

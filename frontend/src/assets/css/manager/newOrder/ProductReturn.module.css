@@ -30,7 +30,7 @@
 }
 
 .main span p{
-    min-width: 90px;
+    min-width: 50px;
     text-align: center;
     /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew; */
     font-size: 11px;
@@ -44,7 +44,7 @@
 }
 
 .btn{
-    width: 167px;
+    min-width: 167px;
     height: 30px;
     display: flex;
     justify-content: space-between;
@@ -87,11 +87,11 @@
 }
 
 .btnText{
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .buttons{
-    width: 111px;
+    min-width: 111px;
     height: 28px;
     display: flex;
     justify-content: space-between;

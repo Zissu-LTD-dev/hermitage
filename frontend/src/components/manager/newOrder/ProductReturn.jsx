@@ -7,7 +7,9 @@ import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
 const ProductReturn = ({ productData }) => {
   const { state, dispatch } = useMainContext();
 
-  let { image, name, providerName, categoryName, barcode } = productData;
+  // let { image, name, providerName, categoryName, barcode } = productData;
+  let { image, name, providerName, subGroupName,  barcode, packQuantity, price } = productData;
+
   const [active, setActive] = useState(productData.quantity ? true : false);
   const [quantity, setQuantity] = useState(productData.quantity ? productData.quantity : 1);
 
@@ -66,7 +68,8 @@ const ProductReturn = ({ productData }) => {
 
       <span>
         <p>{providerName}</p>
-        <p>{categoryName}</p>
+        <p>{subGroupName}</p>
+        <p>{price ? `${price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}₪` : "אין מחיר זמין"}</p>
         <p>{barcode}</p>
         {active && (
           <>

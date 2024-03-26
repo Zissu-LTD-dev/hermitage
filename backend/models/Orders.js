@@ -6,18 +6,8 @@ const orderSchema = new mongoose.Schema({
   branchName: String,
   providerNumber: Number,
   providerName: String,
-  orderLines: [
-    {
-      product: Object,
-      quantity: Number,
-    },
-  ],
-  returnLines: [
-    {
-      product: Object,
-      quantity: Number,
-    },
-  ],
+  orderLines: Object,
+  returnLines: Object,
   totalOrderQty: Number,
   totalReturnQty: Number,
   totalOrderAmount: Number,

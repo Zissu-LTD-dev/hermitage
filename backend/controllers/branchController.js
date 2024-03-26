@@ -6,7 +6,6 @@ const {
     Obligations,
     Document,
     Order,
-    Return,
     Product,
     LocationProductsConfig_row,
     Provider,
@@ -63,49 +62,34 @@ const getFilters = async (req, res) => {
   // createOrder
 const createOrder = async (req, res) => {
     let {branch, summary} = req.body;
-  // get blockedProviders from branch 
-  let blockedProviders = await Branch.findById(branch.idNumber, {blockedProviders: 1, _id: 0});
+    
+    // order number
+    let lastOrder = await Order.findOne().sort({orderNumber: -1});
+    let newOrderNumber = lastOrder ? lastOrder.orderNumber : 100 ;
+    
+    let newOrders = summary.map(order => {
+      newOrderNumber = newOrderNumber + 1;  
+      return {
+          "orderNumber": newOrderNumber,
+          "branchNumber": branch.number,
+          "branchName": branch.name,
+          "providerNumber": order.providerNumber,
+          "providerName": order.providerName,
+          "orderLines": order.orderLines,
+          "returnLines": order.returnLines,
+          "totalOrderQty": order.totalOrderQty,
+          "totalReturnQty": order.totalReturnQty,
+          "totalOrderAmount": order.totalOrderAmount,
+          "totalReturnAmount": order.totalReturnAmount,
+          "orderStatus": "pending",
+          "returnStatus": "pending",
+          "notes": "",
+        }
+    });
 
-  let orderNum = await Order.findOne().sort("-orderNum")
-  let returnNum = await Return.findOne().sort("-returnNum")
-  orderNum = orderNum ? orderNum.orderNum + 1 : 1
-  returnNum = returnNum ? returnNum.returnNum + 1 : 1 
-  
-    for (let order of summary) {
-      
-      if(order.productsOrder.length){
-  
-        let orderEntity = new Order({
-          orderNum: orderNum,
-          branchID: branch.idNumber,
-          branchName: branch.name,
-          provider: order.provider,
-          providerName: order.providerName,
-          products: order.productsOrder,
-          totalOrders: order.sumOrder,
-          totalReturns: order.sumReturn,
-          totalPrice: order.sumTotal,
-        });
-        await orderEntity.save();
-        await sendOrderMail(branch, order.providerName, order.productsOrder);
-      }
-  
-      if(order.productsReturn.length){
-        let returnEntity = new Return({
-          returnNum: returnNum,
-          branchID: branch.idNumber,
-          branchName: branch.name,
-          provider: order.provider,
-          providerName: order.providerName,
-          products: order.productsReturn,
-          totalOrders: order.sumOrder,
-          totalReturns: order.sumReturn,
-          totalPrice: order.sumTotal,
-        });
-        await returnEntity.save();
-      }
-    }
-  
+    let orders = await Order.insertMany(newOrders);
+    console.log(newOrders);
+    
     res.status(200).json({message: 'The order was successfully sent'});
   };
 

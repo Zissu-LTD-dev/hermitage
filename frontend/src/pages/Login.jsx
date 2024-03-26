@@ -31,7 +31,7 @@ function Login() {
       setShowError(true);
       return;
     }
-    console.log(data);
+    
     const { token, user, branch } = data;
 
     user.branch = branch;

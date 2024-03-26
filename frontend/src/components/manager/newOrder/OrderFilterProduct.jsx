@@ -46,7 +46,7 @@ function OrderFilterProduct() {
       <div className={filterProductStyle.main}>
         {products.map((product, i) => (
           <div className={filterProductStyle.product}>
-            <ProductOrder key={i} productData={product} />
+            <ProductOrder key={product.barcode} productData={product} />
           </div>
         ))}
       </div>

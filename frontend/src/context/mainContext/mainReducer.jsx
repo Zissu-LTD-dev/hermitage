@@ -305,19 +305,26 @@ export const mainReducer = (state, action) => {
         summary.forEach((provider) => {
           if (provider.providerName === product.providerName) {
             providerExists = true;
-            provider.productsOrder.push(product);
-            provider.sumOrder += product.quantity;
+
+            provider.orderLines.products.push(product);
+            provider.orderLines.quantity += product.quantity;
+            provider.totalOrderQty += product.quantity;
+            provider.totalOrderAmount += product.price * product.quantity;
           }
         });
         if (!providerExists) {
           summary.push({
-            provider: product.provider,
+            providerNumber: product.providerNumber,
             providerName: product.providerName,
-            productsOrder: [product],
-            productsReturn: [],
-            sumOrder: product.quantity,
-            sumReturn: 0,
-            sumTotal: 0,
+            orderLines: {
+              products: [product],
+              quantity: product.quantity,
+            },
+            returnLines: { products: [], quantity: 0},
+            totalOrderQty: product.quantity,
+            totalOrderAmount: product.price * product.quantity,
+            totalReturnQty: 0,
+            totalReturnAmount: 0,
           });
         }
       });
@@ -327,26 +334,32 @@ export const mainReducer = (state, action) => {
         summary.forEach((provider) => {
           if (provider.providerName === product.providerName) {
             providerExists = true;
-            provider.productsReturn.push(product);
-            provider.sumReturn += product.quantity;
+
+            provider.returnLines.products.push(product);
+            provider.returnLines.quantity += product.quantity;
+            provider.totalReturnQty += product.quantity;
+            provider.totalReturnAmount += product.price * product.quantity;
           }
         });
         if (!providerExists) {
           summary.push({
-            provider: product.provider,
+            providerNumber: product.providerNumber,
             providerName: product.providerName,
-            productsOrder: [],
-            productsReturn: [product],
-            sumOrder: 0,
-            sumReturn: product.quantity,
-            sumTotal: 0,
+            orderLines: { products: [], quantity: 0 },
+            returnLines: {
+              products: [product],
+              quantity: product.quantity,
+            },
+            totalOrderQty: 0,
+            totalOrderAmount: 0,
+            totalReturnQty: product.quantity,
+            totalReturnAmount: product.price * product.quantity,
           });
         }
       });
 
-      summary.forEach((provider) => {
-        provider.sumTotal = provider.sumOrder - provider.sumReturn;
-      });
+
+
 
       return { ...state, summary: summary };
 

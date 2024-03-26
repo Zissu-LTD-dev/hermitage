@@ -48,24 +48,24 @@ function DynamicContent() {
                 />
               ))}
             {state.statusOrder.step === 1 && activeFiltersSearch && (
-              <OrderFilterProduct />
+              <OrderFilterProduct key={state.statusOrder.step} />
             )}
 
 
             {state.statusOrder.step === 2 &&
               state.orderedProducts.map((product, i) => (
-                <ProductOrderSummary key={i} productData={product} />
+                <ProductOrderSummary key={product.barcode} productData={product} />
               ))}
 
 
             {state.statusOrder.step === 3 &&
-                <ReturnFilterProduct />
+                <ReturnFilterProduct key={state.statusOrder.step} />
               }
 
 
             {state.statusOrder.step === 4 &&
               state.summary.map((provider, i) => (
-                <OrderSummary key={i} providers={provider} />
+                <OrderSummary key={`${i}${provider.providerNumber}`} providers={provider} />
               ))}
           </div>
         </div>

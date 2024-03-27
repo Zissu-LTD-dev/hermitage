@@ -53,12 +53,12 @@ function Sidebar() {
             </div>
             <span>מסמכים</span>
           </div>
-          <div>
+          {/* <div>
             <div className={sidebar.icon}>
               <img src={branchLayout} alt="branchLayout" />
             </div>
             <span>פריסת הסניף</span>
-          </div>
+          </div> */}
         </div>
         <div className={sidebar.connectedBy}>
           <div className={sidebar.icon}>

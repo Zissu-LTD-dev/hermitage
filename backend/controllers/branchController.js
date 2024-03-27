@@ -81,13 +81,15 @@ const createOrder = async (req, res) => {
           "totalReturnQty": order.totalReturnQty,
           "totalOrderAmount": order.totalOrderAmount,
           "totalReturnAmount": order.totalReturnAmount,
-          "orderStatus": "pending",
-          "returnStatus": "pending",
+          "orderStatus": order.orderLines.products.length > 0 ? "pending" : "",
+          "returnStatus": order.returnLines.products.length > 0 ? "pending" : "",
           "notes": "",
         }
     });
 
     let orders = await Order.insertMany(newOrders);
+
+    // TODO: send mail to provider
     console.log(newOrders);
     
     res.status(200).json({message: 'The order was successfully sent'});
@@ -95,8 +97,13 @@ const createOrder = async (req, res) => {
 
   // getOrders
 const getOrders = async (req, res) => {
-    let branchName = req.params.branchName;
-    let orders = await Order.find({branchName: branchName, status: "pending"});
+    let branchNumber = req.params.branchNumber;
+    
+    // get all orders for this branch from Order model
+    let orders = await Order.find({
+      branchNumber: branchNumber
+    });
+
     res.status(200).json({orders: orders});
   };
 

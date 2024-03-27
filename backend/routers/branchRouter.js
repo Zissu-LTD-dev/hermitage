@@ -19,7 +19,7 @@ branchRouter.get("/getFilters", branch.getFilters);
 branchRouter.post("/createOrder", branch.createOrder);
 
 // getOrders
-branchRouter.get("/getOrders/:branchName", branch.getOrders);
+branchRouter.get("/getOrders/:branchNumber", branch.getOrders);
 
 // allDocuments
 branchRouter.get("/allDocuments/:branchId", branch.allDocuments);

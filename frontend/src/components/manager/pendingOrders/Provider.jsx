@@ -1,52 +1,59 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Product from "./Product";
 import providerC from "../../../assets/css/manager/pendingOrders/Provider.module.css";
 
-function Provider({ order }) {
+function Provider({ order, status }) {
   const [open, setOpen] = useState(false);
-  let { orderNum, createdAt, providerName, products } = order;
-  const number = orderNum.toString().padStart(3, "0");
-  const date = createdAt.split("T")[0].split("-").reverse().join("/");
+  const [colorStatus, setColorStatus] = useState("");
+  let { orderNumber, createdDate, providerName, returnLines, orderLines } =
+    order;
+  const date = createdDate.split("T")[0].split("-").reverse().join("/");
 
   const handleOpen = () => {
     setOpen(!open);
   };
 
+  useEffect(() => {
+    if (status === "הזמנות ממתינות") setColorStatus("#CC7752");
+    if (status === "הזמנות שהושלמו") setColorStatus("#79B551");
+    if (status === "הזמנות מבוטלות") setColorStatus("#082A3A");
+    if (status === "החזרות") setColorStatus("#007BFF");
+  }, [status]);
+
   return (
     <>
-      {!open && (
+      <div className={providerC.main_open}>
         <div className={providerC.main} onClick={handleOpen}>
           <span>
-            <div className={providerC.orderNum}>הזמנה #{number}</div>
+            <div className={providerC.orderNum}>הזמנה #{orderNumber}</div>
             <div className={providerC.date}>{date}</div>
             <div className={providerC.provider}>{providerName}</div>
           </span>
           <span>
-            <div className={providerC.status}>הזמנה ממתינה</div>
-            <div className={providerC.icon + " " + providerC.close__icon}></div>
+            <div
+              style={{ backgroundColor: colorStatus }}
+              className={providerC.status}
+            >
+              {status}
+            </div>
+            <div className={ !open ? providerC.icon + " " + providerC.close__icon : providerC.icon }></div>
           </span>
         </div>
-      )}
-      {open && (
-        <div className={providerC.main__open}>
-          <div className={providerC.main} onClick={handleOpen}>
-            <span>
-              <div className={providerC.orderNum}>הזמנה #{number}</div>
-              <div className={providerC.date}>{date}</div>
-              <div className={providerC.provider}>{providerName}</div>
-            </span>
-            <span>
-              <div className={providerC.status}>הזמנה ממתינה</div>
-              <div className={providerC.icon}></div>
-            </span>
-          </div>
+        {open && status != "החזרות" && (
           <div className={providerC.products}>
-            {products.map((product) => (
-              <Product productData={product} />
+            {orderLines.products.map((product) => (
+              <Product key={product.barcode} productData={product} />
             ))}
           </div>
-        </div>
-      )}
+        )}
+        {open && status === "החזרות" && (
+          <div className={providerC.products}>
+            {returnLines.products.map((product) => (
+              <Product key={product.barcode} productData={product} />
+            ))}
+          </div>
+        )}
+      </div>
     </>
   );
 }

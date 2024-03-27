@@ -3,7 +3,7 @@ import product from "../../../assets/css/manager/pendingOrders/Product.module.cs
 import img from "../../../assets/image/manager/0007434_-12-.png";
 
 function Product({ productData }) {
-  let { name, categoryName, barcode, quantity } = productData;
+  let { name, subGroupName, barcode, quantity } = productData;
 
   return (
     <div className={product.main}>
@@ -14,7 +14,7 @@ function Product({ productData }) {
         <div className={product.name}>{name}</div>
       </span>
       <span>
-        <div className={product.category}>{categoryName}</div>
+        <div className={product.category}>{subGroupName}</div>
         <div className={product.barcode}>{barcode}</div>
         <div className={product.quantity}>{quantity} יחידות</div>
       </span>

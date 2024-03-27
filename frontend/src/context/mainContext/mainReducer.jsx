@@ -309,7 +309,7 @@ export const mainReducer = (state, action) => {
       state.orderedProducts.forEach((product) => {
         let providerExists = false;
         summary.forEach((provider) => {
-          if (provider.providerName === product.providerName) {
+          if (provider.providerName === product.providerName && provider.quantity > 0) {
             providerExists = true;
 
             provider.orderLines.products.push(product);
@@ -318,7 +318,7 @@ export const mainReducer = (state, action) => {
             provider.totalOrderAmount += product.price * product.quantity;
           }
         });
-        if (!providerExists) {
+        if (!providerExists && product.quantity > 0) {
           summary.push({
             providerNumber: product.providerNumber,
             providerName: product.providerName,
@@ -338,7 +338,7 @@ export const mainReducer = (state, action) => {
       state.returnedProducts.forEach((product) => {
         let providerExists = false;
         summary.forEach((provider) => {
-          if (provider.providerName === product.providerName) {
+          if (provider.providerName === product.providerName && provider.quantity > 0) {
             providerExists = true;
 
             provider.returnLines.products.push(product);
@@ -347,7 +347,7 @@ export const mainReducer = (state, action) => {
             provider.totalReturnAmount += product.price * product.quantity;
           }
         });
-        if (!providerExists) {
+        if (!providerExists && product.quantity > 0) {
           summary.push({
             providerNumber: product.providerNumber,
             providerName: product.providerName,

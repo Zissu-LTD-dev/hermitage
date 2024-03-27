@@ -13,6 +13,8 @@ function Wizard() {
     let branch = state.userInfo.branch;
     let order = { summary, branch };
 
+    if (summary.length === 0) return dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אין מוצרים לשליחה" } });
+
     dispatch({ type: "SET_SHOW_LOADER", payload: true });
     const data = await apiRequest("manager/createOrder", "POST", order);
     dispatch({ type: "SET_SHOW_LOADER", payload: false });

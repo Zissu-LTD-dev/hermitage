@@ -32,6 +32,9 @@ function DynamicContent() {
     } else {
       dispatch({ type: "SET_ACTIVE_NAVBAR", payload: false });
     }
+    return () => {
+      dispatch({ type: "SET_ACTIVE_NAVBAR", payload: false });
+    }
   }, [state.statusOrder]);
 
   return (

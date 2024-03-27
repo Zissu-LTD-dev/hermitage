@@ -14,6 +14,7 @@ export const initialState = {
     show: false,
     message: "",
   },
+  activeNavbar: false,
 
   status: "new order",
   statusOrder: {
@@ -54,6 +55,8 @@ export const SET_SHOW_SUCCESS = "SET_SHOW_SUCCESS";
 export const SET_SHOW_WARNING = "SET_SHOW_WARNING";
 
 export const SET_USER_INFO = "SET_USER_INFO";
+
+export const SET_ACTIVE_NAVBAR = "SET_ACTIVE_NAVBAR";
 
 // manager 👇
 export const SET_STATUS = "SET_STATUS";
@@ -104,6 +107,9 @@ export const mainReducer = (state, action) => {
         userInfo: action.payload,
         branchType: action.payload.branch.branchTypeNumber,
       };
+
+    case SET_ACTIVE_NAVBAR:
+      return { ...state, activeNavbar: action.payload };
 
     // manager 👇
     case SET_STATUS:

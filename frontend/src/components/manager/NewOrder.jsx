@@ -26,6 +26,14 @@ function DynamicContent() {
     }
   }, [state.search, state.displayFilters]);
 
+  useEffect(() => {
+    if (state.statusOrder.step === 1 || state.statusOrder.step === 3) {
+      dispatch({ type: "SET_ACTIVE_NAVBAR", payload: true });
+    } else {
+      dispatch({ type: "SET_ACTIVE_NAVBAR", payload: false });
+    }
+  }, [state.statusOrder]);
+
   return (
     <>
       <div className={newOrder.main}>

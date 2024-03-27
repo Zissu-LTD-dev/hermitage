@@ -139,7 +139,7 @@ function Filters() {
             : filtersStyle.filters
         }
       >
-        <div className={filtersStyle.filter} onClick={() => setActive(!active)}>
+        <div className={filtersStyle.filter} onClick={ state.activeNavbar ? () => setActive(!active) : null }>
           <h4>סינון</h4>
           <i className={filtersStyle.icon}></i>
         </div>

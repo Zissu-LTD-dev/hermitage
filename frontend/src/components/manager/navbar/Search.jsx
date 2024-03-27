@@ -43,6 +43,7 @@ function Search() {
           placeholder="חיפוש מוצרים"
           value={state.search}
           onChange={handleChange}
+          disabled={!state.activeNavbar ? true : false}
         />
         <div className={searchStyle.icon}></div>
       </div>

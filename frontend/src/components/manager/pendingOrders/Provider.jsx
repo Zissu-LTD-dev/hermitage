@@ -8,6 +8,8 @@ function Provider({ order, status }) {
   let { orderNumber, createdDate, providerName, returnLines, orderLines } =
     order;
   const date = createdDate.split("T")[0].split("-").reverse().join("/");
+  let time = createdDate.split("T")[1].split(".")[0];
+  let newtime = time.split(":")[0] + ":" + time.split(":")[1];
 
   const handleOpen = () => {
     setOpen(!open);
@@ -26,7 +28,11 @@ function Provider({ order, status }) {
         <div className={providerC.main} onClick={handleOpen}>
           <span>
             <div className={providerC.orderNum}>הזמנה #{orderNumber}</div>
-            <div className={providerC.date}>{date}</div>
+            <div className={providerC.date}>
+              {date}
+              <br />
+              בשעה : {newtime}
+            </div>
             <div className={providerC.provider}>{providerName}</div>
           </span>
           <span>

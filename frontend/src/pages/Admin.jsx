@@ -48,7 +48,7 @@ function Admin() {
       {state.showWarning.show && <WarningPopup isShow={state.showWarning.show} message={state.showWarning.message} />}
       
       <div className={admin.main} >
-        <Sidebar branchName="כמנהל רשת" />
+        <Sidebar branchName="מנהל רשת" />
         <Navbar />
         <div className={admin.content}>
           {stateAdmin.status == "branch management" && <BranchManagement />}
@@ -56,6 +56,7 @@ function Admin() {
           {stateAdmin.status == "block management" && <BlockManagement />}
           {stateAdmin.status == "documents" && <Documents />}
           {stateAdmin.status == "adding products" && <AddingProducts />}
+          {stateAdmin.status == "general management" && <h1>general management</h1>}
         </div>
       </div>
     </>

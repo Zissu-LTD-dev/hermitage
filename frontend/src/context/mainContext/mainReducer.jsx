@@ -105,7 +105,7 @@ export const mainReducer = (state, action) => {
       return {
         ...state,
         userInfo: action.payload,
-        branchType: action.payload.branch.branchTypeNumber,
+        branchType: action.payload.branch?.branchTypeNumber ? action.payload.branch.branchTypeNumber : null,
       };
 
     case SET_ACTIVE_NAVBAR:

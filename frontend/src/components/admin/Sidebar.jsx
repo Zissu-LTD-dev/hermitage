@@ -34,13 +34,13 @@ function Sidebar({ branchName }) {
             <div className={sidebar.icon}>
               <img src={branchManagement} alt="branch management" />
             </div>
-            <span>ניהול סניפים</span>
+            <span>ניהול סניפים וספקים</span>
           </div>
           <div onClick={() => changeStatus("approvals status")}>
             <div className={sidebar.icon}>
               <img src={approvalsStatus} alt="approvals status" />
             </div>
-            <span>סטטוס אישורים</span>
+            <span>סטטוס הזמנות</span>
           </div>
           <div onClick={() => changeStatus("block management")}>
             <div className={sidebar.icon}>
@@ -59,6 +59,12 @@ function Sidebar({ branchName }) {
               <img src={addingProducts} alt="adding products" />
             </div>
             <span>הוספת מוצרים</span>
+          </div>
+          <div onClick={() => changeStatus("general management")}>
+            <div className={sidebar.icon}>
+              <img src={addingProducts} alt="general management" />
+            </div>
+            <span>ניהול כללי</span>
           </div>
         </div>
         <div className={sidebar.connectedBy}>

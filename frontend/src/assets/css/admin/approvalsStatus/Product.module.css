@@ -41,12 +41,12 @@
 
 .category , .barcode {
   /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew;   */
-  font-size: 11px;
+  font-size: 13px;
   font-family: "IBM Plex Sans Hebrew";
   font-style: normal;
   line-height: 14px;
-  margin-left: 42px;
-  color: #9eaaaf;
+  margin-left: 25px;
+  color: #585c5d;
 }
 
 .quantity {

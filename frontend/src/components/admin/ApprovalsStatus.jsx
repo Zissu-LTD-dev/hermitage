@@ -11,18 +11,24 @@ function ApprovalsStatus() {
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [orderBy, setOrderBy] = useState("panding");
 
-  const handleOrderBy = (orderBy) => {
-    let newOrders = stateAdmin.confirmationOrders;
+
+  const handleOrderBy = () => {
+    let newOrders = stateAdmin.confirmationOrders.filter((order) => order.orderLines.quantity > 0);
+    let newReturnOrders = stateAdmin.confirmationOrders.filter((order) => order.returnLines.quantity > 0);
     switch (orderBy) {
       case "panding":
-        newOrders = newOrders.filter((order) => order.status != "canceled" && order.status != "approved");
+        newOrders = newOrders.filter((order) => order.orderStatus == "pending");
         break;
       case "canceled":
-        newOrders = newOrders.filter((order) => order.status == "canceled");
+        newOrders = newOrders.filter((order) => order.orderStatus == "canceled");
         break;
       case "approved":
-        newOrders = newOrders.filter((order) => order.status == "approved");
+        newOrders = newOrders.filter((order) => order.orderStatus == "approved");
+        break;
+      case "returned":
+        newOrders = newReturnOrders;
         break;
       default:
         break;
@@ -74,7 +80,8 @@ function ApprovalsStatus() {
   useEffect(() => {
     if (stateAdmin.confirmationOrders.length > 0) {
       setLoading(true);
-      let newOrders = stateAdmin.confirmationOrders.filter((order) => order.status != "canceled" && order.status != "approved");
+      let newOrders = stateAdmin.confirmationOrders.filter((order) => order.orderLines.quantity > 0);
+      newOrders = stateAdmin.confirmationOrders.filter((order) => order.orderStatus == "pending");
       setOrders(newOrders);
     }
   }, [stateAdmin.confirmationOrders]);
@@ -121,6 +128,10 @@ function ApprovalsStatus() {
     setOrders(stateAdmin.confirmationOrders);
   }, [stateAdmin.displayFilters]);
 
+  useEffect(() => {
+    handleOrderBy();
+  }, [orderBy]);
+
 
   return (
     <>
@@ -128,15 +139,16 @@ function ApprovalsStatus() {
         <div className={approvalsStatus.header}>
           <div className={approvalsStatus.title}>סטטוס אישורים להזמנות</div>
           <div className={approvalsStatus.filter_buttons}>
-              <div className={approvalsStatus.pending_button} onClick={() => handleOrderBy("panding")} >הזמנות ממתינות לאישור</div>
-              <div className={approvalsStatus.canceled_button} onClick={() => handleOrderBy("canceled")}>הזמנות מבוטלות</div>
-              <div className={approvalsStatus.approved_button} onClick={() => handleOrderBy("approved")} >הזמנות מאושרות</div>
+              <div className={approvalsStatus.pending_button} onClick={() => setOrderBy("panding")} >הזמנות ממתינות לאישור</div>
+              <div className={approvalsStatus.canceled_button} onClick={() => setOrderBy("canceled")}>הזמנות מבוטלות</div>
+              <div className={approvalsStatus.approved_button} onClick={() => setOrderBy("approved")} >הזמנות מאושרות</div>
+              <div className={approvalsStatus.returned_button} onClick={() => setOrderBy("returned")} >החזרות</div>
           </div>
         </div>
         <div className={approvalsStatus.body}>
           {loading ? (
             orders.map((order) => (
-              <Order key={order._id} orderData={order} />
+              <Order key={order._id} orderData={order}  orderBy={orderBy} />
             ))
           ) : (
             <div>טוען...</div>

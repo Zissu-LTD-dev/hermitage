@@ -82,6 +82,9 @@
 .statusCanceled{
     background: #082A3A 0% 0% no-repeat padding-box;
 }
+.statusReturned{
+    background: #007BFF 0% 0% no-repeat padding-box;
+}
 
 .iconArrow {
   width: 15px;

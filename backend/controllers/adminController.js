@@ -1,27 +1,27 @@
 const {
   Branch,
-  Category,
+  SubGroup,
   Notifications,
   Obligations,
   Document,
   Order,
-  Products,
-  Providers,
+  Product,
+  Provider,
   User,
 } = require("../models");
 
 //   InitialData
 const initialData = async (req, res) => {
   try {
-    const products = await Products.find({});
-    const providers = await Providers.find({});
-    const categories = await Category.find({});
+    const products = await Product.find({});
+    const providers = await Provider.find({});
+    const subGroups = await SubGroup.find({});
     const branches = await Branch.find({});
 
     res.status(200).json({
       products,
       providers,
-      categories,
+      subGroups,
       branches,
     });
   } catch (err) {
@@ -98,13 +98,13 @@ const updateBlockedProducts = async (req, res) => {
   try {
     if(blocked){
       productsBarcodeList.forEach(async (barcode) => {
-        const prod = await Products.findOne({ barcode: barcode });
+        const prod = await Product.findOne({ barcode: barcode });
         prod.blocked = true;
         await prod.save();
       });
     }else{
       productsBarcodeList.forEach(async (barcode) => {
-        const prod = await Products.findOne({ barcode: barcode });
+        const prod = await Product.findOne({ barcode: barcode });
         prod.blocked = false;
         await prod.save();
       });
@@ -118,7 +118,7 @@ const updateBlockedProducts = async (req, res) => {
 
 // getAllOrders
 const getAllOrders = async (req, res) => {
-  let orders = await Order.find({});
+  let orders = await Order.find({}).sort({orderNumber: -1});
   res.status(200).json({orders: orders});
 };
 
@@ -126,9 +126,12 @@ const getAllOrders = async (req, res) => {
 const updateOrder = async (req, res) => {
   let newOrder = req.body;
   let order = await Order.findOne({_id: newOrder._id});
-  order.status = newOrder.status;
-  order.products = newOrder.products;
+  order.orderStatus = newOrder.orderStatus;
+  order.orderLines = newOrder.orderLines;
+  order.totalOrderAmount = newOrder.totalOrderAmount;
+  order.totalOrderQty = newOrder.totalOrderQty;
   await order.save();
+  // TODO:  if orderStatus is 'approved' send mail to the provider
   res.status(200).json({message: 'The order was successfully updated'});
 };
 

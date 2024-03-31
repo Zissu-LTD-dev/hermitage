@@ -67,11 +67,11 @@ useEffect(() => {
       let showProducts = [];
 
       if (state.displayFilters.length != []) {
-        if (filters["ספקים"] && filters["קטגוריות"]) {
+        if (filters["ספקים"] && filters["קבוצת משנה"]) {
           products.filter((product) => {
             filters["ספקים"].map((filter) => {
-              filters["קטגוריות"].map((filter2) => {
-                if (product.provider == filter && product.category == filter2) {
+              filters["קבוצת משנה"].map((filter2) => {
+                if (product.providerNumber == filter && product.subGroupNumber == filter2) {
                   showProducts.push(product);
                 }
               });
@@ -80,15 +80,15 @@ useEffect(() => {
         } else if (filters["ספקים"]) {
           products.filter((product) => {
             filters["ספקים"].map((filter) => {
-              if (product.provider == filter) {
+              if (product.providerNumber == filter) {
                 showProducts.push(product);
               }
             });
           });
-        } else if (filters["קטגוריות"]) {
+        } else if (filters["קבוצת משנה"]) {
           products.filter((product) => {
-            filters["קטגוריות"].map((filter) => {
-              if (product.category == filter) {
+            filters["קבוצת משנה"].map((filter) => {
+              if (product.subGroupNumber == filter) {
                 showProducts.push(product);
               }
             });
@@ -119,13 +119,13 @@ useEffect(() => {
             details: state.providers,
           },
           {
-            title: "קטגוריות",
-            details: state.categories,
+            title: "קבוצת משנה",
+            details: state.subGroups,
           },
         ],
       });
     }
-  }, [state.providers, state.categories]);
+  }, [state.providers, state.subGroups]);
 
   return (
     <>

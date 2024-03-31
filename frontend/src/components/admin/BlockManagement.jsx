@@ -49,7 +49,7 @@ function BlockManagement() {
   }
 
   const showBlockedProducts = () => {
-    let blockedProducts = state.products.filter((product) => product.blocked);
+    let blockedProducts = state.products.filter((product) => product.isBlocked);
     setShowProducts(blockedProducts);
   };
 
@@ -64,11 +64,11 @@ function BlockManagement() {
       let showProducts = [];
 
       if (state.displayFilters.length != []) {
-        if (filters["ספקים"] && filters["קטגוריות"]) {
+        if (filters["ספקים"] && filters["קבוצת משנה"]) {
           products.filter((product) => {
             filters["ספקים"].map((filter) => {
-              filters["קטגוריות"].map((filter2) => {
-                if (product.provider == filter && product.category == filter2) {
+              filters["קבוצת משנה"].map((filter2) => {
+                if (product.providerNumber == filter && product.subGroupNumber == filter2) {
                   showProducts.push(product);
                 }
               });
@@ -77,15 +77,15 @@ function BlockManagement() {
         } else if (filters["ספקים"]) {
           products.filter((product) => {
             filters["ספקים"].map((filter) => {
-              if (product.provider == filter) {
+              if (product.providerNumber == filter) {
                 showProducts.push(product);
               }
             });
           });
-        } else if (filters["קטגוריות"]) {
+        } else if (filters["קבוצת משנה"]) {
           products.filter((product) => {
-            filters["קטגוריות"].map((filter) => {
-              if (product.category == filter) {
+            filters["קבוצת משנה"].map((filter) => {
+              if (product.subGroupNumber == filter) {
                 showProducts.push(product);
               }
             });
@@ -116,19 +116,19 @@ function BlockManagement() {
             details: state.providers,
           },
           {
-            title: "קטגוריות",
-            details: state.categories,
+            title: "קבוצת משנה",
+            details: state.subGroups,
           },
         ],
       });
     }
-  }, [state.providers, state.categories]);
+  }, [state.providers, state.subGroups]);
 
   useEffect(() => {
     if(showProducts.length == 0 && state.search == "" ){
       showBlockedProducts();
     }
-  }, [showProducts]);
+  }, [state.search, showProducts]);
 
   return (
     <>
@@ -145,7 +145,7 @@ function BlockManagement() {
         <div className={blockManagement.body}>
           {
             showProducts.map((product, i) => {
-              return <Product product={product} key={i} block={product.blocked}
+              return <Product product={product} key={product.barcode} block={product.isBlocked}
                 checkedAll={checkedAll} added={added} removed={removed}/>
             })
           }

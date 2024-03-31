@@ -99,13 +99,13 @@ const updateBlockedProducts = async (req, res) => {
     if(blocked){
       productsBarcodeList.forEach(async (barcode) => {
         const prod = await Product.findOne({ barcode: barcode });
-        prod.blocked = true;
+        prod.isBlocked = true;
         await prod.save();
       });
     }else{
       productsBarcodeList.forEach(async (barcode) => {
         const prod = await Product.findOne({ barcode: barcode });
-        prod.blocked = false;
+        prod.isBlocked = false;
         await prod.save();
       });
     }

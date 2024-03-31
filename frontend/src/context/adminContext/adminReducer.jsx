@@ -10,7 +10,7 @@ export const initialState = {
 
   products: [],
   providers: [],
-  categories: [],
+  subGroups: [],
   branches: [],
   documents: [],
 };
@@ -51,12 +51,12 @@ export const adminReducer = (state, action) => {
       return { ...state, status: action.payload };
 
     case SET_INITIAL_DATA:
-      let { products, providers, categories, branches } = action.payload;
+      let { products, providers, subGroups, branches } = action.payload;
       return {
         ...state,
         products: products,
         providers: providers,
-        categories: categories,
+        subGroups: subGroups,
         branches: branches,
       };
 
@@ -177,7 +177,7 @@ export const adminReducer = (state, action) => {
     case SET_BLOCKED_PRODUCTS:
       let newProductsBl = state.products.map((product) => {
         if (action.payload.includes(product.barcode)) {
-          product.blocked = true;
+          product.isBlocked = true;
         }
         return product;
       });
@@ -186,7 +186,7 @@ export const adminReducer = (state, action) => {
     case SET_UNBLOCKED_PRODUCTS:
       let newProductsUnBl = state.products.map((product) => {
         if (action.payload.includes(product.barcode)) {
-          product.blocked = false;
+          product.isBlocked = false;
         }
         return product;
       });

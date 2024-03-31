@@ -115,7 +115,7 @@ function Filters() {
       searchInFilters.map((filter, i) => {
         // check if title is = סניפים and if so, search by _id
         filter.title == "סניפים" && filter.details.map((detail, j) => {
-          String(detail.name).startsWith(String(search)) && results.push(detail._id);
+          String(detail.name).startsWith(String(search)) && results.push(detail.number);
         });
         filter.title != "סניפים" && filter.details.map((detail, j) => {
           String(detail.name).startsWith(String(search)) && results.push(detail.number);
@@ -187,7 +187,7 @@ function Filters() {
 
                           onClick={() =>
                             filter.title == "סניפים" ? 
-                            addFilterToList(filter.title, detail._id) :
+                            addFilterToList(filter.title, detail.number) :
                             addFilterToList(filter.title, detail.number)
                           }
                           type="checkbox"
@@ -219,7 +219,7 @@ function Filters() {
 
                       onClick={() =>
                         filter.title == "סניפים" ?
-                        addFilterToList(filter.title, detail._id) :
+                        addFilterToList(filter.title, detail.number) :
                         addFilterToList(filter.title, detail.number)
                       }
                       type="checkbox"

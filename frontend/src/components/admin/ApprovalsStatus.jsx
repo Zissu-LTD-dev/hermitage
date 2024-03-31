@@ -88,13 +88,15 @@ function ApprovalsStatus() {
 
 
   useEffect(() => {
+    if(stateAdmin.displayFilters.length < 1 ) return handleOrderBy();
+
     if(stateAdmin.displayFilters["סניפים"] && stateAdmin.displayFilters["ספקים"]) {
       setOrders([]);
       stateAdmin.confirmationOrders.filter((order) => {
         stateAdmin.displayFilters["סניפים"].map((filter) => {
-          if (order.branchID == filter) {
+          if (order.branchNumber == filter) {
             stateAdmin.displayFilters["ספקים"].map((filter) => {
-              if (order.provider == filter) {
+              if (order.providerNumber == filter) {
                 setOrders((orders) => [...orders, order]);
               }
             });
@@ -107,7 +109,7 @@ function ApprovalsStatus() {
       setOrders([]);
       stateAdmin.confirmationOrders.filter((order) => {
         stateAdmin.displayFilters["ספקים"].map((filter) => {
-          if (order.provider == filter) {
+          if (order.providerNumber == filter) {
             setOrders((orders) => [...orders, order]);
           }
         });
@@ -118,7 +120,7 @@ function ApprovalsStatus() {
       setOrders([]);
       stateAdmin.confirmationOrders.filter((order) => {
         stateAdmin.displayFilters["סניפים"].map((filter) => {
-          if (order.branchID == filter) {
+          if (order.branchNumber == filter) {
             setOrders((orders) => [...orders, order]);
           }
         });

@@ -8,6 +8,7 @@ export const initialState = {
   search: "",
   searchResults: [],
 
+  categories: [],
   products: [],
   providers: [],
   subGroups: [],
@@ -39,6 +40,7 @@ export const SET_UNBLOCKED_PROVIDERS_BY_BRANCH = "SET_UNBLOCKED_PROVIDERS_BY_BRA
 
 export const SET_BLOCKED_PRODUCTS = "SET_BLOCKED_PRODUCTS";
 export const SET_UNBLOCKED_PRODUCTS = "SET_UNBLOCKED_PRODUCTS";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
 export const ADD_DOCUMENT = "ADD_DOCUMENT";
@@ -51,9 +53,10 @@ export const adminReducer = (state, action) => {
       return { ...state, status: action.payload };
 
     case SET_INITIAL_DATA:
-      let { products, providers, subGroups, branches } = action.payload;
+      let {categories,  products, providers, subGroups, branches } = action.payload;
       return {
         ...state,
+        categories: categories,
         products: products,
         providers: providers,
         subGroups: subGroups,
@@ -191,6 +194,12 @@ export const adminReducer = (state, action) => {
         return product;
       });
       return { ...state, products: newProductsUnBl };
+    
+    case DELETE_PRODUCT:
+      let newProductsDel = state.products.filter(
+        (product) => product._id != action.payload
+      );
+      return { ...state, products: newProductsDel };
 
 
     case SET_DOCUMENTS:

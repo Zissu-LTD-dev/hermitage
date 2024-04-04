@@ -1,9 +1,19 @@
+import { useState, useEffect } from "react";
 import productStyle from "../../../assets/css/admin/addingProducts/Product.module.css";
+import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import img from "../../../assets/image/manager/0007434_-12-.png";
 
-function Product({product}) {
+function Product({product, deleteProduct}) {
+  const { state, dispatch } = useAdminContext();
+  let {_id, barcode, name, providerName, category, subGroupName} = product;
+  const [categoryName, setCategoryName] = useState("");
 
-  let {barcode, name, providerName, departmentName, categoryName} = product;
+  useEffect(() => {
+    if(category) {
+      let cat = state.categories.find((cat) => cat.number == category);
+      setCategoryName(cat.name);
+    }
+  }, [state.categories]);
 
   return (
     <>
@@ -16,22 +26,23 @@ function Product({product}) {
         </span>
         <span>
           <div className={productStyle.productDetails + " " + productStyle.providerName}>
-            <div className={productStyle.Icon}></div>
+            {/* <div className={productStyle.Icon}></div> */}
             <div className={productStyle.Text}>{providerName}</div>
           </div>
           <div className={productStyle.productDetails}>
-            <div className={productStyle.Icon}></div>
-            <div className={productStyle.Text}>{departmentName}</div>
-          </div>
-          <div className={productStyle.productDetails}>
-            <div className={productStyle.Icon}></div>
+            {/* <div className={productStyle.Icon}></div> */}
             <div className={productStyle.Text}>{categoryName}</div>
           </div>
           <div className={productStyle.productDetails}>
-            <div className={productStyle.Icon}></div>
+            {/* <div className={productStyle.Icon}></div> */}
+            <div className={productStyle.Text}>{subGroupName}</div>
+          </div>
+          <div className={productStyle.productDetails}>
+            {/* <div className={productStyle.Icon}></div> */}
             <div className={productStyle.Text}>{barcode}</div>
           </div>
-          <div className={productStyle.productDelete}></div>
+          <div className={productStyle.Icon}></div>
+          <div className={productStyle.productDelete} onClick={() => deleteProduct(_id)}></div>
         </span>
       </div>
     </>

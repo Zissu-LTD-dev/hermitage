@@ -127,6 +127,28 @@ useEffect(() => {
     }
   }, [state.providers, state.subGroups]);
 
+  // delete product
+const deleteProduct = async (productID) => {
+    let newShowProducts = showProducts.filter((p) => p._id != productID);
+    setShowProducts(newShowProducts);
+    dispatch({ type: "DELETE_PRODUCT", payload: productID });
+
+    let res = await apiRequestForForm(`admin/deleteProduct/${productID}`, "DELETE");
+    if (!res) {
+      dispatchMain({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "המוצר לא נמחק" },
+      });
+    } else {
+      dispatchMain({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: true, message: "המוצר נמחק בהצלחה" },
+      });
+    }
+  };
+
+  // edit product
+
   return (
     <>
         <div className={addingProducts.main}>
@@ -158,7 +180,7 @@ useEffect(() => {
             </div>
             <div className={addingProducts.body}>
                 {showProducts.map((product) => {
-                    return <Product key={product._id} product={product} />;
+                    return <Product key={product._id} product={product} deleteProduct={deleteProduct} />;
                 })}
             </div>
         </div>

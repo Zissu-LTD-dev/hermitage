@@ -1,6 +1,7 @@
 const {
   Branch,
   SubGroup,
+  Category,
   Notifications,
   Obligations,
   Document,
@@ -13,12 +14,14 @@ const {
 //   InitialData
 const initialData = async (req, res) => {
   try {
+    const categories = await Category.find({});
     const products = await Product.find({});
     const providers = await Provider.find({});
     const subGroups = await SubGroup.find({});
     const branches = await Branch.find({});
 
     res.status(200).json({
+      categories,
       products,
       providers,
       subGroups,
@@ -165,6 +168,16 @@ const deleteDocument = async (req, res) => {
   res.status(200).json({message: 'The document was successfully deleted'});
 };
 
+// delete product
+const deleteProduct = async (req, res) => {
+  let productID = req.params.id;
+  console.log(productID);
+  let currentProduct = await Product.findById(productID);
+  await currentProduct.deleteOne();
+  res.status(200).json({message: 'The product was successfully deleted'});
+}
+
+
 
 module.exports = {
   initialData,
@@ -177,4 +190,5 @@ module.exports = {
   downloadDocument,
   updateDocument,
   deleteDocument,
+  deleteProduct,
 };

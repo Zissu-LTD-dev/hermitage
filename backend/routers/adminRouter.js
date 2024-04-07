@@ -67,6 +67,9 @@ adminRouter.delete("/deleteDocument/:id", admin.deleteDocument);
 // delete product
 adminRouter.delete("/deleteProduct/:id", admin.deleteProduct);
 
+// edit product
+adminRouter.put("/editProduct/:id", admin.editProduct);
+
 
 
 // upload excel file

@@ -4,12 +4,15 @@ import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
 import apiRequestForForm from "../../services/apiForForm";
 import Product from "./addingProducts/Product";
+import EditProduct from "./addingProducts/EditProduct";
 
 function AddingProducts() {
   const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
 
   const [showProducts, setShowProducts] = useState([]);
+  const [showAddProduct, setShowAddProduct] = useState(false);
+  const [showEditProduct, setShowEditProduct] = useState();
 
   const [upload, setUpload] = useState(false);
   const [file, setFile] = useState(null);
@@ -148,6 +151,33 @@ const deleteProduct = async (productID) => {
   };
 
   // edit product
+  const editProduct = async (product) => {
+    setShowEditProduct(product);
+  }
+  // send edit product
+  const sendEditProduct = async (product) => {
+    setShowEditProduct(null);
+    let newShowProducts = showProducts.map((p) => {
+      if (p._id == product._id) return product ;
+      return p;
+    });
+    setShowProducts(newShowProducts);
+    dispatch({ type: "UPDATE_PRODUCT", payload: product });
+
+    let res = await apiRequestForForm(`admin/editProduct/${product._id}`, "PUT", product);
+    if (!res) {
+      dispatchMain({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "המוצר לא נשמר" },
+      });
+    } else {
+      dispatchMain({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: true, message: "המוצר נשמר בהצלחה" },
+      });
+    }
+  }
+
 
   return (
     <>
@@ -155,7 +185,7 @@ const deleteProduct = async (productID) => {
             <div className={addingProducts.header}>
                 <div className={addingProducts.title}>הוספת מוצרים</div>
                 <div className={addingProducts.buttons}>
-                    <div className={addingProducts.addProduct}>
+                    <div className={addingProducts.addProduct} onClick={() => setShowAddProduct(true)} >
                         <div className={addingProducts.addProductIcon}></div>
                         <div className={addingProducts.addProductText}>הוספת מוצר בודד</div>
                     </div>
@@ -180,10 +210,11 @@ const deleteProduct = async (productID) => {
             </div>
             <div className={addingProducts.body}>
                 {showProducts.map((product) => {
-                    return <Product key={product._id} product={product} deleteProduct={deleteProduct} />;
+                    return <Product key={product._id} product={product} deleteProduct={deleteProduct} editProduct={editProduct} />;
                 })}
             </div>
         </div>
+        {showEditProduct && <EditProduct product={showEditProduct} cancel={() => setShowEditProduct(null)} save={sendEditProduct} />}
     </>
   )
 }

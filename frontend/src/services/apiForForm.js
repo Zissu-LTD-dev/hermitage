@@ -16,13 +16,13 @@ const apiRequestForForm = async (endpoint, method = "GET", payload = null, role 
       method,
       headers: {
         Authorization: `Bearer ${token}`,
-        role: role ? role : null
+        role: role ? role : null,
+        "Content-Type": "application/json",
       },
     };
     
-
     if (payload) {
-      options.body = payload;
+      options.body = JSON.stringify(payload);
     }
   
     const url = `${REACT_APP_BACKEND_URL}${endpoint}`;

@@ -1,0 +1,78 @@
+.main{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: calc(100vw - 285px);
+    background-color: #e9e9e977;
+    z-index: 20;
+}
+
+.title{
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 15px;
+    padding: 0 0 15px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+
+.productDetails{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 1rem 0;
+}
+
+.productDetails .Text{
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+}
+
+.productDetails input{
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0.5rem 0;
+}
+
+.btns{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+.save{
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.cancel{
+    background-color: #f44336;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

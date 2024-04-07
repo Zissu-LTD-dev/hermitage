@@ -36,8 +36,9 @@ color: #082A3A;
 
 .addProduct{
     width: 181px;
-height: 40px;
-background: #BE955D 0% 0% no-repeat padding-box;
+    height: 40px;
+    background: #BE955D 0% 0% no-repeat padding-box;
+    cursor: pointer;
 }
 
 .addProductIcon{

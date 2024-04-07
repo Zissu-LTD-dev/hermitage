@@ -13,6 +13,7 @@ export const initialState = {
   providers: [],
   subGroups: [],
   branches: [],
+  typeBranches: [],
   documents: [],
 };
 
@@ -41,6 +42,7 @@ export const SET_UNBLOCKED_PROVIDERS_BY_BRANCH = "SET_UNBLOCKED_PROVIDERS_BY_BRA
 export const SET_BLOCKED_PRODUCTS = "SET_BLOCKED_PRODUCTS";
 export const SET_UNBLOCKED_PRODUCTS = "SET_UNBLOCKED_PRODUCTS";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
 export const ADD_DOCUMENT = "ADD_DOCUMENT";
@@ -53,7 +55,7 @@ export const adminReducer = (state, action) => {
       return { ...state, status: action.payload };
 
     case SET_INITIAL_DATA:
-      let {categories,  products, providers, subGroups, branches } = action.payload;
+      let {categories,  products, providers, subGroups, branches, typeBranches } = action.payload;
       return {
         ...state,
         categories: categories,
@@ -61,6 +63,7 @@ export const adminReducer = (state, action) => {
         providers: providers,
         subGroups: subGroups,
         branches: branches,
+        typeBranches: typeBranches,
       };
 
     case SET_CONFIRMATION_ORDERS:
@@ -200,6 +203,15 @@ export const adminReducer = (state, action) => {
         (product) => product._id != action.payload
       );
       return { ...state, products: newProductsDel };
+
+    case UPDATE_PRODUCT:
+      let newProductsUp = state.products.map((product) => {
+        if (product._id == action.payload._id) {
+          return action.payload;
+        }
+        return product;
+      });
+      return { ...state, products: newProductsUp };
 
 
     case SET_DOCUMENTS:

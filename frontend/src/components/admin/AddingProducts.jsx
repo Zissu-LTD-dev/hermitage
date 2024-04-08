@@ -5,6 +5,7 @@ import { useAdminContext } from "../../context/adminContext/AdminContext";
 import apiRequestForForm from "../../services/apiForForm";
 import Product from "./addingProducts/Product";
 import EditProduct from "./addingProducts/EditProduct";
+import AddProduct from "./addingProducts/AddProduct";
 
 function AddingProducts() {
   const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
@@ -150,6 +151,29 @@ const deleteProduct = async (productID) => {
     }
   };
 
+  // add product
+  const addProduct = async (product) => {
+    setShowAddProduct(false);
+    let newShowProducts = [...showProducts, product];
+    setShowProducts(newShowProducts);
+    dispatch({ type: "ADD_PRODUCT", payload: product });
+
+    let res = await apiRequestForForm("admin/addProduct", "POST", product);
+    if (!res) {
+      dispatchMain({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "המוצר לא נשמר" },
+      });
+    } else {
+      dispatchMain({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: true, message: "המוצר נשמר בהצלחה" },
+      });
+    }
+
+  }
+
+
   // edit product
   const editProduct = async (product) => {
     setShowEditProduct(product);
@@ -215,6 +239,7 @@ const deleteProduct = async (productID) => {
             </div>
         </div>
         {showEditProduct && <EditProduct product={showEditProduct} cancel={() => setShowEditProduct(null)} save={sendEditProduct} />}
+        {showAddProduct && <AddProduct cancel={() => setShowAddProduct(false)} save={addProduct} />}
     </>
   )
 }

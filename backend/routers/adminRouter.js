@@ -64,11 +64,14 @@ adminRouter.put("/updateDocument/:id", admin.updateDocument);
 // delete document
 adminRouter.delete("/deleteDocument/:id", admin.deleteDocument);
 
-// delete product
-adminRouter.delete("/deleteProduct/:id", admin.deleteProduct);
+// add product
+adminRouter.post("/addProduct", admin.addProduct); 
 
 // edit product
 adminRouter.put("/editProduct/:id", admin.editProduct);
+
+// delete product
+adminRouter.delete("/deleteProduct/:id", admin.deleteProduct);
 
 
 

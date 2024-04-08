@@ -173,13 +173,12 @@ const deleteDocument = async (req, res) => {
   res.status(200).json({message: 'The document was successfully deleted'});
 };
 
-// delete product
-const deleteProduct = async (req, res) => {
-  let productID = req.params.id;
-  console.log(productID);
-  let currentProduct = await Product.findById(productID);
-  await currentProduct.deleteOne();
-  res.status(200).json({message: 'The product was successfully deleted'});
+// add product
+const addProduct = async (req, res) => {
+  let product = req.body;
+  let newProduct = new Product(product);
+  await newProduct.save();
+  res.status(200).json({message: 'The product was successfully added'});
 }
 
 // edit product
@@ -194,6 +193,14 @@ const editProduct = async (req, res) => {
   res.status(200).json({message: 'The product was successfully updated'});
 }
 
+// delete product
+const deleteProduct = async (req, res) => {
+  let productID = req.params.id;
+  console.log(productID);
+  let currentProduct = await Product.findById(productID);
+  await currentProduct.deleteOne();
+  res.status(200).json({message: 'The product was successfully deleted'});
+}
 
 
 module.exports = {
@@ -207,6 +214,7 @@ module.exports = {
   downloadDocument,
   updateDocument,
   deleteDocument,
-  deleteProduct,
+  addProduct,
   editProduct,
+  deleteProduct,
 };

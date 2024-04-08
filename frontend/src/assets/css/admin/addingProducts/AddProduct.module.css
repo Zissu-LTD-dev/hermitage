@@ -32,6 +32,13 @@
     padding: 1rem;
 }
 
+.scrolling{
+    width: 100%;
+    height: 70vh;
+    overflow-y: auto;
+}
+
+
 
 .productDetails{
     display: flex;
@@ -44,15 +51,50 @@
     font-size: 1.2rem;
     font-weight: 600;
     display: flex;
-    justify-content: center;
+    justify-content: end;
 }
 
-.productDetails input{
+.productDetails .input{
     width: 100%;
     padding: 0.5rem;
+    text-align: right;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin: 0.5rem 0;
+}
+
+.productDetails input[type="select"]{
+    width: 100%;
+    padding: 0.5rem;
+    text-align: right;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0.5rem 0;
+}
+
+.checkbox{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 0.5rem 0;
+    flex-direction: row-reverse;
+}
+.productDetails input[type="checkbox"]{
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 15px 0 0;
+}
+
+.configByBranch .location{
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.configByBranch .location .Text{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 1rem 0 0;
 }
 
 .btns{
@@ -66,6 +108,7 @@
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
+    margin: 5px 15px;
     cursor: pointer;
 }
 .cancel{
@@ -74,5 +117,6 @@
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
+    margin: 5px 15px;
     cursor: pointer;
 }

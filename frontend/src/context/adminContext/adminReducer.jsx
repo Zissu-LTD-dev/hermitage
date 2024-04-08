@@ -41,8 +41,9 @@ export const SET_UNBLOCKED_PROVIDERS_BY_BRANCH = "SET_UNBLOCKED_PROVIDERS_BY_BRA
 
 export const SET_BLOCKED_PRODUCTS = "SET_BLOCKED_PRODUCTS";
 export const SET_UNBLOCKED_PRODUCTS = "SET_UNBLOCKED_PRODUCTS";
-export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const ADD_PRODUCT = "ADD_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
 export const ADD_DOCUMENT = "ADD_DOCUMENT";
@@ -198,12 +199,9 @@ export const adminReducer = (state, action) => {
       });
       return { ...state, products: newProductsUnBl };
     
-    case DELETE_PRODUCT:
-      let newProductsDel = state.products.filter(
-        (product) => product._id != action.payload
-      );
-      return { ...state, products: newProductsDel };
-
+    case ADD_PRODUCT:
+      return { ...state, products: [...state.products, action.payload] };
+      
     case UPDATE_PRODUCT:
       let newProductsUp = state.products.map((product) => {
         if (product._id == action.payload._id) {
@@ -212,7 +210,12 @@ export const adminReducer = (state, action) => {
         return product;
       });
       return { ...state, products: newProductsUp };
-
+      
+    case DELETE_PRODUCT:
+        let newProductsDel = state.products.filter(
+          (product) => product._id != action.payload
+        );
+        return { ...state, products: newProductsDel };
 
     case SET_DOCUMENTS:
       return { ...state, documents: action.payload };

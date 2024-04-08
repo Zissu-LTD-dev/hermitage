@@ -180,7 +180,7 @@ function EditProduct({ product, cancel, save }) {
                     EditproductStyle.location
                   }
                 >
-                  {/* חסימת פריט */}
+                  {/* פריט זמין*/}
                   <div
                     className={
                       EditproductStyle.productDetails +
@@ -188,7 +188,7 @@ function EditProduct({ product, cancel, save }) {
                       EditproductStyle.checkbox
                     }
                   >
-                    <div className={EditproductStyle.Text}>חסימת פריט </div>
+                    <div className={EditproductStyle.Text}>פריט זמין</div>
                     <input
                       type="checkbox"
                       className={EditproductStyle.input}

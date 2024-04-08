@@ -186,12 +186,11 @@ const deleteProduct = async (req, res) => {
 const editProduct = async (req, res) => {
   let productID = req.params.id;
   let product = req.body;
+
   let currentProduct = await Product.findById(productID);
-  // updata only the fields that were changed
-  // TODO: add the fields that can be changed
-  console.log(currentProduct);
   await currentProduct.updateOne(product);
   await currentProduct.save();
+  
   res.status(200).json({message: 'The product was successfully updated'});
 }
 

@@ -20,28 +20,26 @@ function EditProduct({ product, cancel, save }) {
   }, [branchTypeConfig]);
 
   useEffect(() => {
-    // TODO: יש באג כאן שצריך לתקן 
-    // במוצר אחד לא נכנס הקונפיג הוא פשוט נעלם
+    let branchTypeConfig = [];
     typeBranches.forEach((branch) => {
-      product.branchTypeConfig.map((config) => {
-        if (config.branchType && config.branchType == branch.typeId) {
-          setBranchTypeConfig((prev) => [...prev, config]);
-        } else {
-          setBranchTypeConfig((prev) => [
-            ...prev,
-            {
-              location: {
-                column: null,
-                shelf: null,
-                index: null,
-              },
-              branchType: parseInt(branch.typeId),
-              available: false,
-            },
-          ]);
-        }
-      });
+      let config = product.branchTypeConfig.find(
+        (config) => config.branchType == branch.typeId
+      );
+      if (config) {
+        branchTypeConfig.push(config);
+      } else {
+        branchTypeConfig.push({
+          branchType: branch.typeId,
+          available: true,
+          location: {
+            column: 0,
+            shelf: 0,
+            index: 0,
+          },
+        });
+      }
     });
+    setBranchTypeConfig(branchTypeConfig);
   }, [typeBranches]);
 
   useEffect(() => {

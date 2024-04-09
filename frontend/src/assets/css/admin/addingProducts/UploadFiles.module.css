@@ -1,11 +1,12 @@
 .main {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-start;
 }
 .btnFile {
   height: 40px;
+  margin: 0 5px 0 0;
   padding:  0 30px;
   cursor: pointer;
   display: flex;

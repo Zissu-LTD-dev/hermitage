@@ -1,0 +1,54 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.btnFile {
+  height: 40px;
+  padding:  0 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 20px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+}
+
+.inputFile  {
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.upload {
+    background: #082A3A 0% 0% no-repeat padding-box;
+}
+.update {
+    background: #28566b 0% 0% no-repeat padding-box;
+}
+.delete {
+    background: #bd0f0f 0% 0% no-repeat padding-box;
+}
+.download {
+    background: #0e9273 0% 0% no-repeat padding-box;
+}
+
+.warning{
+    display: flex;
+    justify-content: center;
+    size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #bd0f0f;
+}

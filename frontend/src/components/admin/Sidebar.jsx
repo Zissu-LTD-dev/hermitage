@@ -58,7 +58,7 @@ function Sidebar({ branchName }) {
             <div className={sidebar.icon}>
               <img src={addingProducts} alt="adding products" />
             </div>
-            <span>הוספת מוצרים</span>
+            <span>ניהול מוצרים</span>
           </div>
           <div onClick={() => changeStatus("general management")}>
             <div className={sidebar.icon}>

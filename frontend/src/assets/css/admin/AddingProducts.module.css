@@ -45,7 +45,7 @@ color: #082A3A;
     width: 20px;
     height: 20px;
     margin-left: 12px;
-    background: transparent url('../../image/admin/Iconfeather-plus.svg') 0% 0% no-repeat padding-box;
+    background: transparent url('../../image/admin/Iconfeather-plus.svg') 50% 50% no-repeat padding-box;
 }
 
 .addProductText{
@@ -59,19 +59,28 @@ color: #082A3A;
 }
 
 .uploadProducts{
-    width: 255px;
-height: 40px;
-cursor: pointer;
-
-background: #082A3A 0% 0% no-repeat padding-box;
+    height: 40px;
+    padding: 0 30px;
+    cursor: pointer;
+    background: #082A3A 50% 50% no-repeat padding-box;
 }
 
 .uploadProductsIcon{
     width: 25px;
     height: 25px;
     margin-left: 12px;
+    background: transparent url('../../image/admin/Iconawesome-file-excel.svg') 50% 50% no-repeat padding-box;
+}
 
-    background: transparent url('../../image/admin/Iconawesome-file-excel.svg') 0% 0% no-repeat padding-box;
+.arrowIcon{
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+    transform: rotate(270deg);
+    background: transparent url('../../image/manager/Iconionic-ios-arrow-back-2.svg')  50% 50% no-repeat padding-box;
+}
+.arrowIconUp{
+    transform: rotate(90deg);
 }
 
 .uploadProductsText{

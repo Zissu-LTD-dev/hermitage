@@ -45,7 +45,7 @@
 
 .warning{
     display: flex;
-    justify-content: center;
+    justify-content: end;
     size: 16px;
     font-family: "IBM Plex Sans Hebrew";
     font-weight: normal;

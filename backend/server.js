@@ -33,6 +33,9 @@ app.use(morgan('dev'))
 app.use(cookieParser())
 app.use(cors())
 
+app.get('/', (req, res) => {
+    res.send('API is running...')
+})
 
 app.use('/api/v1/auth', authRouter);
 // TODO: add authAdmin middleware

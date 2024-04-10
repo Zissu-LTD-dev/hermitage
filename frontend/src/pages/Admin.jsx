@@ -16,6 +16,7 @@ import ApprovalsStatus from "../components/admin/ApprovalsStatus";
 import BlockManagement from "../components/admin/BlockManagement";
 import Documents from "../components/admin/Documents";
 import AddingProducts from "../components/admin/AddingProducts";
+import GeneralManagement from "../components/admin/GeneralManagement";
 
 function Admin() {  
   const { state, dispatch } = useMainContext();
@@ -56,7 +57,7 @@ function Admin() {
           {stateAdmin.status == "block management" && <BlockManagement />}
           {stateAdmin.status == "documents" && <Documents />}
           {stateAdmin.status == "adding products" && <AddingProducts />}
-          {stateAdmin.status == "general management" && <h1>general management</h1>}
+          {stateAdmin.status == "general management" && <GeneralManagement />}
         </div>
       </div>
     </>

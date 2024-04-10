@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import UploadFilesStyle from "../../../assets/css/admin/addingProducts/UploadFiles.module.css";
+import cookie from "js-cookie";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
+import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import * as XLSX from "xlsx";
 
 function UploadFiles() {
+  const { state, dispatch } = useAdminContext();
   const deleteProductFile = useRef(null);
   const addProductFile = useRef(null);
   const updateProductFile = useRef(null);
@@ -72,29 +76,28 @@ function UploadFiles() {
       ],
     ];
 
-    const ws = XLSX.utils.aoa_to_sheet(deleteProduct);
-    const ws1 = XLSX.utils.aoa_to_sheet(addProduct);
+    const ws = XLSX.utils.aoa_to_sheet(addProduct);
+    const ws1 = XLSX.utils.aoa_to_sheet(deleteProduct);
     const ws2 = XLSX.utils.aoa_to_sheet(updateProduct);
     const ws3 = XLSX.utils.aoa_to_sheet(moreUpdateProduct);
 
     const wb = {
       SheetNames: [
-        "מחיקה - פריט",
         "הקמה - פריט",
+        "מחיקה - פריט",
         "עדכון - פריט",
         "עדכון קטגוריות > עמודות > מדף",
       ],
     };
     wb.Sheets = {
-      "מחיקה - פריט": ws,
-      "הקמה - פריט": ws1,
+      "הקמה - פריט": ws,
+      "מחיקה - פריט": ws1,
       "עדכון - פריט": ws2,
       "עדכון קטגוריות > עמודות > מדף": ws3,
     };
     wb.Workbook = { Views: [{ RTL: true }] };
 
-    ws["!cols"] = [{ wpx: 100 }];
-    ws1["!cols"] = [
+    ws["!cols"] = [
       { wpx: 100 },
       { wpx: 100 },
       { wpx: 100 },
@@ -103,6 +106,7 @@ function UploadFiles() {
       { wpx: 100 },
       { wpx: 100 },
     ];
+    ws1["!cols"] = [{ wpx: 100 }];
     ws2["!cols"] = [
       { wpx: 150 },
       { wpx: 100 },
@@ -128,50 +132,96 @@ function UploadFiles() {
     updateProductFile.current.click();
   };
 
-  const handleFile = (e) => {
+  const handleFile = async (e) => {
+
     let types = [
       "application/vnd.ms-excel",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ];
     if (!types.includes(e.target.files[0].type)) {
-      dispatchMain({
+      dispatch({
         type: "SET_SHOW_ERROR",
         payload: { show: true, message: "excel הקובץ אינו" },
       });
       return;
     }
-    console.log(e.target.name);
-    // כאן צריך להיות סוויטש לפי שם הקובץ
-    // ואז לכל אחד יהיה ראווט שונה
-    // צריך לשעות גם בבאקאנד 
+
+    switch (e.target.name) {
+      case "addProduct":
+        let addProductRes = await handleUpload(e.target.files[0], "Adding products");
+        if (!addProductRes) {
+          dispatch({
+            type: "SET_SHOW_ERROR",
+            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
+          });
+          return;
+        }
+        // reloud the page
+        window.location.reload();
+        break;
+      case "updateProduct":
+        let updateProductRes = await handleUpload(e.target.files[0], "Update Products");
+        if (!updateProductRes) {
+          dispatch({
+            type: "SET_SHOW_ERROR",
+            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
+          });
+          return;
+        }
+        let updateDetailedProductRes = await handleUpload(e.target.files[0], "Update Detailed Products");
+        if (!updateDetailedProductRes) {
+          dispatch({
+            type: "SET_SHOW_ERROR",
+            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
+          });
+          return;
+        }
+        // reloud the page
+        window.location.reload();
+        break;
+      case "deleteProduct":
+        let res = await handleUpload(e.target.files[0], "Deleting items");
+        if (!res) {
+          dispatch({
+            type: "SET_SHOW_ERROR",
+            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
+          });
+          return;
+        }
+
+        // reloud the page
+        window.location.reload();
+        break;
+      default:
+        break;
+    }
+
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
     setUpload(true);
   };
 
-  const handleUpload = async () => {
-    dispatchMain({ type: "SET_SHOW_LOADER", payload: true });
-    const formData = new FormData();
-    formData.append("excelFile", file);
+  const handleUpload = async (file, action) => {
+    const token = cookie.get("token");
 
-    let res = await apiRequestForForm("admin/uploadExcel", "POST", formData);
-    if (!res) {
-      dispatchMain({ type: "SET_SHOW_LOADER", payload: false });
-      dispatchMain({
-        type: "SET_SHOW_ERROR",
-        payload: { show: true, message: "הקובץ לא הועלה" },
+    let formData = new FormData();
+    formData.append("file", file);
+    formData.append("action", action);
+     
+    try {
+      let res = await fetch(`${REACT_APP_BACKEND_URL}admin/file-upload/upload`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData 
       });
-    } else {
-      dispatchMain({ type: "SET_SHOW_LOADER", payload: false });
-      dispatchMain({
-        type: "SET_SHOW_SUCCESS",
-        payload: { show: true, message: "הקובץ הועלה בהצלחה" },
-      });
+      res = await res.json();
+      if(res.status == 'ok'){return res;}else{ return false;}
+    } catch (error) {
+      console.error(error);
+      return false;
     }
-
-    setUpload(false);
-    setFile(null);
-    setFileName("");
   };
 
   return (

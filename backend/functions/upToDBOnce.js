@@ -391,6 +391,24 @@ const productsUpdateDetailed = async (sheet) => {
   return products;
 }
 
+// delete product
+const productsDelete = async (sheet) => {
+  try {
+    let products = sheet.map((row) => {
+      row = Object.values(row);
+      return row[0];
+    });
+    console.log("products delete", products);
+    products.map(async (barcode) => {
+      return await Product.findOneAndDelete({ barcode: barcode });
+    });
+    return products;
+  } catch (error) {
+    console.log("error", error);
+    return false;
+  }
+};
+
 module.exports = {
   branchTypeUpload,
   branchsUpload,
@@ -400,5 +418,6 @@ module.exports = {
   locationProductsConfigUploadRow,
   productsUpload,
   productsUpdate,
-  productsUpdateDetailed
+  productsUpdateDetailed,
+  productsDelete
 };

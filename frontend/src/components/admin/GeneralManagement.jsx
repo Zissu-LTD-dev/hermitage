@@ -3,7 +3,7 @@ import generalManagement from "../../assets/css/admin/GeneralManagement.module.c
 import Users from "./generalManagement/Users";
 import Branches from "./generalManagement/Branches";
 import Providers from "./generalManagement/Providers";
-import SubGroup from "./generalManagement/Subgroup";
+import SubGroup from "./generalManagement/SubGroup";
 
 function GeneralManagement() {
     const [status, setStatus] = useState();

@@ -80,6 +80,9 @@ adminRouter.post("/newBranch", admin.newBranch);
 // edit branch
 adminRouter.put("/editBranch/:id", admin.editBranch);
 
+// get all users
+adminRouter.get("/allUsers", admin.allUsers);
+
 
 // upload excel file
 adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.uploadExcel );

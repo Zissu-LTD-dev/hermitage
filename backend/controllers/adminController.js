@@ -222,6 +222,12 @@ const editBranch = async (req, res) => {
   res.status(200).json({message: 'The branch was successfully updated'});
 }
 
+// get all users
+const allUsers = async (req, res) => {
+  let users = await User.find({}).select('-password');
+  res.status(200).json({users: users});
+}
+
 
 module.exports = {
   initialData,
@@ -239,4 +245,5 @@ module.exports = {
   deleteProduct,
   newBranch,
   editBranch,
+  allUsers,
 };

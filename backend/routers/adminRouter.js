@@ -74,6 +74,12 @@ adminRouter.put("/editProduct/:id", admin.editProduct);
 adminRouter.delete("/deleteProduct/:id", admin.deleteProduct);
 
 
+// add branch
+adminRouter.post("/newBranch", admin.newBranch);
+
+// edit branch
+adminRouter.put("/editBranch/:id", admin.editBranch);
+
 
 // upload excel file
 adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.uploadExcel );

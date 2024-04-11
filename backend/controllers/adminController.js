@@ -202,6 +202,26 @@ const deleteProduct = async (req, res) => {
   res.status(200).json({message: 'The product was successfully deleted'});
 }
 
+// add branch
+const newBranch = async (req, res) => {
+  let branch = req.body;
+  let newBranch = new Branch(branch);
+  await newBranch.save();
+  res.status(200).json({message: 'The branch was successfully added'});
+}
+
+// edit branch
+const editBranch = async (req, res) => {
+  let branchID = req.params.id;
+  let branch = req.body;
+
+  let currentBranch = await Branch.findById(branchID);
+  await currentBranch.updateOne(branch);
+  await currentBranch.save();
+  
+  res.status(200).json({message: 'The branch was successfully updated'});
+}
+
 
 module.exports = {
   initialData,
@@ -217,4 +237,6 @@ module.exports = {
   addProduct,
   editProduct,
   deleteProduct,
+  newBranch,
+  editBranch,
 };

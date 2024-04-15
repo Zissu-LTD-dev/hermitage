@@ -83,6 +83,15 @@ adminRouter.put("/editBranch/:id", admin.editBranch);
 // get all users
 adminRouter.get("/allUsers", admin.allUsers);
 
+// add user
+adminRouter.post("/addUser", admin.addUser);
+
+// edit user
+adminRouter.put("/editUser/:id", admin.editUser);
+
+// add provider
+adminRouter.post("/addProvider", admin.addProvider);
+
 
 // upload excel file
 adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.uploadExcel );

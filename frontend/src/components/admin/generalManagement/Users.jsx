@@ -13,7 +13,7 @@ function Users() {
     email: "",
     password: "",
     role: "",
-    branch: "",
+    branch: null,
   };
 
   const [users, setUsers] = useState([]);
@@ -24,10 +24,60 @@ function Users() {
   const [editUser, setEditUser] = useState(false);
 
   // add user
-  const handleAddUser = async () => {};
+  const handleAddUser = async () => {
+    let user = apiRequestForForm("admin/addUser", 'POST', newUser);
+    user.then((data) => {
+      console.log(data);
+      if (!data) {
+        mainDispatch({
+          type: "SET_SHOW_ERROR",
+          payload: { show: true, message: "המשתמש כבר קיים"},
+        });
+        setAddUser(false);
+        setNewUser(initialData);
+      } else {
+        mainDispatch({
+          type: "SET_SHOW_SUCCESS",
+          payload: { show: true, message: "המשתמש נוסף בהצלחה" },
+        });
+        setUsers([...users, newUser]);
+        setAddUser(false);
+        setNewUser(initialData);
+      }
+    });
+  };
 
   // edit user
-  const handleEditUser = async () => {};
+  const handleEditUser = async () => {
+    // remove empty key
+    let newUserC = Object.fromEntries(Object.entries(newUser).filter(([key, value]) => value));
+    setNewUser(newUserC);
+
+    let user = apiRequestForForm(`admin/editUser/${newUser._id}`, 'PUT', newUser);
+    user.then((data) => {
+      if(data.error){
+        mainDispatch({
+          type: "SET_SHOW_ERROR",
+          payload: { show: true, message: "שגיאה בעדכון המשתמש" },
+        });
+        return;
+      }
+      mainDispatch({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: true, message: "המשתמש עודכן בהצלחה" },
+      });
+      let updatedUsers = users.map((user) => {
+        if (user._id === newUser._id) {
+          return newUser;
+        }
+        return user;
+      });
+      setUsers(updatedUsers);
+      setEditUser(false);
+      setNewUser(initialData);
+    });
+
+  };
 
   useEffect(() => {
     if (state.branches) {
@@ -108,7 +158,8 @@ function Users() {
                     <option value="admin">מנהל ראשי</option>
                   </select>
                 </div>
-                <div className={subGeneralManagement.formFieldsInput}>
+                { newUser.role === "manager" && 
+                 <div className={subGeneralManagement.formFieldsInput}>
                   <label>סניף</label>
                   <select
                     value={newUser.branch}
@@ -123,7 +174,7 @@ function Users() {
                       </option>
                     ))}
                   </select>
-                </div>
+                </div>}
                 <div className={subGeneralManagement.formFieldsButtons}>
                   <div
                     className={
@@ -144,7 +195,7 @@ function Users() {
                       " " +
                       subGeneralManagement.addButton
                     }
-                    onClick={handleAddUser}
+                    onClick={ () => handleAddUser() }
                   >
                     הוספה
                   </div>
@@ -250,9 +301,9 @@ function Users() {
               </div>
             </>
           )}
-          {!addUser && !editUser && (
+          {!addUser && !editUser &&  users != [] && (
             <>
-              {users.map((user, index) => (
+              {users.length && users.map((user, index) => (
                 <div key={index} className={subGeneralManagement.list}>
                   <div className={subGeneralManagement.listTitle}>
                     {user.username}
@@ -271,9 +322,9 @@ function Users() {
                         : ""}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
-                      {user.branch
+                      {user.branch && branches.length
                         ? branches.find(
-                            (branch) => branch.number === user.branch
+                            (branch) => branch.number == user.branch
                           ).name
                         : "כללי"}
                     </div>
@@ -292,7 +343,7 @@ function Users() {
                     >
                       עריכה
                     </div>
-                    <div
+                    {/* <div
                       className={
                         subGeneralManagement.listButton +
                         " " +
@@ -300,7 +351,7 @@ function Users() {
                       }
                     >
                       מחיקה
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               ))}

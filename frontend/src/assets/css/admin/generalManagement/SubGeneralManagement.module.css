@@ -48,7 +48,7 @@
 }
 .formFieldsTitle{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     font-size: 24px;
     font-weight: 600;
     /* margin: 10px 0; */

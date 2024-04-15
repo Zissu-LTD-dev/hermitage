@@ -25,6 +25,13 @@ UserSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
+// update password
+UserSchema.pre("updateOne", async function () {
+  if (!this._update.password) return;
+  const salt = await bcrypt.genSalt(10);
+  this._update.password = await bcrypt.hash(this._update.password, salt);
+});
+
 // create jwt token
 UserSchema.methods.createToken = function (secretKey, expiresIn) {
   return jwt.sign({ _id: this._id, role: this.role }, secretKey, { expiresIn });

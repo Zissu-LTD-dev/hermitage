@@ -228,6 +228,46 @@ const allUsers = async (req, res) => {
   res.status(200).json({users: users});
 }
 
+// add user
+const addUser = async (req, res) => {
+  let user = req.body;
+  // check if the user already exists
+  let userExist = await User.findOne({email: user.email});
+  if(userExist){
+    return res.status(400).json({message: 'The user already exists', error: true});
+  }
+  let newUser = new User(user);
+  await newUser.save();
+  res.status(200).json({message: 'The user was successfully added', error: false});
+}
+
+// edit user
+const editUser = async (req, res) => {
+  let userID = req.params.id;
+  let user = req.body;
+
+  let currentUser = await User.findById(userID);
+  await currentUser.updateOne(user);
+  await currentUser.save();
+
+  res.status(200).json({message: 'The user was successfully updated', error: false});
+}
+
+// add provider
+const addProvider = async (req, res) => {
+  let provider = req.body;
+  // check if the provider.number already exists
+  let newProvider = await Provider.findOne({number: provider.number});
+
+  if(!newProvider){
+    newProvider = new Provider(provider);
+    await newProvider.save();
+    return res.status(200).json({message: 'The provider was successfully added'});
+  }
+    
+  res.status(200).json({message: 'The provider already exists', error: true});
+}
+
 
 module.exports = {
   initialData,
@@ -246,4 +286,7 @@ module.exports = {
   newBranch,
   editBranch,
   allUsers,
+  addUser,
+  editUser,
+  addProvider,
 };

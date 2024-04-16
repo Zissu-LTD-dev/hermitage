@@ -13,7 +13,7 @@ function Providers() {
     name: "",
     email: "",
     isBlocked: false,
-    branchEmail: [],
+    branchEmails: [],
   };
 
   const [providers, setProviders] = useState([]);
@@ -49,19 +49,34 @@ function Providers() {
 
   // edit provider
   const editProviderHandler = () => {
-    console.log(newProvider);
+    let response = apiRequestForForm(`admin/editProvider/${newProvider._id}`, "put", newProvider);
+    if (response.error) {
+      mainDispatch({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "שגיאה בעדכון הספק" },
+      });
+      return;
+    } else {
+      mainDispatch({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: true, message: "הספק עודכן בהצלחה" },
+      });
+      setProviders([...providers.filter((provider) => provider._id !== newProvider._id), newProvider]);
+      setEditProvider(false);
+      setNewProvider(initialProviders);
+    }
   };
 
   useEffect(() => {
-    if (branches.length && !newProvider.branchEmail.length) {
-      let branchEmail = branches.map((branch) => {
+    if (branches.length && !newProvider.branchEmails.length) {
+      let branchEmails = branches.map((branch) => {
         return {
           branchNumber: branch.number,
           branchName: branch.name,
           emails: [],
         };
       });
-      setNewProvider({ ...newProvider, branchEmail: branchEmail });
+      setNewProvider({ ...newProvider, branchEmails: branchEmails });
     }
   }, [branches, newProvider]);
 
@@ -132,8 +147,8 @@ function Providers() {
                       }
                     />
                   </div>
-                  {newProvider.branchEmail.length &&
-                    newProvider.branchEmail.map((branch, index) => {
+                  {newProvider.branchEmails.length &&
+                    newProvider.branchEmails.map((branch, index) => {
                       return (
                         <div
                           key={index}
@@ -145,12 +160,12 @@ function Providers() {
                             // arr to str
                             value={branch.emails.join(",")}
                             onChange={(e) => {
-                              let newBranchEmail = newProvider.branchEmail;
-                              newBranchEmail[index].emails =
+                              let newbranchEmails = newProvider.branchEmails;
+                              newbranchEmails[index].emails =
                                 e.target.value.split(",");
                               setNewProvider({
                                 ...newProvider,
-                                branchEmail: newBranchEmail,
+                                branchEmails: newbranchEmails,
                               });
                             }}
                           />
@@ -187,7 +202,103 @@ function Providers() {
               </div>
             </>
           )}
-          {editProvider && <></>}
+          {editProvider && (
+            <>
+              <div className={subGeneralManagement.formFields}>
+                <div className={subGeneralManagement.formFieldsTitle}>
+                  עריכת ספק
+                </div>
+                <div className={subGeneralManagement.formFieldsForm}>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>מספר ספק:</label>
+                    <input
+                      type="text"
+                      value={newProvider.number}
+                      onChange={(e) =>
+                        setNewProvider({
+                          ...newProvider,
+                          number: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>שם ספק:</label>
+                    <input
+                      type="text"
+                      value={newProvider.name}
+                      onChange={(e) =>
+                        setNewProvider({ ...newProvider, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>אימייל ראשי : </label>
+                    <input
+                      type="text"
+                      value={newProvider.email}
+                      onChange={(e) =>
+                        setNewProvider({
+                          ...newProvider,
+                          email: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  {newProvider.branchEmails.map((branch, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={subGeneralManagement.formFieldsInput}
+                        >
+                          <label>אימייל עבור סניף: {branch.branchName}</label>
+                          <input
+                            type="text"
+                            // arr to str
+                            value={branch.emails.join(",")}
+                            onChange={(e) => {
+                              let newbranchEmails = newProvider.branchEmails;
+                              newbranchEmails[index].emails =
+                                e.target.value.split(",");
+                              setNewProvider({
+                                ...newProvider,
+                                branchEmails: newbranchEmails,
+                              });
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
+
+                  <div className={subGeneralManagement.formFieldsButtons}>
+                    <div
+                      className={
+                        subGeneralManagement.formFieldsButton +
+                        " " +
+                        subGeneralManagement.cancelButton
+                      }
+                      onClick={() => {
+                        setEditProvider(false);
+                        setNewProvider(initialProviders);
+                      }}
+                    >
+                      ביטול
+                    </div>
+                    <div
+                      className={
+                        subGeneralManagement.formFieldsButton +
+                        " " +
+                        subGeneralManagement.addButton
+                      }
+                      onClick={() => editProviderHandler()}
+                    >
+                      עריכה
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
           {!addProvider && !editProvider && (
             <>
               { providers.length && providers.map((provider, index) => (
@@ -208,7 +319,10 @@ function Providers() {
                       className={subGeneralManagement.listButton +
                         " " +
                         subGeneralManagement.editButton}
-                      onClick={() => setEditProvider(true)}
+                      onClick={() => {
+                        setNewProvider(provider);
+                        setEditProvider(true);
+                      }}
                     >
                       עריכה
                     </div>

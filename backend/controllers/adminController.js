@@ -268,6 +268,18 @@ const addProvider = async (req, res) => {
   res.status(200).json({message: 'The provider already exists', error: true});
 }
 
+// edit provider
+const editProvider = async (req, res) => {
+  let providerID = req.params.id;
+  let provider = req.body;
+
+  let currentProvider = await Provider.findById(providerID);
+  await currentProvider.updateOne(provider);
+  await currentProvider.save();
+  
+  res.status(200).json({message: 'The provider was successfully updated'});
+}
+
 
 module.exports = {
   initialData,
@@ -289,4 +301,5 @@ module.exports = {
   addUser,
   editUser,
   addProvider,
+  editProvider,
 };

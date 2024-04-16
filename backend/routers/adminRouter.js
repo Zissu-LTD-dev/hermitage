@@ -92,6 +92,9 @@ adminRouter.put("/editUser/:id", admin.editUser);
 // add provider
 adminRouter.post("/addProvider", admin.addProvider);
 
+// edit provider
+adminRouter.put("/editProvider/:id", admin.editProvider);
+
 
 // upload excel file
 adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.uploadExcel );

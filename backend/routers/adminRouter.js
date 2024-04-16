@@ -95,6 +95,12 @@ adminRouter.post("/addProvider", admin.addProvider);
 // edit provider
 adminRouter.put("/editProvider/:id", admin.editProvider);
 
+// add sub group
+adminRouter.post("/addSubGroup", admin.addSubGroup);
+
+// edit sub group
+adminRouter.put("/editSubGroup/:id", admin.editSubGroup);
+
 
 // upload excel file
 adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.uploadExcel );

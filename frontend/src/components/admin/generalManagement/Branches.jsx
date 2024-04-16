@@ -36,10 +36,10 @@ function Branches() {
       newBranch
     );
     if (!response) {
-      mainDispatch({ type: "SHOW_ERROR", payload: "הוספת סניף נכשלה" });
+      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "הוספת סניף נכשלה"} });
       return;
     }
-    mainDispatch({ type: "SHOW_SUCCESS", payload: "הסניף נוסף בהצלחה" });
+    mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הסניף נוסף בהצלחה"} });
 
     setBranches([...branches, newBranch]);
     setNewBranch(initialBranch);

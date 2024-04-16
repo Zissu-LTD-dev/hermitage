@@ -280,6 +280,33 @@ const editProvider = async (req, res) => {
   res.status(200).json({message: 'The provider was successfully updated'});
 }
 
+// add sub group
+const addSubGroup = async (req, res) => {
+  let subGroup = req.body;
+  // check if the sub group.number already exists
+  let newSub = await SubGroup.findOne({number: subGroup.number});
+
+  if(!newSub){
+    newSub = new SubGroup(subGroup);
+    await newSub.save();
+    return res.status(200).json({message: 'The sub group was successfully added'});
+  }
+
+  res.status(200).json({message: 'The sub group already exists', error: true});
+}
+
+// edit sub group
+const editSubGroup = async (req, res) => {
+  let subGroupID = req.params.id;
+  let subGroup = req.body;
+
+  let currentSubGroup = await SubGroup.findById(subGroupID);
+  await currentSubGroup.updateOne(subGroup);
+  await currentSubGroup.save();
+
+  res.status(200).json({message: 'The sub group was successfully updated'});
+}
+
 
 module.exports = {
   initialData,
@@ -302,4 +329,6 @@ module.exports = {
   editUser,
   addProvider,
   editProvider,
+  addSubGroup,
+  editSubGroup,
 };

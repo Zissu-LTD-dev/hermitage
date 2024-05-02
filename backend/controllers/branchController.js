@@ -61,7 +61,7 @@ const getFilters = async (req, res) => {
 
   // createOrder
 const createOrder = async (req, res) => {
-    let {branch, summary} = req.body;
+    let {userName, branch, summary} = req.body;
     
     // order number
     let lastOrder = await Order.findOne().sort({orderNumber: -1});
@@ -71,6 +71,7 @@ const createOrder = async (req, res) => {
       newOrderNumber = newOrderNumber + 1;  
       return {
           "orderNumber": newOrderNumber,
+          "userName": userName,
           "branchNumber": branch.number,
           "branchName": branch.name,
           "providerNumber": order.providerNumber,

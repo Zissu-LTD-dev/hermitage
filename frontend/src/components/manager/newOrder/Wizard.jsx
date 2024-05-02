@@ -11,7 +11,8 @@ function Wizard() {
   const sendOrder = async () => {
     let summary = state.summary;
     let branch = state.userInfo.branch;
-    let order = { summary, branch };
+    let userName = state.userInfo.username;
+    let order = { summary, branch, userName };
 
     if (summary.length === 0) return dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אין מוצרים לשליחה" } });
 

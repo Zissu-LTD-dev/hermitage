@@ -5,7 +5,7 @@ import providerC from "../../../assets/css/manager/pendingOrders/Provider.module
 function Provider({ order, status }) {
   const [open, setOpen] = useState(false);
   const [colorStatus, setColorStatus] = useState("");
-  let { orderNumber, createdDate, providerName, returnLines, orderLines } =
+  let { orderNumber, createdDate, providerName, returnLines, orderLines, userName } =
     order;
   const date = createdDate.split("T")[0].split("-").reverse().join("/");
   let time = createdDate.split("T")[1].split(".")[0];
@@ -33,6 +33,7 @@ function Provider({ order, status }) {
               <br />
               בשעה : {newtime}
             </div>
+            <div className={providerC.userName}>בוצע על ידי : {userName}</div>
             <div className={providerC.provider}>{providerName}</div>
           </span>
           <span>

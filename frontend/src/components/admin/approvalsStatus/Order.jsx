@@ -10,7 +10,7 @@ function Order({orderData, orderBy}) {
   const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [open, setOpen] = useState(false);
-  let { orderNumber, createdDate, branchNumber, branchName, provider, providerName, orderStatus, returnStatus, orderLines, returnLines } = orderData;
+  let { orderNumber, createdDate, userName, branchNumber, branchName, provider, providerName, orderStatus, returnStatus, orderLines, returnLines } = orderData;
   let products = orderBy == "returned" ? returnLines.products : orderLines.products;
   let status = orderBy == "returned" ? 'returned' : orderStatus;
   let time = createdDate.split("T")[1].split(".")[0];
@@ -110,7 +110,11 @@ function Order({orderData, orderBy}) {
               <br />
               בשעה: {time}
             </div>
-            <div className={orderStyle.branchName}>{branchName} - {branchNumber}</div>
+            <div className={orderStyle.branchName}>
+              {branchName} - {branchNumber}
+              <br />
+              בוצע על ידי: {userName}
+            </div>
             <div className={orderStyle.providerName}>{providerName}</div>
           </span>
           <span>

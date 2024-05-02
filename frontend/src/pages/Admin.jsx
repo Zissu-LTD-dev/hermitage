@@ -52,11 +52,12 @@ function Admin() {
         <Sidebar branchName="מנהל רשת" />
         <Navbar />
         <div className={admin.content}>
-          {stateAdmin.status == "branch management" && <BranchManagement />}
+          {stateAdmin.status == "order execution" && <h2>ביצוע הזמנה לסניף</h2>}
           {stateAdmin.status == "approvals status" && <ApprovalsStatus />}
+          {stateAdmin.status == "branch management" && <BranchManagement />}
           {stateAdmin.status == "block management" && <BlockManagement />}
-          {stateAdmin.status == "documents" && <Documents />}
           {stateAdmin.status == "adding products" && <AddingProducts />}
+          {stateAdmin.status == "documents" && <Documents />}
           {stateAdmin.status == "general management" && <GeneralManagement />}
         </div>
       </div>

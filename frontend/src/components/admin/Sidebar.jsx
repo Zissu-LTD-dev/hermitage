@@ -30,11 +30,11 @@ function Sidebar({ branchName }) {
       <div className={sidebar.sidebar}>
         <div className={sidebar.logo}></div>
         <div className={sidebar.menu}>
-          <div onClick={() => changeStatus("branch management")}>
+          <div onClick={() => changeStatus("order execution")}>
             <div className={sidebar.icon}>
-              <img src={branchManagement} alt="branch management" />
+              <img src={branchManagement} alt="order execution" />
             </div>
-            <span>ניהול סניפים וספקים</span>
+            <span> ביצוע הזמנה לסניף</span>
           </div>
           <div onClick={() => changeStatus("approvals status")}>
             <div className={sidebar.icon}>
@@ -42,23 +42,29 @@ function Sidebar({ branchName }) {
             </div>
             <span>סטטוס הזמנות</span>
           </div>
-          <div onClick={() => changeStatus("block management")}>
+          <div onClick={() => changeStatus("branch management")}>
             <div className={sidebar.icon}>
-              <img src={blockManagement} alt="block management" />
+              <img src={branchManagement} alt="branch management" />
             </div>
-            <span>ניהול חסומים</span>
-          </div>
-          <div onClick={() => changeStatus("documents")}>
-            <div className={sidebar.icon}>
-              <img src={documents} alt="documents" />
-            </div>
-            <span>מסמכים</span>
+            <span>ניהול סניפים וספקים</span>
           </div>
           <div onClick={() => changeStatus("adding products")}>
             <div className={sidebar.icon}>
               <img src={addingProducts} alt="adding products" />
             </div>
             <span>ניהול מוצרים</span>
+          </div>
+          <div onClick={() => changeStatus("block management")}>
+            <div className={sidebar.icon}>
+              <img src={blockManagement} alt="block management" />
+            </div>
+            <span>ניהול מוצרים חסומים</span>
+          </div>
+          <div onClick={() => changeStatus("documents")}>
+            <div className={sidebar.icon}>
+              <img src={documents} alt="documents" />
+            </div>
+            <span>מסמכים</span>
           </div>
           <div onClick={() => changeStatus("general management")}>
             <div className={sidebar.icon}>

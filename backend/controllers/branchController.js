@@ -26,7 +26,7 @@ const sendOrderMail = async (branch, provider, productsOrder) => {
 
 // getProducts
 const getProducts = async (req, res) => {
-    const products = await Product.find({ isBlocked: false });
+    const products = await Product.find();
     const locationProductsConfig = await LocationProductsConfig_row.find({});
     
     res.status(200).json({ 'success': true, 'products': products, 'locationProductsConfig': locationProductsConfig });

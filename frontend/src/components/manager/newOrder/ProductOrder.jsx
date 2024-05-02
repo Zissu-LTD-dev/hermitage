@@ -8,7 +8,7 @@ import imgProduct from '../../../assets/image/manager/0007434_-12-.png';
 const ProductOrder = ({productData}) => {
   const { state, dispatch } = useMainContext();
 
-    let { image, name, providerName, subGroupName,  barcode, packQuantity, price } = productData;
+    let { image, name, providerName, subGroupName,  barcode, packQuantity, price, isBlocked } = productData;
     let QuantityPerCase = packQuantity ? packQuantity : 1;
     let fixPrice = price ?`${price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}₪`: 'אין מחיר זמין';
     const [quantity, setQuantity] = useState(0);
@@ -47,9 +47,14 @@ const ProductOrder = ({productData}) => {
             <p>{fixPrice}</p>
             <p>{barcode}</p>
             <div className={product.buttons}>
-                <button className={product.decrease} onClick={onIncrease}></button>
-                <span>{quantity}</span>
-                <button className={product.increase} onClick={onDecrease}></button>
+                {isBlocked && <span className={product.blocked}> מוצר חסום</span>}
+                {!isBlocked && (
+                  <>
+                    <button className={product.decrease} onClick={onIncrease}></button>
+                    <span>{quantity}</span>
+                    <button className={product.increase} onClick={onDecrease}></button>
+                  </>
+                )}
             </div>
         </div>
     );

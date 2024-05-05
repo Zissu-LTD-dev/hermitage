@@ -43,7 +43,6 @@
     display: flex;
     align-items: center;
     margin: 0 16px 0 0;
-    /* font: normal normal medium 18px/23px IBM Plex Sans Hebrew; */
     font-family: IBM Plex Sans Hebrew;
     font-size: 18px;
     font-weight: 500;
@@ -110,21 +109,18 @@ color: #082A3A
 .product .name {
     width: 95%;
     height: calc(100% - 135px);
-    padding: 31px 0 0 0;
+    padding: 38px 0 0 0;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
     align-items: center;
-    /* font: normal normal 600 11px/14px IBM Plex Sans Hebrew; */
     font-family: IBM Plex Sans Hebrew;
     font-size: 11px;
     font-weight: 600;
     line-height: 14px;
     text-align: center;
-    
     color: #082A3A;
-    /* text-align: center; */
 }
 .shelf {
     position: relative;

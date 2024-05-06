@@ -56,6 +56,9 @@ export const SET_SHOW_WARNING = "SET_SHOW_WARNING";
 
 export const SET_USER_INFO = "SET_USER_INFO";
 
+// SET_CURRENT_BRANCH for admin 
+export const SET_CURRENT_BRANCH = "SET_CURRENT_BRANCH";
+
 export const SET_ACTIVE_NAVBAR = "SET_ACTIVE_NAVBAR";
 
 // manager 👇
@@ -106,6 +109,20 @@ export const mainReducer = (state, action) => {
         ...state,
         userInfo: action.payload,
         branchType: action.payload.branch?.branchTypeNumber ? action.payload.branch.branchTypeNumber : null,
+      };
+
+    case SET_CURRENT_BRANCH:
+      if (action.payload === null) {
+        return {
+          ...state,
+          branchType: null,
+          userInfo: { ...state.userInfo, branch: null },
+        };
+      }
+      return {
+        ...state,
+        branchType: action.payload.branchTypeNumber ,
+        userInfo: { ...state.userInfo, branch: action.payload },
       };
 
     case SET_ACTIVE_NAVBAR:

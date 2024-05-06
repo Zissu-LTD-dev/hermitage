@@ -9,7 +9,8 @@ import useFetch from "../hooks/useFetch";
 import { ErrorPopup, SuccessPopup, WarningPopup, LoaderPopup } from "../components/popups";
 
 import Sidebar from "../components/admin/Sidebar";
-import Navbar from "../components/admin/navbar/Navbar";
+import NavbarAdmin from "../components/admin/navbar/NavbarAdmin";
+import Navbar from "../components/manager/navbar/Navbar";
 
 import MakingOrderBranch from "../components/admin/MakingOrderBranch";
 import BranchManagement from "../components/admin/BranchManagement";
@@ -51,7 +52,8 @@ function Admin() {
       
       <div className={admin.main} >
         <Sidebar branchName="מנהל רשת" />
-        <Navbar />
+        {stateAdmin.status != "order execution" &&<NavbarAdmin />}
+        {stateAdmin.status == "order execution" && <Navbar />}
         <div className={admin.content}>
           {stateAdmin.status == "order execution" && <MakingOrderBranch />}
           {stateAdmin.status == "approvals status" && <ApprovalsStatus />}

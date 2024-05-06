@@ -4,7 +4,7 @@ import Filters from "./Filters";
 import Search from "./Search";
 import DocInfo from "./DocInfo";
 
-function Navbar() {
+function NavbarAdmin() {
   return (
     <>
       <div className={navbar.navbar}>
@@ -20,4 +20,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default NavbarAdmin;

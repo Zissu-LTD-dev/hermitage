@@ -20,10 +20,18 @@ const authAdmin = async (req, res, next) => {
 const authManager = async (req, res, next) => {
   const token = req.headers.authorization ? req.headers.authorization.split(" ")[1] : null;
   if (!token) return res.status(401).json({ msg: "You are not authorized" });
-
+  
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_MANAGER);
-    // console.log({decoded: decoded});
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET_MANAGER);
+    } catch (managerError) {
+      try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET_ADMIN);
+      } catch (adminError) {
+        throw new Error('Token verification failed');
+      }
+    }
     req.user = decoded;  
     next();
   } catch (error) {

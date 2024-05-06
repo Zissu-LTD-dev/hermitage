@@ -15,3 +15,9 @@
 - user name : admin
 - password : admin
 - mail : admin@gmail.com
+
+
+
+nodemailer
+mail : devzissu@gmail.com
+password : CVnNBzJVBZaLy2z

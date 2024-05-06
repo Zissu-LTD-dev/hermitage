@@ -309,7 +309,7 @@ export const mainReducer = (state, action) => {
       state.orderedProducts.forEach((product) => {
         let providerExists = false;
         summary.forEach((provider) => {
-          if (provider.providerName === product.providerName && provider.quantity > 0) {
+          if (provider.providerNumber == product.providerNumber && product.quantity > 0) {
             providerExists = true;
 
             provider.orderLines.products.push(product);
@@ -338,7 +338,7 @@ export const mainReducer = (state, action) => {
       state.returnedProducts.forEach((product) => {
         let providerExists = false;
         summary.forEach((provider) => {
-          if (provider.providerName === product.providerName && provider.quantity > 0) {
+          if (provider.providerNumber === product.providerNumber && product.quantity > 0) {
             providerExists = true;
 
             provider.returnLines.products.push(product);

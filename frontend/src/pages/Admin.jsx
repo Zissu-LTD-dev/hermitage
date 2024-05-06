@@ -11,6 +11,7 @@ import { ErrorPopup, SuccessPopup, WarningPopup, LoaderPopup } from "../componen
 import Sidebar from "../components/admin/Sidebar";
 import Navbar from "../components/admin/navbar/Navbar";
 
+import MakingOrderBranch from "../components/admin/MakingOrderBranch";
 import BranchManagement from "../components/admin/BranchManagement";
 import ApprovalsStatus from "../components/admin/ApprovalsStatus";
 import BlockManagement from "../components/admin/BlockManagement";
@@ -52,7 +53,7 @@ function Admin() {
         <Sidebar branchName="מנהל רשת" />
         <Navbar />
         <div className={admin.content}>
-          {stateAdmin.status == "order execution" && <h2>ביצוע הזמנה לסניף</h2>}
+          {stateAdmin.status == "order execution" && <MakingOrderBranch />}
           {stateAdmin.status == "approvals status" && <ApprovalsStatus />}
           {stateAdmin.status == "branch management" && <BranchManagement />}
           {stateAdmin.status == "block management" && <BlockManagement />}

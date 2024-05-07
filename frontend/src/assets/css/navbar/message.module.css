@@ -1,0 +1,139 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%; 
+  margin: 0 0 0 21px;  
+  cursor: pointer;
+}
+
+.doc__info {
+  position: fixed;
+  /* top: 12px; */
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #be955d ;
+}
+
+.doc__info .doc__icon {
+    /* position: relative; */
+    width: 30px;
+    height: 30px;
+    background: transparent url("../../image/manager/document1.svg") 50% 50%
+    no-repeat padding-box;
+}
+
+.sub__icon {
+  position: relative;
+  top: -17px;
+  left: 23px;
+  width: 23px;
+  background: #082a3a 0% 0% no-repeat padding-box;
+  border: 2.5px solid #ffffff;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+.sub__icon span{
+  height: 23px;
+  font-size: 14px;
+  font-weight: normal;
+  font-family: IBM Plex Sans Hebrew;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.28px;
+  color: #ffffff;
+
+}
+
+
+.message__popup{
+  position: absolute;
+  top: 600px;
+
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  width: 350px;
+  height: 500px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-radius: 0 0  10px;
+  box-shadow: 20px 17px 20px 0px #00000029;
+  z-index: -100;
+  direction: rtl;
+  overflow-y: auto;
+}
+.message__popup.active{
+  animation: slideIn 1s forwards;
+}
+
+.message__popup.close{
+  animation: slideOut 2s forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%);
+    top: calc(100% - 600px);
+  }
+  100% {
+    transform: translateY(0);
+    top: calc(100% - 1px);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateY(0);
+    top: calc(100% - 1px);
+  }
+  100% {
+    transform: translateY(-100%);
+    top: calc(100% - 600px);
+  }
+}
+
+.message__popup__item{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 5px;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 10px 0;
+  box-shadow: 0px 2px 4px 0px #00000029;
+}
+.message__popup__item__content{
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 37px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+.read{
+  font-weight: 500;
+  color: #be955d;
+}
+.unread{
+  font-weight: 500;
+  color: #082a3a;
+}
+.message__popup__item__date{
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+

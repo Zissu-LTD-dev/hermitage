@@ -27,5 +27,8 @@ branchRouter.get("/allDocuments/:branchId", branch.allDocuments);
 // downloadDocument
 branchRouter.get("/downloadDocument/:documentId", branch.downloadDocument);
 
+// readMessage
+branchRouter.post("/readMessage", branch.readMessage);
+
 
 exports.branchRouter = branchRouter;

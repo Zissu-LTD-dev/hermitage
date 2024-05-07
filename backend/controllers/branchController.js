@@ -124,6 +124,20 @@ const downloadDocument = async (req, res) => {
     res.download(document.link);
   };
 
+  // readMessage
+const readMessage = async (req, res) => {
+    let branchId = req.body.branch;
+    let branch = await Branch.findById(branchId);
+    // updata all messages to read
+    let messages = branch.messages.map(msg => {
+      msg.read = true;
+      return msg;
+    });
+    await branch.updateOne({messages: messages});
+    res.status(200).json({message: 'The message was read successfully'});
+  }
+
+
 
   module.exports = {
     getProducts,
@@ -133,5 +147,6 @@ const downloadDocument = async (req, res) => {
     createOrder,
     getOrders,
     allDocuments,
-    downloadDocument
+    downloadDocument,
+    readMessage
   };

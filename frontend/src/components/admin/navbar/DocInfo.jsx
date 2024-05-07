@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import docInfo from "../../../assets/css/navbar/DocInfo.module.css";
+import message from "../../../assets/css/navbar/message.module.css";
 import useFetch from "../../../hooks/useFetch";
 
 function DocInfo() {
@@ -14,12 +14,12 @@ function DocInfo() {
 
   return (
     <>
-      <div className={docInfo.main}>
-        <div className={docInfo.sub__icon} >
+      <div className={message.main}>
+        <div className={message.sub__icon} >
           <span >{docNum}</span>
         </div>
-        <div className={docInfo.doc__info}>
-          <span className={docInfo.doc__icon} />
+        <div className={message.doc__info}>
+          <span className={message.doc__icon} />
         </div>
       </div>
     </>

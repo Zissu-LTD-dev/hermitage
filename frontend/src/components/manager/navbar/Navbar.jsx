@@ -3,7 +3,7 @@ import { useMainContext } from "../../../context/mainContext/MainContext";
 
 import Filters from "./Filters";
 import Search from "./Search";
-import DocInfo from "./DocInfo";
+import MessageM from "./MessageM";
 
 function Navbar() {
   const { state } = useMainContext();
@@ -16,7 +16,7 @@ function Navbar() {
           <Search />
         </span>
         <span className={navbar.navbar__left} >
-          <DocInfo />
+          <MessageM />
         </span>
       </div>
     </>

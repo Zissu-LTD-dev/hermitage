@@ -55,6 +55,7 @@ export const SET_SHOW_SUCCESS = "SET_SHOW_SUCCESS";
 export const SET_SHOW_WARNING = "SET_SHOW_WARNING";
 
 export const SET_USER_INFO = "SET_USER_INFO";
+export const READ_MESSAGE = "READ_MESSAGE";
 
 // SET_CURRENT_BRANCH for admin 
 export const SET_CURRENT_BRANCH = "SET_CURRENT_BRANCH";
@@ -109,6 +110,20 @@ export const mainReducer = (state, action) => {
         ...state,
         userInfo: action.payload,
         branchType: action.payload.branch?.branchTypeNumber ? action.payload.branch.branchTypeNumber : null,
+      };
+
+    case READ_MESSAGE:
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          branch: {
+            ...state.userInfo.branch,
+            messages: state.userInfo.branch.messages.map((msg) => {
+              return { ...msg, read: true };
+            }),
+          },
+        },
       };
 
     case SET_CURRENT_BRANCH:

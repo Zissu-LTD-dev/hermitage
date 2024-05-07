@@ -17,6 +17,7 @@ import BranchManagement from "../components/admin/BranchManagement";
 import ApprovalsStatus from "../components/admin/ApprovalsStatus";
 import BlockManagement from "../components/admin/BlockManagement";
 import Documents from "../components/admin/Documents";
+import Message from "../components/admin/Message";
 import AddingProducts from "../components/admin/AddingProducts";
 import GeneralManagement from "../components/admin/GeneralManagement";
 
@@ -61,6 +62,7 @@ function Admin() {
           {stateAdmin.status == "block management" && <BlockManagement />}
           {stateAdmin.status == "adding products" && <AddingProducts />}
           {stateAdmin.status == "documents" && <Documents />}
+          {stateAdmin.status == "message" && <Message />}
           {stateAdmin.status == "general management" && <GeneralManagement />}
         </div>
       </div>

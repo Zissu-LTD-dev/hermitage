@@ -66,6 +66,12 @@ function Sidebar({ branchName }) {
             </div>
             <span>מסמכים</span>
           </div>
+          <div onClick={() => changeStatus("message")}>
+            <div className={sidebar.icon}>
+              <img src={addingProducts} alt="message" />
+            </div>
+            <span>הודעות</span>
+          </div>
           <div onClick={() => changeStatus("general management")}>
             <div className={sidebar.icon}>
               <img src={addingProducts} alt="general management" />

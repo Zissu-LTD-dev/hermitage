@@ -307,6 +307,29 @@ const editSubGroup = async (req, res) => {
   res.status(200).json({message: 'The sub group was successfully updated'});
 }
 
+// add message to branchs
+const addMessageToBranchs = async (req, res) => {
+  let { branchesList, message } = req.body;
+  try {
+    const branches = await Branch.find({});
+    branches.forEach(async (branch) => {
+      if (branchesList.includes(branch._id.toString())) {
+        let idForMessage = `${branch._id}${branch.messages.length + 1 }`;
+        branch.messages.push({
+          id: idForMessage,
+          contact: message,
+          date: new Date().toLocaleString(),
+          read: false,
+        });
+        await branch.save();
+      }
+    });
+    res.status(200).json({ message: "Updated Successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 module.exports = {
   initialData,
@@ -331,4 +354,5 @@ module.exports = {
   editProvider,
   addSubGroup,
   editSubGroup,
+  addMessageToBranchs,
 };

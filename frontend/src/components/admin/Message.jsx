@@ -37,8 +37,8 @@ function Message() {
 
   const sendMessage = async () => {
     dispatch({ type: "SET_SHOW_LOADER", payload: true });
-    let res = await apiRequestForForm("admin/sendMessage", "POST", {
-      branches: selectBranches,
+    let res = await apiRequestForForm("admin/addMessageToBranchs", "POST", {
+      branchesList: selectBranches,
       message,
     });
     if (!res) {
@@ -107,6 +107,7 @@ function Message() {
           <textarea
             onChange={(e) => setMessage(e.target.value)}
             placeholder="הקלד הודעה"
+            value={message}
           ></textarea>
         </div>
         <div className={MessageStyle.btn}>

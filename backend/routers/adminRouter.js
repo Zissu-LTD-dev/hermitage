@@ -101,6 +101,9 @@ adminRouter.post("/addSubGroup", admin.addSubGroup);
 // edit sub group
 adminRouter.put("/editSubGroup/:id", admin.editSubGroup);
 
+// add message to branchs
+adminRouter.post("/addMessageToBranchs", admin.addMessageToBranchs);
+
 
 // upload excel file
 adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.uploadExcel );

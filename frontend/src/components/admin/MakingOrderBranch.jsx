@@ -43,14 +43,14 @@ function MakingOrderBranch() {
         )}
         {!selectBranch &&(
             <div className={makingOrderBranch.mainSelectBranch}>
-                <h2>ביצוע הזמנה עבור סניף  {currentBranch && currentBranch.name}</h2>
+                <div className={makingOrderBranch.title} >ביצוע הזמנה עבור סניף  {currentBranch && currentBranch.name}</div>
                 <select onChange={handleBranch}>
-                    <option>בחר סניף</option>
+                    <option value="" disabled selected >בחר סניף</option>
                     {branches && branches.map((branch) => (
                         <option key={branch._id} value={branch._id}>{branch.name}</option>
                     ))}
                 </select>
-                <button onClick={() => setSelectBranch(true)}>בחר</button>
+                <div className={makingOrderBranch.btn} onClick={() => {currentBranch && setSelectBranch(true) }}>בחר</div>
             </div>
         )}
     </>

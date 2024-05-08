@@ -32,7 +32,7 @@ function PrivateRouteAdmin({ children }) {
   }, []);
 
   if (loading) return 
-  if (isAuthenticated && role == "admin") return children;
+  if (isAuthenticated && role == "admin" || role == "subAdmin" ) return children;
   return <Navigate to="/" replace />;
 }
 

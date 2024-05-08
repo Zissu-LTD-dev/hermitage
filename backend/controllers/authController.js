@@ -37,7 +37,7 @@ const login = async (req, res) => {
 
   let token = "";
   let expiresIn = remember ? '30d' : process.env.JWT_EXPIRE ;
-  if (user.role === "admin") {
+  if (user.role === "admin" || user.role === "subAdmin") {
     token = user.createToken(process.env.JWT_SECRET_ADMIN, expiresIn );
   } else if (user.role === "manager") {
     token = user.createToken(process.env.JWT_SECRET_MANAGER, expiresIn );

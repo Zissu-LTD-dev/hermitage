@@ -27,7 +27,7 @@ color: #082A3A;
     justify-content: space-between;
     align-items: center;
 }
-.addProduct , .uploadProducts{
+.addProduct , .uploadProducts , .downloadProducts{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -112,4 +112,27 @@ color: #082A3A;
 
 .body::-webkit-scrollbar {
     width: 0;
+}
+
+.downloadProducts{
+    height: 40px;
+    padding: 0 30px;
+    cursor: pointer;
+    background: #0e9273 50% 50% no-repeat padding-box;
+}
+
+.downloadProductsIcon{
+    width: 25px;
+    height: 25px;
+    margin-left: 12px;
+    background: transparent url('../../image/admin/Iconfeather-plus.svg') 50% 50% no-repeat padding-box;
+}
+.downloadProductsText{
+    /* font: normal normal medium 16px/20px IBM Plex Sans Hebrew; */
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
 }

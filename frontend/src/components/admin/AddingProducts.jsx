@@ -163,6 +163,10 @@ const deleteProduct = async (productID) => {
     }
   }
 
+  const downloadProducts = async () => {
+    alert("בקרוב תוכלו להוריד קובץ עם כל המוצרים");
+  }
+
 
   return (
     <>
@@ -173,6 +177,10 @@ const deleteProduct = async (productID) => {
                     <div className={addingProducts.addProduct} onClick={() => setShowAddProduct(true)} >
                         <div className={addingProducts.addProductIcon}></div>
                         <div className={addingProducts.addProductText}>הוספת מוצר בודד</div>
+                    </div>
+                    <div className={addingProducts.downloadProducts}  onClick={downloadProducts}>
+                        <div className={addingProducts.downloadProductsIcon}></div>
+                        <div className={addingProducts.downloadProductsText}>הורדת מוצרים לקובץ</div>
                     </div>
                     {!showUploadFiles && 
                       <div className={addingProducts.uploadProducts} onClick={() => setShowUploadFiles(true)}>

@@ -58,8 +58,8 @@
 .message__popup{
   position: absolute;
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
+  flex-direction: column;
+  /* justify-content: flex-end; */
   width: 350px;
   height: 500px;
   padding: 10px 20px 40px;
@@ -68,8 +68,10 @@
   box-shadow: 20px 17px 20px 0px #8e8e8e29;
   z-index: -100;
   direction: rtl;
-  overflow-y: auto;
+  overflow-x: hidden;
+  overflow-y: auto;  
 }
+
 .message__popup.active{
   animation: slideIn 1s forwards;
 }

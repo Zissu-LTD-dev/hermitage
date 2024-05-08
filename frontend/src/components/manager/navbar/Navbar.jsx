@@ -16,7 +16,7 @@ function Navbar() {
           <Search />
         </span>
         <span className={navbar.navbar__left} >
-          <MessageM />
+          {state.userInfo.role === "manager" && <MessageM />}
         </span>
       </div>
     </>

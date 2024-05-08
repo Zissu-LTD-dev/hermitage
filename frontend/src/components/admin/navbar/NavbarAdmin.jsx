@@ -13,7 +13,7 @@ function NavbarAdmin() {
           <Search />
         </span>
         <span className={navbar.navbar__left}>
-          <DocInfo />
+          {/* <DocInfo /> */}
         </span>
       </div>
     </>

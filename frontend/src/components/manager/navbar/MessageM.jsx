@@ -5,22 +5,20 @@ import apiRequest from "../../../services/api";
 
 function MessageM() {
   const { state, dispatch } = useMainContext();
-  
+
   const [msgNum, setMsgNum] = useState(0);
   const [messageData, setMessageData] = useState([]);
   const [openShowMessage, setOpenShowMessage] = useState(false);
 
-  const hendleReadMessage = async () => {
-    const data = await apiRequest("manager/readMessage", "POST", {
-      branch: state.userInfo.branch._id,
-    });
-    if (!data) return;
-    dispatch({ type: "READ_MESSAGE" });
+  const handleReadMessage = async () => {
+    if (msgNum) {
+      const data = await apiRequest("manager/readMessage", "POST", {
+        branch: state.userInfo.branch._id,
+      });
+      if (!data) return;
+      dispatch({ type: "READ_MESSAGE" });
+    }
   };
-
-  useEffect(() => {
-    if(openShowMessage) hendleReadMessage();
-  }, [openShowMessage]);
 
   useEffect(() => {
     if (state.userInfo.branch) {
@@ -36,7 +34,14 @@ function MessageM() {
     <>
       <div
         className={messageStyle.main}
-        onClick={() => setOpenShowMessage(!openShowMessage)}
+        onClick={() => {
+          if (openShowMessage) {
+            setOpenShowMessage(false);
+            handleReadMessage();
+          }else{
+            setOpenShowMessage(true);
+          }
+        }}
       >
         <div className={messageStyle.sub__icon}>
           <span>{msgNum}</span>
@@ -45,13 +50,9 @@ function MessageM() {
           <span className={messageStyle.doc__icon} />
         </div>
       </div>
-      <div
-        className={
-          messageStyle.message__popup +
-          " " +
-          (openShowMessage ? messageStyle.active : messageStyle.close)
-        }
-      >
+      {openShowMessage && (
+
+        <div className={messageStyle.message__popup}>
         {messageData.map((msg, index) => (
           <div key={index} className={messageStyle.message__popup__item}>
             <div
@@ -60,7 +61,7 @@ function MessageM() {
                 " " +
                 (msg.read ? messageStyle.read : messageStyle.unread)
               }
-            >
+              >
               {msg.contact}
             </div>
             <p className={messageStyle.message__popup__item__date}>
@@ -70,6 +71,7 @@ function MessageM() {
           </div>
         ))}
       </div>
+      )}
     </>
   );
 }

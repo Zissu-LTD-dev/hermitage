@@ -10,7 +10,7 @@ function Documents() {
 
 
   useEffect(() => {
-    let branchId = state.userInfo.branch.number;
+    let branchId = state.userInfo.branch._id;
     const getDocuments = async () => {
       let res = await apiRequest(`manager/allDocuments/${branchId}`);
       if (!res) {

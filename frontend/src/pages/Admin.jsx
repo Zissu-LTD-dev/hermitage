@@ -52,7 +52,7 @@ function Admin() {
       {state.showWarning.show && <WarningPopup isShow={state.showWarning.show} message={state.showWarning.message} />}
       
       <div className={admin.main} >
-        <Sidebar branchName="מנהל רשת" />
+        <Sidebar branchName={state.userInfo.role === "admin" ? "מנהל ראשי" : "ניהול סניפים"} />
         {stateAdmin.status != "order execution" &&<NavbarAdmin />}
         {stateAdmin.status == "order execution" && <Navbar />}
         <div className={admin.content}>

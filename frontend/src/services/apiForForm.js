@@ -7,6 +7,7 @@ const { REACT_APP_BACKEND_URL } = import.meta.env;
  * @param {*} method default is GET
  * @param {*} payload default is null
  * @param {*} role default is null
+ * @param {*} ContentType default is application/json
  * @returns {Promise} 
  */
 const apiRequestForForm = async (endpoint, method = "GET", payload = null, role = null, ContentType = "application/json") => {

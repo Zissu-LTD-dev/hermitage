@@ -6,6 +6,9 @@ import documents from "../../assets/css/admin/Documents.module.css";
 import apiRequestForForm from "../../services/apiForForm";
 import Document from "./documents/Document";
 
+import cookie from "js-cookie";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
+
 function Documents() {
   const { state, dispatch } = useMainContext();
   const { state: adminState, dispatch: adminDispatch } = useAdminContext();
@@ -30,10 +33,23 @@ function Documents() {
 
   const handleUpload = async () => {
     dispatch({ type: "SET_SHOW_LOADER", payload: true });
+    const token = cookie.get("token");
+
     const formData = new FormData();
     formData.append("pdfFile", file);
 
-    let res = await apiRequestForForm("admin/uploadPdf", "POST", formData);
+    // regular request for form data
+    let res = await fetch(`${REACT_APP_BACKEND_URL}admin/uploadPdf`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        contentType: "multipart/form-data",
+      },
+      body: formData,
+    });
+
+
+    // let res = await apiRequestForForm("admin/uploadPdf", "POST", formData, null , "multipart/form-data");
     if (!res) {
     dispatch({ type: "SET_SHOW_LOADER", payload: false });
       dispatch({
@@ -47,8 +63,8 @@ function Documents() {
       type: "SET_SHOW_SUCCESS",
       payload: { show: true, message: "הקובץ הועלה בהצלחה" },
     });
-    
-    adminDispatch({ type: "ADD_DOCUMENT", payload: res.file });
+    let data = await res.json();
+    adminDispatch({ type: "ADD_DOCUMENT", payload: data.file });
 
     setUpload(false);
     setFile(null);

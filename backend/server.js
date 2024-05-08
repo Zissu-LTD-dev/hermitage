@@ -38,8 +38,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/v1/auth', authRouter);
-// TODO: add authAdmin middleware
-app.use('/api/v1/admin/file-upload', fileUploadRouter);
+app.use('/api/v1/admin/file-upload', authAdmin, fileUploadRouter);
 app.use('/api/v1/admin', authAdmin , adminRouter);
 app.use('/api/v1/manager', authManager, branchRouter);
 

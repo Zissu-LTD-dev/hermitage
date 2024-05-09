@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Imaging from "../../../assets/css/manager/ImagingColumn/ImagingColumn.module.css";
 import shelf from "../../../assets/image/ImagingColumn/Asset 4@4x.png";
 
-function ImagingColumn({ name, products, openImaging, closeImaging }) {
+function ImagingColumn({ name, activeRow, products, openImaging, closeImaging }) {
   const [productsGroup, setProductsGroup] = useState([]);
 
   const [open, setOpen] = useState(openImaging);
@@ -10,15 +10,32 @@ function ImagingColumn({ name, products, openImaging, closeImaging }) {
   useEffect(() => {
     let temp = [];
     let group = [];
-    products.forEach((product, index) => {
-      if (index % 11 === 0 && index !== 0) {
+    if(activeRow){
+      products.forEach((product, index) => {
+        if (index % 11 === 0 && index !== 0) {
+          temp.push(group);
+          group = [];
+        }
+        group.push(product);
+      });
+    }else{
+      let shelfs = [];
+      products.forEach((product) => {
+        if (!shelfs[product.location.shelf]) {
+          shelfs[product.location.shelf] = [];
+        }
+        shelfs[product.location.shelf].push(product);
+      });
+      shelfs.forEach((shelf) => {
+        let group = [];
+        shelf.forEach((product) => {
+          group.push(product);
+        });
         temp.push(group);
-        group = [];
-      }
-      group.push(product);
-    });
-    temp.push(group);
-    setProductsGroup(temp);
+      });
+    }
+      temp.push(group);
+      setProductsGroup(temp);
   }, [products]);
 
   useEffect(() => {

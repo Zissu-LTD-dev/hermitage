@@ -99,7 +99,7 @@ function Column({ details }) {
           </span>
           <span>
             <i className={column.imaging} onClick={() => setShowImaging(true)}>
-              <ImagingColumn name={columnsName} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} />
+              <ImagingColumn name={columnsName} activeRow={activeRow} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} />
             </i>
             <i
               className={column.opening__arrow}
@@ -121,7 +121,7 @@ function Column({ details }) {
                 className={column.imaging}
                 onClick={() => setShowImaging(true)}
               >
-                <ImagingColumn name={columnsName} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} />
+                <ImagingColumn name={columnsName} activeRow={activeRow} products={products} openImaging={showImaging} closeImaging={() => setShowImaging(false)} />
               </i>
               <i
                 className={column.closing__arrow}

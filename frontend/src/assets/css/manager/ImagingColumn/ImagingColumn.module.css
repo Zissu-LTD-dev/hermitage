@@ -12,7 +12,7 @@
   opacity: 1;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 1000000;
+  z-index: 5;
 }
 .content {
   width: 1157px;
@@ -87,7 +87,15 @@ color: #082A3A
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
+
+.products::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
 .product {
     width: 92px;
     height: 138px;
@@ -99,11 +107,11 @@ color: #082A3A
 .img {
     width: 100%;
     height: 80px;
-    margin: 0 0 0px 0;
+    margin: 0 0 -10px 0;
     background-color: #082a3a;
 }
 .img img {
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
 }
 .product .name {

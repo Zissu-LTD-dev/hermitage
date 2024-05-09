@@ -2,11 +2,14 @@ import sidebar from "../../assets/css/admin/Sidebar.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
 
+import store from "../../assets/image/admin/store.svg";
 import branchManagement from "../../assets/image/admin/shop.svg";
 import approvalsStatus from "../../assets/image/admin/clock.svg";
 import blockManagement from "../../assets/image/admin/block.svg";
 import documents from "../../assets/image/admin/document.svg";
 import addingProducts from "../../assets/image/admin/Iconfeather-plus-circle.svg";
+import chat from "../../assets/image/admin/chat.svg";
+import generalManagement from "../../assets/image/admin/manage.svg";
 
 import connectedBy from "../../assets/image/manager/Layer3.svg";
 
@@ -34,7 +37,7 @@ function Sidebar({ branchName }) {
             <>
               <div onClick={() => changeStatus("order execution")}>
                 <div className={sidebar.icon}>
-                  <img src={branchManagement} alt="order execution" />
+                  <img src={store} alt="order execution" />
                 </div>
                 <span> ביצוע הזמנה לסניף</span>
               </div>
@@ -70,13 +73,13 @@ function Sidebar({ branchName }) {
               </div>
               <div onClick={() => changeStatus("message")}>
                 <div className={sidebar.icon}>
-                  <img src={addingProducts} alt="message" />
+                  <img src={chat} alt="message" />
                 </div>
                 <span>הודעות</span>
               </div>
               <div onClick={() => changeStatus("general management")}>
                 <div className={sidebar.icon}>
-                  <img src={addingProducts} alt="general management" />
+                  <img src={generalManagement} alt="general management" />
                 </div>
                 <span>ניהול כללי</span>
               </div>
@@ -86,7 +89,7 @@ function Sidebar({ branchName }) {
             <>
               <div onClick={() => changeStatus("order execution")}>
                 <div className={sidebar.icon}>
-                  <img src={branchManagement} alt="order execution" />
+                  <img src={store} alt="order execution" />
                 </div>
                 <span> ביצוע הזמנה לסניף</span>
               </div>

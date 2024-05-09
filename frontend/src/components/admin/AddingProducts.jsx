@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import addingProducts from "../../assets/css/admin/AddingProducts.module.css";
+import cookie from "js-cookie";
+const { REACT_APP_BACKEND_URL } = import.meta.env;
 import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
 import apiRequestForForm from "../../services/apiForForm";
@@ -164,7 +166,32 @@ const deleteProduct = async (productID) => {
   }
 
   const downloadProducts = async () => {
-    alert("בקרוב תוכלו להוריד קובץ עם כל המוצרים");
+    dispatchMain({ type: "SET_SHOW_LOADER", payload: true });
+    let token = cookie.get("token");
+    const response = await fetch(`${REACT_APP_BACKEND_URL}admin/downloadProducts`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      dispatchMain({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "ההורדה נכשלה" },
+      });
+      dispatchMain({ type: "SET_SHOW_LOADER", payload: false });
+      return;
+    }
+    dispatchMain({ type: "SET_SHOW_LOADER", payload: false });
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'מוצרים.xlsx';
+    document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+    a.click();    
+    a.remove();  //afterwards we remove the element again         
+    
   }
 
 

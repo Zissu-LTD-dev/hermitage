@@ -1,5 +1,5 @@
 const express = require("express");
-const {auth, admin, uploadFile } = require("../controllers");
+const {auth, admin, uploadFile, downloadProducts } = require("../controllers");
 const adminRouter = express.Router();
 
 const multer = require('multer');
@@ -111,5 +111,7 @@ adminRouter.post("/uploadExcel", uploadXLSX.single('excelFile'),  uploadFile.upl
 // upload pdf file
 adminRouter.post("/uploadPdf", uploadPDF.single('pdfFile'),  uploadFile.uploadPdf );
 
+// downloadProducts
+adminRouter.get("/downloadProducts", downloadProducts.downloadProducts );
 
 exports.adminRouter = adminRouter;

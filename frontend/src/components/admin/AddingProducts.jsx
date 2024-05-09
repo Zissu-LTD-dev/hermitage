@@ -183,15 +183,15 @@ const deleteProduct = async (productID) => {
       return;
     }
     dispatchMain({ type: "SET_SHOW_LOADER", payload: false });
+    let date = new Date();
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'מוצרים.xlsx';
-    document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-    a.click();    
-    a.remove();  //afterwards we remove the element again         
-    
+    a.download = `products-${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}.xlsx`;
+    document.body.appendChild(a); 
+    a.click();   
+    a.remove();    
   }
 
 

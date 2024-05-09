@@ -41,7 +41,13 @@ function DynamicContent() {
     <>
       <div className={newOrder.main}>
         <div className={newOrder.header}>
-          <div className={newOrder.title}>{state.statusOrder.title}</div>
+          <div className={newOrder.title}>{state.statusOrder.title}
+            {state.userInfo.role !== "manager" && (
+              <>
+                <span className={newOrder.title}> (עבור - {state.userInfo.branch.name})</span>
+              </>
+            )}
+          </div>
           {state.statusOrder.step === 1 && !activeFiltersSearch && (
             <div className={newOrder.categories}>
               <Categories />

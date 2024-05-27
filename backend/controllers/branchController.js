@@ -11,7 +11,7 @@ const {
     Provider,
     User,
   } = require("../models");
-const { sendMail, verify } = require("../functions/sendMail");
+const  weezmoMail  = require("../functions/weezmoMail"); 
 
 const sendOrderMail = async (branch, provider, productsOrder) => {
     let subject = `הזמנה חדשה מסניף ${branch.name}, עבור : ${provider}`;
@@ -91,9 +91,23 @@ const createOrder = async (req, res) => {
     let orders = await Order.insertMany(newOrders);
 
     // TODO: send mail to provider
-    console.log(newOrders);
-    
-    res.status(200).json({message: 'The order was successfully sent'});
+    // console.log(newOrders);
+    let sendMail = await weezmoMail({
+      target: "770tzv@gmail.com",
+      message: "message",
+      subjectLine: "subjectLine",
+      senderName: "senderName",
+    });
+
+    if (sendMail) {
+      // צריך לשנות את הסטטוס של ההזמנה שנשלחה
+      console.log('Mail was sent successfully');
+      res.status(200).json({message: 'The order was successfully sent with mail'});
+    }else{
+      // לשלוח הודעה שההזמנה בוצע אב לא נשלחה לספק ולצור קשר עם המנהל 
+      console.log('Mail was not sent');
+      res.status(200).json({message: 'The order was successfully sent without mail !!!'});
+    }
   };
 
   // getOrders

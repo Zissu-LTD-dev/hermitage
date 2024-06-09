@@ -48,7 +48,10 @@ function PendingOrders() {
           </div>
         </div>
         <div className={pendingOrders.content}>
-          {orders.map((order, i) => (
+          {title === "החזרות" && orders.filter(order => order.returnLines.quantity > 0).map((order, i) => (
+            <Provider key={i} order={order} status={title} />
+          ))}
+          {title !== "החזרות" && orders.filter(order => order.orderLines.quantity > 0).map((order, i) => (
             <Provider key={i} order={order} status={title} />
           ))}
         </div>

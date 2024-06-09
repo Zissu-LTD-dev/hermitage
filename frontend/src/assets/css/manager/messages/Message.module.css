@@ -1,0 +1,116 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 30px;
+  width: calc(100% - 60px);
+  height: calc(100vh - 60px);
+}
+
+.header{
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.title {
+  padding: 10px 0;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 37px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+  margin-left: 32px;
+}
+
+.readBTN{
+  min-width: 106px;
+        min-height: 20px;
+        padding: 10px 20px;
+        margin: 0 5px;
+        border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 19px;
+        font-family: "IBM Plex Sans Hebrew";
+        font-style: normal;
+        letter-spacing: 0px;
+        color: #ffffff;
+        background-color: #79B551;
+        cursor: pointer;
+}
+
+.message__popup {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: calc(100vh - 300px);
+  margin-bottom: 20px;
+  padding: 10px 20px 40px;
+  background-color: #ffffff;
+  direction: rtl;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+
+/* message__popup__item שיהיה צבע לפי זוגי ואי זוגי  */
+.message__popup__item:nth-child(odd) {
+  background-color: #f8f8f8;
+}
+
+.message__popup__item {
+  display: flex;
+  flex-direction: column;
+  padding: 0px 5px;
+  border-bottom: 1px solid #e0e0e0;
+  margin: 10px 0;
+  box-shadow: 0px 2px 4px 0px #00000029;
+}
+
+.newMessage{
+  color: #f14c4c;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 37px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+
+}
+.message__popup__item__content {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 37px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+.read {
+  font-weight: 500;
+  color: #be955d;
+}
+.unread {
+  font-weight: 500;
+  color: #082a3a;
+}
+.message__popup__item__date {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+}

@@ -13,6 +13,7 @@ import {
 } from "../components/popups";
 
 import Navbar from "../components/manager/navbar/Navbar";
+import Messages from "../components/manager/Messages";
 import NewOrder from "../components/manager/NewOrder";
 import PendingOrders from "../components/manager/PendingOrders";
 import Documents from "../components/manager/Documents";
@@ -116,6 +117,7 @@ function Manager() {
         <Navbar />
         {!loading ? (
           <div className={manager.content}>
+            {state.status == "messages" && <Messages />}
             {state.status == "new order" && <NewOrder />}
             {state.status == "pending orders" && <PendingOrders />}
             {state.status == "documents" && <Documents />}

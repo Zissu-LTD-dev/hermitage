@@ -16,7 +16,7 @@ export const initialState = {
   },
   activeNavbar: false,
 
-  status: "new order",
+  status: "messages",
   statusOrder: {
     title: "יצירת הזמנה חדשה",
     step: 1,

@@ -3,7 +3,7 @@ import { useMainContext } from "../../../context/mainContext/MainContext";
 
 import Filters from "./Filters";
 import Search from "./Search";
-import MessageM from "./MessageM";
+import MessageM from "../messages/MessageM";
 
 function Navbar() {
   const { state } = useMainContext();
@@ -15,9 +15,9 @@ function Navbar() {
           <Filters />
           <Search />
         </span>
-        <span className={navbar.navbar__left} >
+        {/* <span className={navbar.navbar__left} >
           {state.userInfo.role === "manager" && <MessageM />}
-        </span>
+        </span> */}
       </div>
     </>
   );

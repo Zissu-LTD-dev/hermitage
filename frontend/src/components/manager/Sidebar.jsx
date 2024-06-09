@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import sidebar from "../../assets/css/manager/Sidebar.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 
+import massage from "../../assets/image/manager/chat1.svg";
 import newOrder from "../../assets/image/manager/Layer68.svg";
 import waitingOrders from "../../assets/image/manager/clock.svg";
 import documents from "../../assets/image/manager/document.svg";
@@ -35,6 +36,12 @@ function Sidebar() {
       <div className={sidebar.sidebar}>
         <div className={sidebar.logo}></div>
         <div className={sidebar.menu}>
+        <div onClick={() => changeStatus("messages")}>
+            <div className={sidebar.icon}>
+              <img src={massage} alt="massage" />
+            </div>
+            <span>הודעות</span>
+          </div>
           <div onClick={() => changeStatus("new order")}>
             <div className={sidebar.icon}>
               <img src={newOrder} alt="new order" />

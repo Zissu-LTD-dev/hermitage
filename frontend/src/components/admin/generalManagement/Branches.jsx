@@ -111,6 +111,16 @@ function Branches() {
                     />
                   </div>
                   <div className={subGeneralManagement.formFieldsInput}>
+                    <label>מספר EDI:</label>
+                    <input
+                      type="text"
+                      value={newBranch.EDInumber}
+                      onChange={(e) =>
+                        setNewBranch({ ...newBranch, EDInumber: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
                     <label>שם סניף:</label>
                     <input
                       type="text"
@@ -228,6 +238,16 @@ function Branches() {
                     />
                   </div>
                   <div className={subGeneralManagement.formFieldsInput}>
+                    <label>מספר EDI:</label>
+                    <input
+                      type="text"
+                      value={newBranch.EDInumber}
+                      onChange={(e) =>
+                        setNewBranch({ ...newBranch, EDInumber: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
                     <label>שם סניף:</label>
                     <input
                       type="text"
@@ -337,6 +357,9 @@ function Branches() {
                   <div className={subGeneralManagement.listDetails}>
                     <div className={subGeneralManagement.listDetail}>
                       מספר סניף: {branch.number}
+                    </div>
+                    <div className={subGeneralManagement.listDetail}>
+                     EDI-num :  {branch.EDInumber ? branch.EDInumber : "אין edi "}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
                       {branch.phone ? branch.phone : "ללא טלפון"}

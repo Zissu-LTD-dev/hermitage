@@ -5,6 +5,7 @@ const branchSchema = new mongoose.Schema({
     type: Number,
     unique: true,
   },
+  EDInumber: Number,
   name: String,
   phone: String,
   email: String,

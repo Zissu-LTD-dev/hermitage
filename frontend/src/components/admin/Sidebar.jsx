@@ -99,6 +99,12 @@ function Sidebar({ branchName }) {
                 </div>
                 <span>סטטוס הזמנות</span>
               </div>
+              <div onClick={() => changeStatus("message")}>
+                <div className={sidebar.icon}>
+                  <img src={chat} alt="message" />
+                </div>
+                <span>הודעות</span>
+              </div>
               <div onClick={() => changeStatus("documents")}>
                 <div className={sidebar.icon}>
                   <img src={documents} alt="documents" />

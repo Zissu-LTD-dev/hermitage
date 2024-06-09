@@ -114,7 +114,7 @@ const createOrder = async (req, res) => {
     emails.push(...branchEmails);
     let mailPromises = emails.map(async (email) => {
       let sendMail = await weezmoMail({
-        target: process.env.NODE_ENV == 'dev' ? "hasan@hermitage.co.il" : email,
+        target: process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : email,
         message: order,
         subjectLine: `הזמנה חדשה מסניף ${order.branchName}, עבור : ${order.providerName}`,
         senderName: "הרמיטאז' הזמנות סניפים",

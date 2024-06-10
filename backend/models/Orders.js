@@ -3,8 +3,13 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema({
   orderNumber: Number,
   userName: String,
+  branchEDI: String,
   branchNumber: Number,
   branchName: String,
+  branchAddress: String,
+  branchCity: String,
+  branchMail: String,
+  branchPhone: String,
   providerNumber: Number,
   providerName: String,
   orderLines: Object,

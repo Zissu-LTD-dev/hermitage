@@ -6,7 +6,13 @@ function generateEmailHtml(message) {
   const {
     orderNumber,
     userName,
+    branchEDI,
+    branchNumber,
     branchName,
+    branchAddress,
+    branchCity,
+    branchMail,
+    branchPhone,
     providerName,
     orderLines,
     returnLines,
@@ -22,7 +28,6 @@ function generateEmailHtml(message) {
         <tr style="text-align: right;">
           <th>שם מוצר</th>
           <th>בר קוד</th>
-          <th>מחיר</th>
           <th>כמות</th>
         </tr>
     `;
@@ -31,12 +36,11 @@ function generateEmailHtml(message) {
         <tr>
           <td>${product.name}</td>
           <td>${product.barcode}</td>
-          <td>${product.price} ש"ח</td>
           <td>${product.quantity} יחידות</td>
         </tr>
       `;
     });
-    orderHtml += `</table><p style="font-weight: bold;" >סה"כ מוצרים: ${orderLines.quantity} <br /> סה"כ עלות: ${totalOrderAmount} ש"ח</p>`;
+    orderHtml += `</table><p style="font-weight: bold;" >סה"כ מוצרים: ${orderLines.quantity} </p>`;
   } else {
     orderHtml +=
       '<h3 style="color: #082a3a;" >הזמנות</h3><p style="font-weight: bold;" >אין מוצרים להזמנה</p>';
@@ -50,7 +54,6 @@ function generateEmailHtml(message) {
       <tr style="text-align: right;">
           <th>שם מוצר</th>
           <th>בר קוד</th>
-          <th>מחיר</th>
           <th>כמות</th>
         </tr>
     `;
@@ -59,7 +62,6 @@ function generateEmailHtml(message) {
         <tr>
           <td>${product.name}</td>
           <td>${product.barcode}</td>
-          <td>${product.price} ש"ח</td>
           <td>${product.quantity} יחידות</td>
         </tr>
       `;
@@ -93,7 +95,15 @@ function generateEmailHtml(message) {
         <h1 style="color: #082a3a;">פרטי הזמנה</h1>
         <p style="font-weight: bold;" >מספר הזמנה: ${orderNumber}</p>
         <p style="font-weight: bold;" >שם מבצע ההזמנה : ${userName}</p>
-        <p style="font-weight: bold;" >שם הסניף: ${branchName}</p>
+        <p style="font-weight: bold;" >פרטי סניף : </p>  
+        <ul style="padding: 0 20px;">
+          <li><span><b>EDI: </b></span> ${branchEDI}</li>
+          <li><b>מספר סניף: </b> ${branchNumber}</li>
+          <li><b>שם סניף: </b> ${branchName}</li>
+          <li><b>כתובת: </b> ${branchAddress} ${branchCity}</li>
+          <li><b>מייל: </b> ${branchMail}</li>
+          <li><b>טלפון: </b> ${branchPhone}</li>
+        </ul>
         <p style="font-weight: bold;" >עבור ספק: ${providerName}</p>
         <hr>
         ${orderHtml}

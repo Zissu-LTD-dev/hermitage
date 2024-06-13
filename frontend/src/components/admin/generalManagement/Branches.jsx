@@ -42,7 +42,10 @@ function Branches() {
     }
     mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הסניף נוסף בהצלחה"} });
 
-    setBranches([...branches, newBranch]);
+    
+    let newBranches = [...branches, response];
+    newBranches.sort((a, b) => a.number - b.number);
+    setBranches(newBranches);
     setNewBranch(initialBranch);
     setAddBranch(false);
   };
@@ -66,6 +69,7 @@ function Branches() {
       }
       return branch;
     });
+    newBranches.sort((a, b) => a.number - b.number);
     setBranches(newBranches);
     setNewBranch(initialBranch);
     setEditBranch(false);
@@ -73,7 +77,8 @@ function Branches() {
 
   useEffect(() => {
     if (state.branches.length > 0 && state.typeBranches.length > 0) {
-      setBranches(state.branches);
+      let sortedBranches = state.branches.sort((a, b) => a.number - b.number);
+      setBranches(sortedBranches);
       setTypeBranch(state.typeBranches);
     }
   }, [state.branches, state.typeBranches]);

@@ -9,7 +9,7 @@ function Branches() {
   const { state, dispatch } = useAdminContext();
 
   const initialBranch = {
-    _id: "",
+    EDInumber: null,
     number: null,
     name: "",
     phone: "",
@@ -43,7 +43,7 @@ function Branches() {
     mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הסניף נוסף בהצלחה"} });
 
     
-    let newBranches = [...branches, response];
+    let newBranches = [...branches, newBranch];
     newBranches.sort((a, b) => a.number - b.number);
     setBranches(newBranches);
     setNewBranch(initialBranch);

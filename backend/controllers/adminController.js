@@ -146,7 +146,8 @@ const updateOrder = async (req, res) => {
     emails.push(...branchEmails);
     let mailPromises = emails.map(async (email) => {
       let sendMail = await weezmoMail({
-        target: process.env.NODE_ENV == "dev" ? process.env.EMAIL_FOR_DEV : email,
+        target:
+          process.env.NODE_ENV == "dev" ? process.env.EMAIL_FOR_DEV : email,
         message: order,
         subjectLine: `הזמנה חדשה מסניף ${order.branchName}, עבור : ${order.providerName}`,
         senderName: "הרמיטאז' הזמנות סניפים",
@@ -160,11 +161,9 @@ const updateOrder = async (req, res) => {
     await Promise.all(mailPromises);
 
     await order.save();
-    res
-      .status(200)
-      .json({
-        message: "The order was successfully updated and mail was sent",
-      });
+    res.status(200).json({
+      message: "The order was successfully updated and mail was sent",
+    });
   } else {
     await order.save();
     res.status(200).json({ message: "The order was successfully updated" });
@@ -347,6 +346,35 @@ const editSubGroup = async (req, res) => {
   res.status(200).json({ message: "The sub group was successfully updated" });
 };
 
+// add category
+const addCategory = async (req, res) => {
+  let category = req.body;
+  // check if the category.number already exists
+  let newCategory = await Category.findOne({ number: category.number });
+
+  if (!newCategory) {
+    newCategory = new Category(category);
+    await newCategory.save();
+    return res
+      .status(200)
+      .json({ message: "The category was successfully added" });
+  }
+
+  res.status(200).json({ message: "The category already exists", error: true });
+};
+
+// edit category
+const editCategory = async (req, res) => {
+  let categoryID = req.params.id;
+  let category = req.body;
+
+  let currentCategory = await Category.findById(categoryID);
+  await currentCategory.updateOne(category);
+  await currentCategory.save();
+
+  res.status(200).json({ message: "The category was successfully updated" });
+};
+
 // add message to branchs
 const addMessageToBranchs = async (req, res) => {
   let { branchesList, message } = req.body;
@@ -394,5 +422,7 @@ module.exports = {
   editProvider,
   addSubGroup,
   editSubGroup,
+  addCategory,
+  editCategory,
   addMessageToBranchs,
 };

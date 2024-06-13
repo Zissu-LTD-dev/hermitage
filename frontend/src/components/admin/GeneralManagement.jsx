@@ -5,6 +5,7 @@ import Users from "./generalManagement/Users";
 import Branches from "./generalManagement/Branches";
 import Providers from "./generalManagement/Providers";
 import SubGroup from "./generalManagement/SubGroup";
+import Categories from "./generalManagement/Categories";
 
 function GeneralManagement() {
     const [status, setStatus] = useState();
@@ -26,7 +27,10 @@ function GeneralManagement() {
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("subgroup")}
             >קבוצות משנה</div>
-            {/* <div className={generalManagement.headerButton}>עמודה מדף מפורט</div> */}
+            {/* categories */}
+            <div className={generalManagement.headerButton}
+                onClick={() => setStatus("categories")}
+            >קטגוריות</div>
           </div>
         </div>
         <div className={generalManagement.body}>
@@ -34,6 +38,7 @@ function GeneralManagement() {
             {status == "branches" && <Branches />}
             {status == "providers" && <Providers />}
             {status == "subgroup" && <SubGroup />}
+            {status == "categories" && <Categories />}
         </div>
       </div>
     </>

@@ -25,13 +25,13 @@ function Users() {
 
   // add user
   const handleAddUser = async () => {
-    let user = apiRequestForForm("admin/addUser", 'POST', newUser);
+    let user = apiRequestForForm("admin/addUser", "POST", newUser);
     user.then((data) => {
       console.log(data);
       if (!data) {
         mainDispatch({
           type: "SET_SHOW_ERROR",
-          payload: { show: true, message: "המשתמש כבר קיים"},
+          payload: { show: true, message: "המשתמש כבר קיים" },
         });
         setAddUser(false);
         setNewUser(initialData);
@@ -50,12 +50,18 @@ function Users() {
   // edit user
   const handleEditUser = async () => {
     // remove empty key
-    let newUserC = Object.fromEntries(Object.entries(newUser).filter(([key, value]) => value));
+    let newUserC = Object.fromEntries(
+      Object.entries(newUser).filter(([key, value]) => value)
+    );
     setNewUser(newUserC);
 
-    let user = apiRequestForForm(`admin/editUser/${newUser._id}`, 'PUT', newUser);
+    let user = apiRequestForForm(
+      `admin/editUser/${newUser._id}`,
+      "PUT",
+      newUser
+    );
     user.then((data) => {
-      if(data.error){
+      if (data.error) {
         mainDispatch({
           type: "SET_SHOW_ERROR",
           payload: { show: true, message: "שגיאה בעדכון המשתמש" },
@@ -76,7 +82,6 @@ function Users() {
       setEditUser(false);
       setNewUser(initialData);
     });
-
   };
 
   useEffect(() => {
@@ -158,23 +163,24 @@ function Users() {
                     <option value="admin">מנהל ראשי</option>
                   </select>
                 </div>
-                { newUser.role === "manager" && 
-                 <div className={subGeneralManagement.formFieldsInput}>
-                  <label>סניף</label>
-                  <select
-                    value={newUser.branch}
-                    onChange={(e) =>
-                      setNewUser({ ...newUser, branch: e.target.value })
-                    }
-                  >
-                    <option value="">בחר סניף</option>
-                    {branches.map((branch) => (
-                      <option key={branch._id} value={branch.number}>
-                        {branch.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>}
+                {newUser.role === "manager" && (
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>סניף</label>
+                    <select
+                      value={newUser.branch}
+                      onChange={(e) =>
+                        setNewUser({ ...newUser, branch: e.target.value })
+                      }
+                    >
+                      <option value="">בחר סניף</option>
+                      {branches.map((branch) => (
+                        <option key={branch._id} value={branch.number}>
+                          {branch.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
                 <div className={subGeneralManagement.formFieldsButtons}>
                   <div
                     className={
@@ -195,7 +201,7 @@ function Users() {
                       " " +
                       subGeneralManagement.addButton
                     }
-                    onClick={ () => handleAddUser() }
+                    onClick={() => handleAddUser()}
                   >
                     הוספה
                   </div>
@@ -301,49 +307,50 @@ function Users() {
               </div>
             </>
           )}
-          {!addUser && !editUser &&  users != [] && (
+          {!addUser && !editUser && users != [] && (
             <>
-              {users.length && users.map((user, index) => (
-                <div key={index} className={subGeneralManagement.list}>
-                  <div className={subGeneralManagement.listTitle}>
-                    {user.username}
-                  </div>
-                  <div className={subGeneralManagement.listDetails}>
-                    <div className={subGeneralManagement.listDetail}>
-                      {user.email}
+              {users.length &&
+                users.map((user, index) => (
+                  <div key={index} className={subGeneralManagement.list}>
+                    <div className={subGeneralManagement.listTitle}>
+                      {user.username}
                     </div>
-                    <div className={subGeneralManagement.listDetail}>
-                      {user.role
-                        ? user.role === "manager"
-                          ? "מנהל סניף"
-                          : user.role === "subAdmin"
-                          ? "מנהל מישני"
-                          : "מנהל ראשי"
-                        : ""}
+                    <div className={subGeneralManagement.listDetails}>
+                      <div className={subGeneralManagement.listDetail}>
+                        {user.email}
+                      </div>
+                      <div className={subGeneralManagement.listDetail}>
+                        {user.role
+                          ? user.role === "manager"
+                            ? "מנהל סניף"
+                            : user.role === "subAdmin"
+                            ? "מנהל מישני"
+                            : "מנהל ראשי"
+                          : ""}
+                      </div>
+                      <div className={subGeneralManagement.listDetail}>
+                        {user.branch && branches.length > 0
+                          ? branches.find(
+                              (branch) => branch.number === user.branch
+                            )?.name || "כללי"
+                          : "כללי"}
+                      </div>
                     </div>
-                    <div className={subGeneralManagement.listDetail}>
-                      {user.branch && branches.length
-                        ? branches.find(
-                            (branch) => branch.number == user.branch
-                          ).name
-                        : "כללי"}
-                    </div>
-                  </div>
-                  <div className={subGeneralManagement.listButtons}>
-                    <div
-                      className={
-                        subGeneralManagement.listButton +
-                        " " +
-                        subGeneralManagement.editButton
-                      }
-                      onClick={() => {
-                        setEditUser(true);
-                        setNewUser(user);
-                      }}
-                    >
-                      עריכה
-                    </div>
-                    {/* <div
+                    <div className={subGeneralManagement.listButtons}>
+                      <div
+                        className={
+                          subGeneralManagement.listButton +
+                          " " +
+                          subGeneralManagement.editButton
+                        }
+                        onClick={() => {
+                          setEditUser(true);
+                          setNewUser(user);
+                        }}
+                      >
+                        עריכה
+                      </div>
+                      {/* <div
                       className={
                         subGeneralManagement.listButton +
                         " " +
@@ -352,9 +359,9 @@ function Users() {
                     >
                       מחיקה
                     </div> */}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </>
           )}
         </div>

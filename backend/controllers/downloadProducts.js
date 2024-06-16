@@ -8,7 +8,7 @@ const downloadProducts = async (req, res) => {
     let isBlocked = product.isBlocked ? 1 : 2;
     data.push({
       "חסום להזמנות - 1 חסום , 2 פתוח": isBlocked,
-      "מס ספק": product.providerNumber,
+      "ספק": product.providerName,
       "מס קטגוריה ": product.category,
       "קבוצת משנה": product.subGroupName,
       "מס ברקוד (ראשי)": product.barcode, 

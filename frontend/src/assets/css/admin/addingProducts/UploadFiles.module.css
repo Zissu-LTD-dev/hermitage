@@ -53,3 +53,94 @@
     letter-spacing: 0px;
     color: #bd0f0f;
 }
+
+.fileData{
+    height: calc(100vh - 350px);
+    padding: 0 10px;
+    margin: 5px 0;
+    border: 1px solid #082A3A;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #082A3A;
+    /* גלילה  */
+    overflow: auto;
+}
+
+.fileData h3{
+    font-size: 20px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #082A3A;
+}
+
+.fileData table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 10px 0;
+}
+
+.fileData th {
+    min-width: 150px;
+    background-color: #082A3A;
+    color: white;
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    padding: 10px;
+}
+
+.fileData td {
+    min-width: 150px;
+    border: 1px solid #082A3A;
+    padding: 10px;
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+}
+
+.fileData tr:nth-child(even) {
+    background-color: #bbbbbb;
+}
+
+.fileData tr:hover {
+    background-color: #d7d7d7;
+}
+
+.fileData button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+}
+
+.upload{
+    background-color: #082A3A;
+    color: white;
+}
+
+.fileData button:hover {
+    background-color: #082A3A;
+    color: white;
+}
+
+.fileData button:disabled {
+    background-color: #f2f2f2;
+    color: #082A3A;
+    cursor: not-allowed;
+}
+
+

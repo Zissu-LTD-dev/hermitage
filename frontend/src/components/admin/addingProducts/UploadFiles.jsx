@@ -3,17 +3,21 @@ import UploadFilesStyle from "../../../assets/css/admin/addingProducts/UploadFil
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
+import {useMainContext } from "../../../context/mainContext/MainContext";
 import * as XLSX from "xlsx";
 
 function UploadFiles() {
   const { state, dispatch } = useAdminContext();
+  const { state: mainState, dispatch: mainDispatch } = useMainContext();
   const deleteProductFile = useRef(null);
   const addProductFile = useRef(null);
   const updateProductFile = useRef(null);
 
   const [upload, setUpload] = useState(false);
   const [file, setFile] = useState(null);
+  const [fileData, setFileData] = useState(null);
   const [fileName, setFileName] = useState("");
+  const [btnName, setBtnName] = useState("");
 
   const downloadExcel = () => {
     const deleteProduct = [["מס ברקוד (ראשי)"]];
@@ -132,92 +136,124 @@ function UploadFiles() {
     updateProductFile.current.click();
   };
 
-  const handleFile = async (e) => {
+  const changeDataToJSON = (dataXLSX, keys) => {
+    const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheet = workbook.Sheets[workbook.SheetNames[keys]];
+        const sheetData = XLSX.utils.sheet_to_json(sheet);
+        setFileData(sheetData);
+      };
+      reader.readAsArrayBuffer(dataXLSX);
+  };
 
+  const handleFile = async (e) => {
     let types = [
       "application/vnd.ms-excel",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ];
     if (!types.includes(e.target.files[0].type)) {
-      dispatch({
+      mainDispatch({
         type: "SET_SHOW_ERROR",
         payload: { show: true, message: "excel הקובץ אינו" },
       });
       return;
     }
-
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
     switch (e.target.name) {
       case "addProduct":
-        let addProductRes = await handleUpload(e.target.files[0], "Adding products");
-        if (!addProductRes) {
-          dispatch({
-            type: "SET_SHOW_ERROR",
-            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
-          });
-          return;
-        }
-        // reloud the page
-        window.location.reload();
+        setBtnName("addProduct");
+        changeDataToJSON(e.target.files[0], 0);
         break;
       case "updateProduct":
-        let updateProductRes = await handleUpload(e.target.files[0], "Update Products");
-        if (!updateProductRes) {
-          dispatch({
-            type: "SET_SHOW_ERROR",
-            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
-          });
-          return;
-        }
-        let updateDetailedProductRes = await handleUpload(e.target.files[0], "Update Detailed Products");
-        if (!updateDetailedProductRes) {
-          dispatch({
-            type: "SET_SHOW_ERROR",
-            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
-          });
-          return;
-        }
-        // reloud the page
-        window.location.reload();
+        setBtnName("updateProduct");
+        changeDataToJSON(e.target.files[0], 2);
         break;
       case "deleteProduct":
-        let res = await handleUpload(e.target.files[0], "Deleting items");
-        if (!res) {
-          dispatch({
+        setBtnName("deleteProduct");
+        changeDataToJSON(e.target.files[0], 1);
+        break;
+    }
+
+  };
+
+  const handleUpload = async (action) => {
+     switch (action) {
+      case "addProduct":
+        let addProductRes = await uploadToServer(file, "Adding products");
+        if (!addProductRes) {
+          mainDispatch({
             type: "SET_SHOW_ERROR",
             payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
           });
           return;
         }
-
-        // reloud the page
-        window.location.reload();
+        break;
+      case "updateProduct":
+        let updateProductRes = await uploadToServer(file, "Update Products");
+        if (!updateProductRes) {
+          mainDispatch({
+            type: "SET_SHOW_ERROR",
+            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
+          });
+          return;
+        }
+        let updateDetailedProductRes = await uploadToServer(file, "Update Detailed Products");
+        if (!updateDetailedProductRes) {
+          mainDispatch({
+            type: "SET_SHOW_ERROR",
+            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
+          });
+          return;
+        }
+        break;
+      case "deleteProduct":
+        let res = await uploadToServer(file, "Deleting items");
+        if (!res) {
+          mainDispatch({
+            type: "SET_SHOW_ERROR",
+            payload: { show: true, message: "הקובץ לא נטען בהצלחה" },
+          });
+          return;
+        }
         break;
       default:
         break;
     }
-
-    setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
-    setUpload(true);
-  };
-
-  const handleUpload = async (file, action) => {
+    mainDispatch({
+      type: "SET_SHOW_SUCCESS",
+      payload: { show: true, message: "הקובץ נטען העמוד יטען מחדש" },
+    });
+    setTimeout(() => {
+      window.location.reload();
+    }, 4000);
+  }
+    const uploadToServer = async (file, action) => {
     const token = cookie.get("token");
 
     let formData = new FormData();
     formData.append("file", file);
     formData.append("action", action);
-     
+
     try {
-      let res = await fetch(`${REACT_APP_BACKEND_URL}admin/file-upload/upload`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData 
-      });
+      let res = await fetch(
+        `${REACT_APP_BACKEND_URL}admin/file-upload/upload`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
       res = await res.json();
-      if(res.status == 'ok'){return res;}else{ return false;}
+      if (res.status == "ok") {
+        return res;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.error(error);
       return false;
@@ -284,9 +320,52 @@ function UploadFiles() {
         </div>
       </div>
       <p className={UploadFilesStyle.warning}>
-        *העלאה של קובץ אקסל עם המוצרים להוספה עדכון או מחיקה חייב להיות
-        בטמפלט הנכון*
+        *העלאה של קובץ אקסל עם המוצרים להוספה עדכון או מחיקה חייב להיות בטמפלט
+        הנכון*
       </p>
+      {fileData && (
+        <div className={UploadFilesStyle.fileData}>
+          <h3>קובץ שנבחר: {fileName}</h3>
+          <table>
+            <thead>
+              <tr>
+                {Object.keys(fileData[0]).map((key, index) => (
+                  <th key={index}>{key}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {fileData.map((row, index) => (
+                <tr key={index}>
+                  {Object.values(row).map((value, index) => (
+                    <td key={index}>{value}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className={UploadFilesStyle.uploadBtns}>
+            <button
+              className={UploadFilesStyle.cancel}
+              onClick={() => {
+                setFile(null);
+                setFileData(null);
+                setFileName("");
+                setUpload(false);
+                setBtnName("");
+              }}
+            >
+              ביטול
+            </button>
+            <button
+              className={UploadFilesStyle.upload}
+              onClick={() => handleUpload(btnName)}
+            >
+              העלאה
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -70,47 +70,59 @@ const getFilters = async (req, res) => {
 const createOrder = async (req, res) => {
   let { userName, branch, summary } = req.body;
 
+  // Check if branch is an array or a single object
+  const branches = Array.isArray(branch) ? branch : [branch];
+
   // order number
   let lastOrder = await Order.findOne().sort({ orderNumber: -1 });
   let newOrderNumber = lastOrder ? lastOrder.orderNumber : 100;
 
-  let newOrders = summary.map((order) => {
-    newOrderNumber = newOrderNumber + 1;
-    return {
-      orderNumber: newOrderNumber,
-      userName: userName,
-      branchEDI: branch.EDInumber,
-      branchNumber: branch.number,
-      branchName: branch.name,
-      branchAddress: branch.address,
-      branchCity: branch.city,
-      branchMail: branch.email,
-      branchPhone: branch.phone,
-      providerNumber: order.providerNumber,
-      providerName: order.providerName,
-      orderLines: order.orderLines,
-      returnLines: order.returnLines,
-      totalOrderQty: order.totalOrderQty,
-      totalReturnQty: order.totalReturnQty,
-      totalOrderAmount: order.totalOrderAmount,
-      totalReturnAmount: order.totalReturnAmount,
-      orderStatus: order.orderLines.products.length > 0 ? "pending" : "",
-      returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
-      notes: "",
-    };
-  });
+  let allOrders = [];
 
-  let orders = await Order.insertMany(newOrders);
+  for (const currentBranch of branches) {
+    let newOrders = summary.map((order) => {
+      newOrderNumber = newOrderNumber + 1;
+      return {
+        orderNumber: newOrderNumber,
+        userName: userName,
+        branchEDI: currentBranch.EDInumber,
+        branchNumber: currentBranch.number,
+        branchName: currentBranch.name,
+        branchAddress: currentBranch.address,
+        branchCity: currentBranch.city,
+        branchMail: currentBranch.email,
+        branchPhone: currentBranch.phone,
+        providerNumber: order.providerNumber,
+        providerName: order.providerName,
+        orderLines: order.orderLines,
+        returnLines: order.returnLines,
+        totalOrderQty: order.totalOrderQty,
+        totalReturnQty: order.totalReturnQty,
+        totalOrderAmount: order.totalOrderAmount,
+        totalReturnAmount: order.totalReturnAmount,
+        orderStatus: order.orderLines.products.length > 0 ? "pending" : "",
+        returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
+        notes: "",
+      };
+    });
+
+    allOrders = allOrders.concat(newOrders);
+  }
+
+  let orders = await Order.insertMany(allOrders);
 
   let mailPromises = orders.map(async (order) => {
     let branchNumber = order.branchNumber;
     let providerNumber = order.providerNumber;
-    if (branch.blockedProviders.includes(providerNumber)) {
+    
+    // Check blocked providers only if branch is a single object
+    if (!Array.isArray(branch) && branch.blockedProviders && branch.blockedProviders.includes(providerNumber)) {
       console.log(
         `Provider ${providerNumber} is blocked for branch ${branchNumber}`
       );
       return;
     }
+    
     let provider = await Provider.findOne({ number: providerNumber });
     let emails = [provider.email];
     let branchEmails = provider.branchEmails.filter(

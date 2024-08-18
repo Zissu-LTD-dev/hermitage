@@ -229,6 +229,12 @@ const deleteProduct = async (req, res) => {
   res.status(200).json({ message: "The product was successfully deleted" });
 };
 
+// GET all branches
+const allBranches = async (req, res) => {
+  let branches = await Branch.find({});
+  res.status(200).json({ branches: branches });
+};
+
 // add branch
 const newBranch = async (req, res) => {
   let branch = req.body;
@@ -413,6 +419,7 @@ module.exports = {
   addProduct,
   editProduct,
   deleteProduct,
+  allBranches,
   newBranch,
   editBranch,
   allUsers,

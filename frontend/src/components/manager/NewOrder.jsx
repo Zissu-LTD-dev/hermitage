@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import newOrder from "../../assets/css/manager/NewOrder.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 
+import apiRequest from "../../services/api";
+
+
 import Categories from "./newOrder/Categories";
 import Wizard from "./newOrder/Wizard";
 import Column from "./newOrder/Column";
@@ -13,9 +16,25 @@ import ReturnFilterProduct from "./newOrder/ReturnFilterProduct";
 function DynamicContent() {
   const { state, dispatch } = useMainContext();
   const [activeFiltersSearch, setActiveFiltersSearch] = useState(false);
+  const [branches, setBranches] = useState([]);
+
+  const getBranches = async () => {
+    let data = await apiRequest("admin/allBranches");
+    if (!data) return false;    
+    return data;
+    
+  };
 
   useEffect(() => {
     dispatch({ type: "SET_STATUS_ORDER", payload: 1 });
+    if (state.userInfo.role !== "manager" ) {
+      let allBranches = getBranches();
+      allBranches.then((data) => {
+        if (data) {
+          setBranches(data.branches);
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -44,7 +63,9 @@ function DynamicContent() {
           <div className={newOrder.title}>{state.statusOrder.title}
             {state.userInfo.role !== "manager" && (
               <>
-                <span className={newOrder.title}> (עבור - {state.userInfo.branch.name})</span>
+                <span className={newOrder.title}>
+                   (עבור - {state.userInfo.branch.length == branches.length ? "כל הסניפים" : state.userInfo.branch.map((branch) => branch.name).join(", ")})
+                </span>
               </>
             )}
           </div>

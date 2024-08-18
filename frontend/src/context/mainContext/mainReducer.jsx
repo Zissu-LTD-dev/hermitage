@@ -62,6 +62,8 @@ export const SET_CURRENT_BRANCH = "SET_CURRENT_BRANCH";
 
 export const SET_ACTIVE_NAVBAR = "SET_ACTIVE_NAVBAR";
 
+export const SET_TYPE_BRANCH = "SET_TYPE_BRANCH";
+
 // manager 👇
 export const SET_STATUS = "SET_STATUS";
 export const SET_STATUS_ORDER = "SET_STATUS_ORDER";
@@ -142,6 +144,9 @@ export const mainReducer = (state, action) => {
 
     case SET_ACTIVE_NAVBAR:
       return { ...state, activeNavbar: action.payload };
+
+    case SET_TYPE_BRANCH:
+      return { ...state, branchType: action.payload };
 
     // manager 👇
     case SET_STATUS:

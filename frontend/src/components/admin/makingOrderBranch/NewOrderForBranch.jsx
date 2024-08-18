@@ -9,7 +9,16 @@ import NewOrder from "../../../components/manager/NewOrder";
 function NewOrderForBranch() {
     const { state, dispatch } = useMainContext();
     const [loading, setLoading] = useState(true);
-  
+
+    const setTypeBranch = async () => {
+        if (state.userInfo.branch.length > 1) {
+          dispatch({ type: "SET_TYPE_BRANCH", payload: 1 });
+        } else {
+          let branchTypeNumber = state.userInfo.branch[0].branchTypeNumber;
+          dispatch({ type: "SET_TYPE_BRANCH", payload:  branchTypeNumber });
+        }
+      }
+
     const getAllProducts = async () => {
       const data = await apiRequest(`manager/getProducts`);
       if (!data) return false;
@@ -44,6 +53,7 @@ function NewOrderForBranch() {
   
     useEffect(() => {
       dispatch({ type: "SET_SHOW_LOADER", payload: true });
+        setTypeBranch();
         let allProducts = getAllProducts();
         let category = getCategory();
         let subGroups = getSubGroups();

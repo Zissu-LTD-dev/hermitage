@@ -73,6 +73,8 @@ adminRouter.put("/editProduct/:id", admin.editProduct);
 // delete product
 adminRouter.delete("/deleteProduct/:id", admin.deleteProduct);
 
+// get all branches
+adminRouter.get("/allBranches", admin.allBranches);
 
 // add branch
 adminRouter.post("/newBranch", admin.newBranch);

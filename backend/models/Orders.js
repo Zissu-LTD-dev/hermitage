@@ -26,7 +26,8 @@ const orderSchema = new mongoose.Schema({
     type: String,
     enum: ["pending", "approved", "canceled", ""],
   },
-  notes: String,
+  noteProvider: String,
+  noteManager: String,
   createdDate: {
     type: Date,
     default: Date.now,

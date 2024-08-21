@@ -18,6 +18,7 @@ function generateEmailHtml(message) {
     returnLines,
     totalOrderQty,
     totalOrderAmount,
+    noteProvider,
   } = message;
 
   let orderHtml = "";
@@ -109,6 +110,8 @@ function generateEmailHtml(message) {
         ${orderHtml}
         <hr>
         ${returnHtml}
+        <hr>
+        ${ noteProvider ?  '<h3>הערה :</h3><p>' + noteProvider + '</p>' : '' }
       </body>
     </html>
   `;

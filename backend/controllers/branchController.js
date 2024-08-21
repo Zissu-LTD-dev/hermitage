@@ -102,7 +102,8 @@ const createOrder = async (req, res) => {
         totalReturnAmount: order.totalReturnAmount,
         orderStatus: order.orderLines.products.length > 0 ? "pending" : "",
         returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
-        notes: "",
+        noteProvider: order.noteProvider,
+        noteManager: order.noteManager,
       };
     });
 

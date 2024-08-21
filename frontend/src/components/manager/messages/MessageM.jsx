@@ -28,9 +28,7 @@ function MessageM() {
 
   useEffect(() => {
     if (state.userInfo.branch) {
-      let sortData = state.userInfo.branch.messages.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      });
+      let sortData = [...state.userInfo.branch.messages].reverse();      
       setMessageData(sortData);
       let num = state.userInfo.branch.messages.filter(
         (msg) => msg.read === false

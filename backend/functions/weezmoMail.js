@@ -121,10 +121,10 @@ const weezmoMail = async (data) => {
   try {
     return sdk
       .postV3ExternalSendemail({
-        target: target,
-        message: emailHtml,
-        subjectLine: subjectLine,
-        senderName: senderName,
+        Target: target,
+        Message: emailHtml,
+        SubjectLine: subjectLine,
+        SenderName: senderName,
       })
       .then(({ data }) => {
         console.log(data);

@@ -8,7 +8,7 @@ var openapi_json_1 = __importDefault(require("./openapi.json"));
 var SDK = /** @class */ (function () {
     function SDK() {
         this.spec = oas_1.default.init(openapi_json_1.default);
-        this.core = new core_1.default(this.spec, 'weezmo/v1 (api/6.1.1)');
+        this.core = new core_1.default(this.spec, 'weezmo/v1 (api/6.1.2)');
     }
     /**
      * Optionally configure various options that the SDK allows.
@@ -74,6 +74,23 @@ var SDK = /** @class */ (function () {
         this.core.setServer(url, variables);
     };
     /**
+     * Create and shedule SMS Campaign for contact lists
+     *
+     * @summary Will create an SMS Campaign
+     * @throws FetchError<400, types.PostApiSmscampaignCreateResponse400> Bad Request
+     */
+    SDK.prototype.postApiSmscampaignCreate = function (body) {
+        return this.core.fetch('/api/SmsCampaign/create', 'post', body);
+    };
+    /**
+     * Get status of campaign by campaignId
+     *
+     * @throws FetchError<400, types.GetApiSmscampaignStatusCampaignidResponse400> Bad Request
+     */
+    SDK.prototype.getApiSmscampaignStatusCampaignid = function (metadata) {
+        return this.core.fetch('/api/SmsCampaign/status/{campaignId}', 'get', metadata);
+    };
+    /**
      * Create or update list of contacts.
      * Max number of contacts per request: 5000 contacts.
      *
@@ -96,13 +113,25 @@ var SDK = /** @class */ (function () {
         return this.core.fetch('/api/Contacts/GetContactStatus', 'post', body);
     };
     /**
-     * Returns list of all unsubscribed contacts.
+     * Returns list of contacts page with last index id.
+     * Max. number of contacts per request - 1000 contacts.
+     *
+     * @summary Get contacts list
+     * @throws FetchError<400, types.PostApiContactsListResponse400> Bad Request
+     * @throws FetchError<401, types.PostApiContactsListResponse401> Unauthorized
+     */
+    SDK.prototype.postApiContactsList = function (body) {
+        return this.core.fetch('/api/Contacts/list', 'post', body);
+    };
+    /**
+     * Returns list of unsubscribed contacts page with last index id.
+     * Max. number of contacts per request - 1000 contacts.
      *
      * @summary Get unsubscribers list
-     * @throws FetchError<401, types.GetApiUnsubscribeListResponse401> Unauthorized
+     * @throws FetchError<401, types.PostApiUnsubscribeListResponse401> Unauthorized
      */
-    SDK.prototype.getApiUnsubscribeList = function () {
-        return this.core.fetch('/api/Unsubscribe/list', 'get');
+    SDK.prototype.postApiUnsubscribeList = function (body) {
+        return this.core.fetch('/api/Unsubscribe/list', 'post', body);
     };
     /**
      * Unsubscribe one or more contacts from SMS/Email or both.
@@ -136,6 +165,16 @@ var SDK = /** @class */ (function () {
         return this.core.fetch('/v3/External/SendEmail', 'post', body);
     };
     /**
+     * Send email via Weezmo, using target and email content, including attachments.
+     *
+     * @summary Send Email With Attachments
+     * @throws FetchError<400, types.PostV3ExternalSendemailwithattachmentsResponse400> Bad Request
+     * @throws FetchError<401, types.PostV3ExternalSendemailwithattachmentsResponse401> Unauthorized
+     */
+    SDK.prototype.postV3ExternalSendemailwithattachments = function (body) {
+        return this.core.fetch('/v3/External/SendEmailWithAttachments', 'post', body);
+    };
+    /**
      * Create a new receipt.
      *
      * @summary Create
@@ -154,6 +193,16 @@ var SDK = /** @class */ (function () {
      */
     SDK.prototype.postV3EntitiesReceiptCreatewithpdf = function (body, metadata) {
         return this.core.fetch('/v3/entities/receipt/createWithPdf', 'post', body, metadata);
+    };
+    /**
+     * Add more files to the digital receipts (For example, warranty, insurance, etc.).
+     *
+     * @summary Add additional files
+     * @throws FetchError<400, types.PostV2EntitiesReceiptAdditionalfileResponse400> Bad Request
+     * @throws FetchError<401, types.PostV2EntitiesReceiptAdditionalfileResponse401> Unauthorized
+     */
+    SDK.prototype.postV2EntitiesReceiptAdditionalfile = function (body) {
+        return this.core.fetch('/v2/entities/receipt/additionalFile', 'post', body);
     };
     return SDK;
 }());

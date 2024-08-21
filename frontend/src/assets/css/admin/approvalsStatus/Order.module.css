@@ -150,3 +150,39 @@ cursor: pointer;
     background: #79B551 0% 0% no-repeat padding-box;
     cursor: pointer;
   }
+
+
+.notes{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #082a3a05;
+    margin: 15px 0 15px 0;
+}
+.note{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #082a3a05;
+    margin: 0 0 15px 0;
+}
+.noteTitle{
+    font-size: 18px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: 600;
+    line-height: 23px;
+    padding: 0 35px;
+    color: #082a3a;
+}
+.noteContent{
+    font-size: 18px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 23px;
+    padding: 0 35px;
+    color: #082a3a;
+}

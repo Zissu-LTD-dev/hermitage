@@ -10,7 +10,7 @@ function Order({orderData, orderBy}) {
   const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [open, setOpen] = useState(false);
-  let { orderNumber, createdDate, userName, branchNumber, branchName, provider, providerName, orderStatus, returnStatus, orderLines, returnLines } = orderData;
+  let { orderNumber, createdDate, userName, branchNumber, branchName, provider, providerName, orderStatus, returnStatus, orderLines, returnLines, noteProvider, noteManager } = orderData;
   let products = orderBy == "returned" ? returnLines.products : orderLines.products;
   let status = orderBy == "returned" ? 'returned' : orderStatus;
   let time = createdDate.split("T")[1].split(".")[0];
@@ -132,6 +132,20 @@ function Order({orderData, orderBy}) {
                     <Product key={product._id} productData={product} onDelete={handleDelete} onDecrease={handleDecrease} onIncrease={handleIncrease} orderBy={orderBy}  />
                 ))}
             </div>
+            <div className={orderStyle.notes}>
+              {noteManager && (
+                <div className={orderStyle.note}>
+                  <div className={orderStyle.noteTitle}>הערה למנהל:</div>
+                  <div className={orderStyle.noteContent}>{noteManager}</div>
+                </div>
+              )}
+              {noteProvider && (
+                <div className={orderStyle.note}>
+                  <div className={orderStyle.noteTitle}>הערה לספק:</div>
+                  <div className={orderStyle.noteContent}>{noteProvider}</div>
+                </div>
+              )}
+            </div>
             <div className={orderStyle.footer}>
                 <div className={orderStyle.cancelOrder} onClick={handleCancelOrder}>ביטול הזמנה</div>
                 <div className={orderStyle.approveOrder} onClick={handleApproveOrder}>אישור הזמנה</div>
@@ -144,6 +158,20 @@ function Order({orderData, orderBy}) {
                 {products.map((product) => (
                     <Product key={product._id} productData={product} orderBy={orderBy} />
                 ))}
+            </div>
+            <div className={orderStyle.notes}>
+              {noteManager && (
+                <div className={orderStyle.note}>
+                  <div className={orderStyle.noteTitle}>הערה למנהל:</div>
+                  <div className={orderStyle.noteContent}>{noteManager}</div>
+                </div>
+              )}
+              {noteProvider && (
+                <div className={orderStyle.note}>
+                  <div className={orderStyle.noteTitle}>הערה לספק:</div>
+                  <div className={orderStyle.noteContent}>{noteProvider}</div>
+                </div>
+              )}
             </div>
           </>
         )}

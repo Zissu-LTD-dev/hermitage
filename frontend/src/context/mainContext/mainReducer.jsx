@@ -89,6 +89,7 @@ export const ADD_RETURNED_PRODUCT = "ADD_RETURNED_PRODUCT";
 export const REMOVE_RETURNED_PRODUCT = "REMOVE_RETURNED_PRODUCT";
 
 export const SET_SUMMARY = "SET_SUMMARY";
+export const UPDATE_SUMMARY = "UPDATE_SUMMARY";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
@@ -368,6 +369,8 @@ export const mainReducer = (state, action) => {
             totalOrderAmount: product.price * product.quantity,
             totalReturnQty: 0,
             totalReturnAmount: 0,
+            noteProvider: "",
+            noteManager: "",
           });
         }
       });
@@ -397,6 +400,8 @@ export const mainReducer = (state, action) => {
             totalOrderAmount: 0,
             totalReturnQty: product.quantity,
             totalReturnAmount: product.price * product.quantity,
+            noteProvider: "",
+            noteManager: "",
           });
         }
       });
@@ -405,6 +410,19 @@ export const mainReducer = (state, action) => {
 
 
       return { ...state, summary: summary };
+    
+    case UPDATE_SUMMARY:
+      let { index, noteProvider, noteManager } = action.payload;
+      let newSummary = state.summary.map((provider, i) => {
+        if (i === index) {
+          return { ...provider, noteProvider, noteManager };
+        } else {
+          return provider;
+        }
+      });
+
+      return { ...state, summary: newSummary };
+      
 
     case CLEAR_ORDER:
       return {

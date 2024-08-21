@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
 import summary from "../../../assets/css/manager/newOrder/OrderSummary.module.css";
+import { useMainContext } from '../../../context/mainContext/MainContext';
 
 import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
 
 
-function OrderSummary({ providers }) {
+function OrderSummary({ providers , index }) {
+  const { state, dispatch } = useMainContext();
+
   const [open, setOpen] = useState(false);
+  const [noteProvider, setNoteProvider] = useState("");
+  const [noteManager, setNoteManager] = useState("");
 
   const {
     providerName,
@@ -16,6 +21,10 @@ function OrderSummary({ providers }) {
     totalReturnQty,
     totalReturnAmount,
   } = providers;
+
+  useEffect(() => {
+    dispatch({ type: "UPDATE_SUMMARY", payload: { index, noteProvider, noteManager } });
+  }, [noteProvider, noteManager]);
 
   return (
     <>
@@ -95,6 +104,17 @@ function OrderSummary({ providers }) {
                 ))}
               </div>
             )}
+            
+            <div className={summary.notes}>
+              <div className={summary.provider_note}>
+                <label>הערה לספק : </label>
+                <input type="text" onChange={(e) => setNoteProvider(e.target.value)} />
+              </div>
+              <div className={summary.manager_note}>
+                <label>הערה למנהל : </label>
+                <input type="text" onChange={(e) => setNoteManager(e.target.value)} />
+              </div>
+            </div>
           </div>
         )}
       </div>

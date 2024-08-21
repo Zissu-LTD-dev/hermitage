@@ -120,3 +120,40 @@
     }
   }
 }
+
+.notes{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0 10px 0;
+  padding: 0 5px;
+  
+  .provider_note , .manager_note{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "IBM Plex Sans Hebrew", sans-serif;
+    padding: 0 10px;
+    margin: 0 0 15px 0;
+
+    label{
+      width: 10%;
+      text-align: right;
+    }
+    input{
+      width: 40%;
+      height: 30px;
+      padding: 5px;
+      border: 1px solid #be955d;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: 400;
+      font-family: "IBM Plex Sans Hebrew", sans-serif;
+      line-height: 23px;
+    }
+  }
+}

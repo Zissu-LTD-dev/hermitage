@@ -103,7 +103,7 @@ function DynamicContent() {
 
             {state.statusOrder.step === 4 &&
               state.summary.map((provider, i) => (
-                <OrderSummary key={`${i}${provider.providerNumber}`} providers={provider} />
+                <OrderSummary key={`${i}${provider.providerNumber}`} providers={provider} index={i} />
               ))}
           </div>
         </div>

@@ -45,7 +45,7 @@ function Sidebar({ branchName }) {
                 <div className={sidebar.icon}>
                   <img src={approvalsStatus} alt="approvals status" />
                 </div>
-                <span>סטטוס הזמנות</span>
+                <span>ניהול אישורי הזמנה</span>
               </div>
               <div onClick={() => changeStatus("branch management")}>
                 <div className={sidebar.icon}>
@@ -97,7 +97,7 @@ function Sidebar({ branchName }) {
                 <div className={sidebar.icon}>
                   <img src={approvalsStatus} alt="approvals status" />
                 </div>
-                <span>סטטוס הזמנות</span>
+                <span>ניהול אישורי הזמנה</span>
               </div>
               <div onClick={() => changeStatus("message")}>
                 <div className={sidebar.icon}>

@@ -12,11 +12,18 @@ function Search() {
     dispatch({ type: "SET_SEARCH", payload: search });
 
     if (search !== "") {
-      let results = allProducts.filter(
-        (product) =>
-          String(product.name).startsWith(String(search)) ||
-          String(product.barcode).startsWith(search)
-      );
+      let results = allProducts.filter((product) => {
+        const isLocationValid = product.location && 
+                                typeof product.location === 'object' && 
+                                Object.keys(product.location).length > 0;
+      
+        return (
+          isLocationValid &&
+          product.location.column > 0 &&
+          (String(product.name).startsWith(String(search)) ||
+           String(product.barcode).startsWith(search))
+        );
+      });
       dispatch({ type: "SET_SEARCH_RESULTS", payload: results });
     } else {
       dispatch({ type: "SET_SEARCH_RESULTS", payload: [] });

@@ -13,6 +13,11 @@ function OrderFilterProduct() {
     let displayFilters = state.displayFilters;
 
     for (let i = 0; i < allProducts.length; i++) {
+      const isLocationValid = allProducts[i].location && 
+                              typeof allProducts[i].location === 'object' && 
+                              Object.keys(allProducts[i].location).length > 0;
+
+      if (!isLocationValid || allProducts[i].location.column == 0 ) continue;
       if (
         displayFilters["קבוצת משנה"] &&
         displayFilters["קבוצת משנה"].includes(allProducts[i]["subGroupNumber"])

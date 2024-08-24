@@ -115,6 +115,16 @@ const createOrder = async (req, res) => {
   let mailPromises = orders.map(async (order) => {
     let branchNumber = order.branchNumber;
     let providerNumber = order.providerNumber;
+
+    // Check if have limited in this order
+    let products = order.orderLines.products;
+    let productsLimited = products.filter((product) => product.limited);
+    if (productsLimited.length > 0) {
+      console.log(
+        `Provider ${providerNumber} is blocked for branch ${branchNumber}`
+      );
+      return;
+    }
     
     // Check blocked providers only if branch is a single object
     if (!Array.isArray(branch) && branch.blockedProviders && branch.blockedProviders.includes(providerNumber)) {

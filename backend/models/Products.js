@@ -26,7 +26,11 @@ const ProductSchema = new mongoose.Schema({
   isBlocked: {
     type: Boolean,
     default: false
-  }
+  },
+  limited: {
+    type: Boolean,
+    default: false
+  },
 });
 
 

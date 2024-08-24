@@ -87,7 +87,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
+  margin-right: 20px;
   cursor: pointer;
 }
 .blockedIcon {
@@ -105,5 +105,13 @@
   background: #be955d 0% 0% no-repeat padding-box;
 }
 .unblockedText {
+  background: #082a3a 0% 0% no-repeat padding-box;
+}
+
+
+.limitedText{
+  background: #be955d 0% 0% no-repeat padding-box;
+}
+.unlimitedText{
   background: #082a3a 0% 0% no-repeat padding-box;
 }

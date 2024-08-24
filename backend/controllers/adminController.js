@@ -122,6 +122,23 @@ const updateBlockedProducts = async (req, res) => {
   }
 };
 
+// updateLimitedProducts
+const updateLimitedProducts = async (req, res) => {
+  let { barcode, limited } = req.body;
+  try {
+    const prod = await Product.findOne({
+      barcode: barcode,
+    });
+    prod.limited = limited;
+    await prod.save();
+    res.status(200).json({ message: "Updated Successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+
 // getAllOrders
 const getAllOrders = async (req, res) => {
   let orders = await Order.find({}).sort({ orderNumber: -1 });
@@ -410,6 +427,7 @@ module.exports = {
   updateBlockedProvidersByProvider,
   updateBlockedProvidersByBranch,
   updateBlockedProducts,
+  updateLimitedProducts,
   getAllOrders,
   updateOrder,
   getAllDocuments,

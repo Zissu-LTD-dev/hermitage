@@ -8,6 +8,7 @@ import img from "../../../assets/image/manager/0007434_-12-.png";
 function Product({ product, block,  checkedAll, added, removed }) {
   const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
+  const [limited, setLimited] = useState(product.limited);
 
   const [checked, setChecked] = useState(false);
   let { name, providerName, categoryName, barcode } = product;
@@ -38,6 +39,27 @@ function Product({ product, block,  checkedAll, added, removed }) {
       setChecked(false)
     }
   
+  const handleLimited = async (limit) => {
+      if (limit) {
+        setLimited(true);
+        dispatch({ type: "SET_LIMITED_PRODUCTS", payload: [barcode] });
+        let res = await apiRequest("admin/updateLimitedProducts", "PUT", {
+          barcode: barcode,
+          limited: true,
+        });
+        if (!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בהגבלת הפריט" } });
+        dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הפריט הוגבל" } });
+      } else {
+        setLimited(false);
+        dispatch({ type: "SET_UNLIMITED_PRODUCTS", payload: [barcode] });
+        let res = await apiRequest("admin/updateLimitedProducts", "PUT", {
+          barcode: barcode,
+          limited: false,
+        });
+        if (!res) return dispatchMain({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בביטול הגבלת הפריט" } });
+        dispatchMain({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הגבלת הפריט בוטלה" } });
+      }
+    }
 
   useEffect(() => {
     if (checked) added(barcode);
@@ -70,6 +92,21 @@ function Product({ product, block,  checkedAll, added, removed }) {
           <div className={productStyle.provider}>{providerName}</div>
           <div className={productStyle.category}>{categoryName}</div>
           <div className={productStyle.barcode}>{barcode}</div>
+          {!limited ? (
+            <div
+              className={productStyle.button + " " + productStyle.limitedText}
+              onClick={() => handleLimited(true)}
+            >
+              <div>הגבל פריט</div>
+            </div>
+          ) : (
+            <div
+              className={productStyle.button + " " + productStyle.unlimitedText}
+              onClick={() => handleLimited(false)}
+            >
+              <div>בטל הגבלה</div>
+            </div>
+          )}
           {!block ? (
             <div
               className={productStyle.button + " " + productStyle.blockedText}

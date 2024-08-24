@@ -39,6 +39,9 @@ export const SET_UNBLOCKED_PROVIDERS_BY_PROVIDER = "SET_UNBLOCKED_PROVIDERS_BY_P
 export const SET_BLOCKED_PROVIDERS_BY_BRANCH = "SET_BLOCKED_PROVIDERS_BY_BRANCH";
 export const SET_UNBLOCKED_PROVIDERS_BY_BRANCH = "SET_UNBLOCKED_PROVIDERS_BY_BRANCH";
 
+export const SET_LIMITED_PRODUCTS = "SET_LIMITED_PRODUCTS";
+export const SET_UNLIMITED_PRODUCTS = "SET_UNLIMITED_PRODUCTS";
+
 export const SET_BLOCKED_PRODUCTS = "SET_BLOCKED_PRODUCTS";
 export const SET_UNBLOCKED_PRODUCTS = "SET_UNBLOCKED_PRODUCTS";
 export const ADD_PRODUCT = "ADD_PRODUCT";
@@ -180,6 +183,25 @@ export const adminReducer = (state, action) => {
         return branch;
       });
       return { ...state, branches: newBranchesUnBl };
+    
+    case SET_LIMITED_PRODUCTS:
+      let newProductsLim = state.products.map((product) => {
+        if (action.payload.includes(product.barcode)) {
+          product.limited = true;
+        }
+        return product;
+      });
+      return { ...state, products: newProductsLim };
+
+    case SET_UNLIMITED_PRODUCTS:
+      let newProductsUnLim = state.products.map((product) => {
+        if (action.payload.includes(product.barcode)) {
+          product.limited = false;
+        }
+        return product;
+      });
+      return { ...state, products: newProductsUnLim };
+      
 
     case SET_BLOCKED_PRODUCTS:
       let newProductsBl = state.products.map((product) => {

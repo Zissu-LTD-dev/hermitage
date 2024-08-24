@@ -46,6 +46,9 @@ adminRouter.put("/updateBlockedProvidersByBranch", admin.updateBlockedProvidersB
 // updateBlockedProducts
 adminRouter.put("/updateBlockedProducts", admin.updateBlockedProducts);
 
+// updateLimitedProducts
+adminRouter.put("/updateLimitedProducts", admin.updateLimitedProducts);
+
 // /getOrders
 adminRouter.get("/getAllOrders", admin.getAllOrders);
 

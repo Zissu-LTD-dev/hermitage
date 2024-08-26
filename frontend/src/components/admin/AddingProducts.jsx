@@ -60,6 +60,24 @@ useEffect(() => {
               }
             });
           });
+        } else if (filters["מוצרים"]) {
+          products.filter((product) => {
+            filters["מוצרים"].map((filter) => {
+              if (filter) {
+                let config = product.branchTypeConfig.length > 0;
+                let found = product.branchTypeConfig.find((config) => config.location.column > 0) ? true : false;
+                if (found && config) {
+                    showProducts.push(product);
+                  }
+                } else if (!filter) {
+                  let config = product.branchTypeConfig.length == 0;
+                  let found = product.branchTypeConfig.find((config) => config.location.column > 0) ? true : false;
+                  if (!found || config) {
+                    showProducts.push(product);
+                  }
+                }
+              });
+            });
         } else {
           showProducts = [];
         }
@@ -89,6 +107,10 @@ useEffect(() => {
             title: "קבוצת משנה",
             details: state.subGroups,
           },
+          {
+            title: 'מוצרים',
+            details: [ { name: "פעילים", _id: "active", number: 1 }, { name: "לא פעילים", _id: "notActive", number: 0 } ]
+          }
         ],
       });
     }

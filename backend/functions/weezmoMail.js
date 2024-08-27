@@ -1,6 +1,16 @@
-// process.env.WEEZMO_KEY
-const sdk = require("@api/weezmo");
-sdk.auth(process.env.WEEZMO_KEY);
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+const FormData = require('form-data');
+const puppeteer = require('puppeteer');
+
+async function generatePDF(html, outputPath) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setContent(html, { waitUntil: 'networkidle0' });
+  await page.pdf({ path: outputPath, format: 'A4' });
+  await browser.close();
+}
 
 function generateEmailHtml(message) {
   const {
@@ -121,25 +131,47 @@ const weezmoMail = async (data) => {
   let { target, message, subjectLine, senderName } = data;
   const emailHtml = generateEmailHtml(message);
 
+  // Ensure 'uploads' directory exists
+  const uploadsDir = path.join(__dirname, 'orders');
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+  }
+
+  // Generate PDF
+  const pdfPath = path.join(uploadsDir, `order_${message.orderNumber}.pdf`);
+  await generatePDF(emailHtml, pdfPath);
+
+  // Create FormData and append fields
+  const form = new FormData();
+  form.append('Target', target);
+  form.append('Message', emailHtml);
+  form.append('SubjectLine', subjectLine);
+  form.append('SenderName', senderName);
+  form.append('AttachedFiles', fs.createReadStream(pdfPath));
+
+  // Set up the request configuration
+  const config = {
+    method: 'post',
+    url: 'https://api-core.weezmo.com/v3/External/SendEmailWithAttachments',
+    headers: {
+      'accept': 'application/json',
+      'XApiKey': `${process.env.WEEZMO_KEY}`
+    },
+    data: form
+  };
+
   try {
-    return sdk
-      .postV3ExternalSendemail({
-        Target: target,
-        Message: emailHtml,
-        SubjectLine: subjectLine,
-        SenderName: senderName,
-      })
-      .then(({ data }) => {
-        console.log(data);
-        return data;
-      })
-      .catch((err) => {
-        console.error(err);
-        return false;
-      });
+    const response = await axios(config);
+    console.log(JSON.stringify(response.data));
+    return response.data;
   } catch (error) {
     console.error(error);
     return false;
+  } finally {
+    // Clean up: remove the temporary PDF file
+    // fs.unlinkSync(pdfPath);
+    console.log('PDF generated at:', pdfPath);
+    
   }
 };
 

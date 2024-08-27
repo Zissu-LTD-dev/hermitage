@@ -1,7 +1,8 @@
 const excel = require("xlsx");
-const { Product } = require("../models");
+const { Product, BranchType } = require("../models");
 
 const downloadProducts = async (req, res) => {
+  let branchType = await BranchType.find({});
   let products = await Product.find({});
   let data = [];
   products.map((product) => {
@@ -15,6 +16,14 @@ const downloadProducts = async (req, res) => {
       "תאור - שם פריט": product.name,
       "תאור - כמות בארגז": product.packQuantity,
       "תאור - עלות קניה": product.price,
+    });
+    branchType.map((type) => {
+      let found = product.branchTypeConfig.find((config) => config.branchType == type.typeId);
+      if (found && found.location.column > 0) {
+        data[data.length - 1][type.name] = 1;
+      } else {
+        data[data.length - 1][type.name] = "";
+      }
     });
   });
   var wb = { Workbook: { Views: [{ RTL: true }] }, Sheets: {}, SheetNames: [] };

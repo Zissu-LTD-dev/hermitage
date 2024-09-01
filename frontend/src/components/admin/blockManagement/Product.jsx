@@ -3,15 +3,19 @@ import apiRequest from "../../../services/api.js"; //endpoint, method = "GET", p
 import productStyle from "../../../assets/css/admin/blockManagement/Product.module.css";
 import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
-import img from "../../../assets/image/manager/0007434_-12-.png";
+
+import imgProductDefault  from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 function Product({ product, block,  checkedAll, added, removed }) {
   const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
   const { state, dispatch } = useAdminContext();
   const [limited, setLimited] = useState(product.limited);
+  const [imageError, setImageError] = useState(false);
 
   const [checked, setChecked] = useState(false);
   let { name, providerName, categoryName, barcode } = product;
+  let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
 
     // blockedProducts
     const blockedProducts = async() => {
@@ -61,6 +65,10 @@ function Product({ product, block,  checkedAll, added, removed }) {
       }
     }
 
+  const handleImageError = () => {
+    setImageError(true);
+  }
+
   useEffect(() => {
     if (checked) added(barcode);
     else removed(barcode);
@@ -84,7 +92,7 @@ function Product({ product, block,  checkedAll, added, removed }) {
             <input type="checkbox" checked={checked} onChange={() => setChecked(!checked)}/>
           </div>
           <div className={productStyle.image}>
-            <img src={img} />
+            <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
           </div>
           <div className={productStyle.name}>{name}</div>
         </span>

@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 import productStyle from "../../../assets/css/admin/addingProducts/Product.module.css";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
-import img from "../../../assets/image/manager/0007434_-12-.png";
+import imgProductDefault  from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 function Product({product, deleteProduct, editProduct}) {
   const { state, dispatch } = useAdminContext();
   let {_id, barcode, name, providerName, category, subGroupName, price} = product;
   const [categoryName, setCategoryName] = useState("");
-  
+  const [imageError, setImageError] = useState(false);
+
+  let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
+
+  const handleImageError = () => {
+    setImageError(true);
+  }
 
   useEffect(() => {
     if(category) {
@@ -21,7 +28,7 @@ function Product({product, deleteProduct, editProduct}) {
       <div className={productStyle.main}>
         <span>
           <div className={productStyle.productImg}>
-            <img src={img} />
+            <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
           </div>
           <div className={productStyle.productName}>{name}</div>
         </span>

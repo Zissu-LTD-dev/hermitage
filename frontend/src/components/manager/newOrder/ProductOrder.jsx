@@ -2,16 +2,21 @@ import { useState, useEffect } from 'react';
 import product from '../../../assets/css/manager/newOrder/ProductOrder.module.css';
 import { useMainContext } from '../../../context/mainContext/MainContext';
 
-import imgProduct from '../../../assets/image/manager/0007434_-12-.png';
+import imgProductDefault  from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 
 const ProductOrder = ({productData}) => {
   const { state, dispatch } = useMainContext();
 
-    let { image, name, providerName, subGroupName,  barcode, packQuantity, price, isBlocked } = productData;
+    let {name, providerName, subGroupName,  barcode, packQuantity, price, isBlocked } = productData;
     let QuantityPerCase = packQuantity ? packQuantity : 1;
     let fixPrice = price ?`${price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}₪`: 'אין מחיר זמין';
+    let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
+    
     const [quantity, setQuantity] = useState(0);
+    const [imageError, setImageError] = useState(false);
+
     
       const onIncrease = () => {
         setQuantity(quantity + 1);
@@ -29,6 +34,10 @@ const ProductOrder = ({productData}) => {
 
       }
 
+    const handleImageError = () => {
+      setImageError(true);
+    }
+
     useEffect(() => {
       state.orderedProducts.forEach((product) => {
         if (product.barcode === barcode) {
@@ -39,7 +48,7 @@ const ProductOrder = ({productData}) => {
     
     return (
         <div className={product.product}>
-            <img src={image ? image : imgProduct } alt={name} />
+            <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
             <h2>{name}</h2>
             <p>כמות באריזה: {QuantityPerCase} </p>
             <p>{providerName}</p>

@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useMainContext } from "../../../context/mainContext/MainContext";
 import product from "../../../assets/css/manager/newOrder/ProductOrderSummary.module.css";
 
-import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
+import imgProductDefault  from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 const ProductOrder = ({ productData }) => {
   const { state, dispatch } = useMainContext();
-
-  let { image, name, providerName, subGroupName,  barcode, packQuantity, price, quantity } = productData;
+  const [imageError, setImageError] = useState(false);
+  let { name, providerName, subGroupName,  barcode, packQuantity, price, quantity } = productData;
+  let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
 
   const onIncrease = () => {
     dispatch({
@@ -30,11 +32,15 @@ const ProductOrder = ({ productData }) => {
     }
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  }
+
   return (
     <div className={product.product}>
       <span>
-        <img src={image ? image : imgProduct} alt="img" />
-        <span className={product.details}>
+      <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
+      <span className={product.details}>
           <h2>{name}</h2>
         </span>
       </span>

@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import product from "../../../assets/css/manager/newOrder/ProductReturn.module.css";
 import { useMainContext } from "../../../context/mainContext/MainContext";
 
-import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
+import imgProductDefault  from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 const ProductReturn = ({ productData }) => {
   const { state, dispatch } = useMainContext();
 
   // let { image, name, providerName, categoryName, barcode } = productData;
-  let { image, name, providerName, subGroupName,  barcode, packQuantity, price } = productData;
+  let { name, providerName, subGroupName,  barcode, packQuantity, price } = productData;
+  let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
 
+  const [imageError, setImageError] = useState(false);
   const [active, setActive] = useState(productData.quantity ? true : false);
   const [quantity, setQuantity] = useState(productData.quantity ? productData.quantity : 1);
 
@@ -34,6 +37,10 @@ const ProductReturn = ({ productData }) => {
       }
     }
   };
+
+  const handleImageError = () => {
+    setImageError(true);
+  }
 
   useEffect(() => {
     if(!active){
@@ -62,8 +69,8 @@ const ProductReturn = ({ productData }) => {
   return (
     <div className={product.main}>
       <span>
-        <img src={image ? image : imgProduct} alt={name} />
-        <h2>{name}</h2>
+      <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
+      <h2>{name}</h2>
       </span>
 
       <span>

@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import summary from "../../../assets/css/manager/newOrder/OrderSummary.module.css";
 import { useMainContext } from '../../../context/mainContext/MainContext';
 
-import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
+import imgProductDefault from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
-
-function OrderSummary({ providers , index }) {
+function OrderSummary({ providers, index }) {
   const { state, dispatch } = useMainContext();
 
   const [open, setOpen] = useState(false);
   const [noteProvider, setNoteProvider] = useState("");
   const [noteManager, setNoteManager] = useState("");
+  const [imageErrors, setImageErrors] = useState({});
 
   const {
     providerName,
@@ -22,9 +23,30 @@ function OrderSummary({ providers , index }) {
     totalReturnAmount,
   } = providers;
 
+  const handleImageError = (barcode) => {
+    setImageErrors(prev => ({ ...prev, [barcode]: true }));
+  }
+
   useEffect(() => {
     dispatch({ type: "UPDATE_SUMMARY", payload: { index, noteProvider, noteManager } });
   }, [noteProvider, noteManager]);
+
+
+  const renderProductLine = (line) => (
+    <div key={line.barcode} className={summary.order_line}>
+      <div className={summary.product_img}>
+        <img 
+          src={imageErrors[line.barcode] ? imgProductDefault : `${REACT_APP_PROJECT_IMAGES}${line.barcode}.png`} 
+          alt={line.name} 
+          onError={() => handleImageError(line.barcode)} 
+        />
+      </div>
+      <div className={summary.product_name}>{line.name}</div>
+      <div className={summary.product_barcode}>{line.barcode}</div>
+      <div className={summary.product_quantity}>{line.quantity} יח'</div>
+      <div className={summary.product_price}>{line.price.toFixed(2)} ש"ח</div>
+    </div>
+  );
 
   return (
     <>
@@ -58,50 +80,16 @@ function OrderSummary({ providers , index }) {
         </div>
         {open && (
           <div className={summary.body}>
-            {orderLines.quantity != 0  && (
+            {orderLines.quantity !== 0 && (
               <div className={summary.order_lines}>
                 <div className={summary.order_title}>הזמנות </div>
-                {orderLines.products.map((line, index) => (
-                  <div key={index} className={summary.order_line}>
-                    {/* img, name, barcode, quantity, price */}
-                    <div className={summary.product_img}>
-                      <img src={line.image ? line.image : imgProduct} alt='img' />
-                    </div>
-                    <div className={summary.product_name}>{line.name}</div>
-                    <div className={summary.product_barcode}>
-                      {line.barcode}
-                    </div>
-                    <div className={summary.product_quantity}>
-                      {line.quantity} יח'
-                    </div>
-                    <div className={summary.product_price}>
-                      {line.price.toFixed(2)} ש"ח
-                    </div>
-                  </div>
-                ))}
+                {orderLines.products.map(renderProductLine)}
               </div>
             )}
-            {returnLines.quantity != 0 && (
+            {returnLines.quantity !== 0 && (
               <div className={summary.order_lines}>
                 <div className={summary.order_title}>החזרות </div>
-                {returnLines.products.map((line, index) => (
-                  <div key={index} className={summary.order_line}>
-                    {/* img, name, barcode, quantity, price */}
-                    <div className={summary.product_img}>
-                      <img src={line.image ? line.image : imgProduct} alt='img' />
-                    </div>
-                    <div className={summary.product_name}>{line.name}</div>
-                    <div className={summary.product_barcode}>
-                      {line.barcode}
-                    </div>
-                    <div className={summary.product_quantity}>
-                      {line.quantity} יח'
-                    </div>
-                    <div className={summary.product_price}>
-                      {line.price.toFixed(2)} ש"ח
-                    </div>
-                  </div>
-                ))}
+                {returnLines.products.map(renderProductLine)}
               </div>
             )}
             

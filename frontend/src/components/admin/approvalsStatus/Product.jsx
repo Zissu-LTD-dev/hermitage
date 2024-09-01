@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import productStyle from "../../../assets/css/admin/approvalsStatus/Product.module.css";
-import imgProduct from "../../../assets/image/manager/0007434_-12-.png";
 import { useMainContext } from "../../../context/mainContext/MainContext";
+import imgProductDefault  from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
   const { state, dispatch } = useMainContext();
   const [product, setProduct] = useState(productData);
   let { _id, name, price, subGroupName, barcode, quantity } = product;
+  let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  }
 
   return (
     <>
       <div className={productStyle.main}>
         <span>
           <div className={productStyle.img}>
-            <img src={imgProduct} alt="img" />
+            <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
           </div>
           <div className={productStyle.name}>{name}</div>
         </span>

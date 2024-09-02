@@ -381,6 +381,14 @@ const editSubGroup = async (req, res) => {
   res.status(200).json({ message: "The sub group was successfully updated" });
 };
 
+// delete sub group
+const deleteSubGroup = async (req, res) => {
+  let subGroupID = req.params.id;
+  let currentSubGroup = await SubGroup.findById(subGroupID);
+  await currentSubGroup.deleteOne();
+  res.status(200).json({ message: "The sub group was successfully deleted" });
+}
+
 // add category
 const addCategory = async (req, res) => {
   let category = req.body;
@@ -409,6 +417,14 @@ const editCategory = async (req, res) => {
 
   res.status(200).json({ message: "The category was successfully updated" });
 };
+
+// delete category
+const deleteCategory = async (req, res) => {
+  let categoryID = req.params.id;
+  let currentCategory = await Category.findById(categoryID);
+  await currentCategory.deleteOne();
+  res.status(200).json({ message: "The category was successfully deleted" });
+}
 
 // add message to branchs
 const addMessageToBranchs = async (req, res) => {
@@ -458,8 +474,10 @@ module.exports = {
   addProvider,
   editProvider,
   addSubGroup,
+  deleteSubGroup,
   editSubGroup,
   addCategory,
   editCategory,
+  deleteCategory,
   addMessageToBranchs,
 };

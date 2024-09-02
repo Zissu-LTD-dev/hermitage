@@ -106,11 +106,17 @@ adminRouter.post("/addSubGroup", admin.addSubGroup);
 // edit sub group
 adminRouter.put("/editSubGroup/:id", admin.editSubGroup);
 
+// delete sub group
+adminRouter.delete("/deleteSubGroup/:id", admin.deleteSubGroup);
+
 // add category
 adminRouter.post("/addCategory", admin.addCategory);
 
 // edit category
 adminRouter.put("/editCategory/:id", admin.editCategory);
+
+// delete category
+adminRouter.delete("/deleteCategory/:id", admin.deleteCategory);
 
 // add message to branchs
 adminRouter.post("/addMessageToBranchs", admin.addMessageToBranchs);

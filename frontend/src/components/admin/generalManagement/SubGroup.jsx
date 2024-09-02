@@ -18,6 +18,7 @@ function SubGroup() {
 
   const [addSubGroup, setAddSubGroup] = useState(false);
   const [editSubGroup, setEditSubGroup] = useState(false);
+  const [currentSubGroup, setCurrentSubGroup] = useState([]);
 
   const addSubGroupHandler = async () => {
     let response = await apiRequestForForm("admin/addSubGroup", "POST", newSubGroup);
@@ -47,6 +48,28 @@ function SubGroup() {
     setEditSubGroup(false);
 
   }
+
+  const deleteSubGroupHandler = async (id) => {
+    let response = await apiRequestForForm(`admin/deleteSubGroup/${id}`, "DELETE");
+    if(response.error){
+      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "מחיקת הקבוצת משנה נכשלה"} });
+      return;
+    }else{
+      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "מחיקת הקבוצת משנה בוצעה "} });
+      let index = state.subGroups.findIndex(subGroup => subGroup._id === id);
+      state.subGroups.splice(index, 1);
+    }
+  }
+
+  useEffect(() => {
+    let tempSubGroups = [];
+    state.products.forEach(product => {
+      if(!tempSubGroups.find(subGroup => subGroup === product.subGroupNumber)){
+        product.subGroupNumber && tempSubGroups.push(product.subGroupNumber);
+      }
+    });
+    setCurrentSubGroup(tempSubGroups);
+  }, [state.products])
 
   useEffect(() => {
     setSubGroups(state.subGroups);
@@ -196,7 +219,11 @@ function SubGroup() {
                     >
                       עריכה
                     </div>
-                    {/* <div className={subGeneralManagement.listButton + " " + subGeneralManagement.deleteButton}>מחיקה</div> */}
+                    {!currentSubGroup.includes(subGroup.number) && (
+                      <div className={subGeneralManagement.listButton + " " + subGeneralManagement.deleteButton}
+                        onClick={() => deleteSubGroupHandler(subGroup._id)}
+                      >מחיקה</div>
+                      )}
                   </div>
                 </div>
                 ))

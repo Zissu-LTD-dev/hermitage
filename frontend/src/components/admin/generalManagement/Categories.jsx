@@ -18,6 +18,7 @@ function Category() {
 
   const [addCategory, setAddCategory] = useState(false);
   const [editCategory, setEditCategory] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState([]);
 
   const addCategoryHandler = async () => {
     let categoryNumberExists = state.categories.find(category => category.number === newCategory.number);
@@ -50,6 +51,30 @@ function Category() {
     setNewCategory(initialState);
     setEditCategory(false);
   }
+
+  // delete category
+  const deleteCategoryHandler = async (id) => {
+    let response = await apiRequestForForm(`admin/deleteCategory/${id}`, "DELETE");
+    if(response.error){
+      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "מחיקת הקטגוריה נכשלה"} });
+      return;
+    }else{
+      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "מחיקת הקטגוריה בוצעה "} });
+      let index = state.categories.findIndex(category => category._id === id);
+      state.categories.splice(index, 1);
+    }
+  }
+
+
+  useEffect(() => {
+    let tempCategories = [];
+    state.products.forEach(product => {
+      if(!tempCategories.find(category => category === product.category)){
+        product.category && tempCategories.push(product.category);
+      }
+    });
+    setCurrentCategory(tempCategories);
+  }, [state.products])
 
   useEffect(() => {
     // sort categories by number
@@ -201,6 +226,18 @@ function Category() {
                     >
                       עריכה
                     </div>
+                    {!currentCategory.includes(category.number) && (
+                      <div
+                        className={
+                          generalManagementStyles.listButton +
+                          " " +
+                          generalManagementStyles.deleteButton
+                        }
+                        onClick={() => deleteCategoryHandler(category._id)}
+                      >
+                        מחיקה
+                      </div>
+                      )}
                   </div>
                 </div>
                 ))

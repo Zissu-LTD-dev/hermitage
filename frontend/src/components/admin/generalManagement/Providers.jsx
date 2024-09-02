@@ -154,7 +154,7 @@ function Providers() {
                           key={index}
                           className={subGeneralManagement.formFieldsInput}
                         >
-                          <label>אימייל עבור סניף: {branch.branchName}</label>
+                          <label>אימייל עבור סניף: {branch.branchName} - {branch.branchNumber}</label>
                           <input
                             type="text"
                             // arr to str
@@ -251,7 +251,7 @@ function Providers() {
                           key={index}
                           className={subGeneralManagement.formFieldsInput}
                         >
-                          <label>אימייל עבור סניף: {branch.branchName}</label>
+                          <label>אימייל עבור סניף: {branch.branchName} - {branch.branchNumber}</label>
                           <input
                             type="text"
                             // arr to str

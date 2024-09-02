@@ -48,6 +48,7 @@ function Branches() {
     setBranches(newBranches);
     setNewBranch(initialBranch);
     setAddBranch(false);
+    window.location.reload();
   };
 
   // edit branch

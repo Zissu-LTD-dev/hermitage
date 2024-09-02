@@ -257,6 +257,18 @@ const newBranch = async (req, res) => {
   let branch = req.body;
   let newBranch = new Branch(branch);
   await newBranch.save();
+
+  //update new branch in all providers
+  let providers = await Provider.find({});
+  providers.forEach(async (provider) => {
+    provider.branchEmails.push({
+      branchNumber: branch.number,
+      branchName: branch.name,
+      emails: [],
+    });
+    await provider.save();
+  });
+
   res.status(200).json({ message: "The branch was successfully added" });
 };
 

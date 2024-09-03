@@ -45,7 +45,7 @@ function EditProduct({ product, cancel, save }) {
   useEffect(() => {
     setCategories(state.categories.sort((a, b) => a.number - b.number));
     setSubGroups(state.subGroups);
-    setTypeBranches(state.typeBranches);
+    setTypeBranches(state.typeBranches.sort((a, b) => a.typeId - b.typeId));
   }, []);
   return (
     <>

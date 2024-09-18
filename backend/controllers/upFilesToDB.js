@@ -97,7 +97,7 @@ const mainUpload = async (req, res) => {
       break;
 
     case "Setting pages and shelves":
-      let result6 = await locationProductsConfigUploadRow(sheet[5]);
+      let result6 = await locationProductsConfigUploadRow(sheet[0]);
       result6
         ? res.json({
             status: "ok",

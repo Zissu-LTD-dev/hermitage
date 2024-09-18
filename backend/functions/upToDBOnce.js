@@ -141,25 +141,27 @@ const subGroupUpload = async (sheet) => {
 
 // upload the location products config row
 const locationProductsConfigUploadRow = async (sheet) => {
+  let categories = await Category.find();
   try {
     let locationProductsConfig = sheet.map((row) => {
       row = Object.values(row);
+
+      let columnsName ;
+      if(row[3].includes("עמודה +")){
+        columnsName = "עמודה " + row[2];
+      }else if(row[3].includes("מקרר +")) {
+        columnsName = "מקרר " + row[2];
+      }else{
+        columnsName = row[3];
+      }
+
       return {
-        categoryNumber: row[6],
-        categoryName: row[7],
-        columnsNumber: row[8],
-        columnsName:
-          row[9] == "עמודה + המספר"
-            ? `עמודה ${row[8]}`
-            : row[9],
-        shelvesNumber: row[10],
-        shelvesName: row[11],
-        branchType1: row[0],
-        branchType2: row[1],
-        branchType3: row[2],
-        branchType4: row[3],
-        branchType5: row[4],
-        branchType6: row[5],
+        categoryNumber: row[0],
+        categoryName: categories.find((category) => category.number === row[0]).name,
+        columnsNumber: row[2],
+        columnsName: columnsName,
+        shelvesNumber: row[4],
+        shelvesName: row[5],
       };
     });
 

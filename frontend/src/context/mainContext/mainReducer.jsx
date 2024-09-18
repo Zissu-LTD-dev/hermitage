@@ -236,10 +236,7 @@ export const mainReducer = (state, action) => {
         if ( newColumns.some( (newColumn) => newColumn.columnsNumber === column.columnsNumber ) ) return;
         
         newColumns.push({
-          columnsName:
-            state.activeCategory == 5
-              ? `מקרר ${column.columnsNumber}`
-              : column.columnsName,
+          columnsName: column.columnsName,
           columnsNumber: column.columnsNumber,
           shelves: [],
         });

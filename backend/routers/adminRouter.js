@@ -118,6 +118,18 @@ adminRouter.put("/editCategory/:id", admin.editCategory);
 // delete category
 adminRouter.delete("/deleteCategory/:id", admin.deleteCategory);
 
+// get locationProductsConfig
+adminRouter.get("/locationProductsConfig", admin.locationProductsConfig);
+
+// add locationProductsConfig
+adminRouter.post("/addLocationProductsConfig", admin.addLocationProductsConfig);
+
+// edit locationProductsConfig
+adminRouter.put("/editLocationProductsConfig/:id", admin.editLocationProductsConfig);
+
+// delete locationProductsConfig
+adminRouter.delete("/deleteLocationProductsConfig/:id", admin.deleteLocationProductsConfig);
+
 // add message to branchs
 adminRouter.post("/addMessageToBranchs", admin.addMessageToBranchs);
 

@@ -1,0 +1,182 @@
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.headers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.scrollableContainer {
+    max-height: 458px; /* גובה מקסימלי לרשימה */
+    overflow-y: auto;  /* גלילה פנימית */
+}
+
+.row, .headers {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr) auto auto;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+    background-color: #F5F5F5;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.row span{
+    text-align: right;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.input {
+    width: 90%;
+    padding: 5px 10px;
+    border: 1px solid #0A4F5A;
+    border-radius: 5px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+}
+
+.addButton {
+    background-color: #0A4F5A;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.addButton:hover {
+    background-color: #0c6270;
+}
+
+.editButton, .saveButton {
+    background-color: #0A4F5A;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.editButton:hover, .saveButton:hover {
+    background-color: #0c6270;
+}
+
+.deleteButton {
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.deleteButton:hover {
+    background-color: #ff3333;
+}
+
+.cancelButton {
+    background-color: #d49d10;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.cancelButton:hover {
+    background-color: #e0a82b;
+}
+
+.confirmDelete{
+    /* זה צריך להיות מוצג מתחת לשורה יפה ומיושר לשמאל */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.confirmDeleteButton{
+    background-color: #FF0000;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.cancelDeleteButton{
+    background-color: #d49d10;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.emptyButton{
+    background-color: #f5f5f5;
+    color: #f5f5f5;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.row:last-child {
+    animation: fadeIn 0.5s ease-in-out;
+}

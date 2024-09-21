@@ -6,6 +6,7 @@ const {
   BranchType,
   SubGroup,
   Category,
+  LocationProductsConfig_row,
   Notifications,
   Obligations,
   Document,
@@ -426,6 +427,52 @@ const deleteCategory = async (req, res) => {
   res.status(200).json({ message: "The category was successfully deleted" });
 }
 
+// get locationProductsConfig
+const locationProductsConfig = async (req, res) => {
+  let locationProductsConfig = await LocationProductsConfig_row.find({});
+  res.status(200).json({ locationProductsConfig: locationProductsConfig });
+};
+
+// add locationProductsConfig
+const addLocationProductsConfig = async (req, res) => {
+  let locationProductsConfig = req.body;
+  let newLocationProductsConfig = new LocationProductsConfig_row(
+    locationProductsConfig
+  );
+  await newLocationProductsConfig.save();
+  res
+    .status(200)
+    .json({ message: "The locationProductsConfig was successfully added" });
+};
+
+// edit locationProductsConfig
+const editLocationProductsConfig = async (req, res) => {
+  let locationProductsConfigID = req.params.id;
+  let locationProductsConfig = req.body;
+
+  let currentLocationProductsConfig = await LocationProductsConfig_row.findById(
+    locationProductsConfigID
+  );
+  await currentLocationProductsConfig.updateOne(locationProductsConfig);
+  await currentLocationProductsConfig.save();
+
+  res
+    .status(200)
+    .json({ message: "The locationProductsConfig was successfully updated" });
+};
+
+// delete locationProductsConfig
+const deleteLocationProductsConfig = async (req, res) => {
+  let locationProductsConfigID = req.params.id;
+  let currentLocationProductsConfig = await LocationProductsConfig_row.findById(
+    locationProductsConfigID
+  );
+  await currentLocationProductsConfig.deleteOne();
+  res
+    .status(200)
+    .json({ message: "The locationProductsConfig was successfully deleted" });
+};
+
 // add message to branchs
 const addMessageToBranchs = async (req, res) => {
   let { branchesList, message } = req.body;
@@ -479,5 +526,9 @@ module.exports = {
   addCategory,
   editCategory,
   deleteCategory,
+  locationProductsConfig,
+  addLocationProductsConfig,
+  editLocationProductsConfig,
+  deleteLocationProductsConfig,
   addMessageToBranchs,
 };

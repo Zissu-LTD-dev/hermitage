@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import locationProductsConfigStyles from "../../../assets/css/admin/generalManagement/LocationProductsConfig.module.css";
@@ -8,11 +8,39 @@ function LocationProductsConfig() {
     const { state: mainState, dispatch: mainDispatch } = useMainContext();
     const { state, dispatch } = useAdminContext();
 
+    const newRowRef = useRef(null);
+
     const [locationProductsConfig, setLocationProductsConfig] = useState([]);
     const [categories, setCategories] = useState([]);
     const [editingIndex, setEditingIndex] = useState(null);
     const [editedData, setEditedData] = useState({});
     const [confirmationDelete, setConfirmationDelete] = useState(null);
+    const [isAddingNew, setIsAddingNew] = useState(false);
+    const [newData, setNewData] = useState({
+        categoryNumber: "",
+        categoryName: "",
+        columnsNumber: "",
+        columnsName: "",
+        shelvesNumber: "",
+        shelvesName: "",
+    });
+
+    const sortLocationProductsConfig = (data) => {
+        return data.sort((a, b) => {
+          // קודם כל, מיון לפי מספר קטגוריה
+          if (a.categoryNumber !== b.categoryNumber) {
+            return a.categoryNumber - b.categoryNumber;
+          }
+          
+          // אם מספרי הקטגוריה זהים, מיין לפי מספר עמודה
+          if (a.columnsNumber !== b.columnsNumber) {
+            return a.columnsNumber - b.columnsNumber;
+          }
+          
+          // אם גם מספרי העמודה זהים, מיין לפי מספר מדף
+          return a.shelvesNumber.localeCompare(b.shelvesNumber, undefined, {numeric: true, sensitivity: 'base'});
+        });
+      };
 
     const getLocationProductsConfig = async () => {
         let response = await apiRequestForForm("admin/locationProductsConfig", "GET");
@@ -21,6 +49,7 @@ function LocationProductsConfig() {
             return;
         } else {
             mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הנתונים נטענו בהצלחה" } });
+            response.locationProductsConfig = sortLocationProductsConfig(response.locationProductsConfig);
             setLocationProductsConfig(response.locationProductsConfig);
         }
     };
@@ -45,10 +74,14 @@ function LocationProductsConfig() {
 
     const handleSave = async (index) => {
         // validate editedData
+        if (editedData.categoryNumber === "" || editedData.columnsNumber === "" || editedData.columnsName === "") {
+            mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "יש למלא את כל השדות" } });
+            return;
+        }
         editedData.categoryName = categories.find((category) => category.number == editedData.categoryNumber)?.name;
         if (editedData.shelvesNumber.match(/^[0-9]+$/) == null || parseInt(editedData.shelvesNumber) <= 0) {
             editedData.shelvesNumber = "פתוח";
-        }else{
+        } else {
             let shelvesString = "";
             for (let i = 1; i <= parseInt(editedData.shelvesNumber); i++) {
                 shelvesString += "," + i;
@@ -59,7 +92,7 @@ function LocationProductsConfig() {
         
         let categoryList = locationProductsConfig.filter((item) => item.categoryNumber == editedData.categoryNumber);
         let columnsList = categoryList.filter((item) => item.columnsNumber == editedData.columnsNumber);
-        if(columnsList.length > 0){
+        if (columnsList.length > 0) {
             mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "מספר העמודה כבר קיים בקטגוריה זו" } });
             return;
         }
@@ -73,42 +106,86 @@ function LocationProductsConfig() {
             mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הנתונים עודכנו בהצלחה" } });
         }
 
-        const updatedConfig = [...locationProductsConfig];
-        updatedConfig[index] = editedData;
+        const updatedConfig = sortLocationProductsConfig([...locationProductsConfig.filter(item => item._id !== editedData._id), editedData]);
         setLocationProductsConfig(updatedConfig);
         setEditingIndex(null);
         setEditedData({});
     };
 
     const handleDelete = async (index) => {
-        // TODO: send delete request to the server
-        // let response = await apiRequestForForm("admin/deleteLocationProductsConfig/" + locationProductsConfig[index]._id, "DELETE");
-        // if (response.error) {
-        //     mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "שגיאה במחיקת הנתונים" } });
-        //     return;
-        // } else {
-        //     mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הנתונים נמחקו בהצלחה" } });
-        // }
+        let response = await apiRequestForForm("admin/deleteLocationProductsConfig/" + locationProductsConfig[index]._id, "DELETE");
+        if (response.error) {
+            mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "שגיאה במחיקת הנתונים" } });
+            return;
+        } else {
+            mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הנתונים נמחקו בהצלחה" } });
+        }
         setConfirmationDelete(null);
         const updatedConfig = locationProductsConfig.filter((_, i) => i !== index);
         setLocationProductsConfig(updatedConfig);
     };
 
     const handleAdd = () => {
-        const newEntry = {
-            _id: { $oid: new Date().toISOString() },
+        setIsAddingNew(true);
+        setNewData({
             categoryNumber: "",
             categoryName: "",
             columnsNumber: "",
             columnsName: "",
             shelvesNumber: "",
             shelvesName: "",
-            v: 0,
-        };
-        setLocationProductsConfig([...locationProductsConfig, newEntry]);
-        setEditingIndex(locationProductsConfig.length);
-        setEditedData(newEntry);
+        });
     };
+
+    const handleSaveNew = async () => {
+        // Validate newData
+        if (newData.categoryNumber === "" || newData.columnsNumber === "" || newData.columnsName === "") {
+            mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "יש למלא את כל השדות" } });
+            return;
+        }
+        newData.categoryName = categories.find((category) => category.number == newData.categoryNumber)?.name;
+        if (newData.shelvesNumber.match(/^[0-9]+$/) == null || parseInt(newData.shelvesNumber) <= 0) {
+            newData.shelvesNumber = "פתוח";
+        } else {
+            let shelvesString = "";
+            for (let i = 1; i <= parseInt(newData.shelvesNumber); i++) {
+                shelvesString += "," + i;
+            }
+            shelvesString = shelvesString.substring(1);
+            newData.shelvesNumber = shelvesString;
+        }
+        
+        let categoryList = locationProductsConfig.filter((item) => item.categoryNumber == newData.categoryNumber);
+        let columnsList = categoryList.filter((item) => item.columnsNumber == newData.columnsNumber);
+        if (columnsList.length > 0) {
+            mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "מספר העמודה כבר קיים בקטגוריה זו" } });
+            return;
+        }
+
+        // Send newData to the server
+        let response = await apiRequestForForm("admin/addLocationProductsConfig", "POST", newData);
+        if (response.error) {
+            mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "שגיאה בהוספת הנתונים" } });
+            return;
+        } else {
+            mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הנתונים נוספו בהצלחה" } });
+        }
+
+        const updatedConfig = sortLocationProductsConfig([...locationProductsConfig, { ...newData, _id: response.newId }]);
+        setLocationProductsConfig(updatedConfig);        setIsAddingNew(false);
+        setNewData({});
+    };
+
+    const handleCancelNew = () => {
+        setIsAddingNew(false);
+        setNewData({});
+    };
+
+    useEffect(() => {
+        if (isAddingNew && newRowRef.current) {
+            newRowRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [isAddingNew]);
 
     return (
         <div className={locationProductsConfigStyles.container}>
@@ -118,16 +195,79 @@ function LocationProductsConfig() {
             <div className={locationProductsConfigStyles.headers}>
                 <span>מספר קטגוריה</span>
                 <span>שם קטגוריה</span>
-                <span>מספר עמודות</span>
-                <span>שם עמודות</span>
+                <span>מספר עמודה</span>
+                <span>שם עמודה</span>
                 <span>מספר מדפים</span>
                 <span>שם מדפים</span>
                 <button className={locationProductsConfigStyles.emptyButton}>ערוך</button>
-                <button className={locationProductsConfigStyles.emptyButton}>מחק        </button>
+                <button className={locationProductsConfigStyles.emptyButton}>מחק</button>
             </div>
 
             {/* רשימת המוצרים */}
             <div className={locationProductsConfigStyles.scrollableContainer}>
+                {isAddingNew && (
+                    <>
+                    <div ref={newRowRef} className={locationProductsConfigStyles.headers}>
+                        <h3>
+                            הוספת עמודה חדשה : 
+                        </h3>
+                    </div>
+                    <div className={locationProductsConfigStyles.row}>
+                        <input
+                            disabled
+                            type="text"
+                            value={newData.categoryNumber}
+                            onChange={(e) => setNewData({ ...newData, categoryNumber: e.target.value })}
+                            placeholder="מספר קטגוריה"
+                            className={locationProductsConfigStyles.input}
+                            ></input>
+
+                        <select
+                            value={newData.categoryNumber}
+                            onChange={(e) => setNewData({ ...newData, categoryNumber: e.target.value })}
+                            className={locationProductsConfigStyles.input}
+                        >
+                            <option value="">בחר קטגוריה</option>
+                            {categories.map((category) => (
+                                <option key={category.number} value={category.number}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+                        <input
+                            type="text"
+                            value={newData.columnsNumber}
+                            onChange={(e) => setNewData({ ...newData, columnsNumber: e.target.value })}
+                            placeholder="מספר עמודה"
+                            className={locationProductsConfigStyles.input}
+                        />
+                        <input
+                            type="text"
+                            value={newData.columnsName}
+                            onChange={(e) => setNewData({ ...newData, columnsName: e.target.value })}
+                            placeholder="שם עמודה"
+                            className={locationProductsConfigStyles.input}
+                        />
+                        <input
+                            type="text"
+                            value={newData.shelvesNumber}
+                            onChange={(e) => setNewData({ ...newData, shelvesNumber: e.target.value })}
+                            placeholder="מספר מדפים"
+                            className={locationProductsConfigStyles.input}
+                        />
+                        <input
+                            type="text"
+                            value={newData.shelvesName}
+                            onChange={(e) => setNewData({ ...newData, shelvesName: e.target.value })}
+                            placeholder="שם מדפים"
+                            className={locationProductsConfigStyles.input}
+                        />
+                        <button onClick={handleSaveNew} className={locationProductsConfigStyles.saveButton}>שמור</button>
+                        <button onClick={handleCancelNew} className={locationProductsConfigStyles.cancelButton}>בטל</button>
+                    </div>
+                    <hr />
+                    </>
+                )}
                 {locationProductsConfig.map((item, index) => (
                     <div key={item._id} className={locationProductsConfigStyles.row}>
                         {editingIndex === index ? (
@@ -143,7 +283,7 @@ function LocationProductsConfig() {
                                     value={editedData.categoryNumber}
                                     onChange={(e) => setEditedData({ ...editedData, categoryNumber: e.target.value })}
                                     className={locationProductsConfigStyles.input}
-                                    >
+                                >
                                     {categories.map((category) => (
                                         <option key={category.number} value={category.number}>
                                             {category.name}

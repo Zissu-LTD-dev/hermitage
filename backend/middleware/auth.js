@@ -41,7 +41,12 @@ const authManager = async (req, res, next) => {
 
 const checkAuth = async (req, res) => {
   const token = req.headers.authorization ? req.headers.authorization.split(" ")[1] : null;
-  const jwtSecret = req.headers.role == "admin" ? process.env.JWT_SECRET_ADMIN : process.env.JWT_SECRET_MANAGER;
+  console.log(req.headers);
+  let role = req.headers.role; 
+  let isAdmin = role == "admin" || role == "subAdmin" || role == "master";
+  console.log({isAdmin: isAdmin});
+  
+  const jwtSecret = isAdmin ? process.env.JWT_SECRET_ADMIN : process.env.JWT_SECRET_MANAGER;
   if (!token) return res.status(401).json({ msg: "You are not authorized please login" });
 
   try {

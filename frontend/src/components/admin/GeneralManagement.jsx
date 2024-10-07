@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import generalManagement from "../../assets/css/admin/GeneralManagement.module.css";
+import { useMainContext } from "../../context/mainContext/MainContext";
 
 import Users from "./generalManagement/Users";
 import Branches from "./generalManagement/Branches";
@@ -10,16 +11,27 @@ import Categories from "./generalManagement/Categories";
 import Locationproductsconfig from "./generalManagement/Locationproductsconfig";
 
 function GeneralManagement() {
+  const { state, dispatch } = useMainContext();
+
+    const [isMaster, setIsMaster] = useState(false);
     const [status, setStatus] = useState();
+
+    useEffect(() => {
+        if (state.userInfo.role === "master") {
+          setIsMaster(true);
+        }
+    }, [state.userInfo.role]);
+
   return (
     <>
       <div className={generalManagement.main}>
         <div className={generalManagement.header}>
           <div className={generalManagement.title}>ניהול כללי</div>
           <div className={generalManagement.headerButtons}>
-            <div className={generalManagement.headerButton}
+            {  isMaster &&
+              <div className={generalManagement.headerButton}
                 onClick={() => setStatus("users")}
-            >משתמשים</div>
+            >משתמשים</div>}
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("branches")}
             >סניפים</div>

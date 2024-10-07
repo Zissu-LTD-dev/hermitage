@@ -40,7 +40,7 @@ function Login() {
     await localStorage.setItem("user", JSON.stringify(user));
     await dispatch({ type: "SET_USER_INFO", payload: user });
 
-    if (user.role === "admin" || user.role === "subAdmin") {
+    if (user.role === "admin" || user.role === "subAdmin" || user.role === "master") {
       navigate("/admin");
     } else {
       navigate("/manager");

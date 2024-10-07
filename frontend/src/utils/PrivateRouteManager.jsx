@@ -33,7 +33,7 @@ function PrivateRouteManager({ children }) {
 
   if (loading) return
   if (isAuthenticated && role == "manager") return children;
-  if (isAuthenticated && role == "admin") return <Navigate to="/admin" replace />;
+  if (isAuthenticated && role == "admin" || role == "subAdmin" || role == "master" ) return <Navigate to="/admin" replace />;
   return <Navigate to="/" replace />;
 }
 

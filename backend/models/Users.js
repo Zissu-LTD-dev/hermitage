@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
   password: String, // encrypted
   role: {
     type: String,
-    enum: ["manager", "subAdmin", "admin"],
+    enum: ["manager", "subAdmin", "admin", "master"],
   },
   branch: Number,
 });

@@ -178,11 +178,11 @@ function Users() {
                       setNewUser({ ...newUser, role: e.target.value })
                     }
                   >
-                    {/* ["manager", "subAdmin", "admin"], */}
-                    <option value="">בחר תפקיד</option>
+                    <option value="" disabled >בחר תפקיד</option>
                     <option value="manager">מנהל סניף</option>
-                    <option value="subAdmin">מנהל מישני</option>
-                    <option value="admin">מנהל ראשי</option>
+                    <option value="subAdmin">מנהל תפעול</option>
+                    <option value="admin">מנהל אדמין</option>
+                    <option value="master">מאסטר</option>
                   </select>
                 </div>
                 {newUser.role === "manager" && (
@@ -276,10 +276,13 @@ function Users() {
                         setNewUser({ ...newUser, role: e.target.value })
                       }
                     >
-                      <option value="">בחר תפקיד</option>
+                      <option value=""
+                        disabled
+                      >בחר תפקיד</option>
                       <option value="manager">מנהל סניף</option>
-                      <option value="subAdmin">מנהל מישני</option>
-                      <option value="admin">מנהל ראשי</option>
+                      <option value="subAdmin">מנהל תפעול</option>
+                      <option value="admin">מנהל אדמין</option>
+                      <option value="master">מאסטר</option>
                     </select>
                   </div>
                   {newUser.role === "manager" && (
@@ -342,12 +345,14 @@ function Users() {
                         {user.email}
                       </div>
                       <div className={subGeneralManagement.listDetail}>
-                        {user.role
+                        {user.role 
                           ? user.role === "manager"
                             ? "מנהל סניף"
                             : user.role === "subAdmin"
-                            ? "מנהל מישני"
-                            : "מנהל ראשי"
+                            ? "מנהל תפעול"
+                            : user.role === "admin"
+                            ? "מנהל אדמין"
+                            : "מאסטר"
                           : ""}
                       </div>
                       <div className={subGeneralManagement.listDetail}>

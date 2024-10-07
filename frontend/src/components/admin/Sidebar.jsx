@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import sidebar from "../../assets/css/admin/Sidebar.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
@@ -13,9 +14,12 @@ import generalManagement from "../../assets/image/admin/manage.svg";
 
 import connectedBy from "../../assets/image/manager/Layer3.svg";
 
-function Sidebar({ branchName }) {
+function Sidebar() {
   const { state, dispatch } = useMainContext();
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
+
+  const [branchName, setBranchName] = useState("");
+  const [isMaster, setIsMaster] = useState(false);
 
   const logoutHandler = () => {
     dispatch({ type: "CLEAR_STATE" });
@@ -28,12 +32,27 @@ function Sidebar({ branchName }) {
     dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
   };
 
+  useEffect(() => {
+    if (state.userInfo.role === "master" || state.userInfo.role === "admin") {
+      setIsMaster(true);
+    }
+    if (state.userInfo.role === "subAdmin") {
+      setBranchName("מנהל תפעול");
+    }
+    if (state.userInfo.role === "admin") {
+      setBranchName("מנהל אדמין");
+    }
+    if (state.userInfo.role === "master") {
+      setBranchName("מאסטר");
+    }
+  }, [state.userInfo.role]);
+
   return (
     <>
       <div className={sidebar.sidebar}>
         <div className={sidebar.logo}></div>
         <div className={sidebar.menu}>
-          {state.userInfo.role === "admin" && (
+          {isMaster && (
             <>
               <div onClick={() => changeStatus("order execution")}>
                 <div className={sidebar.icon}>
@@ -85,7 +104,7 @@ function Sidebar({ branchName }) {
               </div>
             </>
           )}
-          {state.userInfo.role === "subAdmin" && (
+          {!isMaster && (
             <>
               <div onClick={() => changeStatus("order execution")}>
                 <div className={sidebar.icon}>

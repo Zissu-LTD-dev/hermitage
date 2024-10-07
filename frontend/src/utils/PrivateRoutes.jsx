@@ -40,7 +40,7 @@ function PrivateRoute({ children}) {
 
   if (loading && !isAuthenticated) return 
   if (isAuthenticated) {
-    if (role == "admin") return <Navigate to="/admin" replace />;
+    if (role == "admin" || role == "subAdmin" || role == "master") return <Navigate to="/admin" replace />;
     if (role == "manager") return <Navigate to="/manager" replace />;
   }
   if (!isAuthenticated) return  children;

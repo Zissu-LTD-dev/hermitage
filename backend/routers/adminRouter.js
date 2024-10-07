@@ -103,6 +103,9 @@ adminRouter.post("/addUser", admin.addUser);
 // edit user
 adminRouter.put("/editUser/:id", admin.editUser);
 
+// delete user
+adminRouter.delete("/deleteUser/:id", admin.deleteUser);
+
 // add provider
 adminRouter.post("/addProvider", admin.addProvider);
 

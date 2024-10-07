@@ -132,12 +132,17 @@
     justify-content: space-between;
 }
 .listDetail{
-    max-width: 33%;
+    width: 33%;
     font-size: 20px;
     font-weight: 500;
     font-family: 'Poppins', sans-serif;
     margin: 5px 0;
+    padding: 0 10px;
 }
+.listDetail:last-child{
+    text-align: left;
+}
+
 .listButtons{
     display: flex;
     justify-content: start;

@@ -349,6 +349,14 @@ const editUser = async (req, res) => {
     .json({ message: "The user was successfully updated", error: false });
 };
 
+// delete user
+const deleteUser = async (req, res) => {
+  let userID = req.params.id;
+  let currentUser = await User.findById(userID);
+  await currentUser.deleteOne();
+  res.status(200).json({ message: "The user was successfully deleted" });
+};
+
 // add provider
 const addProvider = async (req, res) => {
   let provider = req.body;
@@ -548,6 +556,7 @@ module.exports = {
   allUsers,
   addUser,
   editUser,
+  deleteUser,
   addProvider,
   editProvider,
   addSubGroup,

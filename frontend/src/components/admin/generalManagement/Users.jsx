@@ -17,6 +17,7 @@ function Users() {
   };
 
   const [users, setUsers] = useState([]);
+  const [currentUsers, setCurrentUsers] = useState([]);
   const [branches, setBranches] = useState([]);
   const [newUser, setNewUser] = useState(initialData);
 
@@ -84,6 +85,26 @@ function Users() {
     });
   };
 
+  // delete user
+  const handleDeleteUser = async (id) => {
+    let user = apiRequestForForm(`admin/deleteUser/${id}`, "DELETE");
+    user.then((data) => {
+      if (data.error) {
+        mainDispatch({
+          type: "SET_SHOW_ERROR",
+          payload: { show: true, message: "שגיאה במחיקת המשתמש" },
+        });
+        return;
+      }
+      mainDispatch({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: true, message: "המשתמש נמחק בהצלחה" },
+      });
+      let updatedUsers = users.filter((user) => user._id !== id);
+      setUsers(updatedUsers);
+    });
+  };
+
   useEffect(() => {
     if (state.branches) {
       setBranches(state.branches);
@@ -95,6 +116,7 @@ function Users() {
     users.then((data) => {
       setUsers(data.users);
     });
+    setCurrentUsers(mainState.userInfo);
   }, []);
 
   return (
@@ -350,15 +372,18 @@ function Users() {
                       >
                         עריכה
                       </div>
-                      {/* <div
-                      className={
-                        subGeneralManagement.listButton +
-                        " " +
-                        subGeneralManagement.deleteButton
-                      }
-                    >
-                      מחיקה
-                    </div> */}
+                      {currentUsers._id !== user._id && (
+                        <div
+                          onClick={() => handleDeleteUser(user._id)}
+                          className={
+                            subGeneralManagement.listButton +
+                            " " +
+                            subGeneralManagement.deleteButton
+                          }
+                        >
+                          מחיקה
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}

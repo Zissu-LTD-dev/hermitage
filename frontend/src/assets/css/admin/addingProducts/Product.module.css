@@ -72,3 +72,7 @@ color: #082A3A;
     background: transparent url('../../../image/admin/Iconfeather-trash-2.svg') 50% 50% no-repeat padding-box;
     cursor: pointer;
 }
+
+.blocked{
+    background: #ffebeb;
+}

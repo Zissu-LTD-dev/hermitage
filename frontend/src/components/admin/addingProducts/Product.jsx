@@ -6,7 +6,7 @@ const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 function Product({product, deleteProduct, editProduct}) {
   const { state, dispatch } = useAdminContext();
-  let {_id, barcode, name, providerName, category, subGroupName, price} = product;
+  let {_id, barcode, name, providerName, category, subGroupName, price, isBlocked} = product;
   const [categoryName, setCategoryName] = useState("");
   const [imageError, setImageError] = useState(false);
 
@@ -25,7 +25,7 @@ function Product({product, deleteProduct, editProduct}) {
 
   return (
     <>
-      <div className={productStyle.main}>
+      <div className={productStyle.main + " " + (isBlocked ? productStyle.blocked : "")}>
         <span>
           <div className={productStyle.productImg}>
             <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />

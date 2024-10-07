@@ -170,8 +170,9 @@ function LocationProductsConfig() {
         } else {
             mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "הנתונים נוספו בהצלחה" } });
         }
+        newData._id = response._id;
 
-        const updatedConfig = sortLocationProductsConfig([...locationProductsConfig, { ...newData, _id: response.newId }]);
+        const updatedConfig = sortLocationProductsConfig([...locationProductsConfig, newData]);
         setLocationProductsConfig(updatedConfig);        setIsAddingNew(false);
         setNewData({});
     };

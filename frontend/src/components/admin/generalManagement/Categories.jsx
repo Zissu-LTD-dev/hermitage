@@ -32,6 +32,7 @@ function Category() {
       return;
     }else{
       mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הוספת קטגוריה בוצעה בהצלחה"} });
+      newCategory._id = response._id;
       state.categories.push(newCategory);
       state.categories.sort((a, b) => a.number - b.number);
     }

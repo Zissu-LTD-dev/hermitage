@@ -42,6 +42,7 @@ function Providers() {
         type: "SET_SHOW_SUCCESS",
         payload: { show: true, message: "הספק נוסף בהצלחה" },
       });
+      newProvider._id = response._id;
       state.providers.push(newProvider);
       state.providers.sort((a, b) => a.number - b.number);
       setAddProvider(false);

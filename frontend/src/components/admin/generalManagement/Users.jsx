@@ -27,7 +27,6 @@ function Users() {
   const handleAddUser = async () => {
     let user = apiRequestForForm("admin/addUser", "POST", newUser);
     user.then((data) => {
-      console.log(data);
       if (!data) {
         mainDispatch({
           type: "SET_SHOW_ERROR",
@@ -40,6 +39,7 @@ function Users() {
           type: "SET_SHOW_SUCCESS",
           payload: { show: true, message: "המשתמש נוסף בהצלחה" },
         });
+        newUser._id = data._id;
         setUsers([...users, newUser]);
         setAddUser(false);
         setNewUser(initialData);

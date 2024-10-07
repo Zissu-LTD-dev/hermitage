@@ -222,7 +222,7 @@ const addProduct = async (req, res) => {
   let product = req.body;
   let newProduct = new Product(product);
   await newProduct.save();
-  res.status(200).json({ message: "The product was successfully added" });
+  res.status(200).json({ message: "The product was successfully added", _id: newProduct._id });
 };
 
 // edit product
@@ -269,7 +269,7 @@ const newBranch = async (req, res) => {
     await provider.save();
   });
 
-  res.status(200).json({ message: "The branch was successfully added" });
+  res.status(200).json({ message: "The branch was successfully added", _id: newBranch._id });
 };
 
 // edit branch
@@ -332,7 +332,7 @@ const addUser = async (req, res) => {
   await newUser.save();
   res
     .status(200)
-    .json({ message: "The user was successfully added", error: false });
+    .json({ message: "The user was successfully added", error: false , _id: newUser._id});
 };
 
 // edit user
@@ -363,7 +363,7 @@ const addProvider = async (req, res) => {
       .json({ message: "The provider was successfully added" });
   }
 
-  res.status(200).json({ message: "The provider already exists", error: true });
+  res.status(200).json({ message: "The provider already exists", error: true , _id: newProvider._id});
 };
 
 // edit provider
@@ -394,7 +394,7 @@ const addSubGroup = async (req, res) => {
 
   res
     .status(200)
-    .json({ message: "The sub group already exists", error: true });
+    .json({ message: "The sub group already exists", error: true , _id: newSub._id});
 };
 
 // edit sub group
@@ -431,7 +431,7 @@ const addCategory = async (req, res) => {
       .json({ message: "The category was successfully added" });
   }
 
-  res.status(200).json({ message: "The category already exists", error: true });
+  res.status(200).json({ message: "The category already exists", error: true , _id: newCategory._id});
 };
 
 // edit category
@@ -469,7 +469,7 @@ const addLocationProductsConfig = async (req, res) => {
   await newLocationProductsConfig.save();
   res
     .status(200)
-    .json({ message: "The locationProductsConfig was successfully added" });
+    .json({ message: "The locationProductsConfig was successfully added" , _id: newLocationProductsConfig._id});
 };
 
 // edit locationProductsConfig

@@ -27,6 +27,7 @@ function SubGroup() {
       return;
     }else{
       mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הוספת קבוצת משנה בוצעה בהצלחה"} });
+      newSubGroup._id = response._id;
       state.subGroups.push(newSubGroup);
       state.subGroups.sort((a, b) => a.number - b.number);
     }

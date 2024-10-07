@@ -112,6 +112,9 @@ adminRouter.post("/addProvider", admin.addProvider);
 // edit provider
 adminRouter.put("/editProvider/:id", admin.editProvider);
 
+// delete provider
+adminRouter.delete("/deleteProvider/:id", admin.deleteProvider);
+
 // add sub group
 adminRouter.post("/addSubGroup", admin.addSubGroup);
 

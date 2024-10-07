@@ -386,6 +386,14 @@ const editProvider = async (req, res) => {
   res.status(200).json({ message: "The provider was successfully updated" });
 };
 
+// delete provider
+const deleteProvider = async (req, res) => {
+  let providerID = req.params.id;
+  let currentProvider = await Provider.findById(providerID);
+  await currentProvider.deleteOne();
+  res.status(200).json({ message: "The provider was successfully deleted" });
+};
+
 // add sub group
 const addSubGroup = async (req, res) => {
   let subGroup = req.body;
@@ -397,7 +405,7 @@ const addSubGroup = async (req, res) => {
     await newSub.save();
     return res
       .status(200)
-      .json({ message: "The sub group was successfully added" });
+      .json({ message: "The sub group was successfully added" , _id: newSub._id});
   }
 
   res
@@ -436,10 +444,10 @@ const addCategory = async (req, res) => {
     await newCategory.save();
     return res
       .status(200)
-      .json({ message: "The category was successfully added" });
+      .json({ message: "The category was successfully added" , _id: newCategory._id});
   }
 
-  res.status(200).json({ message: "The category already exists", error: true , _id: newCategory._id});
+  res.status(200).json({ message: "The category already exists", error: true });
 };
 
 // edit category
@@ -559,6 +567,7 @@ module.exports = {
   deleteUser,
   addProvider,
   editProvider,
+  deleteProvider,
   addSubGroup,
   deleteSubGroup,
   editSubGroup,

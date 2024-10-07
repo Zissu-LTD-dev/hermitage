@@ -23,7 +23,6 @@ function GeneralManagement() {
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("branches")}
             >סניפים</div>
-            {/* סוגי סניפים */}
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("typesbranches")}
             >סוגי סניפים</div>
@@ -38,7 +37,7 @@ function GeneralManagement() {
             >קטגוריות</div>
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("locationproductsconfig")}
-            >הגדרת סניפים</div>
+            >הגדרת קטגוריות</div>
           </div>
         </div>
         <div className={generalManagement.body}>

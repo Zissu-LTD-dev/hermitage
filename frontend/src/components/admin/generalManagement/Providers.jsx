@@ -17,6 +17,7 @@ function Providers() {
   };
 
   const [providers, setProviders] = useState([]);
+  const [emptyProviders , setEmptyProviders] = useState([]);
   const [branches, setBranches] = useState([]);
   const [newProvider, setNewProvider] = useState(initialProviders);
   const [emailBranch, setEmailBranch] = useState("");
@@ -72,6 +73,25 @@ function Providers() {
     }
   };
 
+  // delete provider
+  const deleteProviderHandler = async (id) => {
+    let response = await apiRequestForForm(`admin/deleteProvider/${id}`, "delete");
+    if (response.error) {
+      mainDispatch({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "שגיאה במחיקת הספק" },
+      });
+      return;
+    } else {
+      mainDispatch({
+        type: "SET_SHOW_SUCCESS",
+        payload: { show: true, message: "הספק נמחק בהצלחה" },
+      });
+      state.providers = state.providers.filter((provider) => provider._id !== id);
+      setProviders(state.providers);
+    }
+  };
+
   useEffect(() => {
     if (branches.length && !newProvider.branchEmails.length) {
       let branchEmails = branches.map((branch) => {
@@ -93,6 +113,22 @@ function Providers() {
       setBranches(state.branches);
     }
   }, [state.providers, state.branches]);
+
+  useEffect(() => {
+    let tempProviders = [];
+    state.products.forEach((product) => {
+      if (!tempProviders.find((provider) => provider === product.providerNumber)) {
+        product.providerNumber && tempProviders.push(product.providerNumber);
+      }
+    });
+    let emptyProviders = [];
+    state.providers.forEach((provider) => {
+      if (!tempProviders.find((tempProvider) => tempProvider === provider.number)) {
+        emptyProviders.push(provider);
+      }
+    });
+    setEmptyProviders(emptyProviders);
+  }, [state.products]);
 
   return (
     <>
@@ -331,7 +367,12 @@ function Providers() {
                     >
                       עריכה
                     </div>
-                    {/* <div className={subGeneralManagement.listButton + " " + subGeneralManagement.deleteButton}>מחיקה</div> */}
+                    { emptyProviders.find((emptyProvider) => emptyProvider.number === provider.number) &&
+                      <div
+                        onClick={() => deleteProviderHandler(provider._id)}
+                        className={subGeneralManagement.listButton + " " + subGeneralManagement.deleteButton}
+                        >מחיקה</div>
+                      }
                   </div>
                 </div>
               ))}

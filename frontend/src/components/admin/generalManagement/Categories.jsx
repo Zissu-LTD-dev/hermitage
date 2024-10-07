@@ -80,8 +80,6 @@ function Category() {
   }, [state.products])
 
   useEffect(() => {
-    // sort categories by number
-    state.categories.sort((a, b) => a.number - b.number);
     setCategories(state.categories);
   }, [state.categories])
 

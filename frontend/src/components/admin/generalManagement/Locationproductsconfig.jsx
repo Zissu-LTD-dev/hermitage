@@ -91,7 +91,7 @@ function LocationProductsConfig() {
         }
         
         let categoryList = locationProductsConfig.filter((item) => item.categoryNumber == editedData.categoryNumber);
-        let columnsList = categoryList.filter((item) => item.columnsNumber == editedData.columnsNumber);
+        let columnsList = categoryList.filter((item) => item.columnsNumber == editedData.columnsNumber && item._id !== editedData._id);
         if (columnsList.length > 0) {
             mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "מספר העמודה כבר קיים בקטגוריה זו" } });
             return;
@@ -197,8 +197,8 @@ function LocationProductsConfig() {
                 <span>שם קטגוריה</span>
                 <span>מספר עמודה</span>
                 <span>שם עמודה</span>
-                <span>מספר מדפים</span>
-                <span>שם מדפים</span>
+                <span>מספר מדף</span>
+                <span></span>
                 <button className={locationProductsConfigStyles.emptyButton}>ערוך</button>
                 <button className={locationProductsConfigStyles.emptyButton}>מחק</button>
             </div>
@@ -252,16 +252,15 @@ function LocationProductsConfig() {
                             type="text"
                             value={newData.shelvesNumber}
                             onChange={(e) => setNewData({ ...newData, shelvesNumber: e.target.value })}
-                            placeholder="מספר מדפים"
+                            placeholder="מספר מדף"
                             className={locationProductsConfigStyles.input}
                         />
-                        <input
+                        <input 
                             type="text"
-                            value={newData.shelvesName}
-                            onChange={(e) => setNewData({ ...newData, shelvesName: e.target.value })}
-                            placeholder="שם מדפים"
-                            className={locationProductsConfigStyles.input}
-                        />
+                            value=''
+                            disabled
+                            style={{border: 'none'}}
+                        ></input>
                         <button onClick={handleSaveNew} className={locationProductsConfigStyles.saveButton}>שמור</button>
                         <button onClick={handleCancelNew} className={locationProductsConfigStyles.cancelButton}>בטל</button>
                     </div>
@@ -310,10 +309,10 @@ function LocationProductsConfig() {
                                 />
                                 <input
                                     type="text"
-                                    value={editedData.shelvesName}
-                                    onChange={(e) => setEditedData({ ...editedData, shelvesName: e.target.value })}
-                                    className={locationProductsConfigStyles.input}
-                                />
+                                    value=''
+                                    disabled
+                                    style={{border: 'none'}}
+                                ></input>
                                 <button onClick={() => handleSave(index)} className={locationProductsConfigStyles.saveButton}>שמור</button>
                                 <button onClick={handleCancel} className={locationProductsConfigStyles.cancelButton}>בטל</button>
                             </>
@@ -324,7 +323,7 @@ function LocationProductsConfig() {
                                 <span>{item.columnsNumber}</span>
                                 <span>{item.columnsName}</span>
                                 <span>{item.shelvesNumber}</span>
-                                <span>{item.shelvesName}</span>
+                                <span></span>
                                 <button onClick={() => handleEdit(index)} className={locationProductsConfigStyles.editButton}>ערוך</button>
                                 <button onClick={() => setConfirmationDelete(index)} className={locationProductsConfigStyles.deleteButton}>מחק</button>
                                 {confirmationDelete === index && (

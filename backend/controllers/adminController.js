@@ -139,7 +139,6 @@ const updateLimitedProducts = async (req, res) => {
   }
 };
 
-
 // getAllOrders
 const getAllOrders = async (req, res) => {
   let orders = await Order.find({}).sort({ orderNumber: -1 });
@@ -285,6 +284,34 @@ const editBranch = async (req, res) => {
   res.status(200).json({ message: "The branch was successfully updated" });
 };
 
+// add type branch
+const addTypeBranch = async (req, res) => {
+  let typeBranch = req.body;
+  let newTypeBranch = new BranchType(typeBranch);
+  await newTypeBranch.save();
+  res.status(200).json({ message: "The type branch was successfully added", _id: newTypeBranch._id });
+};
+
+// edit type branch
+const editTypeBranch = async (req, res) => {
+  let typeBranchID = req.params.id;
+  let typeBranch = req.body;
+
+  let currentTypeBranch = await BranchType.findById(typeBranchID);
+  await currentTypeBranch.updateOne(typeBranch);
+  await currentTypeBranch.save();
+
+  res.status(200).json({ message: "The type branch was successfully updated" });
+};
+
+// delete type branch
+const deleteTypeBranch = async (req, res) => {
+  let typeBranchID = req.params.id;
+  let currentTypeBranch = await BranchType.findById(typeBranchID);
+  await currentTypeBranch.deleteOne();
+  res.status(200).json({ message: "The type branch was successfully deleted" });
+};
+
 // get all users
 const allUsers = async (req, res) => {
   let users = await User.find({}).select("-password");
@@ -388,7 +415,7 @@ const deleteSubGroup = async (req, res) => {
   let currentSubGroup = await SubGroup.findById(subGroupID);
   await currentSubGroup.deleteOne();
   res.status(200).json({ message: "The sub group was successfully deleted" });
-}
+};
 
 // add category
 const addCategory = async (req, res) => {
@@ -425,7 +452,7 @@ const deleteCategory = async (req, res) => {
   let currentCategory = await Category.findById(categoryID);
   await currentCategory.deleteOne();
   res.status(200).json({ message: "The category was successfully deleted" });
-}
+};
 
 // get locationProductsConfig
 const locationProductsConfig = async (req, res) => {
@@ -515,6 +542,9 @@ module.exports = {
   allBranches,
   newBranch,
   editBranch,
+  addTypeBranch,
+  editTypeBranch,
+  deleteTypeBranch,
   allUsers,
   addUser,
   editUser,

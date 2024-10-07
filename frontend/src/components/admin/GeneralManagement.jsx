@@ -3,6 +3,7 @@ import generalManagement from "../../assets/css/admin/GeneralManagement.module.c
 
 import Users from "./generalManagement/Users";
 import Branches from "./generalManagement/Branches";
+import BranchType from "./generalManagement/BranchType";
 import Providers from "./generalManagement/Providers";
 import SubGroup from "./generalManagement/SubGroup";
 import Categories from "./generalManagement/Categories";
@@ -22,6 +23,10 @@ function GeneralManagement() {
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("branches")}
             >סניפים</div>
+            {/* סוגי סניפים */}
+            <div className={generalManagement.headerButton}
+                onClick={() => setStatus("typesbranches")}
+            >סוגי סניפים</div>
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("providers")}
             >ספקים</div>
@@ -39,6 +44,7 @@ function GeneralManagement() {
         <div className={generalManagement.body}>
             {status == "users" && <Users />}
             {status == "branches" && <Branches />}
+            {status == "typesbranches" && <BranchType />}
             {status == "providers" && <Providers />}
             {status == "subgroup" && <SubGroup />}
             {status == "categories" && <Categories />}

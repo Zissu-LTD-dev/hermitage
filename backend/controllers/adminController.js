@@ -19,12 +19,12 @@ const {
 //   InitialData
 const initialData = async (req, res) => {
   try {
-    const categories = await Category.find({});
-    const products = await Product.find({});
-    const providers = await Provider.find({});
-    const subGroups = await SubGroup.find({});
-    const branches = await Branch.find({});
-    const typeBranches = await BranchType.find({});
+    const categories = await Category.find({}).sort({ number: 1 });
+    const products = await Product.find({}).sort({ barcode: 1 });
+    const providers = await Provider.find({}).sort({ number: 1 });
+    const subGroups = await SubGroup.find({}).sort({ number: 1 });
+    const branches = await Branch.find({}).sort({ number: 1 });
+    const typeBranches = await BranchType.find({}).sort({ typeId: 1 });
 
     res.status(200).json({
       categories,
@@ -43,7 +43,7 @@ const initialData = async (req, res) => {
 const updateBlockedProvidersByProvider = async (req, res) => {
   let { providerNumber, branchesList, blocked } = req.body;
   try {
-    const branches = await Branch.find({});
+    const branches = await Branch.find({}).sort({ number: 1 });
 
     branches.forEach(async (branch) => {
       if (branchesList.includes(branch._id.toString())) {
@@ -189,7 +189,7 @@ const updateOrder = async (req, res) => {
 
 // getAllDocuments
 const getAllDocuments = async (req, res) => {
-  let documents = await Document.find({});
+  let documents = await Document.find({}).sort({ date: -1 });
   res.status(200).json({ documents: documents });
 };
 
@@ -248,7 +248,7 @@ const deleteProduct = async (req, res) => {
 
 // GET all branches
 const allBranches = async (req, res) => {
-  let branches = await Branch.find({});
+  let branches = await Branch.find({}).sort({ number: 1 });
   res.status(200).json({ branches: branches });
 };
 

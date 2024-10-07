@@ -34,6 +34,7 @@ function BranchType() {
       mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הוספת סוג סניף בוצעה בהצלחה"} });
       newBranchType._id = response._id;
       state.typeBranches.push(newBranchType);
+      state.typeBranches.sort((a, b) => a.typeId - b.typeId);
     }
     setNewBranchType(initialState);
     setAddBranchType(false);
@@ -48,6 +49,7 @@ function BranchType() {
       mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "עריכת סוג סניף בוצעה בהצלחה"} });
       let index = state.typeBranches.findIndex(branchType => branchType._id === newBranchType._id);
       state.typeBranches[index] = newBranchType;
+      state.typeBranches.sort((a, b) => a.typeId - b.typeId);
     }
     setNewBranchType(initialState);
     setEditBranchType(false);

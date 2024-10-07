@@ -42,6 +42,8 @@ function Providers() {
         type: "SET_SHOW_SUCCESS",
         payload: { show: true, message: "הספק נוסף בהצלחה" },
       });
+      state.providers.push(newProvider);
+      state.providers.sort((a, b) => a.number - b.number);
       setAddProvider(false);
       setNewProvider(initialProviders);
     }
@@ -61,7 +63,9 @@ function Providers() {
         type: "SET_SHOW_SUCCESS",
         payload: { show: true, message: "הספק עודכן בהצלחה" },
       });
-      setProviders([...providers.filter((provider) => provider._id !== newProvider._id), newProvider]);
+      state.providers = [...state.providers.filter((provider) => provider._id !== newProvider._id), newProvider];
+      state.providers.sort((a, b) => a.number - b.number);
+      setProviders(state.providers);
       setEditProvider(false);
       setNewProvider(initialProviders);
     }

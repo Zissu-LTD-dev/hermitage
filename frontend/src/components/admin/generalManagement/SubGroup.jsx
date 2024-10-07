@@ -23,11 +23,12 @@ function SubGroup() {
   const addSubGroupHandler = async () => {
     let response = await apiRequestForForm("admin/addSubGroup", "POST", newSubGroup);
     if(response.error){
-      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "הוספת סניף נכשלה"} });
+      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "הוספת קבוצת משנה נכשלה"} });
       return;
     }else{
-      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הוספת סניף בוצעה בהצלחה"} });
+      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הוספת קבוצת משנה בוצעה בהצלחה"} });
       state.subGroups.push(newSubGroup);
+      state.subGroups.sort((a, b) => a.number - b.number);
     }
     setNewSubGroup(initialState);
     setAddSubGroup(false);
@@ -37,12 +38,13 @@ function SubGroup() {
   const editSubGroupHandler = () => {
     let response = apiRequestForForm(`admin/editSubGroup/${newSubGroup._id}`, "PUT", newSubGroup);
     if(response.error){
-      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "עריכת סניף נכשלה"} });
+      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "עריכת קבוצת משנה נכשלה"} });
       return;
     }else{
-      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "עריכת סניף בוצעה בהצלחה"} });
+      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "עריכת קבוצת משנה בוצעה בהצלחה"} });
       let index = state.subGroups.findIndex(subGroup => subGroup._id === newSubGroup._id);
       state.subGroups[index] = newSubGroup;
+      state.subGroups.sort((a, b) => a.number - b.number);
     }
     setNewSubGroup(initialState);
     setEditSubGroup(false);

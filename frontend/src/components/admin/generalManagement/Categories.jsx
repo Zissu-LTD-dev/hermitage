@@ -33,6 +33,7 @@ function Category() {
     }else{
       mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הוספת קטגוריה בוצעה בהצלחה"} });
       state.categories.push(newCategory);
+      state.categories.sort((a, b) => a.number - b.number);
     }
     setNewCategory(initialState);
     setAddCategory(false);
@@ -47,6 +48,7 @@ function Category() {
       mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "עריכת קטגוריה בוצעה בהצלחה"} });
       let index = state.categories.findIndex(category => category._id === newCategory._id);
       state.categories[index] = newCategory;
+      state.categories.sort((a, b) => a.number - b.number);
     }
     setNewCategory(initialState);
     setEditCategory(false);

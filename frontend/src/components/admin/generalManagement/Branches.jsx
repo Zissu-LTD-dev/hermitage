@@ -71,6 +71,9 @@ function Branches() {
       return branch;
     });
     newBranches.sort((a, b) => a.number - b.number);
+    state.branches = newBranches;
+    mainState.branches = newBranches;
+
     setBranches(newBranches);
     setNewBranch(initialBranch);
     setEditBranch(false);

@@ -118,6 +118,12 @@ function Sidebar() {
                 </div>
                 <span>ניהול אישורי הזמנה</span>
               </div>
+              <div onClick={() => changeStatus("branch management")}>
+                <div className={sidebar.icon}>
+                  <img src={branchManagement} alt="branch management" />
+                </div>
+                <span>ניהול סניפים וספקים</span>
+              </div>
               <div onClick={() => changeStatus("message")}>
                 <div className={sidebar.icon}>
                   <img src={chat} alt="message" />

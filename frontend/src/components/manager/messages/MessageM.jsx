@@ -59,7 +59,8 @@ function MessageM() {
               </div>
               <p className={messageStyle.message__popup__item__date}>
                 נשלחה ב: {msg.date.split(",")[0]} <br />
-                בשעה: {msg.date.split(",")[1]}
+                בשעה: {msg.date.split(",")[1]} <br />
+                שולח : {msg.sender}
               </p>
             </div>
           ))}

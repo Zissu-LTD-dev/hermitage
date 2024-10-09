@@ -63,6 +63,11 @@
     border: 1px solid #707070;
     margin: 5px;
 }
+
+.checkbox div:first-child{
+    margin-left: 90%;
+}
+
 .message{
     display: flex;
     flex-direction: column;

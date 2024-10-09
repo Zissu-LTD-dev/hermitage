@@ -40,6 +40,7 @@ function Message() {
     let res = await apiRequestForForm("admin/addMessageToBranchs", "POST", {
       branchesList: selectBranches,
       message,
+      sender: state.userInfo.username,
     });
     if (!res) {
       dispatch({ type: "SET_SHOW_LOADER", payload: false });

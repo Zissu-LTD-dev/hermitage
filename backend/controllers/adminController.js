@@ -518,7 +518,7 @@ const deleteLocationProductsConfig = async (req, res) => {
 
 // add message to branchs
 const addMessageToBranchs = async (req, res) => {
-  let { branchesList, message } = req.body;
+  let { branchesList, message,  sender } = req.body;
   try {
     const branches = await Branch.find({});
     branches.forEach(async (branch) => {
@@ -527,6 +527,7 @@ const addMessageToBranchs = async (req, res) => {
         branch.messages.push({
           id: idForMessage,
           contact: message,
+          sender: sender,
           date: new Date().toLocaleString(),
           read: false,
         });

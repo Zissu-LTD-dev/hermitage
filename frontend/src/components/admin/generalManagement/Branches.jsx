@@ -9,9 +9,11 @@ function Branches() {
   const { state, dispatch } = useAdminContext();
 
   const initialBranch = {
-    EDInumber: null,
-    number: null,
+    EDInumber: "",
+    number: "",
     name: "",
+    companyName: "",
+    HP: "",
     phone: "",
     email: "",
     address: "",
@@ -36,12 +38,18 @@ function Branches() {
       newBranch
     );
     if (!response) {
-      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "הוספת סניף נכשלה"} });
+      mainDispatch({
+        type: "SET_SHOW_ERROR",
+        payload: { show: true, message: "הוספת סניף נכשלה" },
+      });
       return;
     }
-    mainDispatch({ type: "SET_SHOW_SUCCESS", payload: {show: true, message: "הסניף נוסף בהצלחה"} });
+    mainDispatch({
+      type: "SET_SHOW_SUCCESS",
+      payload: { show: true, message: "הסניף נוסף בהצלחה" },
+    });
     newBranch._id = response._id;
-    
+
     let newBranches = [...branches, newBranch];
     newBranches.sort((a, b) => a.number - b.number);
     setBranches(newBranches);
@@ -79,6 +87,11 @@ function Branches() {
   };
 
   useEffect(() => {
+    setEditBranch(false);
+    setNewBranch(initialBranch);
+  }, [addBranch]);
+
+  useEffect(() => {
     if (state.branches.length > 0 && state.typeBranches.length > 0) {
       let sortedBranches = state.branches.sort((a, b) => a.number - b.number);
       setBranches(sortedBranches);
@@ -100,6 +113,21 @@ function Branches() {
             </div>
           </div>
         </div>
+        {!addBranch && !editBranch && (
+          <div className={subGeneralManagement.list}>
+          <div className={subGeneralManagement.listDetails}>
+            <div className={subGeneralManagement.listDetail}>מספר סניף</div>
+            <div className={subGeneralManagement.listDetail}>EDI-num</div>
+            <div className={subGeneralManagement.listDetail}>ח.פ</div>
+            <div className={subGeneralManagement.listDetail}>שם חברה</div>
+            <div className={subGeneralManagement.listDetail}>טלפון</div>
+            <div className={subGeneralManagement.listDetail}>מייל</div>
+            <div className={subGeneralManagement.listDetail}>כתובת</div>
+            <div className={subGeneralManagement.listDetail}>עיר</div>
+            <div className={subGeneralManagement.listDetail}>סוג סניף</div>
+          </div>
+        </div>
+        )}
         <div className={subGeneralManagement.body}>
           {addBranch && (
             <>
@@ -124,7 +152,10 @@ function Branches() {
                       type="text"
                       value={newBranch.EDInumber}
                       onChange={(e) =>
-                        setNewBranch({ ...newBranch, EDInumber: e.target.value })
+                        setNewBranch({
+                          ...newBranch,
+                          EDInumber: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -135,6 +166,29 @@ function Branches() {
                       value={newBranch.name}
                       onChange={(e) =>
                         setNewBranch({ ...newBranch, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>ח.פ:</label>
+                    <input
+                      type="text"
+                      value={newBranch.HP}
+                      onChange={(e) =>
+                        setNewBranch({ ...newBranch, HP: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>שם חברה:</label>
+                    <input
+                      type="text"
+                      value={newBranch.companyName}
+                      onChange={(e) =>
+                        setNewBranch({
+                          ...newBranch,
+                          companyName: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -251,7 +305,10 @@ function Branches() {
                       type="text"
                       value={newBranch.EDInumber}
                       onChange={(e) =>
-                        setNewBranch({ ...newBranch, EDInumber: e.target.value })
+                        setNewBranch({
+                          ...newBranch,
+                          EDInumber: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -262,6 +319,29 @@ function Branches() {
                       value={newBranch.name}
                       onChange={(e) =>
                         setNewBranch({ ...newBranch, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>ח.פ:</label>
+                    <input
+                      type="text"
+                      value={newBranch.HP}
+                      onChange={(e) =>
+                        setNewBranch({ ...newBranch, HP: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>שם חברה:</label>
+                    <input
+                      type="text"
+                      value={newBranch.companyName}
+                      onChange={(e) =>
+                        setNewBranch({
+                          ...newBranch,
+                          companyName: e.target.value,
+                        })
                       }
                     />
                   </div>
@@ -364,22 +444,29 @@ function Branches() {
                   </div>
                   <div className={subGeneralManagement.listDetails}>
                     <div className={subGeneralManagement.listDetail}>
-                      מספר סניף: {branch.number}
+                      {branch.number}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
-                     EDI-num :  {branch.EDInumber ? branch.EDInumber : "אין edi "}
+                      {branch.EDInumber ? branch.EDInumber : "אין edi "}
+                    </div>
+                    {/* add HP end conpanyName */}
+                    <div className={subGeneralManagement.listDetail}>
+                      {branch.HP ? branch.HP : "אין ח.פ"}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
-                      {branch.phone ? branch.phone : "ללא טלפון"}
+                      {branch.companyName ? branch.companyName : "אין שם חברה"}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
-                      {branch.email ? branch.email : "ללא אימייל"}
+                      {branch.phone ? branch.phone : "אין טלפון"}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
-                      {branch.address ? branch.address : "ללא כתובת"}
+                      {branch.email ? branch.email : "אין אימייל"}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
-                      {branch.city ? branch.city : "ללא עיר"}
+                      {branch.address ? branch.address : "אין כתובת"}
+                    </div>
+                    <div className={subGeneralManagement.listDetail}>
+                      {branch.city ? branch.city : "אין עיר"}
                     </div>
                     <div className={subGeneralManagement.listDetail}>
                       {branch.branchTypeName}

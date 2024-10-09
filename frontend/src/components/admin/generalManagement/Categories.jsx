@@ -41,6 +41,12 @@ function Category() {
   }
 
   const editCategoryHandler = () => {
+    let categoryNumberExists = categories.find(category => category.number == newCategory.number && category._id !== newCategory._id);
+    if(categoryNumberExists){
+        mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "מספר קטגוריה כבר קיים"} });
+        return;
+    }
+
     let response = apiRequestForForm(`admin/editCategory/${newCategory._id}`, "PUT", newCategory);
     if(response.error){
       mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "עריכת קטגוריה נכשלה"} });
@@ -171,6 +177,18 @@ function Category() {
                       }
                     />
                   </div>
+                  {!currentCategory.includes(newCategory.number) && (
+                    <div className={generalManagementStyles.formFieldsInput}>
+                      <label>מספר קטגוריה</label>
+                      <input
+                        type="number"
+                        value={newCategory.number}
+                        onChange={(e) =>
+                          setNewCategory({ ...newCategory, number: e.target.value })
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className={generalManagementStyles.formFieldsButtons}>
                   <div

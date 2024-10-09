@@ -37,6 +37,12 @@ function SubGroup() {
   }
 
   const editSubGroupHandler = () => {
+    let subGroupExist = subGroups.find(subGroup => subGroup.number == newSubGroup.number && subGroup._id !== newSubGroup._id);
+    if(subGroupExist){
+      mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "מספר קבוצת משנה כבר קיים"} });
+      return;
+    }
+
     let response = apiRequestForForm(`admin/editSubGroup/${newSubGroup._id}`, "PUT", newSubGroup);
     if(response.error){
       mainDispatch({ type: "SET_SHOW_ERROR", payload: {show: true, message: "עריכת קבוצת משנה נכשלה"} });
@@ -166,6 +172,18 @@ function SubGroup() {
                       }
                     />
                   </div>
+                    {!currentSubGroup.includes(newSubGroup.number) && (
+                      <div className={subGeneralManagement.formFieldsInput}>
+                        <label>מספר קבוצת משנה</label>
+                        <input
+                          type="number"
+                          value={newSubGroup.number}
+                          onChange={(e) =>
+                            setNewSubGroup({ ...newSubGroup, number: e.target.value })
+                          }
+                        />
+                      </div>
+                    )}
                 </div>
                 <div className={subGeneralManagement.formFieldsButtons}>
                   <div

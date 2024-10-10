@@ -18,6 +18,8 @@ function generateEmailHtml(message) {
     userName,
     branchEDI,
     branchNumber,
+    HP,
+    companyName,
     branchName,
     branchAddress,
     branchCity,
@@ -108,12 +110,14 @@ function generateEmailHtml(message) {
         <p style="font-weight: bold;" >שם מבצע ההזמנה : ${userName}</p>
         <p style="font-weight: bold;" >פרטי סניף : </p>  
         <ul style="padding: 0 20px;">
-          <li><span><b>EDI: </b></span> ${branchEDI}</li>
+          <li><span><b>EDI: </b></span> ${branchEDI ? branchEDI : 'לא קיים'}</li>
           <li><b>מספר סניף: </b> ${branchNumber}</li>
           <li><b>שם סניף: </b> ${branchName}</li>
-          <li><b>כתובת: </b> ${branchAddress} ${branchCity}</li>
-          <li><b>מייל: </b> ${branchMail}</li>
-          <li><b>טלפון: </b> ${branchPhone}</li>
+          <li><b>ח.פ: </b> ${HP ? HP : 'לא קיים'}</li>
+          <li><b>שם חברה: </b> ${companyName ? companyName : 'לא קיים'}</li>
+          <li><b>כתובת: </b> ${branchAddress ? branchAddress : 'לא קיימת' } ${branchCity ? ', ' + branchCity : ''}</li>
+          <li><b>מייל: </b> ${branchMail ? branchMail : 'לא קיים'}</li>
+          <li><b>טלפון: </b> ${branchPhone ? branchPhone : 'לא קיים'}</li> 
         </ul>
         <p style="font-weight: bold;" >עבור ספק: ${providerName}</p>
         <hr>

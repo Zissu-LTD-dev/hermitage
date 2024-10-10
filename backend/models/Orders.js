@@ -6,6 +6,8 @@ const orderSchema = new mongoose.Schema({
   branchEDI: String,
   branchNumber: Number,
   branchName: String,
+  HP: Number,
+  companyName: String,
   branchAddress: String,
   branchCity: String,
   branchMail: String,

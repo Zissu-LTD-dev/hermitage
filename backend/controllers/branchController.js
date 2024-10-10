@@ -87,6 +87,8 @@ const createOrder = async (req, res) => {
         userName: userName,
         branchEDI: currentBranch.EDInumber,
         branchNumber: currentBranch.number,
+        HP: currentBranch.HP,
+        companyName: currentBranch.companyName,
         branchName: currentBranch.name,
         branchAddress: currentBranch.address,
         branchCity: currentBranch.city,

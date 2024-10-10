@@ -20,9 +20,11 @@ function Order({orderData, orderBy}) {
   const updateOrder = async (newOrder) => {
     const data = await apiRequest("admin/updateOrder", "PUT", newOrder);
     if (!data){ 
+      dispatch({ type: "SET_SHOW_LOADER", payload: false });
       dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בעדכון ההזמנה" } });
       return false;
     } 
+    dispatch({ type: "SET_SHOW_LOADER", payload: false });
     dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "ההזמנה עודכנה בהצלחה" } });
     return true;
   }
@@ -35,6 +37,7 @@ function Order({orderData, orderBy}) {
     }
 
     const handleApproveOrder =async () => {
+      dispatch({ type: "SET_SHOW_LOADER", payload: true });
       let newOrder = { ...orderData, orderStatus: "approved" };
       let update = await updateOrder(newOrder);
       if (!update) return;

@@ -368,10 +368,10 @@ const addProvider = async (req, res) => {
     await newProvider.save();
     return res
       .status(200)
-      .json({ message: "The provider was successfully added" });
+      .json({ message: "The provider was successfully added", _id: newProvider._id });
   }
 
-  res.status(200).json({ message: "The provider already exists", error: true , _id: newProvider._id});
+  res.status(200).json({ message: "The provider already exists", error: true});
 };
 
 // edit provider
@@ -390,7 +390,19 @@ const editProvider = async (req, res) => {
 const deleteProvider = async (req, res) => {
   let providerID = req.params.id;
   let currentProvider = await Provider.findById(providerID);
+  let numProvider = currentProvider.number;
   await currentProvider.deleteOne();
+
+  let branches = await Branch.find({});
+
+  branches.forEach(async (branch) => {
+    if (branch.blockedProviders.includes(numProvider)) {
+      branch.blockedProviders = branch.blockedProviders.filter(
+        (prov) => prov != numProvider
+      );
+      await branch.save();
+    }
+  });
   res.status(200).json({ message: "The provider was successfully deleted" });
 };
 

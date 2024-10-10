@@ -45,6 +45,7 @@ function Providers() {
       });
       newProvider._id = response._id;
       state.providers.push(newProvider);
+      newProvider.number = parseInt(newProvider.number);
       state.providers.sort((a, b) => a.number - b.number);
       setAddProvider(false);
       setNewProvider(initialProviders);
@@ -74,7 +75,7 @@ function Providers() {
   };
 
   // delete provider
-  const deleteProviderHandler = async (id) => {
+  const deleteProviderHandler = async (id, number) => {
     let response = await apiRequestForForm(`admin/deleteProvider/${id}`, "delete");
     if (response.error) {
       mainDispatch({
@@ -88,6 +89,11 @@ function Providers() {
         payload: { show: true, message: "הספק נמחק בהצלחה" },
       });
       state.providers = state.providers.filter((provider) => provider._id !== id);
+      state.branches.forEach(async (branch) => {
+        if (branch.blockedProviders.includes(number)) {
+          branch.blockedProviders = branch.blockedProviders.filter((blockedProvider) => blockedProvider !== number);
+        }
+      });
       setProviders(state.providers);
     }
   };
@@ -128,7 +134,7 @@ function Providers() {
       }
     });
     setEmptyProviders(emptyProviders);
-  }, [state.products]);
+  }, [state.products, addProvider]);
 
   return (
     <>
@@ -155,7 +161,7 @@ function Providers() {
                   <div className={subGeneralManagement.formFieldsInput}>
                     <label>מספר ספק:</label>
                     <input
-                      type="text"
+                      type="number"
                       value={newProvider.number}
                       onChange={(e) =>
                         setNewProvider({
@@ -253,7 +259,7 @@ function Providers() {
                   <div className={subGeneralManagement.formFieldsInput}>
                     <label>מספר ספק:</label>
                     <input
-                      type="text"
+                      type="number"
                       value={newProvider.number}
                       onChange={(e) =>
                         setNewProvider({
@@ -369,7 +375,7 @@ function Providers() {
                     </div>
                     { emptyProviders.find((emptyProvider) => emptyProvider.number === provider.number) &&
                       <div
-                        onClick={() => deleteProviderHandler(provider._id)}
+                        onClick={() => deleteProviderHandler(provider._id , provider.number)}
                         className={subGeneralManagement.listButton + " " + subGeneralManagement.deleteButton}
                         >מחיקה</div>
                       }

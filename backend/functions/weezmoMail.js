@@ -61,9 +61,9 @@ function generateEmailHtml(message) {
 
   let returnHtml = "";
   if (returnLines.products.length > 0) {
-    returnHtml += '<h3 style="color: #082a3a;" >החזרות : </h3>';
+    returnHtml += '<h3 style="color: red;" >החזרות : </h3>';
     returnHtml += `
-    <table style="width: 70%; margin-bottom: 20px;">
+    <table style="width: 70%; margin-bottom: 20px; color: red;">
       <tr style="text-align: right;">
           <th>שם מוצר</th>
           <th>בר קוד</th>
@@ -79,10 +79,10 @@ function generateEmailHtml(message) {
         </tr>
       `;
     });
-    returnHtml += `</table><p style="font-weight: bold;" >סה"כ מוצרים להחזרה: ${returnLines.quantity}</p>`;
+    returnHtml += `</table><p style="font-weight: bold; color: red;" >סה"כ מוצרים להחזרה: ${returnLines.quantity}</p>`;
   } else {
     returnHtml +=
-      '<h3 style="color: #082a3a;" >החזרות</h3><p>אין מוצרים להחזרה</p>';
+      '<h3 style="color: red;" >החזרות</h3><p style="color: red;">אין מוצרים להחזרה</p>';
   }
 
   return `

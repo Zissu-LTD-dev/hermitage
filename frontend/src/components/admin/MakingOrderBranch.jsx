@@ -11,7 +11,7 @@ function MakingOrderBranch() {
   const [selectBranch, setSelectBranch] = useState(false);
   const [selectedBranches, setSelectedBranches] = useState([]);
   const [branches, setBranches] = useState([]);
-  const [selectAll, setSelectAll] = useState(false); // נוסיף מצב חדש לניהול הצ'קבוקס של "בחר הכל"
+  const [selectAll, setSelectAll] = useState(false);
 
   const handleBranchSelection = (e) => {
     const branchId = e.target.value;
@@ -19,7 +19,7 @@ function MakingOrderBranch() {
       const newSelectedBranches = prevSelectedBranches.includes(branchId)
         ? prevSelectedBranches.filter((id) => id !== branchId)
         : [...prevSelectedBranches, branchId];
-      setSelectAll(newSelectedBranches.length === branches.length); // עדכון המצב של "בחר הכל" בהתאם לבחירות
+      setSelectAll(newSelectedBranches.length === branches.length);
       return newSelectedBranches;
     });
   };
@@ -95,7 +95,7 @@ function MakingOrderBranch() {
                     checked={selectedBranches.includes(branch._id)}
                     className={makingOrderBranch.branchCheckbox}
                   />
-                  <label htmlFor={`branch-${branch._id}`}>{branch.name}</label>
+                  <label htmlFor={`branch-${branch._id}`}>{branch.name} - {branch.number}</label>
                 </div>
               ))}
           </div>

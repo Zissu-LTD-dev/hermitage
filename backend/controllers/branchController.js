@@ -106,6 +106,7 @@ const createOrder = async (req, res) => {
         returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
         noteProvider: order.noteProvider,
         noteManager: order.noteManager,
+        createdDate: new Date( Date.now() + 3 * 60 * 60 * 1000 ),
       };
     });
 

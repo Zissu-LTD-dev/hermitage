@@ -30,10 +30,7 @@ const orderSchema = new mongoose.Schema({
   },
   noteProvider: String,
   noteManager: String,
-  createdDate: {
-    type: Date,
-    default: Date.now,
-  },
+  createdDate: Date,
 });
 
 module.exports = mongoose.model("Order", orderSchema);

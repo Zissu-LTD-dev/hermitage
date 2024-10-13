@@ -126,23 +126,56 @@ function UploadFiles() {
     XLSX.writeFile(wb, "קובץ טמפלט.xlsx");
   };
 
-  const deleteProduct = () => {
-    deleteProductFile.current.click();
-  };
-  const addProduct = () => {
-    addProductFile.current.click();
-  };
-  const updateProduct = () => {
-    updateProductFile.current.click();
-  };
+const resetState = () => {
+  setFile(null);
+  setFileData(null);
+  setFileName("");
+  setUpload(false);
+  setBtnName("");
+};
+
+const deleteProduct = () => {
+  resetState();
+  // reset file input
+  addProductFile.current.value = "";
+  updateProductFile.current.value = "";
+  if (deleteProductFile.current.value){
+    deleteProductFile.current.value = "";
+  }
+  deleteProductFile.current.click();
+};
+
+const addProduct = () => {
+  resetState();
+  deleteProductFile.current.value = "";
+  updateProductFile.current.value = "";
+  if (addProductFile.current.value){
+    addProductFile.current.value = "";
+  }
+  addProductFile.current.click();
+};
+
+const updateProduct = () => {
+  resetState();
+  deleteProductFile.current.value = "";
+  addProductFile.current.value = "";
+  if (updateProductFile.current.value){
+    updateProductFile.current.value = "";
+  }
+  updateProductFile.current.click();
+};
 
   const changeDataToJSON = (dataXLSX, keys) => {
     const reader = new FileReader();
       reader.onload = (e) => {
         const data = new Uint8Array(e.target.result);
         const workbook = XLSX.read(data, { type: "array" });
-        const sheet = workbook.Sheets[workbook.SheetNames[keys]];
-        const sheetData = XLSX.utils.sheet_to_json(sheet);
+        let sheetName = workbook.SheetNames.findIndex((sheet) => sheet === keys);        
+        const sheet = workbook.Sheets[workbook.SheetNames[sheetName]];
+        const sheetData = XLSX.utils.sheet_to_json(sheet, {
+          raw: false,
+          defval: "",
+        });
         setFileData(sheetData);
       };
       reader.readAsArrayBuffer(dataXLSX);
@@ -165,15 +198,15 @@ function UploadFiles() {
     switch (e.target.name) {
       case "addProduct":
         setBtnName("addProduct");
-        changeDataToJSON(e.target.files[0], 0);
+        changeDataToJSON(e.target.files[0], 'הקמה - פריט');
         break;
       case "updateProduct":
         setBtnName("updateProduct");
-        changeDataToJSON(e.target.files[0], 2);
+        changeDataToJSON(e.target.files[0], 'עדכון - פריט');
         break;
       case "deleteProduct":
         setBtnName("deleteProduct");
-        changeDataToJSON(e.target.files[0], 1);
+        changeDataToJSON(e.target.files[0], 'מחיקה - פריט');
         break;
     }
 
@@ -268,7 +301,7 @@ function UploadFiles() {
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.upload}
           onClick={() => addProduct()}
         >
-          העלאת מוצרים חדשים
+          הקמה - פריט
           {/* file input */}
           <input
             className={UploadFilesStyle.inputFile}
@@ -284,7 +317,8 @@ function UploadFiles() {
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.update}
           onClick={() => updateProduct()}
         >
-          עדכון מוצרים קיימים
+          עדכון - פריט  |
+          עדכון קטגוריות - עמודות - מדף
           {/* file input */}
           <input
             className={UploadFilesStyle.inputFile}
@@ -300,7 +334,7 @@ function UploadFiles() {
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.delete}
           onClick={() => deleteProduct()}
         >
-          מחיקת מוצרים
+          מחיקה - פריט
           {/* file input */}
           <input
             className={UploadFilesStyle.inputFile}
@@ -321,9 +355,10 @@ function UploadFiles() {
       </div>
       <p className={UploadFilesStyle.warning}>
         *העלאה של קובץ אקסל עם המוצרים להוספה עדכון או מחיקה חייב להיות בטמפלט
-        הנכון*
+        הנכון* <br />
+        *העדכון הוא על 2 טאבים באקסל*
       </p>
-      {fileData && (
+      {fileData && fileData.length > 0 && ( 
         <div className={UploadFilesStyle.fileData}>
           <h3>קובץ שנבחר: {fileName}</h3>
           <table>

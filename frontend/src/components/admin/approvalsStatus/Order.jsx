@@ -39,13 +39,14 @@ function Order({orderData, orderBy}) {
     const handleApproveOrder =async () => {
       dispatch({ type: "SET_SHOW_LOADER", payload: true });
       let newOrder = { ...orderData, orderStatus: "approved" };
+      newOrder.orderLines.products = newOrder.orderLines.products.filter((product) => product.quantity > 0);
       let update = await updateOrder(newOrder);
       if (!update) return;
       dispatchAdmin({ type: "APPROVE_ORDER_ADMIN", payload: newOrder });
     }
 
     const handleDecrease = (product) => {
-      if (product.quantity == 1) return handleDelete(product);
+      if (product.quantity == 0 ) return ;
       product.quantity--;
       let newProducts = products.map((p) => {
         if (p._id == product._id) {

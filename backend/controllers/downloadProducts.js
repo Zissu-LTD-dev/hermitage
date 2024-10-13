@@ -7,8 +7,10 @@ const downloadProducts = async (req, res) => {
   let data = [];
   products.map((product) => {
     let isBlocked = product.isBlocked ? 1 : 2;
+    let limited = product.limited ? 1 : 2;
     data.push({
       "חסום להזמנות - 1 חסום , 2 פתוח": isBlocked,
+      "מוצר מוגבל - 1 מוגבל 2 לא  מוגבל": limited,
       "ספק": product.providerName,
       "מס ספק": product.providerNumber,
       "מס קטגוריה ": product.category,
@@ -33,6 +35,7 @@ const downloadProducts = async (req, res) => {
 
   // Set the column widths
   ws["!cols"] = [
+    { wch: 20 },
     { wch: 20 },
     { wch: 20 },
     { wch: 20 },

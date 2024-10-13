@@ -34,6 +34,7 @@ useEffect(() => {
       let showProducts = [];
 
       if (state.displayFilters.length != []) {
+        setShowUploadFiles(false);
         if (filters["ספקים"] && filters["קבוצת משנה"]) {
           products.filter((product) => {
             filters["ספקים"].map((filter) => {
@@ -90,6 +91,7 @@ useEffect(() => {
   // search
   useEffect(() => {
     if (state.searchResults != []) {
+      setShowUploadFiles(false);
       setShowProducts(state.searchResults);
     }
   }, [state.searchResults]);
@@ -115,6 +117,14 @@ useEffect(() => {
       });
     }
   }, [state.providers, state.subGroups]);
+
+  useEffect(() => {
+    if(showUploadFiles){
+      setShowProducts([]);
+      dispatch({ type: "SET_SEARCH", payload: "" });
+      dispatch({ type: "SET_FILTERS", payload: [] });
+    }
+  }, [showUploadFiles]);
 
   // delete product
 const deleteProduct = async (productID) => {

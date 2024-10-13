@@ -16,6 +16,7 @@ function EditProduct({ cancel, save }) {
     price: "",
     packQuantity: 1,
     isBlocked: false,
+    limited: false,
     branchTypeConfig: [],
   };
   const [newProduct, setNewProduct] = useState(initialProduct);
@@ -202,6 +203,24 @@ function EditProduct({ cancel, save }) {
                 checked={newProduct.isBlocked}
                 onChange={(e) =>
                   setNewProduct({ ...newProduct, isBlocked: e.target.checked })
+                }
+              />
+            </div>
+            {/* פריט מוגבל */}
+            <div
+              className={
+                EditproductStyle.productDetails +
+                " " +
+                EditproductStyle.checkbox
+              }
+            >
+              <div className={EditproductStyle.Text}>פריט מוגבל</div>
+              <input
+                type="checkbox"
+                className={EditproductStyle.input}
+                checked={newProduct.limited}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, limited: e.target.checked })
                 }
               />
             </div>

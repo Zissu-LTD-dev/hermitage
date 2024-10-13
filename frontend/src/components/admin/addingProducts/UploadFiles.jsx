@@ -42,6 +42,7 @@ function UploadFiles() {
         "תאור - שם פריט",
         "תאור - כמות בארגז",
         "תאור - עלות קניה",
+        "הגבלת פריט - 1 מוגבל , 2 לא מוגבל",
       ],
     ];
     const moreUpdateProduct = [
@@ -120,6 +121,7 @@ function UploadFiles() {
       { wpx: 100 },
       { wpx: 100 },
       { wpx: 100 },
+      { wpx: 170 },
     ];
     ws3["!cols"] = [{ wpx: 100 }];
 

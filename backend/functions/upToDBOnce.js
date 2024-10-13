@@ -275,7 +275,8 @@ const productsUpdate = async (sheet) => {
       newProduct.category = row[2] ? row[2] : null; // "מס קטגוריה "
       newProduct.price = row[7] ? row[7] : null; // "תאור - עלות קניה"
       newProduct.isBlocked = row[0] == 1 ? true : false; // "חסום להזמנות - 1 חסום , 2 פתוח"
-      
+      newProduct.limited = row[8] == 1 ? true : false; // הגבלת פריט - 1 מוגבל , 2 לא מוגבל"
+
       // clear the empty fields
       Object.keys(newProduct).forEach((key) => {
         if (newProduct[key] === null || newProduct[key] === undefined) {

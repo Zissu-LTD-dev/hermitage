@@ -191,7 +191,7 @@ function Document({dataDocument}) {
                     <input onChange={handleBranchChange} type="checkbox" id={branch._id} name={branch._id} value={branch._id}
                     checked={branchChecked.includes("all") || branchChecked.includes(branch._id) ? true : false}
                     />
-                    <label htmlFor={branch._id}>{branch.name}</label>
+                    <label htmlFor={branch._id}>{branch.name} - {branch.number}</label>
                   </div>
                 );
               })}

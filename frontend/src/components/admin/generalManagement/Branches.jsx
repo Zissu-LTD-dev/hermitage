@@ -80,6 +80,19 @@ function Branches() {
     newBranches.sort((a, b) => a.number - b.number);
     state.branches = newBranches;
     mainState.branches = newBranches;
+    let updatedProviders = state.providers.map((provider) => {
+      let updatedBranchEmails = provider.branchEmails.map((branchEmail) => {
+        if (branchEmail.branchNumber === newBranch.number) {
+          branchEmail.branchName = newBranch.name;
+        }
+        return branchEmail;
+      });
+      updatedBranchEmails.sort((a, b) => a.branchNumber - b.branchNumber);
+      provider.branchEmails = updatedBranchEmails;
+      return provider;
+    });
+
+    state.providers = updatedProviders;
 
     setBranches(newBranches);
     setNewBranch(initialBranch);
@@ -449,7 +462,6 @@ function Branches() {
                     <div className={subGeneralManagement.listDetail}>
                       {branch.EDInumber ? branch.EDInumber : "אין edi "}
                     </div>
-                    {/* add HP end conpanyName */}
                     <div className={subGeneralManagement.listDetail}>
                       {branch.HP ? branch.HP : "אין ח.פ"}
                     </div>

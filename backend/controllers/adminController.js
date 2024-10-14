@@ -281,6 +281,17 @@ const editBranch = async (req, res) => {
   await currentBranch.updateOne(branch);
   await currentBranch.save();
 
+  let providers = await Provider.find({});
+  providers.map(async (provider) => {
+    provider.branchEmails.map((branchEmail) => {
+      if (branchEmail.branchNumber == branch.number) {
+        branchEmail.branchName = branch.name;
+      }
+    });
+    provider.branchEmails.sort((a, b) => a.branchNumber - b.branchNumber);
+    await provider.save();
+  });
+
   res.status(200).json({ message: "The branch was successfully updated" });
 };
 

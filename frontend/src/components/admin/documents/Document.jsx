@@ -101,7 +101,14 @@ function Document({dataDocument}) {
     });
     let blob = await res.blob();
     let url = window.URL.createObjectURL(blob);
-    window.open(url);
+    
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = `${name}.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
   }
 
   const handleDelete = async () => {

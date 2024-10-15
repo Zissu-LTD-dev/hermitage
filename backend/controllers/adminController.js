@@ -160,7 +160,13 @@ const updateOrder = async (req, res) => {
     let branchEmails = provider.branchEmails.filter(
       (branch) => branch.branchNumber === order.branchNumber
     );
-    emails.push(...branchEmails);
+
+    branchEmails.forEach((branch) => {
+      emails = emails.concat(branch.emails);
+    });
+    
+    emails = emails.filter((email) => email !== "");
+    
     let mailPromises = emails.map(async (email) => {
       let sendMail = await weezmoMail({
         target:

@@ -95,7 +95,7 @@ function MakingOrderBranch() {
                     checked={selectedBranches.includes(branch._id)}
                     className={makingOrderBranch.branchCheckbox}
                   />
-                  <label htmlFor={`branch-${branch._id}`}>{branch.name} - {branch.number}</label>
+                  <label htmlFor={`branch-${branch._id}`}>{branch.number} - {branch.name}</label>
                 </div>
               ))}
           </div>

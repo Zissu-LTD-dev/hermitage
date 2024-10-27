@@ -142,7 +142,13 @@ const createOrder = async (req, res) => {
     let branchEmails = provider.branchEmails.filter(
       (branch) => branch.branchNumber === branchNumber
     );
-    emails.push(...branchEmails);
+
+    branchEmails.forEach((branch) => {
+      emails.concat(branch.emails); 
+    });
+
+    emails = emails.filter((email) => email !== "");
+
     let mailPromises = emails.map(async (email) => {
       let sendMail = await weezmoMail({
         target: process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : email,

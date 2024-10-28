@@ -321,7 +321,7 @@ function UploadFiles() {
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.update}
           onClick={() => updateProduct()}
         >
-          עדכון - פריט | עדכון קטגוריות - עמודות - מדף
+          עדכון - פריט | עדכון קטגוריות &gt; עמודות &gt; מדף
           {/* file input */}
           <input
             className={UploadFilesStyle.inputFile}

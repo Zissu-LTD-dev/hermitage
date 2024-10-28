@@ -76,6 +76,20 @@ function Column({ details }) {
     let newProducts = products.filter(
       (product) => product.location.column == columnsNumber
     );
+
+    // sort products by name
+    newProducts.sort((a, b) => {
+      if (a.name > b.name) return 1;
+      if (a.name < b.name) return -1;
+      return 0;
+    });
+    // sort by location.index if location.index is null or undefined posh them to the end
+    newProducts.sort((a, b) => {
+      if (a.location.index === null || a.location.index === undefined) return 1;
+      if (b.location.index === null || b.location.index === undefined) return -1;
+      return a.location.index - b.location.index;
+    });
+
     return newProducts;
   };
 

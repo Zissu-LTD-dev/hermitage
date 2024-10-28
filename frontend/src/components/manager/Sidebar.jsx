@@ -52,7 +52,7 @@ function Sidebar() {
             <div className={sidebar.icon}>
               <img src={waitingOrders} alt="waiting orders" />
             </div>
-            <span>הזמנות</span>
+            <span>סטטוס הזמנות</span>
           </div>
           <div onClick={() => changeStatus("documents")}>
             <div className={sidebar.icon}>

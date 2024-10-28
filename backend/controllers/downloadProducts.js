@@ -1,18 +1,23 @@
 const excel = require("xlsx");
-const { Product, BranchType } = require("../models");
+const { Product, BranchType, Category } = require("../models");
 
 const downloadProducts = async (req, res) => {
   let branchType = await BranchType.find({});
   let products = await Product.find({});
+  let categories = await Category.find({});
   let data = [];
   products.map((product) => {
     let isBlocked = product.isBlocked ? 1 : 2;
     let limited = product.limited ? 1 : 2;
+    let categoryName = categories.find((category) => category.number == product.category);
+    // צריך להוסיף בדיקה על התמונות אם נמצא 
+    let image = ""; // TODO: Add image
     data.push({
       "חסום להזמנות - 1 חסום , 2 פתוח": isBlocked,
-      "מוצר מוגבל - 1 מוגבל 2 לא  מוגבל": limited,
+      "מוצר מוגבל - 1 מוגבל 2 לא  מוגבל": limited, 
       "ספק": product.providerName,
       "מס ספק": product.providerNumber,
+      "קטגוריה": categoryName ? categoryName.name : "",
       "מס קטגוריה ": product.category,
       "קבוצת משנה": product.subGroupName,
       "מס קבוצת משנה": product.subGroupNumber,
@@ -20,6 +25,7 @@ const downloadProducts = async (req, res) => {
       "תאור - שם פריט": product.name,
       "תאור - כמות בארגז": product.packQuantity,
       "תאור - עלות קניה": product.price,
+      "תמונה": image,
     });
     branchType.map((type) => {
       let found = product.branchTypeConfig.find((config) => config.branchType == type.typeId);
@@ -42,7 +48,9 @@ const downloadProducts = async (req, res) => {
     { wch: 20 },
     { wch: 20 },
     { wch: 20 },
+    { wch: 20 },
     { wch: 40 }, 
+    { wch: 20 },
     { wch: 20 },
     { wch: 20 },
     { wch: 20 },

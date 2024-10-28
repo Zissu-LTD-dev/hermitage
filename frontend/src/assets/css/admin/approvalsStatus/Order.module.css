@@ -151,6 +151,11 @@ cursor: pointer;
     cursor: pointer;
   }
 
+  .disabled{
+    background: #707070 0% 0% no-repeat padding-box;
+    cursor: not-allowed;
+  }
+
 
 .notes{
     width: 100%;

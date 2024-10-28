@@ -70,7 +70,7 @@ function Sidebar() {
                 <div className={sidebar.icon}>
                   <img src={branchManagement} alt="branch management" />
                 </div>
-                <span>ניהול סניפים וספקים</span>
+                <span>ניהול והגבלת סניפים</span>
               </div>
               <div onClick={() => changeStatus("adding products")}>
                 <div className={sidebar.icon}>
@@ -122,7 +122,7 @@ function Sidebar() {
                 <div className={sidebar.icon}>
                   <img src={branchManagement} alt="branch management" />
                 </div>
-                <span>ניהול סניפים וספקים</span>
+                <span>ניהול והגבלת סניפים</span>
               </div>
               <div onClick={() => changeStatus("message")}>
                 <div className={sidebar.icon}>

@@ -85,7 +85,7 @@ function BranchManagement() {
         <div 
           className={active == 'byBranch' ? branchManagement.blocked : branchManagement.blocked + " " + branchManagement.blockedByProvider } 
           onClick={() => setShowBlocked(active == 'byBranch' ? !showBlocked : null )}>
-            {showBlocked ? "הצג הכול" : "הצג חסומים"}
+            {showBlocked ? "הצג הכול" : "הצג סניפים מוגבלים"}
         </div>
       </div>
       <div className={branchManagement.body}>

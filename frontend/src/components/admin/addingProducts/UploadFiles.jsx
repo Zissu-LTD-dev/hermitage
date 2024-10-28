@@ -3,7 +3,7 @@ import UploadFilesStyle from "../../../assets/css/admin/addingProducts/UploadFil
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
-import {useMainContext } from "../../../context/mainContext/MainContext";
+import { useMainContext } from "../../../context/mainContext/MainContext";
 import * as XLSX from "xlsx";
 
 function UploadFiles() {
@@ -128,59 +128,59 @@ function UploadFiles() {
     XLSX.writeFile(wb, "קובץ טמפלט.xlsx");
   };
 
-const resetState = () => {
-  setFile(null);
-  setFileData(null);
-  setFileName("");
-  setUpload(false);
-  setBtnName("");
-};
+  const resetState = () => {
+    setFile(null);
+    setFileData(null);
+    setFileName("");
+    setUpload(false);
+    setBtnName("");
+  };
 
-const deleteProduct = () => {
-  resetState();
-  // reset file input
-  addProductFile.current.value = "";
-  updateProductFile.current.value = "";
-  if (deleteProductFile.current.value){
-    deleteProductFile.current.value = "";
-  }
-  deleteProductFile.current.click();
-};
-
-const addProduct = () => {
-  resetState();
-  deleteProductFile.current.value = "";
-  updateProductFile.current.value = "";
-  if (addProductFile.current.value){
+  const deleteProduct = () => {
+    resetState();
+    // reset file input
     addProductFile.current.value = "";
-  }
-  addProductFile.current.click();
-};
-
-const updateProduct = () => {
-  resetState();
-  deleteProductFile.current.value = "";
-  addProductFile.current.value = "";
-  if (updateProductFile.current.value){
     updateProductFile.current.value = "";
-  }
-  updateProductFile.current.click();
-};
+    if (deleteProductFile.current.value) {
+      deleteProductFile.current.value = "";
+    }
+    deleteProductFile.current.click();
+  };
+
+  const addProduct = () => {
+    resetState();
+    deleteProductFile.current.value = "";
+    updateProductFile.current.value = "";
+    if (addProductFile.current.value) {
+      addProductFile.current.value = "";
+    }
+    addProductFile.current.click();
+  };
+
+  const updateProduct = () => {
+    resetState();
+    deleteProductFile.current.value = "";
+    addProductFile.current.value = "";
+    if (updateProductFile.current.value) {
+      updateProductFile.current.value = "";
+    }
+    updateProductFile.current.click();
+  };
 
   const changeDataToJSON = (dataXLSX, keys) => {
     const reader = new FileReader();
-      reader.onload = (e) => {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
-        let sheetName = workbook.SheetNames.findIndex((sheet) => sheet === keys);        
-        const sheet = workbook.Sheets[workbook.SheetNames[sheetName]];
-        const sheetData = XLSX.utils.sheet_to_json(sheet, {
-          raw: false,
-          defval: "",
-        });
-        setFileData(sheetData);
-      };
-      reader.readAsArrayBuffer(dataXLSX);
+    reader.onload = (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      let sheetName = workbook.SheetNames.findIndex((sheet) => sheet === keys);
+      const sheet = workbook.Sheets[workbook.SheetNames[sheetName]];
+      const sheetData = XLSX.utils.sheet_to_json(sheet, {
+        raw: false,
+        defval: "",
+      });
+      setFileData(sheetData);
+    };
+    reader.readAsArrayBuffer(dataXLSX);
   };
 
   const handleFile = async (e) => {
@@ -200,22 +200,21 @@ const updateProduct = () => {
     switch (e.target.name) {
       case "addProduct":
         setBtnName("addProduct");
-        changeDataToJSON(e.target.files[0], 'הקמה - פריט');
+        changeDataToJSON(e.target.files[0], "הקמה - פריט");
         break;
       case "updateProduct":
         setBtnName("updateProduct");
-        changeDataToJSON(e.target.files[0], 'עדכון - פריט');
+        changeDataToJSON(e.target.files[0], "עדכון - פריט");
         break;
       case "deleteProduct":
         setBtnName("deleteProduct");
-        changeDataToJSON(e.target.files[0], 'מחיקה - פריט');
+        changeDataToJSON(e.target.files[0], "מחיקה - פריט");
         break;
     }
-
   };
 
   const handleUpload = async (action) => {
-     switch (action) {
+    switch (action) {
       case "addProduct":
         let addProductRes = await uploadToServer(file, "Adding products");
         if (!addProductRes) {
@@ -235,7 +234,10 @@ const updateProduct = () => {
           });
           return;
         }
-        let updateDetailedProductRes = await uploadToServer(file, "Update Detailed Products");
+        let updateDetailedProductRes = await uploadToServer(
+          file,
+          "Update Detailed Products"
+        );
         if (!updateDetailedProductRes) {
           mainDispatch({
             type: "SET_SHOW_ERROR",
@@ -264,8 +266,8 @@ const updateProduct = () => {
     setTimeout(() => {
       window.location.reload();
     }, 4000);
-  }
-    const uploadToServer = async (file, action) => {
+  };
+  const uploadToServer = async (file, action) => {
     const token = cookie.get("token");
 
     let formData = new FormData();
@@ -319,8 +321,7 @@ const updateProduct = () => {
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.update}
           onClick={() => updateProduct()}
         >
-          עדכון - פריט  |
-          עדכון קטגוריות - עמודות - מדף
+          עדכון - פריט | עדכון קטגוריות - עמודות - מדף
           {/* file input */}
           <input
             className={UploadFilesStyle.inputFile}
@@ -360,27 +361,29 @@ const updateProduct = () => {
         הנכון* <br />
         *העדכון הוא על 2 טאבים באקסל*
       </p>
-      {fileData && fileData.length > 0 && ( 
-        <div className={UploadFilesStyle.fileData}>
-          <h3>קובץ שנבחר: {fileName}</h3>
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(fileData[0]).map((key, index) => (
-                  <th key={index}>{key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {fileData.map((row, index) => (
-                <tr key={index}>
-                  {Object.values(row).map((value, index) => (
-                    <td key={index}>{value}</td>
+      {fileData && fileData.length > 0 && (
+        <>
+          <div className={UploadFilesStyle.fileData}>
+            <h3>קובץ שנבחר: {fileName}</h3>
+            <table>
+              <thead>
+                <tr>
+                  {Object.keys(fileData[0]).map((key, index) => (
+                    <th key={index}>{key}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {fileData.map((row, index) => (
+                  <tr key={index}>
+                    {Object.values(row).map((value, index) => (
+                      <td key={index}>{value}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div className={UploadFilesStyle.uploadBtns}>
             <button
               className={UploadFilesStyle.cancel}
@@ -401,7 +404,7 @@ const updateProduct = () => {
               העלאה
             </button>
           </div>
-        </div>
+        </>
       )}
     </>
   );

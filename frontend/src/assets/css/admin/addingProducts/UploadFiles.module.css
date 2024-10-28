@@ -55,9 +55,9 @@
 }
 
 .fileData{
-    height: calc(100vh - 350px);
+    height: calc(100vh - 400px);
     padding: 0 10px;
-    margin: 5px 0;
+    margin: 5px 0 25px 0;
     border: 1px solid #082A3A;
     border-radius: 5px;
     font-size: 16px;
@@ -116,7 +116,7 @@
     background-color: #d7d7d7;
 }
 
-.fileData button {
+.uploadBtns button {
     margin: 0 5px;
     padding: 10px 20px;
     cursor: pointer;
@@ -132,12 +132,12 @@
     color: white;
 }
 
-.fileData button:hover {
+.uploadBtns button:hover {
     background-color: #082A3A;
     color: white;
 }
 
-.fileData button:disabled {
+.uploadBtns button:disabled {
     background-color: #f2f2f2;
     color: #082A3A;
     cursor: not-allowed;

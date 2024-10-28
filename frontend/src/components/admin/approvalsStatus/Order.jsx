@@ -256,13 +256,12 @@ function Order({ orderData, orderBy }) {
                   " " +
                   (quantityIsEmpty ? orderStyle.disabled : "")
                 }
-                // onClick={handleApproveOrder}
                 onClick={() => {
                   if (!quantityIsEmpty) {
                     handleApproveOrder();
                   }
                 }}
-                
+
               >
                 אישור הזמנה
               </div>

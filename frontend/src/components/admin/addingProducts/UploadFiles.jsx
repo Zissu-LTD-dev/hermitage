@@ -12,6 +12,7 @@ function UploadFiles() {
   const deleteProductFile = useRef(null);
   const addProductFile = useRef(null);
   const updateProductFile = useRef(null);
+  const updateProductLocationFile = useRef(null);
 
   const [upload, setUpload] = useState(false);
   const [file, setFile] = useState(null);
@@ -141,6 +142,7 @@ function UploadFiles() {
     // reset file input
     addProductFile.current.value = "";
     updateProductFile.current.value = "";
+    updateProductLocationFile.current.value = "";
     if (deleteProductFile.current.value) {
       deleteProductFile.current.value = "";
     }
@@ -151,6 +153,7 @@ function UploadFiles() {
     resetState();
     deleteProductFile.current.value = "";
     updateProductFile.current.value = "";
+    updateProductLocationFile.current.value = "";
     if (addProductFile.current.value) {
       addProductFile.current.value = "";
     }
@@ -161,10 +164,22 @@ function UploadFiles() {
     resetState();
     deleteProductFile.current.value = "";
     addProductFile.current.value = "";
+    updateProductLocationFile.current.value = "";
     if (updateProductFile.current.value) {
       updateProductFile.current.value = "";
     }
     updateProductFile.current.click();
+  };
+
+  const updateProductLocation = () => {
+    resetState();
+    deleteProductFile.current.value = "";
+    addProductFile.current.value = "";
+    updateProductFile.current.value = "";
+    if (updateProductLocationFile.current.value) {
+      updateProductLocationFile.current.value = "";
+    }
+    updateProductLocationFile.current.click();
   };
 
   const changeDataToJSON = (dataXLSX, keys) => {
@@ -206,6 +221,10 @@ function UploadFiles() {
         setBtnName("updateProduct");
         changeDataToJSON(e.target.files[0], "עדכון - פריט");
         break;
+      case "updateProductLocation":
+        setBtnName("updateProductLocation");
+        changeDataToJSON(e.target.files[0], "עדכון קטגוריות > עמודות > מדף");
+        break;
       case "deleteProduct":
         setBtnName("deleteProduct");
         changeDataToJSON(e.target.files[0], "מחיקה - פריט");
@@ -234,6 +253,8 @@ function UploadFiles() {
           });
           return;
         }
+        break;
+      case "updateProductLocation":
         let updateDetailedProductRes = await uploadToServer(
           file,
           "Update Detailed Products"
@@ -316,12 +337,12 @@ function UploadFiles() {
             onChange={(e) => handleFile(e)}
           />
         </div>
-        {/* עדכון מוצרים קיימים */}
+        {/* עדכון מוצרים קיימים - 1 */}
         <div
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.update}
           onClick={() => updateProduct()}
         >
-          עדכון - פריט | עדכון קטגוריות &gt; עמודות &gt; מדף
+          עדכון - פריט
           {/* file input */}
           <input
             className={UploadFilesStyle.inputFile}
@@ -329,6 +350,24 @@ function UploadFiles() {
             type="file"
             accept=".xlsx, .xls"
             name="updateProduct"
+            onChange={(e) => handleFile(e)}
+          />
+        </div>
+        {/* עדכון מוצרים קיימים - 2 */}
+        <div
+          className={
+            UploadFilesStyle.btnFile + " " + UploadFilesStyle.update
+          }
+          onClick={() => updateProductLocation()}
+        >
+          עדכון קטגוריות &gt; עמודות &gt; מדף
+          {/* file input */}
+          <input
+            className={UploadFilesStyle.inputFile}
+            ref={updateProductLocationFile}
+            type="file"
+            accept=".xlsx, .xls"
+            name="updateProductLocation"
             onChange={(e) => handleFile(e)}
           />
         </div>

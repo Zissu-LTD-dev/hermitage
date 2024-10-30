@@ -166,3 +166,49 @@
 .deleteButton{
     background-color: #FF0000;
 }
+
+.deleteBranch{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    background-color: #F5F5F5;
+    padding: 10px;
+    border-radius: 5px;
+    /* border: 1px solid #0A4F5A; */
+    /* width: 50%; */
+    /* margin: 0 auto; */
+    
+}
+
+.deleteBranchTitle{
+    font-size: 24px;
+    font-weight: 600;
+    margin: 10px 0;
+    color: red;
+}
+
+.deleteBranchButtons{
+    display: flex;
+    justify-content: start;
+    margin: 10px 0;
+}
+
+.deleteBranchButton{
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.deleteButtonDelete{
+    background-color: #FF0000;
+}
+
+.cancelButtonDelete{
+    background-color: #0A4F5A;
+}

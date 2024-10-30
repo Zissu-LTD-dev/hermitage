@@ -301,6 +301,14 @@ const editBranch = async (req, res) => {
   res.status(200).json({ message: "The branch was successfully updated" });
 };
 
+// delete branch
+const deleteBranch = async (req, res) => {
+  let branchID = req.params.id;
+  let currentBranch = await Branch.findById(branchID);
+  await currentBranch.deleteOne();
+  res.status(200).json({ message: "The branch was successfully deleted" });
+};
+
 // add type branch
 const addTypeBranch = async (req, res) => {
   let typeBranch = req.body;
@@ -588,6 +596,7 @@ module.exports = {
   allBranches,
   newBranch,
   editBranch,
+  deleteBranch,
   addTypeBranch,
   editTypeBranch,
   deleteTypeBranch,

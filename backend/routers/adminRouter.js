@@ -85,6 +85,9 @@ adminRouter.post("/newBranch", admin.newBranch);
 // edit branch
 adminRouter.put("/editBranch/:id", admin.editBranch);
 
+// delete branch
+adminRouter.delete("/deleteBranch/:id", admin.deleteBranch);
+
 // add type branch
 adminRouter.post("/addBranchType", admin.addTypeBranch);
 

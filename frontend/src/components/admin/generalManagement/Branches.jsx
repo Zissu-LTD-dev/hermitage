@@ -29,6 +29,7 @@ function Branches() {
 
   const [addBranch, setAddBranch] = useState(false);
   const [editBranch, setEditBranch] = useState(false);
+  const [deleteBranch, setDeleteBranch] = useState(0);
 
   // add branch to branches
   const addBranchHandler = async () => {
@@ -111,6 +112,10 @@ function Branches() {
       setTypeBranch(state.typeBranches);
     }
   }, [state.branches, state.typeBranches]);
+
+  useEffect(() => {
+    state.branches = branches;
+   }, [branches]);
 
   return (
     <>
@@ -495,12 +500,50 @@ function Branches() {
                       onClick={() => {
                         setEditBranch(true);
                         setNewBranch(branch);
+                        setDeleteBranch(0);
                       }}
                     >
                       עריכה
                     </div>
-                    {/* <div className={subGeneralManagement.listButton + " " + subGeneralManagement.deleteButton}>מחיקה</div> */}
+                    <div className={subGeneralManagement.listButton + " " + subGeneralManagement.deleteButton}
+                      onClick={() => {
+                        setDeleteBranch(branch.number);
+                      }}
+                    >מחיקה</div>
                   </div>
+                  {deleteBranch === branch.number && (
+                    <div className={subGeneralManagement.deleteBranch}>
+                      <div className={subGeneralManagement.deleteBranchTitle}>
+                        האם למחוק את הסניף?
+                      </div>
+                      <div className={subGeneralManagement.deleteBranchButtons}>
+                        <div
+                          className={
+                            subGeneralManagement.deleteBranchButton +
+                            " " +
+                            subGeneralManagement.cancelButtonDelete
+                          }
+                          onClick={() => setDeleteBranch(0)}
+                        >
+                          ביטול
+                        </div>
+                        <div
+                          className={
+                            subGeneralManagement.deleteBranchButton +
+                            " " +
+                            subGeneralManagement.deleteButtonDelete
+                          }
+                          onClick={() => {
+                            setDeleteBranch(0);
+                            setBranches(branches.filter((b) => b.number !== branch.number));
+                            apiRequestForForm(`admin/deleteBranch/${branch._id}`, "DELETE");
+                          }}
+                        >
+                          מחיקה
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </>

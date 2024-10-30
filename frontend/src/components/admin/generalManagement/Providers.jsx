@@ -357,7 +357,7 @@ function Providers() {
                     <div className={subGeneralManagement.listDetail}>
                       מספר ספק: {provider.number}
                     </div>
-                    <div className={subGeneralManagement.listDetail}>
+                    <div className={subGeneralManagement.listDetail} dir="ltr">
                      {provider.email ? provider.email : "אין כתובת דואר אלקטרוני"}
                     </div>
                   </div>

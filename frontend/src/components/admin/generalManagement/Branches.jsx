@@ -471,7 +471,8 @@ function Branches() {
                     <div className={subGeneralManagement.listDetail}>
                       {branch.phone ? branch.phone : "אין טלפון"}
                     </div>
-                    <div className={subGeneralManagement.listDetail}>
+                    <div className={subGeneralManagement.listDetail} dir="ltr" style={{textAlign: "right"}}>
+
                       {branch.email ? branch.email : "אין אימייל"}
                     </div>
                     <div className={subGeneralManagement.listDetail}>

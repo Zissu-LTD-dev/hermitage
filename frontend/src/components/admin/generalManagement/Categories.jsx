@@ -79,7 +79,7 @@ function Category() {
     let tempCategories = [];
     state.products.forEach(product => {
       if(!tempCategories.find(category => category === product.category)){
-        product.category && tempCategories.push(product.category);
+        product.category && tempCategories.push(parseInt(product.category));
       }
     });
     setCurrentCategory(tempCategories);

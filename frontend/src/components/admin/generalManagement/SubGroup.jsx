@@ -74,7 +74,7 @@ function SubGroup() {
     let tempSubGroups = [];
     state.products.forEach(product => {
       if(!tempSubGroups.find(subGroup => subGroup === product.subGroupNumber)){
-        product.subGroupNumber && tempSubGroups.push(product.subGroupNumber);
+        product.subGroupNumber && tempSubGroups.push(parseInt(product.subGroupNumber));
       }
     });
     setCurrentSubGroup(tempSubGroups);

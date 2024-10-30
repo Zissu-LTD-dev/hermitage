@@ -272,6 +272,8 @@ const newBranch = async (req, res) => {
       branchName: branch.name,
       emails: [],
     });
+    // sort branchEmails by branchNumber
+    provider.branchEmails.sort((a, b) => a.branchNumber - b.branchNumber);
     await provider.save();
   });
 
@@ -306,6 +308,16 @@ const deleteBranch = async (req, res) => {
   let branchID = req.params.id;
   let currentBranch = await Branch.findById(branchID);
   await currentBranch.deleteOne();
+
+  let branchs = await Branch.find({});
+  let branchsNumbers = branchs.map((branch) => branch.number);
+
+  let providers = await Provider.find({});
+  providers.map(async (provider) => {
+      provider.branchEmails = provider.branchEmails.filter((branchEmail) => branchsNumbers.includes(branchEmail.branchNumber));
+      await provider.save();
+  });
+
   res.status(200).json({ message: "The branch was successfully deleted" });
 };
 

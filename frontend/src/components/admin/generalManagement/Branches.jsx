@@ -100,6 +100,17 @@ function Branches() {
     setEditBranch(false);
   };
 
+  const updateProviders = (number) => {
+    let updatedProviders = state.providers.map((provider) => {
+      let updatedBranchEmails = provider.branchEmails.filter(
+        (branchEmail) => branchEmail.branchNumber !== number
+      );
+      provider.branchEmails = updatedBranchEmails;
+      return provider;
+    });
+    state.providers = updatedProviders;
+  };
+
   useEffect(() => {
     setEditBranch(false);
     setNewBranch(initialBranch);
@@ -534,9 +545,10 @@ function Branches() {
                             subGeneralManagement.deleteButtonDelete
                           }
                           onClick={() => {
-                            setDeleteBranch(0);
                             setBranches(branches.filter((b) => b.number !== branch.number));
                             apiRequestForForm(`admin/deleteBranch/${branch._id}`, "DELETE");
+                            updateProviders(branch.number);
+                            setDeleteBranch(0);
                           }}
                         >
                           מחיקה

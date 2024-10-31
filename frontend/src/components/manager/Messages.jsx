@@ -39,7 +39,7 @@ function Messages() {
   useEffect(() => {
       getMessages();
       getReadList();
-  }, [state]);
+  }, []);
       
 
   return (

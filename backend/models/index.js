@@ -4,6 +4,7 @@ const Category = require('./Categories.js')
 const Document = require('./Documents.js')
 const LocationProductsConfig_row = require('./LocationProductsConfig_row.js')
 const Message = require('./Messages.js')
+const MessageReads = require('./MessageReads.js')
 const Order = require('./Orders.js')
 const Product = require('./Products.js')
 const Provider = require('./Providers.js')
@@ -17,6 +18,7 @@ module.exports = {
     Document,
     LocationProductsConfig_row,
     Message,
+    MessageReads,
     Order,
     Product,
     Provider,

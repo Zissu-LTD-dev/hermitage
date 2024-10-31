@@ -16,7 +16,6 @@ const branchSchema = new mongoose.Schema({
   branchTypeNumber: Number,
   branchTypeName: String,
   blockedProviders: Array,
-  messages: Array,
 });
 
 module.exports = mongoose.model("Branch", branchSchema);

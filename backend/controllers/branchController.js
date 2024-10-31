@@ -2,8 +2,8 @@ const {
   Branch,
   Category,
   SubGroup,
-  Notifications,
-  Obligations,
+  Message,
+  MessageReads,
   Document,
   Order,
   Product,
@@ -207,17 +207,35 @@ const downloadDocument = async (req, res) => {
   res.download(document.link);
 };
 
+// getMessages
+const getMessages = async (req, res) => {
+  // params
+  let branchId = req.params.branchId;
+  // תביא לי רק את ההודעות של הסניף הזה אם הוא נמצא במערך branch_ids
+  let messages = await Message.find({ branch_ids: branchId });
+  res.status(200).json(messages);
+};
+
+// getReadList
+const getReadList = async (req, res) => {
+  let branchId = req.params.branchId;
+  let readList = await MessageReads.find({ branch_id: branchId })
+  res.status(200).json(readList);
+}
+
 // readMessage
 const readMessage = async (req, res) => {
-  let branchId = req.body.branch;
-  let branch = await Branch.findById(branchId);
-  // updata all messages to read
-  let messages = branch.messages.map((msg) => {
-    msg.read = true;
-    return msg;
+  let { branch, messages } = req.body;
+  let readList = messages.map((msg) => {
+    return {
+      message_id: msg._id,
+      branch_id: branch,
+      read_timestamp: new Date(),
+    };
   });
-  await branch.updateOne({ messages: messages });
-  res.status(200).json({ message: "The message was read successfully" });
+
+  let readMessages = await MessageReads.insertMany(readList);
+  res.status(200).json({ readMessages });
 };
 
 module.exports = {
@@ -229,5 +247,7 @@ module.exports = {
   getOrders,
   allDocuments,
   downloadDocument,
+  getMessages,
+  getReadList,
   readMessage,
 };

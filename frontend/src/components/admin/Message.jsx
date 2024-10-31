@@ -86,7 +86,7 @@ function Message() {
                 <label for="all">כל הסניפים</label>
               </div>
               {branches.map((branch) => (
-                <div>
+                <div key={branch._id}>
                   <input
                     key={branch._id}
                     type="checkbox"

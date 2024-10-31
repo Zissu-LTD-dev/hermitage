@@ -7,8 +7,8 @@ const {
   SubGroup,
   Category,
   LocationProductsConfig_row,
-  Notifications,
-  Obligations,
+  Message,
+  MessageReads,
   Document,
   Order,
   Product,
@@ -568,26 +568,10 @@ const deleteLocationProductsConfig = async (req, res) => {
 // add message to branchs
 const addMessageToBranchs = async (req, res) => {
   let { branchesList, message,  sender } = req.body;
-  try {
-    const branches = await Branch.find({});
-    branches.forEach(async (branch) => {
-      if (branchesList.includes(branch._id.toString())) {
-        let idForMessage = `${branch._id}${branch.messages.length + 1}`;
-        branch.messages.push({
-          id: idForMessage,
-          contact: message,
-          sender: sender,
-          date: new Date().toLocaleString(),
-          read: false,
-        });
-        await branch.save();
-      }
-    });
-    res.status(200).json({ message: "Updated Successfully" });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
+  let timestamp = new Date();
+  let newMessage = new Message({ content: message, branch_ids: branchesList, sender, timestamp });
+  await newMessage.save();
+  res.status(200).json({ message: "The message was successfully added" });
 };
 
 module.exports = {

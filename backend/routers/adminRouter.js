@@ -7,7 +7,7 @@ const path = require("path");
 
 const storagePDF = multer.diskStorage({
     destination: function(req, file, cb) {
-      cb(null, path.join(__dirname, "../assets/documents"));
+      cb(null, path.join(process.env.UPLOADS_FOLDER));
     },
     // filename with utf-8
     filename:  function(req, file, cb) {
@@ -19,7 +19,7 @@ const storagePDF = multer.diskStorage({
 
   const storageXLSX = multer.diskStorage({
     destination: function(req, file, cb) {
-      cb(null, path.join(__dirname, "../assets/documents"));
+      cb(null, path.join(process.env.UPLOADS_FOLDER));
     },
     // filename with utf-8
     filename:  function(req, file, cb) {

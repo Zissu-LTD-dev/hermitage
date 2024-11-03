@@ -19,10 +19,12 @@ function Documents() {
   const [fileName, setFileName] = useState("");
 
   const handleFile = (e) => {
-    if (e.target.files[0].type !== "application/pdf") {
+    // check if the file is a pdf or word or excel
+    let allowedFiles = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"];
+    if (!allowedFiles.includes(e.target.files[0].type)) {
       dispatch({
         type: "SET_SHOW_ERROR",
-        payload: { show: true, message: "PDF הקובץ אינו" },
+        payload: { show: true, message: "הקובץ לא נתמך" },
       });
       return;
     }

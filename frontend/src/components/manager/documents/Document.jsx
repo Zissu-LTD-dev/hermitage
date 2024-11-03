@@ -25,7 +25,7 @@ function Document({document}) {
     <>
       <div className={documentStyle.main}>
         <span>
-          <div className={documentStyle.name}>{name}</div>
+          <div className={documentStyle.name}>{link.split(".")[link.split("/").length - 1] + "." +  name }</div>
           <div className={documentStyle.date}>{date}</div>
         </span>
         <span>

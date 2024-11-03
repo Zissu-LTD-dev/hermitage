@@ -104,7 +104,7 @@ function Document({dataDocument}) {
     
     let a = document.createElement('a');
     a.href = url;
-    a.download = `${name}.pdf`;
+    a.download = `${name}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -158,7 +158,7 @@ function Document({dataDocument}) {
     <>
       <div className={documentStyle.main}>
         <span>
-          <div className={documentStyle.name}>{name}</div>
+          <div className={documentStyle.name}>{link.split(".")[link.split("/").length - 1] + "." +  name }</div>
           <div className={documentStyle.date}>{date}</div>
           {forTo.includes("כל הסניפים") && <div className={documentStyle.forTo} >כל הסניפים</div> }
           {!forTo.includes("כל הסניפים") && 

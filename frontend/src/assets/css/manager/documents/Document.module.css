@@ -17,7 +17,7 @@
 }
 
 .name {
-  width: 150px;
+  min-width: 150px;
   /* font: normal normal 600 16px/20px IBM Plex Sans Hebrew; */
   font-size: 16px;
   font-weight: 600;

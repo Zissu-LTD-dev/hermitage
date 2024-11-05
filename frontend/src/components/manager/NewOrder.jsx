@@ -32,6 +32,16 @@ function DynamicContent() {
     localStorage.setItem("activeOrder", '{}');
   };
 
+  const updateActiveOrder = () => {
+    const activeOrder = {
+      orderedProducts: state.orderedProducts,
+      returnedProducts: state.returnedProducts,
+      summary: state.summary,
+      branchNumbers: state.userInfo.branch.number
+    };
+    localStorage.setItem("activeOrder", JSON.stringify(activeOrder));
+  };
+
   useEffect(() => {
     const activeOrder = localStorage.getItem("activeOrder");
     if (activeOrder) {
@@ -69,6 +79,10 @@ function DynamicContent() {
       dispatch({ type: "SET_ACTIVE_NAVBAR", payload: false });
     }
   }, [state.statusOrder]);
+
+  useEffect(() => {
+    updateActiveOrder();
+  }, [state.orderedProducts, state.returnedProducts, state.summary]);
 
   return (
     <>

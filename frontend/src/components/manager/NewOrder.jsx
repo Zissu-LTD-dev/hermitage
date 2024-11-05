@@ -29,6 +29,7 @@ function DynamicContent() {
   const handleNewOrder = () => {
     localStorage.removeItem("activeOrder");
     setShowPopup(false);
+    localStorage.setItem("activeOrder", '{}');
   };
 
   useEffect(() => {

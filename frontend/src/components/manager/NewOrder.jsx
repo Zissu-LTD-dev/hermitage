@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import newOrder from "../../assets/css/manager/NewOrder.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
-
 import apiRequest from "../../services/api";
-
-
 import Categories from "./newOrder/Categories";
 import Wizard from "./newOrder/Wizard";
 import Column from "./newOrder/Column";
@@ -17,13 +14,29 @@ function DynamicContent() {
   const { state, dispatch } = useMainContext();
   const [activeFiltersSearch, setActiveFiltersSearch] = useState(false);
   const [branches, setBranches] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
 
   const getBranches = async () => {
     let data = await apiRequest("admin/allBranches");
     if (!data) return false;    
     return data;
-    
   };
+
+  const handleContinueOrder = () => {
+    setShowPopup(false);
+  };
+
+  const handleNewOrder = () => {
+    localStorage.removeItem("activeOrder");
+    setShowPopup(false);
+  };
+
+  useEffect(() => {
+    const activeOrder = localStorage.getItem("activeOrder");
+    if (activeOrder) {
+      setShowPopup(true);
+    }
+  }, []);
 
   useEffect(() => {
     dispatch({ type: "SET_STATUS_ORDER", payload: 1 });
@@ -58,6 +71,15 @@ function DynamicContent() {
 
   return (
     <>
+      {showPopup && (
+        <div className={newOrder.popupOverlay}>
+          <div className={newOrder.popup}>
+            <p>יש הזמנה פעילה האם להמשיך?</p>
+            <button className={newOrder.continueOrderBtn} onClick={handleContinueOrder}>המשך הזמנה</button>
+            <button className={newOrder.newOrderBtn} onClick={handleNewOrder}>הזמנה חדשה</button>
+          </div>
+        </div>
+      )}
       <div className={newOrder.main}>
         <div className={newOrder.header}>
           <div className={newOrder.title}>{state.statusOrder.title}
@@ -88,19 +110,13 @@ function DynamicContent() {
             {state.statusOrder.step === 1 && activeFiltersSearch && (
               <OrderFilterProduct key={state.statusOrder.step} />
             )}
-
-
             {state.statusOrder.step === 2 &&
               state.orderedProducts.map((product, i) => (
                 <ProductOrderSummary key={product.barcode} productData={product} />
               ))}
-
-
             {state.statusOrder.step === 3 &&
                 <ReturnFilterProduct key={state.statusOrder.step} />
               }
-
-
             {state.statusOrder.step === 4 &&
               state.summary.map((provider, i) => (
                 <OrderSummary key={`${i}${provider.providerNumber}`} providers={provider} index={i} />

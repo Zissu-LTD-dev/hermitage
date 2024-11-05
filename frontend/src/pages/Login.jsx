@@ -54,7 +54,7 @@ function Login() {
   useEffect(() => {
     dispatch({ type: "CLEAR_STATE" });
     document.cookie = `token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-    localStorage.clear();
+    localStorage.setItem("user", null)
   }, []);
 
 

@@ -15,6 +15,8 @@ function DynamicContent() {
   const [activeFiltersSearch, setActiveFiltersSearch] = useState(false);
   const [branches, setBranches] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
+  const [activeOrder, setActiveOrder] = useState(localStorage.getItem("activeOrder"));
+  const [firstTime, setFirstTime] = useState(true);
 
   const getBranches = async () => {
     let data = await apiRequest("admin/allBranches");
@@ -23,13 +25,16 @@ function DynamicContent() {
   };
 
   const handleContinueOrder = () => {
+    let activeOrder = JSON.parse(localStorage.getItem("activeOrder"));
+    state.orderedProducts = activeOrder.orderedProducts;
+    state.returnedProducts = activeOrder.returnedProducts;
+    state.summary = activeOrder.summary;
     setShowPopup(false);
   };
 
   const handleNewOrder = () => {
-    localStorage.removeItem("activeOrder");
+    localStorage.setItem("activeOrder", "{}");
     setShowPopup(false);
-    localStorage.setItem("activeOrder", '{}');
   };
 
   const updateActiveOrder = () => {
@@ -43,13 +48,6 @@ function DynamicContent() {
   };
 
   useEffect(() => {
-    const activeOrder = localStorage.getItem("activeOrder");
-    if (activeOrder) {
-      setShowPopup(true);
-    }
-  }, []);
-
-  useEffect(() => {
     dispatch({ type: "SET_STATUS_ORDER", payload: 1 });
     if (state.userInfo.role !== "manager" ) {
       let allBranches = getBranches();
@@ -58,6 +56,9 @@ function DynamicContent() {
           setBranches(data.branches);
         }
       });
+    }
+    if(activeOrder && activeOrder !== "{}" && state.userInfo.branch.number == JSON.parse(activeOrder).branchNumbers) {
+      setShowPopup(true);
     }
   }, []);
 
@@ -81,7 +82,11 @@ function DynamicContent() {
   }, [state.statusOrder]);
 
   useEffect(() => {
-    updateActiveOrder();
+    if(!firstTime) {
+      updateActiveOrder();
+    } else {
+      setFirstTime(false);
+    }
   }, [state.orderedProducts, state.returnedProducts, state.summary]);
 
   return (

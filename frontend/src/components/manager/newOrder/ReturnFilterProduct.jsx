@@ -6,6 +6,7 @@ import ProductReturn from "./ProductReturn";
 function ReturnFilterProduct() {
   const { state, dispatch } = useMainContext();
   const [products, setProducts] = useState([]);
+  const [orderProvidersList, setOrderProvidersList] = useState([]);
 
   const filterProducts = () => {
     let newProducts = [];
@@ -36,6 +37,14 @@ function ReturnFilterProduct() {
   };
 
   useEffect(() => {
+    let newOrderProvidersList = state.orderedProducts.map((product) => {
+      return product.providerNumber;
+    });
+    newOrderProvidersList = [...new Set(newOrderProvidersList)];
+    setOrderProvidersList(newOrderProvidersList);
+  }, []);
+
+  useEffect(() => {
     if (state.displayFilters.length != 0) filterProducts();
     if (state.search != "") searchProducts();
 
@@ -49,14 +58,14 @@ function ReturnFilterProduct() {
       {products.length > 0 && (
         <div className={filterProductStyle.main}>
           {products.map((product) => (
-            <ProductReturn key={product.barcode} productData={product} />
+            <ProductReturn key={product.barcode} productData={product} open={orderProvidersList.includes(product.providerNumber)} />
           ))}
         </div>
       )}
       {!state.displayFilters.length && !state.search && !products.length && (
         <div className={filterProductStyle.main}>
           {state.returnedProducts.map((product) => (
-            <ProductReturn key={product.barcode} productData={product} />
+            <ProductReturn key={product.barcode} productData={product} open={orderProvidersList.includes(product.providerNumber)} />
           ))}
         </div>
       )}

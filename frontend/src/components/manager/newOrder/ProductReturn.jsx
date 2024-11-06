@@ -5,7 +5,7 @@ import { useMainContext } from "../../../context/mainContext/MainContext";
 import imgProductDefault  from '../../../assets/image/products/000.png';
 const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
-const ProductReturn = ({ productData }) => {
+const ProductReturn = ({ productData, open }) => {
   const { state, dispatch } = useMainContext();
 
   // let { image, name, providerName, categoryName, barcode } = productData;
@@ -67,7 +67,7 @@ const ProductReturn = ({ productData }) => {
   }, [state.displayFilters, state.searchResults]);
 
   return (
-    <div className={product.main}>
+    <div className={product.main + " " + (!open ? product.disabled : "")}> 
       <span>
       <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
       <h2>{name}</h2>
@@ -97,7 +97,7 @@ const ProductReturn = ({ productData }) => {
             </div>
           </>
         )}
-        {!active && (
+        {!active && open && (
           <>
             <div onClick={() => setActive(true)} className={product.btn}>
               <div className={product.btnIcon}></div>
@@ -110,6 +110,20 @@ const ProductReturn = ({ productData }) => {
             </div>
           </>
         )}
+        {!active && !open && (
+          <>
+            <div className={product.btn} style={{cursor: "not-allowed"}}>
+              <div className={product.btnIcon}></div>
+              <div className={product.btnText}>הוסף מוצר להחזרה </div>
+            </div>
+            <div className={product.buttons + " " + product.disabled}>
+              <button className={product.decrease}></button>
+              <div className={product.quantity} >{quantity}</div>
+              <button className={product.increase}></button>
+            </div>
+          </>
+        )}
+
       </span>
     </div>
   );

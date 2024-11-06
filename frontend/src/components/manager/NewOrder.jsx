@@ -38,6 +38,7 @@ function DynamicContent() {
   };
 
   const updateActiveOrder = () => {
+    if(state.orderedProducts.length == 0 && state.returnedProducts.length == 0) return;
     const activeOrder = {
       orderedProducts: state.orderedProducts,
       returnedProducts: state.returnedProducts,

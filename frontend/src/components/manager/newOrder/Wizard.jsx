@@ -22,6 +22,7 @@ function Wizard() {
     if (data) {
       dispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "ההזמנה נשלחה בהצלחה" } });
       dispatch({ type: "CLEAR_ORDER" });
+      localStorage.setItem("activeOrder", "{}");
       setStep(1);
     } else {
       dispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "אירעה שגיאה בשליחת ההזמנה" } });

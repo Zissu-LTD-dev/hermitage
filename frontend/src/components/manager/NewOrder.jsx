@@ -42,8 +42,7 @@ function DynamicContent() {
     const activeOrder = {
       orderedProducts: state.orderedProducts,
       returnedProducts: state.returnedProducts,
-      summary: state.summary,
-      branchNumbers: state.userInfo.branch.number
+      summary: state.summary
     };
     localStorage.setItem("activeOrder", JSON.stringify(activeOrder));
   };
@@ -58,7 +57,7 @@ function DynamicContent() {
         }
       });
     }
-    if(activeOrder && activeOrder !== "{}" && state.userInfo.branch.number == JSON.parse(activeOrder).branchNumbers) {
+    if(activeOrder && activeOrder !== "{}") {
       setShowPopup(true);
     }
   }, []);

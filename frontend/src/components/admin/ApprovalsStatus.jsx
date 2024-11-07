@@ -11,14 +11,14 @@ function ApprovalsStatus() {
   const { state: stateAdmin, dispatch: dispatchAdmin } = useAdminContext();
   const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
-  const [orderBy, setOrderBy] = useState("panding");
+  const [orderBy, setOrderBy] = useState("pending");
 
 
   const handleOrderBy = () => {
     let newOrders = stateAdmin.confirmationOrders.filter((order) => order.orderLines.quantity > 0);
     let newReturnOrders = stateAdmin.confirmationOrders.filter((order) => order.returnLines.quantity > 0);
     switch (orderBy) {
-      case "panding":
+      case "pending":
         newOrders = newOrders.filter((order) => order.orderStatus == "pending");
         break;
       case "canceled":
@@ -141,7 +141,7 @@ function ApprovalsStatus() {
         <div className={approvalsStatus.header}>
           <div className={approvalsStatus.title}>סטטוס אישורים להזמנות</div>
           <div className={approvalsStatus.filter_buttons}>
-              <div className={approvalsStatus.pending_button} onClick={() => setOrderBy("panding")} >הזמנות ממתינות לאישור</div>
+              <div className={approvalsStatus.pending_button} onClick={() => setOrderBy("pending")} >הזמנות ממתינות לאישור</div>
               <div className={approvalsStatus.canceled_button} onClick={() => setOrderBy("canceled")}>הזמנות מבוטלות</div>
               <div className={approvalsStatus.approved_button} onClick={() => setOrderBy("approved")} >הזמנות מאושרות</div>
               <div className={approvalsStatus.returned_button} onClick={() => setOrderBy("returned")} >החזרות</div>

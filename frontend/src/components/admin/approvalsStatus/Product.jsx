@@ -28,8 +28,8 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
           <div className={productStyle.category}>{subGroupName}</div>
           <div className={productStyle.barcode}>{barcode}</div>
           <div className={productStyle.barcode}>{price}₪</div>
-          { orderBy != "panding" && <div className={productStyle.barcode}> {quantity} פריטים </div> }
-          { orderBy == "panding" && (
+          { orderBy != "pending" && <div className={productStyle.barcode}> {quantity} פריטים </div> }
+          { orderBy == "pending" && (
             <>
               <div className={productStyle.quantity}>
                 <button

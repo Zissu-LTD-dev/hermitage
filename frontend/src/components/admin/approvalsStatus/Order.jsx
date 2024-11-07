@@ -215,7 +215,7 @@ function Order({ orderData, orderBy }) {
             ></div>
           </span>
         </div>
-        {open && orderBy == "panding" && (
+        {open && orderData.orderStatus == "pending" && (
           <>
             <div className={orderStyle.body}>
               {products.map((product) => (
@@ -268,7 +268,7 @@ function Order({ orderData, orderBy }) {
             </div>
           </>
         )}
-        {open && orderBy != "panding" && (
+        {open && orderData.orderStatus != "pending" && (
           <>
             <div className={orderStyle.body}>
               {products.map((product) => (

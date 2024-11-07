@@ -14,7 +14,9 @@ function DynamicContent() {
   const { state, dispatch } = useMainContext();
   const [activeFiltersSearch, setActiveFiltersSearch] = useState(false);
   const [branches, setBranches] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopupActiveOrder, setShowPopupActiveOrder] = useState(false);
+  const [showPopupInReturn0, setShowPopupInReturn0] = useState(false);
+  const [showPopupInReturn1, setShowPopupInReturn1] = useState(false);
   const [activeOrder, setActiveOrder] = useState(localStorage.getItem("activeOrder"));
   const [firstTime, setFirstTime] = useState(true);
 
@@ -29,12 +31,12 @@ function DynamicContent() {
     state.orderedProducts = activeOrder.orderedProducts;
     state.returnedProducts = activeOrder.returnedProducts;
     state.summary = activeOrder.summary;
-    setShowPopup(false);
+    setShowPopupActiveOrder(false);
   };
 
   const handleNewOrder = () => {
     localStorage.setItem("activeOrder", "{}");
-    setShowPopup(false);
+    setShowPopupActiveOrder(false);
   };
 
   const updateActiveOrder = () => {
@@ -58,7 +60,7 @@ function DynamicContent() {
       });
     }
     if(activeOrder && activeOrder !== "{}") {
-      setShowPopup(true);
+      setShowPopupActiveOrder(true);
     }
   }, []);
 
@@ -71,6 +73,13 @@ function DynamicContent() {
   }, [state.search, state.displayFilters]);
 
   useEffect(() => {
+    if (state.statusOrder.step === 3){
+      if (state.orderedProducts.length == 0) {
+        setShowPopupInReturn0(true);
+      } else {
+        setShowPopupInReturn1(true);
+      }
+    }
     if (state.statusOrder.step === 1 || state.statusOrder.step === 3) {
       dispatch({ type: "SET_ACTIVE_NAVBAR", payload: true });
     } else {
@@ -91,12 +100,40 @@ function DynamicContent() {
 
   return (
     <>
-      {showPopup && (
+      {/* פופאפ אם יש הזמנה פעילה */}
+      {showPopupActiveOrder && (
         <div className={newOrder.popupOverlay}>
           <div className={newOrder.popup}>
             <p>יש הזמנה פעילה האם להמשיך?</p>
             <button className={newOrder.continueOrderBtn} onClick={handleContinueOrder}>המשך הזמנה</button>
             <button className={newOrder.newOrderBtn} onClick={handleNewOrder}>הזמנה חדשה</button>
+          </div>
+        </div>
+      )}
+      {/* פופאפ אם אין מוצרים להזמנה */}
+      {showPopupInReturn0 && (
+        <div className={newOrder.popupOverlay}>
+          <div className={newOrder.popup}>
+            <p>אין מוצרים להזמנה </p>
+            <button className={newOrder.continueOrderBtn} onClick={ () => {
+              setShowPopupInReturn0(false);
+              dispatch({ type: "SET_STATUS_ORDER", payload: 1 });
+            }} >חזור להזמנה</button>
+          </div>
+        </div>
+      )}
+      {/* פופאפ אם להשאר בהחזרת מוצרים או לעבור לסיכום */}
+      {showPopupInReturn1 && (
+        <div className={newOrder.popupOverlay}>
+          <div className={newOrder.popup}>
+            <p>האם להשאר בהחזרת מוצרים או לעבור לסיכום?</p>
+            <button className={newOrder.continueOrderBtn} onClick={ () => {
+              setShowPopupInReturn1(false);
+            }} >החזרת מוצרים</button>
+            <button className={newOrder.newOrderBtn} onClick={ () => {
+              setShowPopupInReturn1(false);
+              dispatch({ type: "SET_STATUS_ORDER", payload: 4 });
+            }} >סיכום הזמנה</button>
           </div>
         </div>
       )}

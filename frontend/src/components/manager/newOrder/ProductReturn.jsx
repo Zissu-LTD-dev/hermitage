@@ -74,6 +74,9 @@ const ProductReturn = ({ productData, open }) => {
       </span>
 
       <span>
+      {!open && <p style={
+          {textAlign: "center", color: "red", fontSize: "1 rem", fontWeight: "bold"}
+      } >אין הזמנות מספק זה </p>}
         <p>{providerName}</p>
         <p>{subGroupName}</p>
         <p>{price ? `${price.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}₪` : "אין מחיר זמין"}</p>

@@ -19,6 +19,7 @@ function DynamicContent() {
   const [showPopupInReturn1, setShowPopupInReturn1] = useState(false);
   const [activeOrder, setActiveOrder] = useState(localStorage.getItem("activeOrder"));
   const [firstTime, setFirstTime] = useState(true);
+  const [emptyColumn, setEmptyColumn] = useState([]);
 
   const getBranches = async () => {
     let data = await apiRequest("admin/allBranches");
@@ -91,6 +92,16 @@ function DynamicContent() {
   }, [state.statusOrder]);
 
   useEffect(() => {
+    if(state.displayProductsConfig.length > 0) {
+      let Products = state.allProducts.filter((product) => product.category == state.activeCategory);
+      let emptyColumn = Products.map((product) => product.location.column);
+      emptyColumn = emptyColumn.filter((column) => typeof column === "number");
+      let unique = [...new Set(emptyColumn)].sort();
+      setEmptyColumn(unique);
+    }
+   }, [state.displayProductsConfig]);
+
+  useEffect(() => {
     if(!firstTime) {
       updateActiveOrder();
     } else {
@@ -159,10 +170,11 @@ function DynamicContent() {
             {state.statusOrder.step === 1 &&
               !activeFiltersSearch &&
               state.displayProductsConfig.map((column, i) => (
-                <Column 
+                emptyColumn.includes(column.columnsNumber) && 
+                  <Column 
                   key={`${state.activeCategory}-${i}`}
                   details={column}
-                />
+                /> 
               ))}
             {state.statusOrder.step === 1 && activeFiltersSearch && (
               <OrderFilterProduct key={state.statusOrder.step} />

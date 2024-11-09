@@ -15,7 +15,7 @@ function ApprovalsStatus() {
 
 
   const handleOrderBy = () => {
-    let newOrders = stateAdmin.confirmationOrders.filter((order) => order.orderLines.quantity > 0);
+    let newOrders = stateAdmin.confirmationOrders.filter((order) => order.orderLines.quantity >= 0);
     let newReturnOrders = stateAdmin.confirmationOrders.filter((order) => order.returnLines.quantity > 0);
     switch (orderBy) {
       case "pending":

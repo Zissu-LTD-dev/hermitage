@@ -8,6 +8,7 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
   const { state, dispatch } = useMainContext();
   const [product, setProduct] = useState(productData);
   let { _id, name, price, subGroupName, barcode, quantity } = product;
+  let originalQuantity = product.originalQuantity || quantity ;
   let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
   const [imageError, setImageError] = useState(false);
 
@@ -28,7 +29,7 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
           <div className={productStyle.category}>{subGroupName}</div>
           <div className={productStyle.barcode}>{barcode}</div>
           <div className={productStyle.barcode}>{price}₪</div>
-          { orderBy != "pending" && <div className={productStyle.barcode}> {quantity} פריטים </div> }
+          { orderBy != "pending" && <div className={productStyle.barcode}> {quantity} פריטים <br/> ( במקור {originalQuantity} פריטים ) </div> }
           { orderBy == "pending" && (
             <>
               <div className={productStyle.quantity}>

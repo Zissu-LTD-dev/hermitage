@@ -20,14 +20,14 @@ const ProductOrder = ({productData}) => {
     
       const onIncrease = () => {
         setQuantity(quantity + 1);
-        dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity + 1 } });
+        dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity + 1 , originalQuantity: quantity + 1} });
       }
       
       const onDecrease = () => {
         if (quantity > 0) {
           setQuantity(quantity - 1);
           if(quantity > 1){
-            dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity - 1 } });
+            dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: quantity - 1 , originalQuantity: quantity - 1} });
           }else{
           dispatch({ type: "REMOVE_ORDERED_PRODUCT", payload:  barcode  });
         }}

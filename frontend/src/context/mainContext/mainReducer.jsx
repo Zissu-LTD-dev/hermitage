@@ -298,7 +298,7 @@ export const mainReducer = (state, action) => {
       let orderedProducts = state.orderedProducts.map((product) => {
         if (product.barcode === action.payload.barcode) {
           productExists = true;
-          return { ...product, quantity: action.payload.quantity };
+          return { ...product, quantity: action.payload.quantity, originalQuantity: action.payload.originalQuantity };
         } else {
           return product;
         }

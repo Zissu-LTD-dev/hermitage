@@ -14,7 +14,7 @@ const ProductOrder = ({ productData }) => {
   const onIncrease = () => {
     dispatch({
       type: "ADD_ORDERED_PRODUCT",
-      payload: { ...productData, quantity: quantity + 1 },
+      payload: { ...productData, quantity: quantity + 1, originalQuantity: quantity + 1 },
     });
   };
 
@@ -22,12 +22,12 @@ const ProductOrder = ({ productData }) => {
     if (productData.quantity > 1) {
       dispatch({
         type: "ADD_ORDERED_PRODUCT",
-        payload: { ...productData, quantity: quantity - 1 },
+        payload: { ...productData, quantity: quantity - 1, originalQuantity: quantity - 1 },
       });
     } else {
       dispatch({
         type: "ADD_ORDERED_PRODUCT",
-        payload: { ...productData, quantity: 0 },
+        payload: { ...productData, quantity: 0, originalQuantity: 0 },
       });
     }
   };

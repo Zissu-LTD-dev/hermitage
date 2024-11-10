@@ -1,11 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import Imaging from "../../../assets/css/manager/ImagingColumn/ImagingColumn.module.css";
 import shelf from "../../../assets/image/ImagingColumn/Asset 4@4x.png";
+import imgProductDefault  from '../../../assets/image/products/000.png';
+const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
+
 
 function ImagingColumn({ name, activeRow, products, openImaging, closeImaging }) {
   const [productsGroup, setProductsGroup] = useState([]);
+  let image = `${REACT_APP_PROJECT_IMAGES}${products.barcode}.png`;
+
 
   const [open, setOpen] = useState(openImaging);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  }
+
 
   useEffect(() => {
     let temp = [];
@@ -72,10 +83,7 @@ function ImagingColumn({ name, activeRow, products, openImaging, closeImaging })
                         return (
                           <div className={Imaging.product} key={index}>
                             <div className={Imaging.img}>
-                              <img
-                                src={"https://picsum.photos/2" + i + index}
-                                alt=""
-                              />
+                              <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
                             </div>
                             <div className={Imaging.name}>{product.name}</div>
                           </div>

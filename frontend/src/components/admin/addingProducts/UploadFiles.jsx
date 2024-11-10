@@ -424,6 +424,10 @@ function UploadFiles() {
             >
               העלאה
             </button>
+            {/* מספר הפריטים שמופיעים בטבלה  */}
+            <span className={UploadFilesStyle.items}>
+              סה"כ פריטים: {fileData.length}
+            </span>
           </div>
         </>
       )}

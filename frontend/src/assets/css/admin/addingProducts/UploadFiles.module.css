@@ -142,5 +142,14 @@
     color: #082A3A;
     cursor: not-allowed;
 }
-
+.items {
+   /* תעשה האתמות לטקסט לגודל ופונט */
+    font-size: 20px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: bold;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #082A3A;
+    margin: 20px;
+}
 

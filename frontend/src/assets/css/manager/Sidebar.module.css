@@ -120,3 +120,16 @@
     color: #BE955D; 
     cursor: pointer;
 }
+
+
+.unread{
+  background-color: #BE955D;
+  color: #ffffff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
+}

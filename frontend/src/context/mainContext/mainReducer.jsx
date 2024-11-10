@@ -45,6 +45,7 @@ export const initialState = {
   summary: [],
 
   documents: [],
+  unreadMessages: 0,
 };
 
 export const CLEAR_STATE = "CLEAR_STATE";
@@ -93,6 +94,7 @@ export const UPDATE_SUMMARY = "UPDATE_SUMMARY";
 export const CLEAR_ORDER = "CLEAR_ORDER";
 
 export const SET_DOCUMENTS = "SET_DOCUMENTS";
+export const SET_UNREAD_MESSAGES = "SET_UNREAD_MESSAGES";
 
 export const mainReducer = (state, action) => {
   switch (action.type) {
@@ -430,6 +432,9 @@ export const mainReducer = (state, action) => {
 
     case SET_DOCUMENTS:
       return { ...state, documents: action.payload };
+    
+    case SET_UNREAD_MESSAGES:
+      return { ...state, unreadMessages: action.payload };
 
     default:
       return state;

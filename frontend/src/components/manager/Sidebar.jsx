@@ -41,6 +41,9 @@ function Sidebar() {
               <img src={massage} alt="massage" />
             </div>
             <span>הודעות</span>
+            {state.unreadMessages > 0 &&
+              <span className={sidebar.unread}>{state.unreadMessages}</span>
+            }
           </div>
           <div onClick={() => changeStatus("new order")}>
             <div className={sidebar.icon}>

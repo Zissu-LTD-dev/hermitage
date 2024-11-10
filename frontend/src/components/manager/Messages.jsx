@@ -40,6 +40,11 @@ function Messages() {
       getMessages();
       getReadList();
   }, []);
+
+  useEffect(() => {
+    let unread = messageData.filter((msg) => !readList.includes(msg._id));
+    dispatch({ type: "SET_UNREAD_MESSAGES", payload: unread.length });
+  }, [messageData, readList]);
       
 
   return (

@@ -76,6 +76,7 @@ const createOrder = async (req, res) => {
   // order number
   let lastOrder = await Order.findOne().sort({ orderNumber: -1 });
   let newOrderNumber = lastOrder ? lastOrder.orderNumber : 100;
+  let sendMail = false;
 
   let allOrders = [];
 
@@ -120,8 +121,12 @@ const createOrder = async (req, res) => {
     let providerNumber = order.providerNumber;
 
     // Check if have limited in this order
-    let products = order.orderLines.products;
-    let productsLimited = products.filter((product) => product.limited);
+    let productsLimited = order.orderLines.products.filter(
+      (product) => {
+        if (product.QuantityLimit == 0) return false;
+        return product.quantity > product.QuantityLimit ? true : false;
+      }
+    );
     if (productsLimited.length > 0) {
       console.log(
         `Provider ${providerNumber} is blocked for branch ${branchNumber}`
@@ -163,13 +168,14 @@ const createOrder = async (req, res) => {
         console.log("Mail was not sent");
       }
     });
+    sendMail = true;
     return Promise.all(mailPromises);
   });
 
   Promise.all(mailPromises)
     .then(() => {
-      console.log("All mails were sent successfully");
-      res.status(200).json({ message: "The order was successfully" });
+      console.log(sendMail ? "All mails were sent successfully" : "No mails were sent saved roders only waiting for approval");
+      res.status(200).json({ message: swndMail ? "All mails were sent successfully" : "No mails were sent saved roders only waiting for approval" });
     })
     .catch((error) => {
       console.error(error);

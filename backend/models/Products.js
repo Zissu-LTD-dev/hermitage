@@ -16,7 +16,10 @@ const ProductSchema = new mongoose.Schema({
   price: Number,
   branchTypeConfig: [{ 
     branchType: Number,
-    available: Boolean,
+    QuantityLimit : {
+      type: Number,
+      default: 0
+    },
     location: {
       column: Number,
       shelf: Number,
@@ -24,10 +27,6 @@ const ProductSchema = new mongoose.Schema({
     }
   }], 
   isBlocked: {
-    type: Boolean,
-    default: false
-  },
-  limited: {
     type: Boolean,
     default: false
   },

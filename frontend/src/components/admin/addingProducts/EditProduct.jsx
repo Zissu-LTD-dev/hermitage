@@ -30,7 +30,7 @@ function EditProduct({ product, cancel, save }) {
       } else {
         branchTypeConfig.push({
           branchType: branch.typeId,
-          available: true,
+          QuantityLimit: 0,
           location: {
             column: 0,
             shelf: 0,
@@ -146,7 +146,7 @@ function EditProduct({ product, cancel, save }) {
                 }
               />
             </div>
-            <div
+            {/* <div
               className={
                 EditproductStyle.productDetails +
                 " " +
@@ -162,7 +162,7 @@ function EditProduct({ product, cancel, save }) {
                   setNewProduct({ ...newProduct, limited: e.target.checked })
                 }
               />
-            </div>
+            </div> */}
             <div
               className={
                 EditproductStyle.productDetails + " " + EditproductStyle.config
@@ -198,34 +198,32 @@ function EditProduct({ product, cancel, save }) {
                   }
                 >
                   {/* פריט זמין*/}
-                  <div
-                    className={
-                      EditproductStyle.productDetails +
-                      " " +
-                      EditproductStyle.checkbox
-                    }
-                  >
-                    <div className={EditproductStyle.Text}>פריט זמין</div>
+                
+                    <div className={EditproductStyle.Text}>הגבל פריט</div>
                     <input
-                      type="checkbox"
+                      type="number"
                       className={EditproductStyle.input}
-                      checked={
+                      min="0"
+                      value={
                         branchTypeConfig.length > 0 &&
-                        branchTypeConfig[currentBranchTypeConfig - 1].available
-                          ? true
-                          : false
+                        branchTypeConfig[currentBranchTypeConfig - 1].QuantityLimit
+                          ? branchTypeConfig[currentBranchTypeConfig - 1]
+                              .QuantityLimit
+                          : 0
                       }
                       onChange={(e) => {
                         let newConfig = branchTypeConfig.map((config) => {
                           if (config.branchType == currentBranchTypeConfig) {
-                            return { ...config, available: e.target.checked };
+                            return {
+                              ...config,
+                              QuantityLimit: e.target.value,
+                            };
                           }
                           return config;
                         });
                         setBranchTypeConfig(newConfig);
                       }}
                     />
-                  </div>
 
                   <div className={EditproductStyle.Text}>עמודה</div>
                   <input

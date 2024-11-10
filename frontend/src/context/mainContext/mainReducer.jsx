@@ -184,19 +184,17 @@ export const mainReducer = (state, action) => {
       let newProducts = action.payload.map((product) => {
         let newConfig = {};
         let location = {};
-        let avilable = true;
+        let QuantityLimit = 0;
         
         product.branchTypeConfig.forEach((config) => {
           if (config.branchType === state.branchType) {
-            if(!config.available) return avilable = false;
+            QuantityLimit = config.QuantityLimit;
             location = config.location;
             newConfig = config;
           }
         });
-        
-        if(!avilable) return false;
 
-        return { ...product, location: location, branchTypeConfig: newConfig };
+        return { ...product, location: location, branchTypeConfig: newConfig, QuantityLimit: QuantityLimit };
       });
 
       newProducts = newProducts.filter((row) => row);

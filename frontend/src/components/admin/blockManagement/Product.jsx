@@ -100,7 +100,7 @@ function Product({ product, block,  checkedAll, added, removed }) {
           <div className={productStyle.provider}>{providerName}</div>
           <div className={productStyle.category}>{categoryName}</div>
           <div className={productStyle.barcode}>{barcode}</div>
-          {!limited ? (
+          {/* {!limited ? (
             <div
               className={productStyle.button + " " + productStyle.limitedText}
               onClick={() => handleLimited(true)}
@@ -114,7 +114,7 @@ function Product({ product, block,  checkedAll, added, removed }) {
             >
               <div>בטל הגבלה</div>
             </div>
-          )}
+          )} */}
           {!block ? (
             <div
               className={productStyle.button + " " + productStyle.blockedText}

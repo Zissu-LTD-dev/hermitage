@@ -43,7 +43,7 @@
 .productDetails{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 90%;
     margin: 1rem 0;
 }
 
@@ -52,10 +52,11 @@
     font-weight: 600;
     display: flex;
     justify-content: end;
+    padding: 0 0 0 1rem;
 }
 
 .productDetails .input{
-    width: 100%;
+    width: 98%;
     padding: 0.5rem;
     text-align: right;
     border: 1px solid #ccc;

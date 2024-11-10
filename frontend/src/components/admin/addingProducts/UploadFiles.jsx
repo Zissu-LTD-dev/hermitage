@@ -4,6 +4,7 @@ import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import { useMainContext } from "../../../context/mainContext/MainContext";
+import useFetch from "../../../hooks/useFetch";
 import * as XLSX from "xlsx";
 
 function UploadFiles() {
@@ -19,6 +20,7 @@ function UploadFiles() {
   const [fileData, setFileData] = useState(null);
   const [fileName, setFileName] = useState("");
   const [btnName, setBtnName] = useState("");
+  const [branchType, setBranchType] = useState(state.typeBranches);
 
   const downloadExcel = () => {
     const deleteProduct = [["מס ברקוד (ראשי)"]];
@@ -43,44 +45,26 @@ function UploadFiles() {
         "תאור - שם פריט",
         "תאור - כמות בארגז",
         "תאור - עלות קניה",
-        "הגבלת פריט - 1 מוגבל , 2 לא מוגבל",
       ],
     ];
+
+
     const moreUpdateProduct = [
       [
         "מס ברקוד (ראשי)",
-        "סוג סניף",
-        "מס עמודה",
-        "מס מדף",
-        "מס סידור",
-        "לא מוצג 1  מוצג 2 ",
-        "סוג סניף",
-        "מס עמודה",
-        "מס מדף",
-        "מס סידור",
-        "לא מוצג 1  מוצג 2 ",
-        "סוג סניף",
-        "מס עמודה",
-        "מס מדף",
-        "מס סידור",
-        "לא מוצג 1  מוצג 2 ",
-        "סוג סניף",
-        "מס עמודה",
-        "מס מדף",
-        "מס סידור",
-        "לא מוצג 1  מוצג 2 ",
-        "סוג סניף",
-        "מס עמודה",
-        "מס מדף",
-        "מס סידור",
-        "לא מוצג 1  מוצג 2 ",
-        "סוג סניף",
-        "מס עמודה",
-        "מס מדף",
-        "מס סידור",
-        "לא מוצג 1  מוצג 2 ",
       ],
     ];
+
+    let lengthBT = branchType.length;
+    for (let i = 0; i < lengthBT; i++) {
+      moreUpdateProduct[0].push(
+        "סוג סניף",
+        "מס עמודה",
+        "מס מדף",
+        "מס סידור",
+        "מוגבל",
+      );
+    }    
 
     const ws = XLSX.utils.aoa_to_sheet(addProduct);
     const ws1 = XLSX.utils.aoa_to_sheet(deleteProduct);
@@ -122,7 +106,6 @@ function UploadFiles() {
       { wpx: 100 },
       { wpx: 100 },
       { wpx: 100 },
-      { wpx: 170 },
     ];
     ws3["!cols"] = [{ wpx: 100 }];
 
@@ -337,6 +320,22 @@ function UploadFiles() {
             onChange={(e) => handleFile(e)}
           />
         </div>
+        {/* מחיקת מוצרים */}
+        <div
+          className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.delete}
+          onClick={() => deleteProduct()}
+        >
+          מחיקה - פריט
+          {/* file input */}
+          <input
+            className={UploadFilesStyle.inputFile}
+            ref={deleteProductFile}
+            type="file"
+            accept=".xlsx, .xls"
+            name="deleteProduct"
+            onChange={(e) => handleFile(e)}
+          />
+        </div>
         {/* עדכון מוצרים קיימים - 1 */}
         <div
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.update}
@@ -371,22 +370,6 @@ function UploadFiles() {
             onChange={(e) => handleFile(e)}
           />
         </div>
-        {/* מחיקת מוצרים */}
-        <div
-          className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.delete}
-          onClick={() => deleteProduct()}
-        >
-          מחיקה - פריט
-          {/* file input */}
-          <input
-            className={UploadFilesStyle.inputFile}
-            ref={deleteProductFile}
-            type="file"
-            accept=".xlsx, .xls"
-            name="deleteProduct"
-            onChange={(e) => handleFile(e)}
-          />
-        </div>
         {/* הורדת קובץ דוגמא */}
         <div
           className={UploadFilesStyle.btnFile + " " + UploadFilesStyle.download}
@@ -397,8 +380,7 @@ function UploadFiles() {
       </div>
       <p className={UploadFilesStyle.warning}>
         *העלאה של קובץ אקסל עם המוצרים להוספה עדכון או מחיקה חייב להיות בטמפלט
-        הנכון* <br />
-        *העדכון הוא על 2 טאבים באקסל*
+        הנכון*
       </p>
       {fileData && fileData.length > 0 && (
         <>

@@ -306,6 +306,8 @@ const productsUpdate = async (sheet) => {
 // productsUpdateDetailed
 const productsUpdateDetailed = async (sheet) => {
 
+  let branchTypes = await BranchType.find();
+  
   let products = sheet.map((row) => {
     row = Object.values(row);
 
@@ -314,81 +316,42 @@ const productsUpdateDetailed = async (sheet) => {
     newProduct.barcode = row[0]; // "מס ברקוד (ראשי)"
     newProduct.branchTypeConfig = [];
 
-    if(row[1]){ // "סוג סניף 1"
-      newProduct.branchTypeConfig.push({
-        branchType: row[1], // "סוג סניף 1"
-        available: row[5] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-        location: {
-          column: row[2], // "מס עמודה"
-          shelf: row[3], // "מס מדף"
-          index: row[4], // "מס סידור"
-        },
-      });
+    for (let i = 0; i < branchTypes.length; i++) {
+      let branchTypeIndex = 1 + i * 5; // כל סוג סניף תופס 5 עמודות
+      if (row[branchTypeIndex]) {
+        newProduct.branchTypeConfig.push({
+          branchType: row[branchTypeIndex], // "סוג סניף"
+          QuantityLimit: row[branchTypeIndex + 4] ? row[branchTypeIndex + 4] : 0, // מוצר מוגבל דיפולט 0  
+          location: {
+            column: row[branchTypeIndex + 1], // "מס עמודה"
+            shelf: row[branchTypeIndex + 2], // "מס מדף"
+            index: row[branchTypeIndex + 3], // "מס סידור"
+          },
+        });
+      }
     }
-    if(row[6]){ // "סוג סניף 2"
-      newProduct.branchTypeConfig.push({
-        branchType: row[6], // "סוג סניף 2"
-        available: row[10] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-        location: {
-          column: row[7], // "מס עמודה"
-          shelf: row[8], // "מס מדף"
-          index: row[9], // "מס סידור"
-        },
-      });
-    }
-    if(row[11]){ // "סוג סניף 3"
-      newProduct.branchTypeConfig.push({
-        branchType: row[11], // "סוג סניף 3"
-        available: row[15] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-        location: {
-          column: row[12], // "מס עמודה"
-          shelf: row[13], // "מס מדף"
-          index: row[14], // "מס סידור"
-        },
-      });
-    }
-    if(row[16]){ // "סוג סניף 4"
-      newProduct.branchTypeConfig.push({
-        branchType: row[16], // "סוג סניף 4"
-        available: row[20] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-        location: {
-          column: row[17], // "מס עמודה"
-          shelf: row[18], // "מס מדף"
-          index: row[19], // "מס סידור"
-        },
-      });
-    }
-    if(row[21]){ // "סוג סניף 5"
-      newProduct.branchTypeConfig.push({
-        branchType: row[21], // "סוג סניף 5"
-        available: row[25] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-        location: {
-          column: row[22], // "מס עמודה"
-          shelf: row[23], // "מס מדף"
-          index: row[24], // "מס סידור"
-        },
-      });
-    }
-    if(row[26]){ // "סוג סניף 6"
-      newProduct.branchTypeConfig.push({
-        branchType: row[26], // "סוג סניף 6"
-        available: row[30] == 1 ? false : true, // 'לא מוצג 1  מוצג 2 ' 
-        location: {
-          column: row[27], // "מס עמודה"
-          shelf: row[28], // "מס מדף"
-          index: row[29], // "מס סידור"
-        },
-      });
-    }
-    
-    return newProduct ;
+
+    return newProduct;
   });
 
   products.map(async (product) => {
-    return await Product.findOneAndUpdate(
-      { barcode: product.barcode },
-      product
-    );
+    let existingProduct = await Product.findOne({ barcode: product.barcode });
+    if (existingProduct) {
+      product.branchTypeConfig.forEach((newConfig) => {
+        let existingConfig = existingProduct.branchTypeConfig.find(
+          (config) => config.branchType === newConfig.branchType
+        );
+        if (existingConfig) {
+          existingConfig.QuantityLimit = newConfig.QuantityLimit ? newConfig.QuantityLimit : existingConfig.QuantityLimit;
+          existingConfig.location = newConfig.location.column ? newConfig.location : existingConfig.location;
+        } else {
+          existingProduct.branchTypeConfig.push(newConfig);
+        }
+      });
+      await existingProduct.save();
+    } else {
+      await Product.create(product);
+    }
   });
   
   return products;

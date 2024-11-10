@@ -21,6 +21,7 @@ function UploadFiles() {
   const [fileName, setFileName] = useState("");
   const [btnName, setBtnName] = useState("");
   const [branchType, setBranchType] = useState(state.typeBranches);
+  const [duplication, setDuplication] = useState([]);
 
   const downloadExcel = () => {
     const deleteProduct = [["מס ברקוד (ראשי)"]];
@@ -301,6 +302,21 @@ function UploadFiles() {
     }
   };
 
+  useEffect(() => {
+    if (fileData && fileData.length > 0) {
+      let barcode = fileData.map((item) => item["מס ברקוד (ראשי)"]);
+      let unique = [...new Set(barcode)];
+      if (barcode.length !== unique.length) {
+        let duplicates = barcode.filter(
+          (item, index) => barcode.indexOf(item) !== index
+        );
+        setDuplication(duplicates);
+      } else {
+        setDuplication([]);
+      }
+    }
+  }, [fileData]);
+
   return (
     <>
       <div className={UploadFilesStyle.main}>
@@ -418,15 +434,34 @@ function UploadFiles() {
             >
               ביטול
             </button>
-            <button
-              className={UploadFilesStyle.upload}
-              onClick={() => handleUpload(btnName)}
-            >
-              העלאה
-            </button>
+            {duplication.length > 0  ? (
+              <button
+                className={UploadFilesStyle.upload}
+                style={{ opacity: 0.5, cursor: "not-allowed" }}
+              >
+                יש כפילויות !!
+              </button>
+            ) : (
+              <button
+                className={UploadFilesStyle.upload}
+                onClick={() => handleUpload(btnName)}
+              >
+                העלאה
+              </button>
+            )} 
+
             {/* מספר הפריטים שמופיעים בטבלה  */}
-            <span className={UploadFilesStyle.items}>
-              סה"כ פריטים: {fileData.length}
+            <span className={UploadFilesStyle.items}
+              style={{ color: duplication.length > 0 ? "red" : "black" }}
+            >
+              סה"כ פריטים: {fileData.length} {" "}
+              {duplication.length > 0 && (
+                <span> | 
+                  ברקודים כפולים: [{duplication.map((item, index) => (
+                    <span key={index}> {item} </span>
+                  ))}]
+                </span>
+              )}
             </span>
           </div>
         </>

@@ -264,14 +264,25 @@ const newBranch = async (req, res) => {
   let newBranch = new Branch(branch);
   await newBranch.save();
 
+  let branches = await Branch.find({}).sort({ number: 1 });
+
   //update new branch in all providers
   let providers = await Provider.find({});
+
+  let branchsNumbers = providers.map((provider) => provider.branchEmails.map((branchEmail) => branchEmail.branchNumber)).flat();
+  let newBranchsNumbers = branches.map((branch) => branch.number);
+  let diff = newBranchsNumbers.filter((branch) => !branchsNumbers.includes(branch));
+  let newBranchs = branches.filter((branch) => diff.includes(branch.number));
+
   providers.forEach(async (provider) => {
-    provider.branchEmails.push({
-      branchNumber: branch.number,
-      branchName: branch.name,
-      emails: [],
+    newBranchs.forEach(async (branch) => {
+      provider.branchEmails.push({
+        branchNumber: branch.number,
+        branchName: branch.name,
+        emails: [],
+      });
     });
+
     // sort branchEmails by branchNumber
     provider.branchEmails.sort((a, b) => a.branchNumber - b.branchNumber);
     await provider.save();

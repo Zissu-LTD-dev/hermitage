@@ -16,6 +16,7 @@ function LocationProductsConfig() {
     const [editedData, setEditedData] = useState({});
     const [confirmationDelete, setConfirmationDelete] = useState(null);
     const [isAddingNew, setIsAddingNew] = useState(false);
+    const [emptyLocationProductsConfig, setEmptyLocationProductsConfig] = useState([]);
     const [newData, setNewData] = useState({
         categoryNumber: "",
         categoryName: "",
@@ -27,17 +28,12 @@ function LocationProductsConfig() {
 
     const sortLocationProductsConfig = (data) => {
         return data.sort((a, b) => {
-          // קודם כל, מיון לפי מספר קטגוריה
           if (a.categoryNumber !== b.categoryNumber) {
             return a.categoryNumber - b.categoryNumber;
           }
-          
-          // אם מספרי הקטגוריה זהים, מיין לפי מספר עמודה
           if (a.columnsNumber !== b.columnsNumber) {
             return a.columnsNumber - b.columnsNumber;
           }
-          
-          // אם גם מספרי העמודה זהים, מיין לפי מספר מדף
           return a.shelvesNumber.localeCompare(b.shelvesNumber, undefined, {numeric: true, sensitivity: 'base'});
         });
       };
@@ -61,6 +57,28 @@ function LocationProductsConfig() {
     useEffect(() => {
         setCategories(state.categories);
     }, [state.categories]);
+
+    useEffect(() => {
+        const emptyConfig = [];
+        state.products.forEach(product => {
+            let categoryIndex = emptyConfig.findIndex(item => item.category === product.category);
+            if (categoryIndex === -1) {
+                emptyConfig.push({category: product.category, columns: []});
+                categoryIndex = emptyConfig.length - 1;
+            }
+
+            product.branchTypeConfig.forEach(branchType => {
+                let columnsN = emptyConfig[categoryIndex].columns.includes(branchType.location.column);
+                if (!columnsN) {
+                    emptyConfig[categoryIndex].columns.push(branchType.location.column);
+                }
+                emptyConfig[categoryIndex].columns.sort((a, b) => a - b);
+            }
+            );
+            emptyConfig.sort((a, b) => a.category - b.category);
+        });
+        setEmptyLocationProductsConfig(emptyConfig);
+    }, [locationProductsConfig, state.products]);
 
     const handleEdit = (index) => {
         setEditingIndex(index);
@@ -325,8 +343,17 @@ function LocationProductsConfig() {
                                 <span>{item.columnsName}</span>
                                 <span>{item.shelvesNumber}</span>
                                 <span></span>
-                                <button onClick={() => handleEdit(index)} className={locationProductsConfigStyles.editButton}>ערוך</button>
-                                <button onClick={() => setConfirmationDelete(index)} className={locationProductsConfigStyles.deleteButton}>מחק</button>
+                                {emptyLocationProductsConfig.find((emptyItem) => emptyItem.category == item.categoryNumber && emptyItem.columns.includes(item.columnsNumber)) === undefined ? (
+                                    <>
+                                            <button onClick={() => handleEdit(index)} className={locationProductsConfigStyles.editButton}>ערוך</button>
+                                            <button onClick={() => setConfirmationDelete(index)} className={locationProductsConfigStyles.deleteButton}>מחק</button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button className={locationProductsConfigStyles.emptyButton}>ערוך</button>
+                                        <button className={locationProductsConfigStyles.emptyButton}>מחק</button>
+                                    </>
+                                )}
                                 {confirmationDelete === index && (
                                     <div className={locationProductsConfigStyles.confirmDelete}>
                                         <button onClick={() => handleDelete(index)} className={locationProductsConfigStyles.confirmDeleteButton}>אישור מחיקה</button>

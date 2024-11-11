@@ -1,18 +1,39 @@
 const excel = require("xlsx");
 const { Product, BranchType, Category } = require("../models");
+const axios = require('axios');
+const linkImages = process.env.LINK_IMAGES
 
 const downloadProducts = async (req, res) => {
   let branchType = await BranchType.find({});
   let products = await Product.find({});
   let categories = await Category.find({});
   let data = [];
+
+  const checkImage = async (barcode) => {
+    const imageURL = `${linkImages}${barcode}.png`;
+    try {
+      const response = await axios.head(imageURL);
+      return response.status === 200;
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        return false;
+      }
+      console.error('Error checking image:', error);
+      return false;
+    }
+  }
   
-  products.forEach((product) => {
+  for (const product of products) {
     let isBlocked = product.isBlocked ? 1 : 2;
     let categoryName = categories.find((category) => category.number == product.category);
-    let image = ""; // TODO: Add image
-    
-    // Create base product data
+    let image = "";
+    if (product.barcode < 10 ) { // צריך להוריד את זה בסוף
+      image = (await checkImage(product.barcode)) ? "יש" : "חסר תמונה";
+    } 
+    else {
+      image = "אין תמונה";
+    }
+
     let productRow = {
       "חסום להזמנות - 1 חסום , 2 פתוח": isBlocked,
       "ספק": product.providerName,
@@ -27,29 +48,28 @@ const downloadProducts = async (req, res) => {
       "תאור - עלות קניה": product.price,
       "תמונה": image,
     };
-
+  
     let numBT = branchType.length;
-    // Add branch data for existing configs only branchTypeConfig
     for (let i = 0; i < numBT; i++) {
-        const branch = product.branchTypeConfig[i];
-        if (!branch) {
-          productRow[`סוג סניף ${i + 1}`] = "";
-          productRow[`הגבלת מוצר ${i + 1}`] = "";
-          productRow[`עמודה ${i + 1}`] = "";
-          productRow[`מדף ${i + 1}`] = "";
-          productRow[`מקום ${i + 1}`] = "";
-          continue;
-        }
-        let branchName = branchType.find((type) => type.typeId == branch.branchType);
-        productRow[`סוג סניף ${i + 1}`] = branchName ? branchName.name : "";
-        productRow[`הגבלת מוצר ${i + 1}`] = branch.QuantityLimit;
-        productRow[`עמודה ${i + 1}`] = branch.location.column;
-        productRow[`מדף ${i + 1}`] = branch.location.shelf;
-        productRow[`מקום ${i + 1}`] = branch.location.index;
+      const branch = product.branchTypeConfig[i];
+      if (!branch) {
+        productRow[`סוג סניף ${i + 1}`] = "";
+        productRow[`הגבלת מוצר ${i + 1}`] = "";
+        productRow[`עמודה ${i + 1}`] = "";
+        productRow[`מדף ${i + 1}`] = "";
+        productRow[`מקום ${i + 1}`] = "";
+        continue;
+      }
+      let branchName = branchType.find((type) => type.typeId == branch.branchType);
+      productRow[`סוג סניף ${i + 1}`] = branchName ? branchName.name : "";
+      productRow[`הגבלת מוצר ${i + 1}`] = branch.QuantityLimit;
+      productRow[`עמודה ${i + 1}`] = branch.location.column;
+      productRow[`מדף ${i + 1}`] = branch.location.shelf;
+      productRow[`מקום ${i + 1}`] = branch.location.index;
     }
-
+  
     data.push(productRow);
-  });
+  }
 
   var wb = { Workbook: { Views: [{ RTL: true }] }, Sheets: {}, SheetNames: [] };
   var ws = excel.utils.json_to_sheet(data, { cellStyles: true });

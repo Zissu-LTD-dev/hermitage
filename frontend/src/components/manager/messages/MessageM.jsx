@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import messageStyle from "../../../assets/css/manager/messages/Message.module.css";
+import DateDisplay from '../../DateDisplay';
 
 function MessageM( {data , readList}) {
   
@@ -26,8 +27,10 @@ function MessageM( {data , readList}) {
                 {msg.content}
               </div>
               <p className={messageStyle.message__popup__item__date}>
-                נשלחה ב: {msg.timestamp.split("T")[0].replace(/-/g, "/")} <br />
-                בשעה: {msg.timestamp.split("T")[1].split(".")[0]} <br />
+                נשלחה ב: <DateDisplay timestamp={msg.timestamp} type="date" />
+                <br />
+                בשעה: <DateDisplay timestamp={msg.timestamp} type="time" />
+                <br />
                 שולח : {msg.sender}
               </p>
             </div>

@@ -3,6 +3,7 @@ import documentStyle from "../../../assets/css/admin/documents/Document.module.c
 import apiRequest from "../../../services/api";
 import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
+import DateDisplay from '../../DateDisplay';
 
 import cookie from "js-cookie";
 const { REACT_APP_BACKEND_URL } = import.meta.env;
@@ -20,9 +21,7 @@ function Document({dataDocument}) {
 
  
   let {name, date, link} = dataDocument;
-
-  date = date.split("T")[0].split("-").reverse().join(".");
-
+  
   const handleBranchChange = (e) => {
     let branchId = e.target.value;
     let checked = e.target.checked;
@@ -159,7 +158,7 @@ function Document({dataDocument}) {
       <div className={documentStyle.main}>
         <span>
           <div className={documentStyle.name}>{link.split(".")[link.split("/").length - 1] + "." +  name }</div>
-          <div className={documentStyle.date}>{date}</div>
+          <div className={documentStyle.date}><DateDisplay timestamp={date} type="full" /></div>
           {forTo.includes("כל הסניפים") && <div className={documentStyle.forTo} >כל הסניפים</div> }
           {!forTo.includes("כל הסניפים") && 
             <div className={documentStyle.show_main_branch}>

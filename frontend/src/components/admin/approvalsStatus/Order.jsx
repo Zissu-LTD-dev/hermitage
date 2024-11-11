@@ -3,6 +3,7 @@ import orderStyle from "../../../assets/css/admin/approvalsStatus/Order.module.c
 import { useMainContext } from "../../../context/mainContext/MainContext";
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 import apiRequest from "../../../services/api";
+import DateDisplay from '../../DateDisplay';
 
 import Product from "./Product";
 
@@ -31,9 +32,6 @@ function Order({ orderData, orderBy }) {
   let products =
     orderBy == "returned" ? returnLines.products : orderLines.products;
   let status = orderBy == "returned" ? "returned" : orderStatus;
-  let time = createdDate.split("T")[1].split(".")[0];
-  time = time.split(":").slice(0, 2).join(":");
-  createdDate = createdDate.split("T")[0].split("-").reverse().join("/");
 
   const updateOrder = async (newOrder) => {
     const data = await apiRequest("admin/updateOrder", "PUT", newOrder);
@@ -166,9 +164,9 @@ function Order({ orderData, orderBy }) {
           <span>
             <div className={orderStyle.orderNum}>הזמנה #{orderNumber}</div>
             <div className={orderStyle.date}>
-              {createdDate}
+              <DateDisplay timestamp={createdDate} type="date" />
               <br />
-              בשעה: {time}
+              בשעה: <DateDisplay timestamp={createdDate} type="time" />
             </div>
             <div className={orderStyle.branchName}>
               {branchName} - {branchNumber}

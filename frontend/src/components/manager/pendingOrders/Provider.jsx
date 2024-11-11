@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import Product from "./Product";
 import providerC from "../../../assets/css/manager/pendingOrders/Provider.module.css";
+import DateDisplay from '../../DateDisplay';
 
 function Provider({ order, status }) {
   const [open, setOpen] = useState(false);
   const [colorStatus, setColorStatus] = useState("");
-  let { orderNumber, createdDate, providerName, returnLines, orderLines, userName } =
-    order;
-  const date = createdDate.split("T")[0].split("-").reverse().join("/");
-  let time = createdDate.split("T")[1].split(".")[0];
-  let newtime = time.split(":")[0] + ":" + time.split(":")[1];
+  let { orderNumber, createdDate, providerName, returnLines, orderLines, userName } = order;
 
   const handleOpen = () => {
     setOpen(!open);
@@ -29,9 +26,9 @@ function Provider({ order, status }) {
           <span>
             <div className={providerC.orderNum}>הזמנה #{orderNumber}</div>
             <div className={providerC.date}>
-              {date}
+              <DateDisplay timestamp={createdDate} type="date" />
               <br />
-              בשעה : {newtime}
+              בשעה : <DateDisplay timestamp={createdDate} type="time" />
             </div>
             <div className={providerC.userName}>בוצע על ידי : {userName}</div>
             <div className={providerC.provider}>{providerName}</div>

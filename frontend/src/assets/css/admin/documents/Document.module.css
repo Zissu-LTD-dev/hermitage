@@ -1,12 +1,11 @@
 .main {
   width: 100%;
-  min-height: 77px;
+  height: 77px;
   background: #ffffff 0% 0% no-repeat padding-box;
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 28px;
+  /* padding: 0 32px 0 28px; */
   margin: 0 0 15px 0;
 }
 

@@ -29,6 +29,7 @@ function Sidebar() {
   };
 
   const changeStatus = (status) => {
+    if (status == "order execution") dispatch({ type: "CLEAR_ORDER" });
     dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
   };
 

@@ -70,10 +70,7 @@ const getFilters = async (req, res) => {
 const createOrder = async (req, res) => {
   let { userName, branch, summary } = req.body;
 
-  // Check if branch is an array or a single object
   const branches = Array.isArray(branch) ? branch : [branch];
-
-  // order number
   let lastOrder = await Order.findOne().sort({ orderNumber: -1 });
   let newOrderNumber = lastOrder ? lastOrder.orderNumber : 100;
   let sendMail = false;
@@ -83,6 +80,23 @@ const createOrder = async (req, res) => {
   for (const currentBranch of branches) {
     let newOrders = summary.map((order) => {
       newOrderNumber = newOrderNumber + 1;
+      
+      // Check for limited products
+      const hasLimitedProducts = order.orderLines.products.some(product => 
+        product.QuantityLimit > 0 && product.quantity > product.QuantityLimit
+      );
+
+      // Mark limited products
+      const productsWithLimitFlag = order.orderLines.products.map(product => ({
+        ...product,
+        isLimited: product.QuantityLimit > 0 && product.quantity > product.QuantityLimit
+      }));
+
+      // Check if provider is blocked
+      const isBlocked = !Array.isArray(branch) && 
+                       branch.blockedProviders && 
+                       branch.blockedProviders.includes(order.providerNumber);
+
       return {
         orderNumber: newOrderNumber,
         userName: userName,
@@ -107,7 +121,9 @@ const createOrder = async (req, res) => {
         returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
         noteProvider: order.noteProvider,
         noteManager: order.noteManager,
-        createdDate: new Date() ,
+        blockReason: isBlocked ? "ספק חסום" : 
+                    hasLimitedProducts ? "מוצר מוגבל" : "",
+        createdDate: new Date(),
       };
     });
 

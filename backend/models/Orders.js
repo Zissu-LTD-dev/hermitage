@@ -30,6 +30,7 @@ const orderSchema = new mongoose.Schema({
   },
   noteProvider: String,
   noteManager: String,
+  blockReason: String,
   createdDate: Date,
 });
 

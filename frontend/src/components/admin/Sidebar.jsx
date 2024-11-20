@@ -29,8 +29,13 @@ function Sidebar() {
   };
 
   const changeStatus = (status) => {
+    localStorage.setItem("statusSidebar", status);
     if (status == "order execution") dispatch({ type: "CLEAR_ORDER" });
-    dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
+    if (status === "adding products" || status === "general management") {
+      window.location.reload();
+    }else{
+      dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
+    }
   };
 
   useEffect(() => {
@@ -47,6 +52,13 @@ function Sidebar() {
       setBranchName("מאסטר");
     }
   }, [state.userInfo.role]);
+
+  useEffect(() => { 
+    let status = localStorage.getItem("statusSidebar");
+    if (status) {
+      dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
+    }
+  }, []);
 
   return (
     <>

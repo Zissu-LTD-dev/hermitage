@@ -5,9 +5,6 @@ const AdminContext = createContext();
 
 const AdminProvider = ({ children }) => {
   const [state, dispatch] = useReducer(adminReducer, initialState);
-
-    useEffect(() => {}, []);
-
     return (
         <AdminContext.Provider value={{ state, dispatch }}>
             {children}

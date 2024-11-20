@@ -261,8 +261,8 @@ const allBranches = async (req, res) => {
 // add branch
 const newBranch = async (req, res) => {
   let branch = req.body;
-  let newBranch = new Branch(branch);
-  await newBranch.save();
+  let newBranchL = new Branch(branch);
+  await newBranchL.save();
 
   let branches = await Branch.find({}).sort({ number: 1 });
 
@@ -275,6 +275,11 @@ const newBranch = async (req, res) => {
   let newBranchs = branches.filter((branch) => diff.includes(branch.number));
 
   providers.forEach(async (provider) => {
+
+    let branchsNumbers = provider.branchEmails.map((branchEmail) => branchEmail.branchNumber);
+    let diff = newBranchsNumbers.filter((branch) => !branchsNumbers.includes(branch));
+    let newBranchs = branches.filter((branch) => diff.includes(branch.number));
+
     newBranchs.forEach(async (branch) => {
       provider.branchEmails.push({
         branchNumber: branch.number,
@@ -288,7 +293,7 @@ const newBranch = async (req, res) => {
     await provider.save();
   });
 
-  res.status(200).json({ message: "The branch was successfully added", _id: newBranch._id });
+  res.status(200).json({ message: "The branch was successfully added", _id: newBranchL._id });
 };
 
 // edit branch

@@ -342,7 +342,9 @@ const productsUpdateDetailed = async (sheet) => {
           (config) => config.branchType === newConfig.branchType
         );
         if (existingConfig) {
-          existingConfig.QuantityLimit = newConfig.QuantityLimit ? newConfig.QuantityLimit : existingConfig.QuantityLimit;
+          existingConfig.QuantityLimit = newConfig.QuantityLimit 
+            || newConfig.QuantityLimit === 0 
+          ? newConfig.QuantityLimit : existingConfig.QuantityLimit;
           existingConfig.location = newConfig.location.column || newConfig.location.column === 0 ? newConfig.location : existingConfig.location;
         } else {
           existingProduct.branchTypeConfig.push(newConfig);

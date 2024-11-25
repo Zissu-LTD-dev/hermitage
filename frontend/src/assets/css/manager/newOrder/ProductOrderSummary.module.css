@@ -81,7 +81,9 @@
   border: none;
 }
 
-.product .buttons .quantityNum {
+.product .buttons .quantityInput {
+  width: 70px;
+  border: none;
   color: #082a3a;
   /*font: normal normal normal 14px/18px IBM Plex Sans Hebrew;*/
   font-size: 14px;
@@ -89,6 +91,11 @@
   font-style: normal;
   font-weight: normal;
   line-height: 18px;
+  text-align: center;
+}
+
+.product .buttons .quantityInput:focus {
+  outline: none;
 }
 
 /* decrease */

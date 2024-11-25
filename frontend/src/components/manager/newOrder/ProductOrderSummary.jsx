@@ -32,6 +32,16 @@ const ProductOrder = ({ productData }) => {
     }
   };
 
+  const handleQuantityChange = (e) => {
+    if (!/^\d+$/.test(e.target.value))  return;
+    const newQuantity = parseInt(e.target.value, 10);
+    if (newQuantity > 0) {
+      dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: newQuantity, originalQuantity: newQuantity } });
+    } else {
+      dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: 0, originalQuantity: 0 } });
+    }
+  };
+
   const handleImageError = () => {
     setImageError(true);
   }
@@ -52,7 +62,13 @@ const ProductOrder = ({ productData }) => {
         <p>{price ? `${price}₪` : "אין מחיר זמין"}</p>
         <div className={product.buttons}>
           <button className={product.decrease} onClick={onIncrease}></button>
-          <span className={product.quantityNum}>{quantity}</span>
+          <input 
+              type="text" 
+              value={quantity}
+              pattern="[0-9]*"
+              onChange={handleQuantityChange} 
+              className={product.quantityInput}
+            />
           <button className={product.increase} onClick={onDecrease}></button>
         </div>
       </span>

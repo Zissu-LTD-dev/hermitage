@@ -38,6 +38,22 @@ const ProductReturn = ({ productData, open }) => {
     }
   };
 
+  
+  const handleQuantityChange = (e) => {
+    if (!/^\d+$/.test(e.target.value)) return;
+    const newQuantity = parseInt(e.target.value, 10);
+    setQuantity(newQuantity);
+    if (newQuantity > 0) {
+      dispatch({
+        type: "ADD_RETURNED_PRODUCT",
+        payload: { ...productData, quantity: newQuantity },
+      });
+    } else {
+      dispatch({ type: "REMOVE_RETURNED_PRODUCT", payload: barcode });
+    }
+  };
+
+
   const handleImageError = () => {
     setImageError(true);
   }
@@ -92,7 +108,13 @@ const ProductReturn = ({ productData, open }) => {
                 className={product.decrease}
                 onClick={onIncrease}
               ></button>
-              <div className={product.quantity} >{quantity}</div>
+              <input 
+                type="text" 
+                value={quantity}
+                pattern="[0-9]*"
+                onChange={handleQuantityChange} 
+                className={product.quantityInput}
+              />
               <button
                 className={product.increase}
                 onClick={onDecrease}

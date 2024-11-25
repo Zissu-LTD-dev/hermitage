@@ -66,13 +66,20 @@
   border: none;
 }
 
-.product div span {
+.product div input {
+  width: 100%;
+  border: none;
   color: #082a3a;
-  /* font: normal normal normal 14px/18px IBM Plex Sans Hebrew; */
+  font: normal normal normal 14px/18px IBM Plex Sans Hebrew;
   font-size: 14px;
   font-family: "IBM Plex Sans Hebrew";
   font-style: normal;
   line-height: 18px;
+  text-align: center;
+}
+
+.product div input:focus {
+  outline: none;
 }
 
 /* decrease */

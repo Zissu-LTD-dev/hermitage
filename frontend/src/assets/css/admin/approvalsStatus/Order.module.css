@@ -191,3 +191,12 @@ cursor: pointer;
     padding: 0 35px;
     color: #082a3a;
 }
+
+.providerNumber{
+    font-size: 17px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 23px;
+    padding: 0 35px;
+    color: #082a3a;
+}

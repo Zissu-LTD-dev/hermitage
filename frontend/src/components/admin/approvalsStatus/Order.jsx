@@ -13,6 +13,7 @@ function Order({ orderData, orderBy }) {
 
   const [open, setOpen] = useState(false);
   const [quantityIsEmpty, setQuantityIsEmpty] = useState(false);
+  const [blockedProvider, setBlockedProvider] = useState(false);
 
   let {
     orderNumber,
@@ -22,6 +23,7 @@ function Order({ orderData, orderBy }) {
     branchName,
     provider,
     providerName,
+    providerNumber,
     orderStatus,
     returnStatus,
     orderLines,
@@ -157,6 +159,16 @@ function Order({ orderData, orderBy }) {
     }
   }, [orderData]);
 
+  useEffect(() => {
+    if (!stateAdmin.branches.length) return;
+    let blockedProviders =  stateAdmin.branches.filter(branch => branch.number == branchNumber)[0];
+    if (blockedProviders && blockedProviders.blockedProviders.includes(providerNumber)) {
+      setBlockedProvider(true);
+      console.log(blockedProviders);
+    }
+    
+  }, [stateAdmin.branches]);
+
   return (
     <>
       <div className={orderStyle.main}>
@@ -176,6 +188,11 @@ function Order({ orderData, orderBy }) {
             <div className={orderStyle.providerName}>{providerName}</div>
           </span>
           <span>
+            {status == "pending" && (
+              <div className={orderStyle.providerNumber}>
+               {blockedProvider ? "ספק חסום" : "יש מוצר מוגבל"} 
+              </div>
+            )}
             {status == "pending" && (
               <div
                 className={orderStyle.status + " " + orderStyle.statusPending}

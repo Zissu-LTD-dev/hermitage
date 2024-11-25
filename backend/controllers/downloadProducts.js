@@ -27,12 +27,12 @@ const downloadProducts = async (req, res) => {
     let isBlocked = product.isBlocked ? 1 : 2;
     let categoryName = categories.find((category) => category.number == product.category);
     let image = "";
-    if (product.barcode < 10 ) { // צריך להוריד את זה בסוף
-      image = (await checkImage(product.barcode)) ? "יש" : "חסר תמונה";
-    } 
-    else {
-      image = "אין תמונה";
-    }
+    image = (await checkImage(product.barcode)) ? "יש" : "חסר";
+    // if (product.barcode < 10 ) { // צריך להוריד את זה בסוף
+    // } 
+    // else {
+    //   image = "אין תמונה";
+    // }
 
     let productRow = {
       "חסום להזמנות - 1 חסום , 2 פתוח": isBlocked,

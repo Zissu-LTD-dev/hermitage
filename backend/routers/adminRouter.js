@@ -161,4 +161,7 @@ adminRouter.post("/uploadPdf", uploadPDF.single('pdfFile'),  uploadFile.uploadPd
 // downloadProducts
 adminRouter.get("/downloadProducts", downloadProducts.downloadProducts );
 
+// sendProviderReport 
+adminRouter.post("/sendProviderReport", admin.sendProviderReport);
+
 exports.adminRouter = adminRouter;

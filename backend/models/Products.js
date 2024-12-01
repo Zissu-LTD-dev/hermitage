@@ -6,7 +6,10 @@ const ProductSchema = new mongoose.Schema({
     unique: true
   },
   name: String,
-  image: String,  
+  image: [{
+    type: Boolean,
+    default: false
+  }],
   providerNumber: Number,
   providerName: String, 
   subGroupNumber: Number, 

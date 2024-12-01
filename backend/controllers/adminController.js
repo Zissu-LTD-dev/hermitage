@@ -590,6 +590,22 @@ const addMessageToBranchs = async (req, res) => {
   res.status(200).json({ message: "The message was successfully added" });
 };
 
+// send Provider Report oin excel file to mail
+const sendProviderReport = async (req, res) => {
+  let { selectedProviders } = req.body;
+  let providers = await Provider.find({ _id: { $in: selectedProviders } });
+  let categories = await Category.find({});
+
+  await Promise.all(
+    providers.map(async (provider) => {
+      let products = await Product.find({ providerNumber: provider.number });
+      await weezmoMail.sendProviderReport(provider, products, categories);
+      console.log(`email sent to ${provider.email}`);
+    })
+  );
+  res.status(200).json({ message: "The report was successfully sent" });
+}; 
+
 module.exports = {
   initialData,
   updateBlockedProvidersByProvider,
@@ -630,4 +646,5 @@ module.exports = {
   editLocationProductsConfig,
   deleteLocationProductsConfig,
   addMessageToBranchs,
+  sendProviderReport,
 };

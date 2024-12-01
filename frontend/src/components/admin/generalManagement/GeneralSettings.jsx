@@ -6,6 +6,7 @@ import apiRequestForForm from "../../../services/apiForForm";
 
 function GeneralSettings() {
   const { state } = useAdminContext();
+  const { state: mainState, dispatch: mainDispatch } = useMainContext();
   const { providers } = state;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedProviders, setSelectedProviders] = useState([]);
@@ -28,17 +29,21 @@ function GeneralSettings() {
   };
 
   const handleSendReport = async () => {
+    mainDispatch({ type: "SET_SHOW_LOADER", payload: true });
     try {
       await apiRequestForForm(
         "admin/sendProviderReport",
         "POST",
-        selectedProviders
+        { selectedProviders }
       );
+      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "דוח נשלח בהצלחה" } });
       setIsPopupOpen(false);
       setSelectedProviders([]);
     } catch (error) {
       console.error('Error sending provider report:', error);
+        mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "שגיאה בשליחת הדוח" } });
     }
+    mainDispatch({ type: "SET_SHOW_LOADER", payload: false });
   };
 
   const handleClosePopup = () => {

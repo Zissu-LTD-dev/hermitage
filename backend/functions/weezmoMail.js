@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 const puppeteer = require('puppeteer');
+const XLSX = require('xlsx');
 
 async function generatePDF(html, outputPath) {
   const browser = await puppeteer.launch();
@@ -179,4 +180,92 @@ const weezmoMail = async (data) => {
   }
 };
 
-module.exports = weezmoMail;
+const sendProviderReport = async (provider, products, categories) => {
+  if (!products || products.length === 0) {
+    return ;
+  }
+  try {
+    // Validate inputs
+    if (!provider || !products || !Array.isArray(products)) {
+      throw new Error('Invalid provider or products data');
+    }
+
+    // Prepare Excel data
+    const excelData = products.map(product => ({
+      'ברקוד': product.barcode || '', 
+      'תיאור פריט': product.name || '',
+      'מספר ספק': product.providerNumber || provider.number || '',
+      'שם ספק': product.providerName || provider.name || '',
+      'מספר קטגוריה': product.category || '',
+      'שם קטגוריה': categories.find(category => category.number === product.category)?.name || '',
+      'מספר קבוצת משנה': product.subGroupNumber || '',
+      'שם קבוצת משנה': product.subGroupName || '',
+      'מחיר': product.price || 0,
+      'תמונה': product.image == true ? 'יש' : 'חסר',
+      'חסום': product.isBlocke == true ? 'כן' : 'לא'
+    }));
+
+    // Create workbook and worksheet
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Products');
+
+    // Ensure 'uploads' directory exists
+    const uploadsDir = path.join(__dirname, 'uploads');
+    if (!fs.existsSync(uploadsDir)) {
+      fs.mkdirSync(uploadsDir);
+    }
+
+    // Generate unique filename
+    const filename = `provider_report_${provider.number || 'unknown'}_${Date.now()}.xlsx`;
+    const excelPath = path.join(uploadsDir, filename);
+
+    // Write Excel file
+    XLSX.writeFile(workbook, excelPath);
+
+    // Create FormData and append fields
+    const form = new FormData();
+    form.append('Target', process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : provider.email);
+    form.append('Message', `דוח מוצרים עבור ספק ${provider.name || 'לא מזוהה'}`);
+    form.append('SubjectLine', `דוח מוצרים עבור ספק ${provider.name || 'לא מזוהה'}`);
+    form.append('SenderName', 'Hermitage System');
+    form.append('AttachedFiles', fs.createReadStream(excelPath));
+
+    // Set up the request configuration
+    const config = {
+      method: 'post',
+      url: 'https://api-core.weezmo.com/v3/External/SendEmailWithAttachments',
+      headers: {
+        'accept': 'application/json',
+        'XApiKey': `${process.env.WEEZMO_KEY}`,
+        ...form.getHeaders()
+      },
+      data: form
+    };
+
+    try {
+      const response = await axios(config);
+      console.log(JSON.stringify(response.data));
+      
+      // Clean up: remove the temporary Excel file
+      fs.unlinkSync(excelPath);
+      
+      return response.data;
+    } catch (error) {
+      console.error('Error sending email:', error);
+      
+      // Clean up: remove the temporary Excel file even if sending fails
+      try { fs.unlinkSync(excelPath); } catch {}
+      
+      return false;
+    }
+  } catch (error) {
+    console.error('Error in sendProviderReport:', error);
+    return false;
+  }
+};
+
+module.exports = { 
+  weezmoMail, 
+  sendProviderReport 
+};

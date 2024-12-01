@@ -613,12 +613,11 @@ const checkImage = async (barcode) => {
   const imageURL = `${linkImages}${barcode}.png`;
   try {
     const response = await axios.head(imageURL);
-    if (response.status === 200) return true;
+    return true;
   } catch (error) {
     if (error.response && error.response.status === 404) {
       return false;
     }
-    console.error('Error checking image:', error);
     return false;
   }
 }
@@ -626,18 +625,16 @@ const checkImage = async (barcode) => {
 // update Product Images if avilable
 const updateProductImages = async (req, res) => {
   let products = await Product.find({});
-  await Promise.all(
-    products.map(async (product) => {
-      const imageExists = await checkImage(product.barcode);
-      if (imageExists) {
-        product.image = true;
-        await product.save();
-      } else {
-        product.image = false;
-        await product.save();
-      }
-    })
-  );
+  products.map(async (product) => {
+    const imageExists = await checkImage(product.barcode);
+    if (imageExists) {
+      product.image = true;
+      await product.save();
+    } else {
+      product.image = false;
+      await product.save();
+    }
+  })
   res.status(200).json({ message: "The images was successfully updated" });
 } 
 

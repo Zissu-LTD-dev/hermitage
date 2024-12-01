@@ -40,6 +40,11 @@ const ProductReturn = ({ productData, open }) => {
 
   
   const handleQuantityChange = (e) => {
+    if (e.target.value === '') {
+      setQuantity(0);
+      dispatch({ type: "REMOVE_RETURNED_PRODUCT", payload: barcode });
+      return;
+    }
     if (!/^\d+$/.test(e.target.value)) return;
     const newQuantity = parseInt(e.target.value, 10);
     setQuantity(newQuantity);

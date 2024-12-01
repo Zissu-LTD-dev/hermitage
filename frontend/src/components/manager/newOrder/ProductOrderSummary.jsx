@@ -33,6 +33,10 @@ const ProductOrder = ({ productData }) => {
   };
 
   const handleQuantityChange = (e) => {
+    if (e.target.value === '') {
+      dispatch({ type: "ADD_ORDERED_PRODUCT", payload: { ...productData, quantity: 0, originalQuantity: 0 } });
+      return;
+    }
     if (!/^\d+$/.test(e.target.value))  return;
     const newQuantity = parseInt(e.target.value, 10);
     if (newQuantity > 0) {

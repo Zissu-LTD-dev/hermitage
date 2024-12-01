@@ -37,6 +37,11 @@ const ProductOrder = ({productData}) => {
   }
 
   const handleQuantityChange = (e) => {
+    if (e.target.value === '') {
+      setQuantity(0);
+      dispatch({ type: "REMOVE_ORDERED_PRODUCT", payload: barcode });
+      return;
+    }
     if (!/^\d+$/.test(e.target.value)) {
       return;
     }

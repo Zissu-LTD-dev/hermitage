@@ -625,16 +625,22 @@ const checkImage = async (barcode) => {
 // update Product Images if avilable
 const updateProductImages = async (req, res) => {
   let products = await Product.find({});
-  products.map(async (product) => {
-    const imageExists = await checkImage(product.barcode);
-    if (imageExists) {
-      product.image = true;
-      await product.save();
-    } else {
-      product.image = false;
-      await product.save();
-    }
-  })
+  console.log('updateProductImages👇');
+  await Promise.all(
+    products.map(async (product) => {
+      console.log('update product', product.barcode);
+      const imageExists = await checkImage(product.barcode);
+      if (imageExists) {
+        product.image = true;
+        await product.save();
+      } else {
+        product.image = false;
+        await product.save();
+      }
+    })
+  );
+  console.log('updateProductImages👆');
+  
   res.status(200).json({ message: "The images was successfully updated" });
 } 
 

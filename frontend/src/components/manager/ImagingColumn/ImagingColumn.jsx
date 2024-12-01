@@ -7,14 +7,14 @@ const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 
 function ImagingColumn({ name, activeRow, products, openImaging, closeImaging }) {
   const [productsGroup, setProductsGroup] = useState([]);
-  let image = `${REACT_APP_PROJECT_IMAGES}${products.barcode}.png`;
-
-
   const [open, setOpen] = useState(openImaging);
-  const [imageError, setImageError] = useState(false);
+  const [imageErrors, setImageErrors] = useState({});
 
-  const handleImageError = () => {
-    setImageError(true);
+  const handleImageError = (barcode) => {
+    setImageErrors(prev => ({
+      ...prev,
+      [barcode]: true
+    }));
   }
 
 
@@ -83,7 +83,11 @@ function ImagingColumn({ name, activeRow, products, openImaging, closeImaging })
                         return (
                           <div className={Imaging.product} key={index}>
                             <div className={Imaging.img}>
-                              <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
+                              <img 
+                                src={imageErrors[product.barcode] ? imgProductDefault : `${REACT_APP_PROJECT_IMAGES}${product.barcode}.png`}
+                                alt={name} 
+                                onError={() => handleImageError(product.barcode)}
+                              />
                             </div>
                             <div className={Imaging.name}>{product.name}</div>
                           </div>

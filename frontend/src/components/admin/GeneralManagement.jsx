@@ -8,6 +8,7 @@ import BranchType from "./generalManagement/BranchType";
 import Providers from "./generalManagement/Providers";
 import SubGroup from "./generalManagement/SubGroup";
 import Categories from "./generalManagement/Categories";
+import GeneralSettings from "./generalManagement/GeneralSettings";
 import Locationproductsconfig from "./generalManagement/Locationproductsconfig";
 
 function GeneralManagement() {
@@ -50,6 +51,9 @@ function GeneralManagement() {
             <div className={generalManagement.headerButton}
                 onClick={() => setStatus("locationproductsconfig")}
             >הגדרת קטגוריות</div>
+            <div className={generalManagement.headerButton}
+                onClick={() => setStatus("generalSettings")}
+            >הגדרות כלליות</div>
           </div>
         </div>
         <div className={generalManagement.body}>
@@ -60,6 +64,7 @@ function GeneralManagement() {
             {status == "subgroup" && <SubGroup />}
             {status == "categories" && <Categories />}
             {status == "locationproductsconfig" && <Locationproductsconfig />}
+            {status == "generalSettings" && <GeneralSettings />}
         </div>
       </div>
     </>

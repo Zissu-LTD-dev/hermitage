@@ -20,10 +20,11 @@ function UploadFiles() {
   const [fileData, setFileData] = useState(null);
   const [fileName, setFileName] = useState("");
   const [btnName, setBtnName] = useState("");
-  const [branchType, setBranchType] = useState(state.typeBranches);
+  const [branchType, setBranchType] = useState([]);
   const [duplication, setDuplication] = useState([]);
 
   const downloadExcel = () => {
+    if (branchType.length == 0) setBranchType([0,1,2,3,4,5,6,7,8,9,10]);
     const deleteProduct = [["מס ברקוד (ראשי)"]];
     const addProduct = [
       [
@@ -316,6 +317,12 @@ function UploadFiles() {
       }
     }
   }, [fileData]);
+
+  useEffect(() => {
+    if (state.typeBranches.length > 0) {
+      setBranchType(state.typeBranches);
+    }
+  }, [state.typeBranches]);
 
   return (
     <>

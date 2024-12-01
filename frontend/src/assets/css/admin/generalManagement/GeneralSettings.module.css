@@ -24,7 +24,7 @@
     height: 100%;
 }
 
-.sendReportSection{
+.section{
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -37,6 +37,13 @@
     font-size: 24px;
     font-weight: 600;
     margin: 0 0 20px 0;
+}
+
+.description{
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 10px 0;
+    color: #666;
 }
 
 .popup {

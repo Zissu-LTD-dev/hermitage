@@ -1,7 +1,5 @@
 const excel = require("xlsx");
 const { Product, BranchType, Category } = require("../models");
-const axios = require('axios');
-const linkImages = process.env.LINK_IMAGES
 
 const downloadProducts = async (req, res) => {
   let branchType = await BranchType.find({});
@@ -9,30 +7,9 @@ const downloadProducts = async (req, res) => {
   let categories = await Category.find({});
   let data = [];
 
-  const checkImage = async (barcode) => {
-    const imageURL = `${linkImages}${barcode}.png`;
-    try {
-      const response = await axios.head(imageURL);
-      return response.status === 200;
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        return false;
-      }
-      console.error('Error checking image:', error);
-      return false;
-    }
-  }
-  
   for (const product of products) {
     let isBlocked = product.isBlocked ? 1 : 2;
     let categoryName = categories.find((category) => category.number == product.category);
-    let image = "";
-    image = (await checkImage(product.barcode)) ? "יש" : "חסר";
-    // if (product.barcode < 10 ) { // צריך להוריד את זה בסוף
-    // } 
-    // else {
-    //   image = "אין תמונה";
-    // }
 
     let productRow = {
       "חסום להזמנות - 1 חסום , 2 פתוח": isBlocked,
@@ -46,7 +23,7 @@ const downloadProducts = async (req, res) => {
       "תאור - שם פריט": product.name,
       "תאור - כמות בארגז": product.packQuantity,
       "תאור - עלות קניה": product.price,
-      "תמונה": image,
+      "תמונה": product.image == true ? "יש" : "חסר",
     };
   
     let numBT = branchType.length;

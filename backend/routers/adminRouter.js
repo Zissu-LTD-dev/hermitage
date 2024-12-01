@@ -164,4 +164,7 @@ adminRouter.get("/downloadProducts", downloadProducts.downloadProducts );
 // sendProviderReport 
 adminRouter.post("/sendProviderReport", admin.sendProviderReport);
 
+// updateProductImages
+adminRouter.put("/updateProductImages", admin.updateProductImages);
+
 exports.adminRouter = adminRouter;

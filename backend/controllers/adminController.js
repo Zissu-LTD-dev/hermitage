@@ -1,6 +1,8 @@
 // body parser
 const bodyParser = require("body-parser");
 const weezmoMail = require("../functions/weezmoMail");
+const axios = require('axios');
+const linkImages = process.env.LINK_IMAGES
 const {
   Branch,
   BranchType,
@@ -606,6 +608,39 @@ const sendProviderReport = async (req, res) => {
   res.status(200).json({ message: "The report was successfully sent" });
 }; 
 
+
+const checkImage = async (barcode) => {
+  const imageURL = `${linkImages}${barcode}.png`;
+  try {
+    const response = await axios.head(imageURL);
+    if (response.status === 200) return true;
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return false;
+    }
+    console.error('Error checking image:', error);
+    return false;
+  }
+}
+
+// update Product Images if avilable
+const updateProductImages = async (req, res) => {
+  let products = await Product.find({});
+  await Promise.all(
+    products.map(async (product) => {
+      const imageExists = await checkImage(product.barcode);
+      if (imageExists) {
+        product.image = true;
+        await product.save();
+      } else {
+        product.image = false;
+        await product.save();
+      }
+    })
+  );
+  res.status(200).json({ message: "The images was successfully updated" });
+} 
+
 module.exports = {
   initialData,
   updateBlockedProvidersByProvider,
@@ -647,4 +682,5 @@ module.exports = {
   deleteLocationProductsConfig,
   addMessageToBranchs,
   sendProviderReport,
+  updateProductImages,
 };

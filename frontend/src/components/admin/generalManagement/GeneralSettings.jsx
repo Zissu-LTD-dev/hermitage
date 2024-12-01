@@ -51,13 +51,23 @@ function GeneralSettings() {
     setSelectedProviders([]);
   };
 
+  const updateProductImages = async () => {
+    try {
+      await apiRequestForForm("admin/updateProductImages", "PUT", {});
+      mainDispatch({ type: "SET_SHOW_SUCCESS", payload: { show: true, message: "עדכון תמונות מוצרים בוצע בהצלחה" } });
+    } catch (error) {
+      console.error('Error updating product images:', error);
+      mainDispatch({ type: "SET_SHOW_ERROR", payload: { show: true, message: "שגיאה בעדכון תמונות מוצרים" } });
+    }
+  };
+
   return (
     <div className={generalSettings.container}>
       <div className={generalSettings.headers}>
         <div className={generalSettings.title}>הגדרות כלליות</div>
       </div>
       <div className={generalSettings.body}>
-        <div className={generalSettings.sendReportSection}>
+        <div className={generalSettings.section}>
           <div className={generalSettings.title}>שלח דוח מוצרים לספקים</div>
           <button 
             className={generalSettings.sendReportButton} 
@@ -66,13 +76,23 @@ function GeneralSettings() {
             שלח דוח
           </button>
         </div>
+        <div className={generalSettings.section}>
+            <div className={generalSettings.title}>עדכון מצב תמונות מוצרים במסד נתונים</div>
+            <div className={generalSettings.description}>העדכון נעשה ברקע ויכול לקחת כמה דקות</div>
+            <button
+              className={generalSettings.sendReportButton}
+              onClick={() => confirm("האם אתה בטוח שברצונך לעדכן מצב תמונות מוצרים במסד נתונים?") ? updateProductImages() : null}
+            >
+              עדכן
+            </button>
+        </div>
 
         {isPopupOpen && (
           <div className={generalSettings.popup}>
             <div className={generalSettings.popupContent}>
               <div className={generalSettings.popupHeader}>
                 <h2 className={generalSettings.popupHeaderTitle}>בחירת ספקים לשליחת דוח</h2>
-                <button 
+            <button
                   className={generalSettings.selectAllButton}
                   onClick={handleSelectAll}
                 >

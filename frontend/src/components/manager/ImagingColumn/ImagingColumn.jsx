@@ -45,7 +45,9 @@ function ImagingColumn({ name, activeRow, products, openImaging, closeImaging })
         temp.push(group);
       });
     }
-      temp.push(group);
+      if (group.length > 0) {
+        temp.push(group);
+      }
       setProductsGroup(temp);
   }, [products]);
 
@@ -94,6 +96,7 @@ function ImagingColumn({ name, activeRow, products, openImaging, closeImaging })
                         );
                       })}
                     </div>
+                    
                     <div className={Imaging.shelf}>
                       <img src={shelf} alt="" />
                     </div>

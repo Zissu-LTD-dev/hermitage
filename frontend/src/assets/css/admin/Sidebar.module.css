@@ -124,3 +124,34 @@
     color: #BE955D;
     cursor: pointer;
 }
+
+/* Media query for 10.9" tablet display (1112x834px) */
+@media screen and (max-width: 1112px) {
+    .sidebar {
+        width: 240px;
+    }
+
+    .sidebar .logo {
+        height: 75px;
+        background-size: 150px 27px;
+    }
+
+    .sidebar .menu div {
+        height: 55px;
+    }
+
+    .sidebar .menu div .icon,
+    .sidebar .connectedBy .icon {
+        width: 55px;
+    }
+
+    .sidebar .menu div img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .sidebar .connectedBy {
+        width: 240px;
+        height: 75px;
+    }
+}

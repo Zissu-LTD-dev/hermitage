@@ -27,3 +27,16 @@
 .navbar .navbar__left{
     height: 100%;
 }
+
+/* Media query for 10.9" tablet display (1112x834px) */
+@media screen and (max-width: 1112px) {
+    .navbar {
+        width: calc(100% - 240px);
+        height: 75px;
+    }
+
+    .navbar .navbar__right {
+        max-width: calc(100% - 80px);
+        gap: 15px;
+    }
+}

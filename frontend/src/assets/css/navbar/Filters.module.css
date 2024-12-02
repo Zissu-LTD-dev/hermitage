@@ -224,3 +224,29 @@
     50% no-repeat padding-box;
   margin: 0 0 0 10px;
 }
+
+/* Media query for 10.9" tablet display (1112x834px) */
+@media screen and (max-width: 1112px) {
+    .filters {
+        width: 380px;
+        padding: 0 25px 0 25px;
+    }
+
+    .open__filter {
+        top: 200px;
+        height: 450px;
+    }
+
+    .filters .filter {
+        height: 75px;
+    }
+
+    .filters .filter .icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .list {
+        height: 300px;
+    }
+}

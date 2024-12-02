@@ -94,3 +94,37 @@ color: #082A3A;
 .off {
   background: #efe4d6 0% 0% no-repeat padding-box;
 }
+
+/* Media query for 10.9" tablet display (1112x834px) */
+@media screen and (max-width: 1112px) {
+    .main {
+        padding: 0 25px 0 25px;
+        gap: 20px;
+    }
+
+    .wizard {
+        height: 25px;
+        font-size: 13px;
+    }
+
+    .wizard .line {
+        width: 28px;
+    }
+
+
+    .wizard div i {
+        width: 18px;
+        height: 18px;
+        font-size: 10px;
+    }
+
+    .wizard div span {
+        font-size: 10px;
+    }
+
+    .button {
+        width: 140px;
+        height: 32px;
+        font-size: 13px;
+    }
+}

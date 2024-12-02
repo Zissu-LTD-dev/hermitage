@@ -114,3 +114,39 @@
   letter-spacing: 0px;
   color: #082a3a;
 }
+
+
+/* Media query for 10.9" tablet display (1112x834px) */
+@media screen and (max-width: 1112px) {
+    .main {
+        padding: 20px;
+    }
+
+    .message__popup {
+        width: 100%;
+        padding:  0;
+        box-shadow: 0px 2px 4px 0px #00000029;
+    }
+
+    .message__popup__item__content {
+        font-size: 18px;
+    }
+
+    .message__popup__item__date {
+        font-size: 12px;
+    }
+
+    .message__popup__item {
+        margin: 5px 0;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .readBTN {
+        font-size: 14px;
+    }
+
+    
+}

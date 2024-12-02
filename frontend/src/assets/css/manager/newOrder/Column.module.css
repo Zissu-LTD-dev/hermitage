@@ -24,7 +24,7 @@
   
 }
   .main span:nth-child(2){
-  width: 8%;
+  /* width: 8%; */
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -165,4 +165,21 @@
 }
 .arrow_icon_right{
   transform: rotate(90deg);
+}
+
+
+/* Media query for 10.9" tablet display (1112x834px) */
+@media screen and (max-width: 1112px) {
+ 
+
+  .title {
+    font-size: 13px;
+  }
+
+  .main__icon{
+    width: 20px;
+    height: 20px;
+    margin: 0 15px 0 10px;
+  }
+
 }

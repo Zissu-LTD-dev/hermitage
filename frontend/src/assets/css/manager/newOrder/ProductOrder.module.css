@@ -113,3 +113,60 @@
   color: #ffffff;
   background: #eb6060;
 }
+
+
+/* Media query for 10.9" tablet display (1112x834px) */
+@media screen and (max-width: 1112px) {
+  .product {
+    min-width: 135px;
+    width: 135px;
+    height: 250px;
+    margin: 0 5px 5px;
+  }
+
+  .product img {
+    height: 75px;
+  }
+
+  .product h2 {
+    font-size: 12px;
+    height: 48px;
+    line-height: 15px;
+    margin-bottom: 2px;
+  }
+
+  .product p {
+    font-size: 11px;
+    line-height: 13px;
+    margin: 2px 0;
+  }
+
+  .product div {
+    height: 22px;
+    margin: 4px 0 0 0;
+  }
+
+  .product div button {
+    width: 22px;
+  }
+
+  .product div input {
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .buttons {
+    min-height: 22px;
+  }
+
+  .buttons .blocked {
+    font-size: 13px;
+    line-height: 13px;
+  }
+
+  .product div .decrease,
+  .product div .increase {
+    width: 22px;
+    background-size: 35% 35%;
+  }
+}

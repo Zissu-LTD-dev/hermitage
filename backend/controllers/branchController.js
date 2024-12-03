@@ -191,7 +191,7 @@ const createOrder = async (req, res) => {
   Promise.all(mailPromises)
     .then(() => {
       console.log(sendMail ? "All mails were sent successfully" : "No mails were sent saved roders only waiting for approval");
-      res.status(200).json({ message: swndMail ? "All mails were sent successfully" : "No mails were sent saved roders only waiting for approval" });
+      res.status(200).json({ message: sendMail ? "All mails were sent successfully" : "No mails were sent saved roders only waiting for approval" });
     })
     .catch((error) => {
       console.error(error);

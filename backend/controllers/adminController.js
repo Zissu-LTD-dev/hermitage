@@ -149,6 +149,7 @@ const getAllOrders = async (req, res) => {
 
 // updateOrder
 const updateOrder = async (req, res) => {
+  // צריך לבדוק אם יש מייל  //TODO:  
   let newOrder = req.body;
   let order = await Order.findOne({ _id: newOrder._id });
   order.orderStatus = newOrder.orderStatus;

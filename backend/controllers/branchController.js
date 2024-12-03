@@ -171,7 +171,7 @@ const createOrder = async (req, res) => {
     emails = emails.filter((email) => email !== "");
 
     let mailPromises = emails.map(async (email) => {
-      let sendMail = await weezmoMail({
+      let sendMail = await weezmoMail.weezmoMail({
         target: process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : email,
         message: order,
         subjectLine: `הזמנה חדשה מסניף ${order.branchName}, עבור : ${order.providerName}`,

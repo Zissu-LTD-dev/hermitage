@@ -138,92 +138,70 @@ const createOrder = async (req, res) => {
     allOrders = allOrders.concat(newOrders);
   }
 
-  let orders = await Order.insertMany(allOrders);
+  try {
+    let orders = await Order.insertMany(allOrders);
+  
+    let sendMail = true;
+  
+    for (const order of orders) {
+      let branchNumber = order.branchNumber;
+      let providerNumber = order.providerNumber;
+      let blockReason = order.blockReason;
 
-  let mailPromises = orders.map(async (order) => {
-    let branchNumber = order.branchNumber;
-    let providerNumber = order.providerNumber;
-
-    // Check if have limited in this order
-    let productsLimited = order.orderLines.products.filter((product) => {
-      if (product.QuantityLimit == 0) return false;
-      return product.quantity > product.QuantityLimit ? true : false;
-    });
-
-    if (productsLimited.length > 0) {
-      console.log(
-        `products ${productsLimited.map((product) => product.name)} limited for branch ${branchNumber}`
-      );
-      return;
-    }
-
-    // Check blocked providers only if branch is a single object
-    if (
-      !Array.isArray(branch) &&
-      branch.blockedProviders &&
-      branch.blockedProviders.includes(providerNumber)
-    ) {
-      console.log(
-        `Provider ${providerNumber} is blocked for branch ${branchNumber}`
-      );
-      return;
-    }
-
-    let provider = await Provider.findOne({ number: providerNumber });
-    let emails = [provider.email];
-    let branchEmails = provider.branchEmails.filter(
-      (branch) => branch.branchNumber === branchNumber
-    );
-
-    branchEmails.forEach((branch) => {
-      emails.concat(branch.emails);
-    });
-
-    emails = emails.filter((email) => email !== "");
-
-    let mailPromises2 = emails.map(async (email) => {
-      let sendMail = await weezmoMail.weezmoMail({
-        target:
-          process.env.NODE_ENV == "dev" ? process.env.EMAIL_FOR_DEV : email,
-        message: order,
-        subjectLine: `הזמנה חדשה מסניף ${order.branchName}, עבור : ${order.providerName}`,
-        senderName: "הרמיטאז' הזמנות סניפים",
-      });
-      if (sendMail) {
-        console.log("Mail was sent successfully");
-        await Order.updateOne(
-          { _id: order._id },
-          { orderStatus: "approved", returnStatus: "approved" }
-        );
-      } else {
-        console.log("Mail was not sent");
+      if (blockReason && blockReason !== "") {
+        continue; // המשך להזמנה הבאה
       }
-    });
-    sendMail = true;
-    return Promise.all(mailPromises2);
-  });
-
-  Promise.all(mailPromises)
-    .then(() => {
-      console.log(
-        sendMail
-          ? "All mails were sent successfully"
-          : "No mails were sent saved roders only waiting for approval"
-      );
-      res
-        .status(200)
-        .json({
-          message: sendMail
-            ? "All mails were sent successfully"
-            : "No mails were sent saved roders only waiting for approval",
+  
+  
+      // מציאת הספק
+      let provider = await Provider.findOne({ number: providerNumber });
+      if (!provider) {
+        console.log(`Provider ${providerNumber} not found`);
+        continue; // המשך להזמנה הבאה
+      }
+  
+      // יצירת רשימת אימיילים
+      let emails = new Set([provider.email]);
+      provider.branchEmails
+        .filter((branch) => branch.branchNumber === branchNumber)
+        .forEach((branch) => branch.emails.forEach((email) => emails.add(email)));
+  
+      emails = Array.from(emails).filter((email) => email); // ניקוי אימיילים ריקים
+  
+      // שליחת מיילים
+      for (const email of emails) {
+        let sendMailResult = await weezmoMail.weezmoMail({
+          target:
+            process.env.NODE_ENV === "dev" ? process.env.EMAIL_FOR_DEV : email,
+          message: order,
+          subjectLine: `הזמנה חדשה מסניף ${order.branchName}, עבור : ${order.providerName}`,
+          senderName: "הרמיטאז' הזמנות סניפים",
         });
-    })
-    .catch((error) => {
-      console.error(error);
-      res
-        .status(200)
-        .json({ message: "There was an error processing the orders" });
+  
+        if (sendMailResult) {
+          console.log(`Mail sent successfully to ${email}`);
+          await Order.updateOne(
+            { _id: order._id },
+            { orderStatus: "approved", returnStatus: "approved" }
+          );
+        } else {
+          console.log(`Failed to send mail to ${email}`);
+          sendMail = false; // לפחות מייל אחד לא נשלח
+        }
+      }
+    }
+  
+    // סיום פעולה ושליחת תגובה
+    res.status(200).json({
+      message: sendMail
+        ? "All mails were sent successfully"
+        : "Some mails failed to send, orders saved waiting for approval",
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "There was an error processing the orders" });
+  }
+  
 };
 
 // getOrders

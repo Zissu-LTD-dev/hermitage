@@ -29,13 +29,11 @@ const getProducts = async (req, res) => {
   const products = await Product.find();
   const locationProductsConfig = await LocationProductsConfig_row.find({});
 
-  res
-    .status(200)
-    .json({
-      success: true,
-      products: products,
-      locationProductsConfig: locationProductsConfig,
-    });
+  res.status(200).json({
+    success: true,
+    products: products,
+    locationProductsConfig: locationProductsConfig,
+  });
 };
 
 // getCategory
@@ -70,7 +68,9 @@ const getFilters = async (req, res) => {
 const createOrder = async (req, res) => {
   let { userName, branch, summary } = req.body;
 
-  const branches = Array.isArray(branch) ? branch : [branch];
+  let branches = Array.isArray(branch) ? branch : [branch];
+  let branchNumbers = branches.map((branch) => branch.number);
+  branches = await Branch.find({ number: { $in: branchNumbers } });
   let lastOrder = await Order.findOne().sort({ orderNumber: -1 });
   let newOrderNumber = lastOrder ? lastOrder.orderNumber : 100;
   let sendMail = false;
@@ -80,22 +80,27 @@ const createOrder = async (req, res) => {
   for (const currentBranch of branches) {
     let newOrders = summary.map((order) => {
       newOrderNumber = newOrderNumber + 1;
-      
+
       // Check for limited products
-      const hasLimitedProducts = order.orderLines.products.some(product => 
-        product.QuantityLimit > 0 && product.quantity > product.QuantityLimit
+      const hasLimitedProducts = order.orderLines.products.some(
+        (product) =>
+          product.QuantityLimit > 0 && product.quantity > product.QuantityLimit
       );
 
       // Mark limited products
-      const productsWithLimitFlag = order.orderLines.products.map(product => ({
-        ...product,
-        isLimited: product.QuantityLimit > 0 && product.quantity > product.QuantityLimit
-      }));
+      const productsWithLimitFlag = order.orderLines.products.map(
+        (product) => ({
+          ...product,
+          isLimited:
+            product.QuantityLimit > 0 &&
+            product.quantity > product.QuantityLimit,
+        })
+      );
 
       // Check if provider is blocked
-      const isBlocked = !Array.isArray(branch) && 
-                       branch.blockedProviders && 
-                       branch.blockedProviders.includes(order.providerNumber);
+      const isBlocked =
+        currentBranch.blockedProviders &&
+        currentBranch.blockedProviders.includes(order.providerNumber);
 
       return {
         orderNumber: newOrderNumber,
@@ -121,8 +126,11 @@ const createOrder = async (req, res) => {
         returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
         noteProvider: order.noteProvider,
         noteManager: order.noteManager,
-        blockReason: isBlocked ? "ספק חסום" : 
-                    hasLimitedProducts ? "מוצר מוגבל" : "",
+        blockReason: isBlocked
+          ? "ספק חסום"
+          : hasLimitedProducts
+          ? "מוצר מוגבל"
+          : "",
         createdDate: new Date(),
       };
     });
@@ -137,27 +145,30 @@ const createOrder = async (req, res) => {
     let providerNumber = order.providerNumber;
 
     // Check if have limited in this order
-    let productsLimited = order.orderLines.products.filter(
-      (product) => {
-        if (product.QuantityLimit == 0) return false;
-        return product.quantity > product.QuantityLimit ? true : false;
-      }
-    );
+    let productsLimited = order.orderLines.products.filter((product) => {
+      if (product.QuantityLimit == 0) return false;
+      return product.quantity > product.QuantityLimit ? true : false;
+    });
+
     if (productsLimited.length > 0) {
       console.log(
-        `Provider ${providerNumber} is blocked for branch ${branchNumber}`
+        `products ${productsLimited.map((product) => product.name)} limited for branch ${branchNumber}`
       );
       return;
     }
-    
+
     // Check blocked providers only if branch is a single object
-    if (!Array.isArray(branch) && branch.blockedProviders && branch.blockedProviders.includes(providerNumber)) {
+    if (
+      !Array.isArray(branch) &&
+      branch.blockedProviders &&
+      branch.blockedProviders.includes(providerNumber)
+    ) {
       console.log(
         `Provider ${providerNumber} is blocked for branch ${branchNumber}`
       );
       return;
     }
-    
+
     let provider = await Provider.findOne({ number: providerNumber });
     let emails = [provider.email];
     let branchEmails = provider.branchEmails.filter(
@@ -165,33 +176,47 @@ const createOrder = async (req, res) => {
     );
 
     branchEmails.forEach((branch) => {
-      emails.concat(branch.emails); 
+      emails.concat(branch.emails);
     });
 
     emails = emails.filter((email) => email !== "");
 
-    let mailPromises = emails.map(async (email) => {
+    let mailPromises2 = emails.map(async (email) => {
       let sendMail = await weezmoMail.weezmoMail({
-        target: process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : email,
+        target:
+          process.env.NODE_ENV == "dev" ? process.env.EMAIL_FOR_DEV : email,
         message: order,
         subjectLine: `הזמנה חדשה מסניף ${order.branchName}, עבור : ${order.providerName}`,
         senderName: "הרמיטאז' הזמנות סניפים",
       });
       if (sendMail) {
         console.log("Mail was sent successfully");
-        await Order.updateOne({ _id: order._id }, { orderStatus: "approved" , returnStatus: "approved" });
+        await Order.updateOne(
+          { _id: order._id },
+          { orderStatus: "approved", returnStatus: "approved" }
+        );
       } else {
         console.log("Mail was not sent");
       }
     });
     sendMail = true;
-    return Promise.all(mailPromises);
+    return Promise.all(mailPromises2);
   });
 
   Promise.all(mailPromises)
     .then(() => {
-      console.log(sendMail ? "All mails were sent successfully" : "No mails were sent saved roders only waiting for approval");
-      res.status(200).json({ message: sendMail ? "All mails were sent successfully" : "No mails were sent saved roders only waiting for approval" });
+      console.log(
+        sendMail
+          ? "All mails were sent successfully"
+          : "No mails were sent saved roders only waiting for approval"
+      );
+      res
+        .status(200)
+        .json({
+          message: sendMail
+            ? "All mails were sent successfully"
+            : "No mails were sent saved roders only waiting for approval",
+        });
     })
     .catch((error) => {
       console.error(error);
@@ -241,9 +266,9 @@ const getMessages = async (req, res) => {
 // getReadList
 const getReadList = async (req, res) => {
   let branchId = req.params.branchId;
-  let readList = await MessageReads.find({ branch_id: branchId })
+  let readList = await MessageReads.find({ branch_id: branchId });
   res.status(200).json(readList);
-}
+};
 
 // readMessage
 const readMessage = async (req, res) => {

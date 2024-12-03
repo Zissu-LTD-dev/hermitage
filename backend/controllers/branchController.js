@@ -66,14 +66,14 @@ const getFilters = async (req, res) => {
 
 // createOrder
 const createOrder = async (req, res) => {
-  let { userName, branch, summary } = req.body;
+  let { userName, branch, summary, role } = req.body;
 
   let branches = Array.isArray(branch) ? branch : [branch];
   let branchNumbers = branches.map((branch) => branch.number);
   branches = await Branch.find({ number: { $in: branchNumbers } });
   let lastOrder = await Order.findOne().sort({ orderNumber: -1 });
   let newOrderNumber = lastOrder ? lastOrder.orderNumber : 100;
-  let sendMail = false;
+  let isAdmin = role != "manager" ? true : false;
 
   let allOrders = [];
 
@@ -126,7 +126,8 @@ const createOrder = async (req, res) => {
         returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
         noteProvider: order.noteProvider,
         noteManager: order.noteManager,
-        blockReason: isBlocked
+        blockReason: isAdmin ? "" : 
+          isBlocked
           ? "ספק חסום"
           : hasLimitedProducts
           ? "מוצר מוגבל"

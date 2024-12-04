@@ -201,8 +201,10 @@ const sendProviderReport = async (provider, products, categories) => {
       'מספר קבוצת משנה': product.subGroupNumber || '',
       'שם קבוצת משנה': product.subGroupName || '',
       'מחיר': product.price || 0,
-      'תמונה': product.image == true ? 'יש' : 'חסר',
-      'חסום': product.isBlocke == true ? 'כן' : 'לא'
+      'כמות בארגז': product.packQuantity || '-',
+      // 'תמונה': product.image == true ? 'יש' : 'חסר', // TODO: Add image check
+      'תמונה': 'זמנית אין מידע',
+      'חסום': product.isBlocked == true ? 'חסום' : 'לא חסום'
     }));
 
     // Create workbook and worksheet

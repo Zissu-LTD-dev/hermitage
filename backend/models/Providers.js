@@ -14,6 +14,7 @@ const providerSchema = new mongoose.Schema({
   },
   branchEmails: [
     {
+      branchID: Number,
       branchNumber: Number,
       branchName: String,
       emails: Array,

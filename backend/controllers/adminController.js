@@ -267,19 +267,15 @@ const newBranch = async (req, res) => {
   let newBranchL = new Branch(branch);
   await newBranchL.save();
 
-  let branches = await Branch.find({}).sort({ number: 1 });
   let providers = await Provider.find({});
   providers.map(async (provider) => {
-    provider.branchEmails = [];
-    branches.map((branch) => {
-      provider.branchEmails.push({
-        branchID: branch._id,
-        branchNumber: branch.number,
-        branchName: branch.name,
-        emails: [],
-      });
+    provider.branchEmails.push({
+      branchID: newBranchL._id,
+      branchNumber: newBranchL.number,
+      branchName: newBranchL.name,
+      emails: [],
     });
-    
+
     provider.branchEmails.sort((a, b) => a.branchNumber - b.branchNumber);
     await provider.save();
   });
@@ -299,7 +295,8 @@ const editBranch = async (req, res) => {
   let providers = await Provider.find({});
   providers.map(async (provider) => {
     provider.branchEmails.map((branchEmail) => {
-      if (branchEmail.branchNumber == branch.number) {
+      if (branchEmail.branchID == branchID) {
+        branchEmail.branchNumber = branch.number;
         branchEmail.branchName = branch.name;
       }
     });
@@ -316,15 +313,14 @@ const deleteBranch = async (req, res) => {
   let currentBranch = await Branch.findById(branchID);
   await currentBranch.deleteOne();
 
-  let branchs = await Branch.find({});
-  let branchsNumbers = branchs.map((branch) => branch.number);
-
   let providers = await Provider.find({});
   providers.map(async (provider) => {
-      provider.branchEmails = provider.branchEmails.filter((branchEmail) => branchsNumbers.includes(branchEmail.branchNumber));
-      await provider.save();
+    provider.branchEmails = provider.branchEmails.filter(
+      (branchEmail) => branchEmail.branchID != branchID
+    );
+    await provider.save();
   });
-
+  
   res.status(200).json({ message: "The branch was successfully deleted" });
 };
 

@@ -593,39 +593,18 @@ const sendProviderReport = async (req, res) => {
   res.status(200).json({ message: "The report was successfully sent" });
 }; 
 
-
-const checkImage = async (barcode) => {
-  const imageURL = `${linkImages}${barcode}.png`;
-  try {
-    const response = await axios.head(imageURL);
-    return true;
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return false;
-    }
-    return false;
-  }
-}
-
 // update Product Images if avilable
 const updateProductImages = async (req, res) => {
+  let barcodesWithImage  = req.body.barcodesWithImage;
   let products = await Product.find({});
-  console.log('updateProductImages👇');
-  await Promise.all(
-    products.map(async (product) => {
-      console.log('update product', product.barcode);
-      const imageExists = await checkImage(product.barcode);
-      if (imageExists) {
-        product.image = true;
-        await product.save();
-      } else {
-        product.image = false;
-        await product.save();
-      }
-    })
-  );
-  console.log('updateProductImages👆');
-  
+
+  products.map(async (product) => {
+    if (barcodesWithImage.includes(product.barcode)) {
+      product.image = true;
+    }
+    await product.save();
+  });
+
   res.status(200).json({ message: "The images was successfully updated" });
 } 
 

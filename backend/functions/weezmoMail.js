@@ -202,8 +202,7 @@ const sendProviderReport = async (provider, products, categories) => {
       'שם קבוצת משנה': product.subGroupName || '',
       'מחיר': product.price || 0,
       'כמות בארגז': product.packQuantity || '-',
-      // 'תמונה': product.image == true ? 'יש' : 'חסר', // TODO: Add image check
-      'תמונה': 'זמנית אין מידע',
+      'תמונה': product.image == true ? 'יש' : 'חסר', 
       'חסום': product.isBlocked == true ? 'חסום' : 'לא חסום'
     }));
 

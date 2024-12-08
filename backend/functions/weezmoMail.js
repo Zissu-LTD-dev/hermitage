@@ -226,7 +226,7 @@ const sendProviderReport = async (provider, products, categories) => {
 
     // Create FormData and append fields
     const form = new FormData();
-    form.append('Target', process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : provider.email);
+    form.append('Target', process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : provider.bookkeepingEmail );
     form.append('Message', `דוח מוצרים עבור ספק ${provider.name || 'לא מזוהה'}`);
     form.append('SubjectLine', `דוח מוצרים עבור ספק ${provider.name || 'לא מזוהה'}`);
     form.append('SenderName', 'Hermitage System');

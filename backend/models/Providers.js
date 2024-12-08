@@ -8,6 +8,7 @@ const providerSchema = new mongoose.Schema({
   name: String,
   phone: String,
   email: String,
+  bookkeepingEmail: String,
   isBlocked: {
     type: Boolean,
     default: false,

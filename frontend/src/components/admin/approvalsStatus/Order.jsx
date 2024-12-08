@@ -30,6 +30,7 @@ function Order({ orderData, orderBy }) {
     returnLines,
     noteProvider,
     noteManager,
+    blockReason,
   } = orderData;
   let products =
     orderBy == "returned" ? returnLines.products : orderLines.products;
@@ -190,7 +191,7 @@ function Order({ orderData, orderBy }) {
           <span>
             {status == "pending" && (
               <div className={orderStyle.providerNumber}>
-               {blockedProvider ? "ספק חסום" : "יש מוצר מוגבל"} 
+               {blockReason != "" ? `סיבה : ${blockReason}` : 'בעיה אחרת' } 
               </div>
             )}
             {status == "pending" && (

@@ -149,6 +149,7 @@ const getAllOrders = async (req, res) => {
 
 // updateOrder
 const updateOrder = async (req, res) => {
+  // צריך לבדוק אם יש מייל  //TODO:  
   let newOrder = req.body;
   let order = await Order.findOne({ _id: newOrder._id });
   order.orderStatus = newOrder.orderStatus;
@@ -170,7 +171,7 @@ const updateOrder = async (req, res) => {
     emails = emails.filter((email) => email !== "");
     
     let mailPromises = emails.map(async (email) => {
-      let sendMail = await weezmoMail({
+      let sendMail = await weezmoMail.weezmoMail({
         target:
           process.env.NODE_ENV == "dev" ? process.env.EMAIL_FOR_DEV : email,
         message: order,
@@ -266,31 +267,15 @@ const newBranch = async (req, res) => {
   let newBranchL = new Branch(branch);
   await newBranchL.save();
 
-  let branches = await Branch.find({}).sort({ number: 1 });
-
-  //update new branch in all providers
   let providers = await Provider.find({});
-
-  let branchsNumbers = providers.map((provider) => provider.branchEmails.map((branchEmail) => branchEmail.branchNumber)).flat();
-  let newBranchsNumbers = branches.map((branch) => branch.number);
-  let diff = newBranchsNumbers.filter((branch) => !branchsNumbers.includes(branch));
-  let newBranchs = branches.filter((branch) => diff.includes(branch.number));
-
-  providers.forEach(async (provider) => {
-
-    let branchsNumbers = provider.branchEmails.map((branchEmail) => branchEmail.branchNumber);
-    let diff = newBranchsNumbers.filter((branch) => !branchsNumbers.includes(branch));
-    let newBranchs = branches.filter((branch) => diff.includes(branch.number));
-
-    newBranchs.forEach(async (branch) => {
-      provider.branchEmails.push({
-        branchNumber: branch.number,
-        branchName: branch.name,
-        emails: [],
-      });
+  providers.map(async (provider) => {
+    provider.branchEmails.push({
+      branchID: newBranchL._id,
+      branchNumber: newBranchL.number,
+      branchName: newBranchL.name,
+      emails: [],
     });
 
-    // sort branchEmails by branchNumber
     provider.branchEmails.sort((a, b) => a.branchNumber - b.branchNumber);
     await provider.save();
   });
@@ -310,7 +295,8 @@ const editBranch = async (req, res) => {
   let providers = await Provider.find({});
   providers.map(async (provider) => {
     provider.branchEmails.map((branchEmail) => {
-      if (branchEmail.branchNumber == branch.number) {
+      if (branchEmail.branchID == branchID) {
+        branchEmail.branchNumber = branch.number;
         branchEmail.branchName = branch.name;
       }
     });
@@ -327,15 +313,14 @@ const deleteBranch = async (req, res) => {
   let currentBranch = await Branch.findById(branchID);
   await currentBranch.deleteOne();
 
-  let branchs = await Branch.find({});
-  let branchsNumbers = branchs.map((branch) => branch.number);
-
   let providers = await Provider.find({});
   providers.map(async (provider) => {
-      provider.branchEmails = provider.branchEmails.filter((branchEmail) => branchsNumbers.includes(branchEmail.branchNumber));
-      await provider.save();
+    provider.branchEmails = provider.branchEmails.filter(
+      (branchEmail) => branchEmail.branchID != branchID
+    );
+    await provider.save();
   });
-
+  
   res.status(200).json({ message: "The branch was successfully deleted" });
 };
 
@@ -608,39 +593,18 @@ const sendProviderReport = async (req, res) => {
   res.status(200).json({ message: "The report was successfully sent" });
 }; 
 
-
-const checkImage = async (barcode) => {
-  const imageURL = `${linkImages}${barcode}.png`;
-  try {
-    const response = await axios.head(imageURL);
-    return true;
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return false;
-    }
-    return false;
-  }
-}
-
 // update Product Images if avilable
 const updateProductImages = async (req, res) => {
+  let barcodesWithImage  = req.body.barcodesWithImage;
   let products = await Product.find({});
-  console.log('updateProductImages👇');
-  await Promise.all(
-    products.map(async (product) => {
-      console.log('update product', product.barcode);
-      const imageExists = await checkImage(product.barcode);
-      if (imageExists) {
-        product.image = true;
-        await product.save();
-      } else {
-        product.image = false;
-        await product.save();
-      }
-    })
-  );
-  console.log('updateProductImages👆');
-  
+
+  products.map(async (product) => {
+    if (barcodesWithImage.includes(product.barcode)) {
+      product.image = true;
+    }
+    await product.save();
+  });
+
   res.status(200).json({ message: "The images was successfully updated" });
 } 
 

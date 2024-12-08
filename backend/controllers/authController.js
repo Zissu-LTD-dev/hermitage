@@ -1,4 +1,5 @@
 const {User, Branch} = require("../models");
+const weezmoMail = require("../functions/weezmoMail");
 const jwt = require("jsonwebtoken");
 
 const getUsers = async (req, res) => {
@@ -55,6 +56,28 @@ const login = async (req, res) => {
   res.status(200).json({ user: user , branch, token });
 };
 
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) return res.status(400).json({ error: "Please provide email" });
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  const resetToken = user.createResetPasswordToken();
+  const userUpdate = await user.updateOne({
+    password: resetToken,
+  });
+  
+  if (!userUpdate) return res.status(500).json({ error: "Server error" });
+
+  const sendMail = await weezmoMail.forgetPassword(email, resetToken);
+
+  if (!sendMail) return res.status(500).json({ error: true,  msg: "Server error in sending email" });
+
+  res.status(200).json({ msg: "Email sent successfully" , success: true });
+}
+
 const updateUser = async (req, res) => {
   let { userId } = req.params;
   const { username, password, email, role } = req.body;
@@ -77,4 +100,4 @@ const logout = async (req, res) => {
   // res.status(200).json({ msg: "logout successful !!!" });
 };
 
-module.exports = { getUsers, login, addUser, updateUser, logout };
+module.exports = { getUsers, login, forgotPassword, addUser, updateUser, logout };

@@ -57,7 +57,7 @@ color: #082A3A
     background: transparent url('../../../image/ImagingColumn/block.svg') 50% 50% no-repeat padding-box;
 }
 .body {
-  height: calc(100% - 30px - 40px);
+  height: calc(100% - 70px);
   direction: rtl;
   display: flex;
   flex-direction: column;
@@ -73,15 +73,15 @@ color: #082A3A
 }
 
 .group {
-    width: 90%;
-    height: 165px;
+    width: 100%;
+    height: 185px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .products{    
-    width: 95%;
-    height: 100%;
+    width: 90%;
+    /* height: 100%; */
     margin-left: 10px;
     display: flex;
     flex-direction: row;
@@ -98,31 +98,23 @@ color: #082A3A
 
 .product {
     width: 92px;
-    height: 138px;
-    margin: 0 10px 0 0;
+    /* height: 138px; */
+    margin: 0 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .img {
-    width: 100%;
-    min-width: 80px;
-    height: 80px;
-    margin: 0 0 -10px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
+    width: 92px;
+    height: 92px;
 }
 .img img {
-    /* width: 100%; */
-    height: 98%;
-    /* צל מכל כוון*/
-    box-shadow: 0px 3px 6px #fff;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .product .name {
-    width: 95%;
+    /* width: 95%; */
     /* height: calc(100% - 80px); */
     padding: 38px 0 0 0;
     display: flex;

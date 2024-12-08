@@ -83,8 +83,9 @@ function Branches() {
     mainState.branches = newBranches;
     let updatedProviders = state.providers.map((provider) => {
       let updatedBranchEmails = provider.branchEmails.map((branchEmail) => {
-        if (branchEmail.branchNumber === newBranch.number) {
+        if (branchEmail.branchID === newBranch._id) {
           branchEmail.branchName = newBranch.name;
+          branchEmail.branchNumber = newBranch.number;
         }
         return branchEmail;
       });
@@ -100,10 +101,10 @@ function Branches() {
     setEditBranch(false);
   };
 
-  const updateProviders = (number) => {
+  const updateProviders = (id) => {
     let updatedProviders = state.providers.map((provider) => {
       let updatedBranchEmails = provider.branchEmails.filter(
-        (branchEmail) => branchEmail.branchNumber !== number
+        (branchEmail) => branchEmail.branchID !== id
       );
       provider.branchEmails = updatedBranchEmails;
       return provider;
@@ -547,7 +548,7 @@ function Branches() {
                           onClick={() => {
                             setBranches(branches.filter((b) => b.number !== branch.number));
                             apiRequestForForm(`admin/deleteBranch/${branch._id}`, "DELETE");
-                            updateProviders(branch.number);
+                            updateProviders(branch._id);
                             setDeleteBranch(0);
                           }}
                         >

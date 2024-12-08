@@ -201,8 +201,9 @@ const sendProviderReport = async (provider, products, categories) => {
       'מספר קבוצת משנה': product.subGroupNumber || '',
       'שם קבוצת משנה': product.subGroupName || '',
       'מחיר': product.price || 0,
-      'תמונה': product.image == true ? 'יש' : 'חסר',
-      'חסום': product.isBlocke == true ? 'כן' : 'לא'
+      'כמות בארגז': product.packQuantity || '-',
+      'תמונה': product.image == true ? 'יש' : 'חסר', 
+      'חסום': product.isBlocked == true ? 'חסום' : 'לא חסום'
     }));
 
     // Create workbook and worksheet
@@ -225,7 +226,7 @@ const sendProviderReport = async (provider, products, categories) => {
 
     // Create FormData and append fields
     const form = new FormData();
-    form.append('Target', process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : provider.email);
+    form.append('Target', process.env.NODE_ENV == 'dev' ? process.env.EMAIL_FOR_DEV : provider.bookkeepingEmail );
     form.append('Message', `דוח מוצרים עבור ספק ${provider.name || 'לא מזוהה'}`);
     form.append('SubjectLine', `דוח מוצרים עבור ספק ${provider.name || 'לא מזוהה'}`);
     form.append('SenderName', 'Hermitage System');
@@ -265,7 +266,36 @@ const sendProviderReport = async (provider, products, categories) => {
   }
 };
 
+const forgetPassword = async (email, password) => {
+  const data = {
+    target: email,
+    message: `הסיסמה החדשה שלך היא: <br> ${password}`,
+    subjectLine: 'איפוס סיסמה'
+  };
+
+  const config = {
+    method: 'post',
+    url: 'https://api-core.weezmo.com/v3/External/SendEmail',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      XApiKey: `${process.env.WEEZMO_KEY}`
+    },
+    data: JSON.stringify(data)
+  };
+
+  try {
+    const response = await axios(config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
 module.exports = { 
   weezmoMail, 
-  sendProviderReport 
+  sendProviderReport,
+  forgetPassword
 };

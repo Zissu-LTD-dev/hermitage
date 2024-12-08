@@ -12,6 +12,7 @@ function Providers() {
     number: null,
     name: "",
     email: "",
+    bookkeepingEmail: "",
     isBlocked: false,
     branchEmails: [],
   };
@@ -182,7 +183,7 @@ function Providers() {
                     />
                   </div>
                   <div className={subGeneralManagement.formFieldsInput}>
-                    <label>אימייל ראשי : </label>
+                    <label>מייל ראשי : </label>
                     <input
                       type="text"
                       value={newProvider.email}
@@ -194,6 +195,19 @@ function Providers() {
                       }
                     />
                   </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>מייל הנהלת חשבונות : </label>
+                    <input
+                      type="text"
+                      value={newProvider.bookkeepingEmail}
+                      onChange={(e) =>
+                        setNewProvider({
+                          ...newProvider,
+                          bookkeepingEmail: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
                   {newProvider.branchEmails.length &&
                     newProvider.branchEmails.map((branch, index) => {
                       return (
@@ -201,7 +215,7 @@ function Providers() {
                           key={index}
                           className={subGeneralManagement.formFieldsInput}
                         >
-                          <label>אימייל עבור סניף: {branch.branchName} - {branch.branchNumber}</label>
+                          <label>מייל עבור סניף: {branch.branchName} - {branch.branchNumber}</label>
                           <input
                             type="text"
                             // arr to str
@@ -280,7 +294,7 @@ function Providers() {
                     />
                   </div>
                   <div className={subGeneralManagement.formFieldsInput}>
-                    <label>אימייל ראשי : </label>
+                    <label>מייל ראשי : </label>
                     <input
                       type="text"
                       value={newProvider.email}
@@ -292,13 +306,26 @@ function Providers() {
                       }
                     />
                   </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
+                    <label>מייל הנהלת חשבונות : </label>
+                    <input
+                      type="text"
+                      value={newProvider.bookkeepingEmail}
+                      onChange={(e) =>
+                        setNewProvider({
+                          ...newProvider,
+                          bookkeepingEmail: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
                   {newProvider.branchEmails.map((branch, index) => {
                       return (
                         <div
                           key={index}
                           className={subGeneralManagement.formFieldsInput}
                         >
-                          <label>אימייל עבור סניף: {branch.branchName} - {branch.branchNumber}</label>
+                          <label>מייל עבור סניף: {branch.branchName} - {branch.branchNumber}</label>
                           <input
                             type="text"
                             // arr to str

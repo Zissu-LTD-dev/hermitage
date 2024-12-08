@@ -48,4 +48,12 @@ UserSchema.statics.verifyToken = function (token, secretKey) {
   return jwt.verify(token, secretKey);
 };
 
+UserSchema.methods.createResetPasswordToken = function () {
+  const resetToken = Math.random().toString(36).slice(2);
+  this.resetPasswordToken = resetToken;
+  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000;
+  return resetToken;
+};
+
+
 module.exports = mongoose.model("User", UserSchema);

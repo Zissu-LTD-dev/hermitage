@@ -266,7 +266,36 @@ const sendProviderReport = async (provider, products, categories) => {
   }
 };
 
+const forgetPassword = async (email, password) => {
+  const data = {
+    target: email,
+    message: `הסיסמה החדשה שלך היא: <br> ${password}`,
+    subjectLine: 'איפוס סיסמה'
+  };
+
+  const config = {
+    method: 'post',
+    url: 'https://api-core.weezmo.com/v3/External/SendEmail',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      XApiKey: `${process.env.WEEZMO_KEY}`
+    },
+    data: JSON.stringify(data)
+  };
+
+  try {
+    const response = await axios(config);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
 module.exports = { 
   weezmoMail, 
-  sendProviderReport 
+  sendProviderReport,
+  forgetPassword
 };

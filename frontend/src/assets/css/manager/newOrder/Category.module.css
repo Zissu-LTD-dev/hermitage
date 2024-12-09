@@ -40,7 +40,7 @@ border-bottom: 1px solid #be965d00;
 /* Media query for 10.9" tablet display (1080x810px) */
 @media screen and (max-width: 1080px) {
     .main {
-        width: 120px;
+        width: 150px;
         height: 40px;
     }
 

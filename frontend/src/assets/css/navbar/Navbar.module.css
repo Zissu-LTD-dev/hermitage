@@ -28,8 +28,8 @@
     height: 100%;
 }
 
-/* Media query for 10.9" tablet display (1112x834px) */
-@media screen and (max-width: 1112px) {
+/* Media query for 10.9" tablet display (1080x810px) */
+@media screen and (max-width: 1080px) {
     .navbar {
         width: calc(100% - 240px);
         height: 75px;

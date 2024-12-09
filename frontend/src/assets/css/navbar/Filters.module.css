@@ -225,16 +225,21 @@
   margin: 0 0 0 10px;
 }
 
-/* Media query for 10.9" tablet display (1112x834px) */
-@media screen and (max-width: 1112px) {
+/* Media query for 10.9" tablet display (1080x810px) */
+@media screen and (max-width: 1080px) {
     .filters {
         width: 380px;
         padding: 0 25px 0 25px;
     }
 
+    .filters .filter h4 {
+        font-size: 16px;
+    }
+
     .open__filter {
-        top: 200px;
-        height: 450px;
+        top: 215px;
+        left: 15px;
+        height: 500px;
     }
 
     .filters .filter {
@@ -249,4 +254,16 @@
     .list {
         height: 300px;
     }
+
+    /* font-size */
+    .list__filter h5 {
+        font-size: 18px;
+    }
+    .list__filter__detail label {
+        font-size: 16px;
+    }
+    .list__submit {
+        font-size: 16px;
+    }
+    
 }

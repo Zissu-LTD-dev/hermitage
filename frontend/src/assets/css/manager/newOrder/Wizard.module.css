@@ -95,8 +95,8 @@ color: #082A3A;
   background: #efe4d6 0% 0% no-repeat padding-box;
 }
 
-/* Media query for 10.9" tablet display (1112x834px) */
-@media screen and (max-width: 1112px) {
+/* Media query for 10.9" tablet display (1080x810px) */
+@media screen and (max-width: 1080px) {
     .main {
         padding: 0 25px 0 25px;
         gap: 20px;
@@ -113,18 +113,18 @@ color: #082A3A;
 
 
     .wizard div i {
-        width: 18px;
-        height: 18px;
-        font-size: 10px;
+        width: 24px;
+        height: 24px;
+        font-size: 15px;
     }
 
     .wizard div span {
-        font-size: 10px;
+        font-size: 15px;
     }
 
     .button {
-        width: 140px;
+        width: 150px;
         height: 32px;
-        font-size: 13px;
+        font-size: 15px;
     }
 }

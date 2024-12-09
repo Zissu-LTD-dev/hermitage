@@ -147,3 +147,67 @@
 .disabled{
     opacity: 0.5;
 }
+
+
+/* Media query for 10.9" tablet display (1080x810px) */
+@media screen and (max-width: 1080px) {
+
+    .main{
+        height: 85px;
+    }
+    
+    .main span h2{
+        width: auto;
+        max-width: 100px;
+    }
+
+    .main span p{
+        width: auto;
+        max-width: 55px;
+        margin-left: 15px;
+    }
+
+    .main span img{
+        width: 75px;
+        height: 75px;
+    }
+
+    .btn{
+        min-width: auto;
+    }
+
+    .btnIcon{
+        width: 15px;
+        height: 15px;
+        margin: 10px;
+    }
+    .btnText{
+        display: none;
+    }
+
+    .activeBtnIcon{
+        width: 15px;
+        height: 15px;
+        margin: 10px;
+    }
+
+    .activeBtnText{
+        display: none;
+    }
+
+    .quantityInput{
+        width: 20px;
+    }
+
+    .buttons{
+        width: auto;
+        min-width: 90px;
+        margin: 0 0 0 5px;
+    }
+
+    .buttons button{
+        width: 28px;
+    }
+    
+    
+}

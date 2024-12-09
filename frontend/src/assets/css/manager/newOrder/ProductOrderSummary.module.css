@@ -115,3 +115,41 @@
   background-repeat: no-repeat;
   background-size: 31% 31%;
 }
+
+
+/* Media query for 10.9" tablet display (1080x810px) */
+@media screen and (max-width: 1080px) {
+  .product {
+    height: 100px;
+  }
+
+  .product img {
+    width: 75px;
+    height: 75px;
+    margin: 5px 5px 4px 19px;
+  }
+
+  .product h2 {
+    width: 100px;
+    font-size: 13px;
+    line-height: 15px;
+  }
+
+  .product .moreDetails {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .product p {
+    width: 50px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .product .buttons .quantityInput {
+    width: 40px;
+  }
+  
+}

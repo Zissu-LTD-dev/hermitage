@@ -132,3 +132,41 @@
 .close__icon {
   transform: rotate(180deg);
 }
+
+
+/* Media query for 10.9" tablet display (1080x810px) */
+@media screen and (max-width: 1080px) {
+    .main {
+        min-height: 90px;
+    }
+    
+    .orderNum{
+      height: auto;
+      font-size: 14px;
+      padding: 0 10px;
+      margin: 0 10px 0 0;
+    }
+    .date{
+      height: auto;
+      font-size: 14px;
+      padding: 0 10px;
+      margin: 0 10px 0 0;
+    }
+    .provider{
+      height: auto;
+      font-size: 14px;
+      padding: 0 10px;
+      margin: 0 10px 0 0;
+    }
+    .userName{
+      height: auto;
+      font-size: 14px;
+      padding: 0 10px;
+      margin: 0 10px 0 0;
+    }
+    .status{
+      font-size: 14px;
+      padding: 0 10px;
+      margin: 0 15px;
+    }
+}

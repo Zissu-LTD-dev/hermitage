@@ -136,3 +136,80 @@ color: #082A3A;
     letter-spacing: 0px;
     color: #FFFFFF;
 }
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+
+    .main {
+        margin: 30px 30px 0 35px;
+    }
+
+    .header{
+        margin-bottom: 20px;
+        padding: 0 0 12px 0;
+    }
+
+    .title{
+        padding: 8px 0;
+        font-size: 24px;
+    }
+
+    .buttons{
+        padding: 8px 0
+    }
+
+    .addProduct , .uploadProducts , .downloadProducts{
+        margin-right: 5px;
+    }
+
+    .addProduct{
+        width: 150px;
+        height: 33px;
+    }
+
+    .addProductIcon{
+        width: 17px;
+        height: 17px;
+        margin-left: 10px;
+    }
+
+    .addProductText{
+        font-size: 14px;
+    }
+
+    .uploadProducts{
+        height: 33px;
+        padding: 0 25px;
+    }
+
+    .uploadProductsIcon{
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+
+    .arrowIcon{
+        width: 15px;
+        height: 15px;
+        margin-right: 10px;
+    }
+
+    .uploadProductsText{
+        font-size: 14px;
+    }
+
+    .downloadProducts{
+        height: 33px;
+        padding: 0 25px;
+    }
+
+    .downloadProductsIcon{
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+    .downloadProductsText{
+        font-size: 14px;
+    }
+}

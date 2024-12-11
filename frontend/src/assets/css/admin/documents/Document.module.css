@@ -300,3 +300,39 @@
   color: #082a3a;
   cursor: pointer;
 }
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main{
+      width: calc(100% - 15px);
+      margin: 0 0 15px 0;
+    }   
+
+    .main span:nth-child(1){
+        
+    }
+
+    .header{
+        margin-bottom: 20px;
+        padding: 0 0 12px 0;
+    }
+
+    .name{
+        width: 150px;
+        height: 33px;
+        font-size: 16px;
+        padding: 0 0 0 10px;
+    }
+
+    .date{
+        font-size: 14px;
+    }
+
+    .forTo{
+        font-size: 14px;
+    }
+
+    .show_main_branch{
+        width: 120px;
+    }  
+}

@@ -127,31 +127,31 @@
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
-    .sidebar {
-        width: 240px;
-    }
+  .sidebar {
+      width: 240px;
+  }
 
-    .sidebar .logo {
-        height: 75px;
-        background-size: 150px 27px;
-    }
+  .sidebar .logo {
+      height: 75px;
+      background-size: 150px 27px;
+  }
 
-    .sidebar .menu div {
-        height: 55px;
-    }
+  .sidebar .menu div {
+      height: 55px;
+  }
 
-    .sidebar .menu div .icon,
-    .sidebar .connectedBy .icon {
-        width: 55px;
-    }
+  .sidebar .menu div .icon,
+  .sidebar .connectedBy .icon {
+      width: 55px;
+  }
 
-    .sidebar .menu div img {
-        width: 25px;
-        height: 25px;
-    }
+  .sidebar .menu div img {
+      width: 25px;
+      height: 25px;
+  }
 
-    .sidebar .connectedBy {
-        width: 240px;
-        height: 75px;
-    }
+  .sidebar .connectedBy {
+      width: 240px;
+      height: 75px;
+  }
 }

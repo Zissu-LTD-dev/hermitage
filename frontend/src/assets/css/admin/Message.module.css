@@ -107,3 +107,20 @@
     border: none;
     cursor: pointer;
 }
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main{
+        margin: 15px;
+    }
+
+    .title{
+        margin: 0 0 20px 0;
+    }
+
+    .message textarea{
+        width: 60%;
+    }
+
+    
+}

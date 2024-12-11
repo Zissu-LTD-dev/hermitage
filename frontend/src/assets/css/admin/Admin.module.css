@@ -13,3 +13,9 @@
     left: 0;
     background: #EFF2F3 0% 0% no-repeat padding-box;
 }
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .content{
+        width: calc(100vw - 240px);
+    }
+}

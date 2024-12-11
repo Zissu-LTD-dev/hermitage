@@ -62,6 +62,14 @@
   
   .body {
     margin: 0 37px 0 30px;
+    max-height: 402px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  
+  }
+  
+  .body::-webkit-scrollbar {
+    width: 5px;
   }
   
   .footer {
@@ -125,3 +133,41 @@
     background: #082a3a 0% 0% no-repeat padding-box;
   }
   
+
+  /* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main{
+        margin: 0 0 20px 0;
+    }
+
+    .header{
+        min-height: 50px;
+        padding: 5px;
+    }
+
+    .title{
+        padding: 8px 0;
+        font-size: 20px;    
+    }
+
+    .name{
+        width: 150px;
+        height: 33px;
+        font-size: 16px;
+        padding: 0 0 0 10px;
+    }
+
+    
+  .noNeed,
+  .need {
+    font-size: 14px;
+    text-align: center;
+    width: 200px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    cursor: pointer;
+  }
+}

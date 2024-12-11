@@ -262,3 +262,25 @@
     z-index: -1;
     opacity: 0;
 }
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .container{
+        padding: 10px;
+    }
+
+    .headers{
+        margin: 0 0 10px 0;
+        padding: 0 0 10px 0;
+    }
+
+    .title{
+        font-size: 20px;
+        margin: 0 0 10px 0;
+    }
+
+    .description{
+        font-size: 14px;
+        margin: 0 0 5px 0;
+    }
+}

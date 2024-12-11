@@ -128,3 +128,29 @@ cursor: pointer;
 }
 
 
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main{
+        margin: 50px 43px 0 53px;
+    }
+
+    .header{
+        margin-bottom: 20px;
+        padding: 0 0 12px 0;
+    }
+
+    .title{
+        padding: 8px 0;
+        font-size: 24px;    
+    }
+
+    .byProvider , .byBranch , .blocked{
+        width: 150px;
+        height: 33px;
+        font-size: 16px;
+        margin-left: 9px;
+    }
+
+    
+    
+}

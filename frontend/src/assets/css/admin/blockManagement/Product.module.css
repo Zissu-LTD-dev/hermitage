@@ -28,7 +28,7 @@
 }
 
 .image {
-  width: 95px;
+  width: 75px;
   height: 68px;
   background: #ffffff 0% 0% no-repeat padding-box;
   margin: 0 0 0 20px;
@@ -114,4 +114,19 @@
 }
 .unlimitedText{
   background: #082a3a 0% 0% no-repeat padding-box;
+}
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+  .provider, .category, .barcode {
+    margin-left: 10px;
+  }
+
+  .button {
+    margin-right: 0px;
+    font-size: 12px;
+    width: 100px;
+  }
+
 }

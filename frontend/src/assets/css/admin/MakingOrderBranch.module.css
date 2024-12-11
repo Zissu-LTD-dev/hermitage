@@ -149,3 +149,46 @@
     max-width: 400px;
   }
 }
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .mainSelectBranch {
+        margin: 5px;
+    }
+
+    .title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .branchCheckbox {
+        width: 100%;
+        max-width: 400px;
+        height: 50px;
+        padding: 0 10px;
+    }
+
+    .branchCheckbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-left: 10px;
+    }
+
+    .branchCheckbox label {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .btn {
+        width: 150px;
+        height: 40px;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    .branchCheckbox.selectAllCheckbox {
+        width: 100%;
+        max-width: 400px;
+        padding: 10px 0;
+    }
+}

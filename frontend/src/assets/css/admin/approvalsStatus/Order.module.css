@@ -200,3 +200,56 @@ cursor: pointer;
     padding: 0 35px;
     color: #082a3a;
 }
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main {
+        width: 99%;
+        padding: 0 ;
+    }
+
+    .head {
+        height: 70px;
+    }
+
+    .orderNum {
+        padding: 0 10px;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .date , .branchName , .providerName {
+        width: 130px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+
+    .providerNumber{
+        width: 130px;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+
+    .status {
+        margin-left: 0px;
+        font-size: 13px;
+    }
+
+    .iconArrow {
+        width: 12px;
+        height: 12px;
+        margin: 0 15px;
+    }
+
+    .body {
+        margin: 0 0 8px 0;
+    }
+
+    .footer {
+        padding: 10px;
+    }
+
+    .cancelOrder , .approveOrder{
+        font-size: 13px;
+    }
+}

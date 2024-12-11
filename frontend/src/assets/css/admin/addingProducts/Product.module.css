@@ -76,3 +76,42 @@ color: #082A3A;
 .blocked{
     background: #ffebeb;
 }
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main{
+        height: 85px;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 3px 6px #082A3A05;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .productDetails{
+        width: 50px;
+    }
+    
+    .productDetails span{
+        display: none;
+    }
+
+    .Icon{
+        width: 20px;
+        height: 20px;
+    }
+
+    .productDelete{
+        width: 20px;
+        height: 20px;
+    }
+
+    .productName{
+        font-size: 14px;
+    }
+
+    .Text{
+        font-size: 12px;
+    }
+}

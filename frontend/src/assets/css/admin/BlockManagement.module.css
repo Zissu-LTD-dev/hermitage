@@ -158,3 +158,62 @@ padding: 0 5px 0 5px;
     color: #FFFFFF;
 cursor: pointer;
 }
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main {
+        margin: 0 0 0 15px;
+        height: calc(100% - 15px);
+    }
+
+    .header {
+        margin-bottom: 20px;
+        padding: 0 0 12px 0;
+    }
+
+    .title {
+        padding: 8px;
+        font-size: 24px;
+    }
+
+    .providerName{
+
+    }
+
+    .headerButtons {
+        width: 175px;
+        height: 33px;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .selectAll input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+
+    .buttons{
+        padding: 0 0 0 0;
+    }
+
+    .blockSelected {
+        width: 175px;
+        height: 33px;
+        font-size: 13px;
+    }
+
+    .blockSelectedIcon {
+        width: 15px;
+        height: 15px;
+        padding: 0 5px 0 5px;
+    }
+
+    .unblockSelected {
+        width: 200px;
+        height: 33px;
+        font-size: 13px;
+        text-align: center;
+    }
+}

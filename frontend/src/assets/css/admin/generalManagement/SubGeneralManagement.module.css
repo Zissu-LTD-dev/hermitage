@@ -212,3 +212,37 @@
 .cancelButtonDelete{
     background-color: #0A4F5A;
 }
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main{
+        
+    }   
+
+    .header{
+        margin: 5px 15px 0;
+    }
+    
+    .title{
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .list{
+        height: 100px;
+    }
+
+    .list div{
+        font-size: 16px;
+        padding: 0 5px;
+
+    }
+
+    .listButtons{
+        margin: 0 0 5px 0;
+    }
+
+    .listTitle{
+        font-size: 20px !important;
+    }
+}

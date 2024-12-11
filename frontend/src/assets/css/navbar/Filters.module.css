@@ -225,8 +225,8 @@
   margin: 0 0 0 10px;
 }
 
-/* Media query for 10.9" tablet display (1080x810px) */
-@media screen and (max-width: 1080px) {
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
     .filters {
         width: 380px;
         padding: 0 25px 0 25px;

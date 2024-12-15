@@ -10,46 +10,55 @@ function Document({document}) {
   const linkRef = useRef(null);
 
   const handleDownload = async () => {
-    
-    if (typeof window === 'undefined') {
-      console.error('Download is only available in a browser');
-      return;
-    }
+      if (typeof window === 'undefined') {
+        console.error('Download is only available in a browser');
+        return;
+      }
 
-    try {
-      const response = await fetch(`${REACT_APP_BACKEND_URL}manager/downloadDocument/${document._id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${cookie.get("token")}`
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+      try {
+        const response = await fetch(`${REACT_APP_BACKEND_URL}manager/downloadDocument/${document._id}`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${cookie.get("token")}`
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        if (isSafari) {
+          // פתרון לספארי
+          window.location.href = url;
+          // ניקוי ה-URL אחרי זמן קצר
+          setTimeout(() => window.URL.revokeObjectURL(url), 100);
+        } else {
+          // פתרון רגיל לשאר הדפדפנים
+          const downloadLink = linkRef.current || document.createElement('a');
+          downloadLink.href = url;
+          downloadLink.download = name;
+          
+          if (!linkRef.current) {
+            document.body.appendChild(downloadLink);
+          }
+          
+          downloadLink.click();
+          
+          if (!linkRef.current) {
+            document.body.removeChild(downloadLink);
+          }
+          
+          window.URL.revokeObjectURL(url);
+        }
+      } catch (error) {
+        console.error('Download failed:', error);
+        alert('Failed to download document. Please try again.');
       }
-      
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      
-      const downloadLink = linkRef.current || document.createElement('a');
-      downloadLink.href = url;
-      downloadLink.download = name;
-      
-      if (!linkRef.current) {
-        document.body.appendChild(downloadLink);
-      }
-      
-      downloadLink.click();
-      
-      if (!linkRef.current) {
-        document.body.removeChild(downloadLink);
-      }
-      
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Download failed:', error);
-      alert('Failed to download document. Please try again.');
-    }
   }
 
   return (

@@ -90,25 +90,38 @@ function Document({dataDocument}) {
 
 
 
-
   const handleDownload = async () => {
-    let res = await fetch(`${REACT_APP_BACKEND_URL}admin/downloadDocument/${dataDocument._id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${cookie.get("token")}`
-      },
-    });
-    let blob = await res.blob();
-    let url = window.URL.createObjectURL(blob);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     
-    let a = document.createElement('a');
-    a.href = url;
-    a.download = `${name}`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-  }
+    try {
+      let res = await fetch(`${REACT_APP_BACKEND_URL}admin/downloadDocument/${dataDocument._id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${cookie.get("token")}`
+        },
+      });
+  
+      let blob = await res.blob();
+      let url = window.URL.createObjectURL(blob);
+      
+      if (isSafari) {
+        // פתרון לספארי
+        window.location.href = url;
+      } else {
+        // פתרון רגיל לשאר הדפדפנים
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      
+      setTimeout(() => window.URL.revokeObjectURL(url), 100);
+    } catch (error) {
+      console.error('Download error:', error);
+    }
+  };
 
   const handleDelete = async () => {
     // delete dataDocument from db

@@ -183,6 +183,19 @@ function Providers() {
                     />
                   </div>
                   <div className={subGeneralManagement.formFieldsInput}>
+                    <label>מייל איש סחר : </label>
+                    <input
+                      type="text"
+                      value={newProvider.bookkeepingEmail}
+                      onChange={(e) =>
+                        setNewProvider({
+                          ...newProvider,
+                          bookkeepingEmail: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
                     <label>מייל ראשי : </label>
                     <input
                       type="text"
@@ -195,19 +208,7 @@ function Providers() {
                       }
                     />
                   </div>
-                  <div className={subGeneralManagement.formFieldsInput}>
-                    <label>מייל הנהלת חשבונות : </label>
-                    <input
-                      type="text"
-                      value={newProvider.bookkeepingEmail}
-                      onChange={(e) =>
-                        setNewProvider({
-                          ...newProvider,
-                          bookkeepingEmail: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
+                 
                   {newProvider.branchEmails.length &&
                     newProvider.branchEmails.map((branch, index) => {
                       return (
@@ -294,6 +295,19 @@ function Providers() {
                     />
                   </div>
                   <div className={subGeneralManagement.formFieldsInput}>
+                    <label>מייל איש סחר : </label>
+                    <input
+                      type="text"
+                      value={newProvider.bookkeepingEmail}
+                      onChange={(e) =>
+                        setNewProvider({
+                          ...newProvider,
+                          bookkeepingEmail: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className={subGeneralManagement.formFieldsInput}>
                     <label>מייל ראשי : </label>
                     <input
                       type="text"
@@ -302,19 +316,6 @@ function Providers() {
                         setNewProvider({
                           ...newProvider,
                           email: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                  <div className={subGeneralManagement.formFieldsInput}>
-                    <label>מייל הנהלת חשבונות : </label>
-                    <input
-                      type="text"
-                      value={newProvider.bookkeepingEmail}
-                      onChange={(e) =>
-                        setNewProvider({
-                          ...newProvider,
-                          bookkeepingEmail: e.target.value,
                         })
                       }
                     />

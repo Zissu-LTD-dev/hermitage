@@ -1,5 +1,6 @@
 .mainSelectBranch {
   width: 100%;
+  height: 100%;
   margin: 40px auto;
   padding: 20px;
   display: flex;
@@ -18,7 +19,7 @@
 
 .chooseBranch {
   width: 100%;
-  max-height: 500px;
+  max-height: calc(100vh - 350px);
   overflow-y: auto;
   padding: 20px;
   display: flex;
@@ -154,6 +155,10 @@
 @media screen and (max-width: 1180px) {
     .mainSelectBranch {
         margin: 5px;
+    }
+
+    .chooseBranch {
+      max-height: calc(100vh - 300px);
     }
 
     .title {

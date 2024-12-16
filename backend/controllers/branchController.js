@@ -175,7 +175,7 @@ const createOrder = async (req, res) => {
           target:
             process.env.NODE_ENV === "dev" ? process.env.EMAIL_FOR_DEV : email,
           message: order,
-          subjectLine: `הזמנה חדשה מסניף ${order.branchName}, עבור : ${order.providerName}`,
+          subjectLine: `הזמנה חדשה מסניף ${order.branchName}`,
           senderName: "הרמיטאז' הזמנות סניפים",
         });
   

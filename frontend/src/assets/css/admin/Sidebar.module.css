@@ -1,5 +1,5 @@
 .sidebar {
-  width: 283px;
+  width: 20%;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -70,7 +70,7 @@
 }
 
 .sidebar .connectedBy {
-  width: 283px;
+  width: 100%;
   height: 85px;
   position: fixed;
   bottom: 0;
@@ -128,7 +128,7 @@
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
   .sidebar {
-      width: 240px;
+      width: 15%;
   }
 
   .sidebar .logo {
@@ -137,12 +137,12 @@
   }
 
   .sidebar .menu div {
-      height: 55px;
+      height: 50px;
   }
 
   .sidebar .menu div .icon,
   .sidebar .connectedBy .icon {
-      width: 55px;
+      width: 40px;
   }
 
   .sidebar .menu div img {
@@ -150,8 +150,27 @@
       height: 25px;
   }
 
+  .sidebar .menu div span {
+      font-size: 12px;
+      line-height: 15px;
+  }
+
   .sidebar .connectedBy {
-      width: 240px;
       height: 75px;
+  }
+
+  .sidebar .connectedBy div p {
+      font-size: 12px;
+      line-height: 15px;
+  }
+
+  .sidebar .connectedBy div p .branch_name {
+      font-size: 12px;
+      line-height: 15px;
+  }
+
+  .sidebar .connectedBy div a {
+      font-size: 10px;
+      line-height: 13px;
   }
 }

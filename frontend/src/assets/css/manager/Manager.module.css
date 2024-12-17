@@ -4,7 +4,7 @@
 
 
 .content{
-    width: calc(100vw - 283px);
+    width: 80%;
     height: calc(100vh - 85px);
     max-height: calc(100vh - 85px);
     overflow-y: hidden;
@@ -28,7 +28,7 @@
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
     .content{
-        width: calc(100vw - 240px);
+        width: 85%;
         height: calc(100vh - 75px);
         max-height: calc(100vh - 75px);
         top: 75px;

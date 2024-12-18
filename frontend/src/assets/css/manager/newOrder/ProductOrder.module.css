@@ -1,6 +1,6 @@
 .product {
-  min-width: 170px;
-  width: 170px;
+  width: 180px;
+  min-width: 10vw;
   height: 290px;
   background: #fbfbfb 0% 0% no-repeat padding-box;
   display: flex;
@@ -117,11 +117,19 @@
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
+  /**
+   * Product item in the order list
+   * 
+   * width: 12vw - 12% of the viewport width
+   * height: 290px - fixed height of the product
+   * margin: 0 8px 8px - 8px margin on the right, 8px margin on the bottom
+   */
   .product {
-    min-width: 135px;
-    width: 135px;
-    height: 250px;
-    margin: 0 5px 5px;
+      width: 175px;
+      min-width: 14vw;
+      height: 290px;
+      margin: 0 8px 8px;
+    
   }
 
   .product img {

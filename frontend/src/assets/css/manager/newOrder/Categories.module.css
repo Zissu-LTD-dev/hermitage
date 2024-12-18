@@ -1,7 +1,10 @@
 .categories{
+  width: 100%;
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     overflow-x: auto;
+    overflow-y: hidden;
+    gap: 5px;
 }
 
 /* width scoling */
@@ -23,23 +26,6 @@
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
-    .categories {
-        gap: 1px;
-    }
+    
 
-    .main {
-        width: 255px;
-        height: 70px;
-    }
-
-    .icon {
-        width: 37px;
-        height: 37px;
-        margin-left: 15px;
-    }
-
-    .name {
-        font-size: 19px;
-        line-height: 24px;
-    }
 }

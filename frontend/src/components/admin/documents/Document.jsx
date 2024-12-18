@@ -91,7 +91,6 @@ function Document({dataDocument}) {
 
 
   const handleDownload = async () => {
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     
     try {
       let res = await fetch(`${REACT_APP_BACKEND_URL}admin/downloadDocument/${dataDocument._id}`, {
@@ -104,18 +103,12 @@ function Document({dataDocument}) {
       let blob = await res.blob();
       let url = window.URL.createObjectURL(blob);
       
-      if (isSafari) {
-        // פתרון לספארי
-        window.location.href = url;
-      } else {
-        // פתרון רגיל לשאר הדפדפנים
-        let a = document.createElement('a');
-        a.href = url;
-        a.download = name;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      }
+      let a = document.createElement('a');
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
       
       setTimeout(() => window.URL.revokeObjectURL(url), 100);
     } catch (error) {

@@ -231,8 +231,6 @@ const downloadDocument = async (req, res) => {
   let documentId = req.params.documentId;
   let document = await Document.findById(documentId);
   
-  res.setHeader('Content-Disposition', `attachment; filename*=UTF-8''${encodeURIComponent(document.name)}`);
-
   res.download(document.link);
 };
 

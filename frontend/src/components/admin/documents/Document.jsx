@@ -163,7 +163,7 @@ function Document({dataDocument}) {
     <>
       <div className={documentStyle.main}>
         <span>
-          <div className={documentStyle.name}>{link.split(".")[link.split("/").length - 1] + "." +  name }</div>
+          <div className={documentStyle.name}>{link.split(".")[1] + "." +  name }</div>
           <div className={documentStyle.date}><DateDisplay timestamp={date} type="full" /></div>
           {forTo.includes("כל הסניפים") && <div className={documentStyle.forTo} >כל הסניפים</div> }
           {!forTo.includes("כל הסניפים") && 

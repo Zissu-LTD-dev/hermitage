@@ -52,7 +52,7 @@ function Document({document}) {
     <>
       <div className={documentStyle.main}>
         <span>
-          <div className={documentStyle.name}>{link.split(".")[link.split("/").length - 1] + "." +  name }</div>
+          <div className={documentStyle.name}>{link.split(".")[1] + "." +  name }</div>
           <div className={documentStyle.date}><DateDisplay timestamp={date} type="full" /></div>
         </span>
         <span>

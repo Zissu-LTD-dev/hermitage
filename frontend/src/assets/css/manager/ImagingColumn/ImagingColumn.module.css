@@ -145,8 +145,11 @@ color: #082A3A
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
+.main {
+     height: 90%;
+    }
     .content {
-        width: 80%;
+        width: 85%;
         height: 80%;
     }
 

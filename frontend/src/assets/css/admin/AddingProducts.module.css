@@ -1,7 +1,7 @@
 .main {
-    height: calc(100% - 61px);
+    height: 95%;
   direction: rtl;
-  margin: 50px 43px 0 53px;
+  margin: 15px;
 }
 
 .header {
@@ -105,7 +105,7 @@ color: #082A3A;
 
 .body{
     width: 100%;
-    height: calc(100% - 62px);
+    height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -141,17 +141,11 @@ color: #082A3A;
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
 
-    .main {
-        margin: 30px 30px 0 35px;
-    }
-
     .header{
-        margin-bottom: 20px;
-        padding: 0 0 12px 0;
+        margin-bottom: 10px;
     }
 
     .title{
-        padding: 8px 0;
         font-size: 24px;
     }
 
@@ -211,5 +205,9 @@ color: #082A3A;
     }
     .downloadProductsText{
         font-size: 14px;
+    }
+
+    .body{
+        height: 80%;
     }
 }

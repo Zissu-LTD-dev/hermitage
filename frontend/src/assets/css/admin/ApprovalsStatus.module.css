@@ -1,14 +1,14 @@
 .main {
-    height: calc(100% - 61px);
+  height: 95%;
   direction: rtl;
-  margin: 50px 43px 0 53px;
+  margin: 15px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 .title{
@@ -24,8 +24,7 @@
 }
 
 .body{
-    width: 100%;
-    height: calc(100% - 62px);
+    height: 93%;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -112,26 +111,17 @@
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
-    .main{
-        margin: 15px;
-    }
-
-    .header{
-        margin-bottom: 20px;
-        padding: 0 0 12px 0;
-    }
 
     .title{
-        padding: 8px 0;
         font-size: 20px;    
     }
 
     .pending_button , .approved_button , .canceled_button , .returned_button{
-        width: 110px;
-        height: 40px;
-        text-align: center;
         font-size: 13px;
-        margin: 0 10px 0 0;
+    }
+
+    .body{
+      height: 83%;
     }
 
 }

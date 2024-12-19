@@ -1,13 +1,14 @@
 .main{
+    height: 95%;
     direction: rtl;
-    margin: 50px 43px 0 53px;
+    margin: 15px;
 }
 
 .header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
 }
 
 .header span{
@@ -118,7 +119,7 @@ cursor: pointer;
 }
 
 .body{
-    max-height: calc(100vh - 196px);
+    height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -130,17 +131,10 @@ cursor: pointer;
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
-    .main{
-        margin: 50px 43px 0 53px;
-    }
-
-    .header{
-        margin-bottom: 20px;
-        padding: 0 0 12px 0;
-    }
+  
 
     .title{
-        padding: 8px 0;
+        /* padding: 8px 0; */
         font-size: 24px;    
     }
 
@@ -151,6 +145,7 @@ cursor: pointer;
         margin-left: 9px;
     }
 
-    
-    
+    .body{
+        height: 80%;
+    }
 }

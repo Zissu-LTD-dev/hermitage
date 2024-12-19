@@ -1,15 +1,17 @@
 .main {
+    width: 98%;
   height: auto;
   margin: 0 0 15px 0;
   display: flex;
   flex-direction: column;
-  padding: 0 39px 0 30px;
+  padding: 0 10px;
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 0px 3px 6px #082a3a05;
 }
 
 .head {
-  height: 86px;
+    min-height: 70px;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -30,7 +32,7 @@
   font-family: "IBM Plex Sans Hebrew";
   font-style: normal;
   letter-spacing: 0px;
-  padding-left: 35px;
+  padding-left: 15px;
   color: #082a3a;
 }
 
@@ -39,7 +41,7 @@
   font-family: "IBM Plex Sans Hebrew";
   font-weight: normal;
   line-height: 23px;
-  padding: 0 35px;
+  padding: 0 15px;
   border-right: 1px solid #7070702f;
   color: #082a3a;
 }
@@ -52,6 +54,7 @@
 }
 
 .providerName {
+  width: 200px;
 }
 
 .status {
@@ -180,7 +183,7 @@ cursor: pointer;
     font-family: "IBM Plex Sans Hebrew";
     font-weight: 600;
     line-height: 23px;
-    padding: 0 35px;
+    padding: 0 20px;
     color: #082a3a;
 }
 .noteContent{
@@ -188,7 +191,7 @@ cursor: pointer;
     font-family: "IBM Plex Sans Hebrew";
     font-weight: normal;
     line-height: 23px;
-    padding: 0 35px;
+    padding: 0 20px;
     color: #082a3a;
 }
 
@@ -197,19 +200,18 @@ cursor: pointer;
     font-family: "IBM Plex Sans Hebrew";
     font-weight: normal;
     line-height: 23px;
-    padding: 0 35px;
+    padding: 0 20px;
     color: #082a3a;
 }
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
     .main {
-        width: 99%;
         padding: 0 ;
     }
 
     .head {
-        height: 70px;
+        /* height: 70px; */
     }
 
     .orderNum {
@@ -219,9 +221,9 @@ cursor: pointer;
     }
 
     .date , .branchName , .providerName {
-        width: 130px;
-        padding: 0 10px;
-        font-size: 14px;
+        max-width: 25%;
+        padding: 10px;
+        font-size: 12px;
     }
 
     .providerNumber{

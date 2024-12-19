@@ -1,6 +1,6 @@
 .main {
   width: 100%;
-  min-height: 50px;
+  min-height: 77px;
   background: #ffffff 0% 0% no-repeat padding-box;
   display: flex;
   justify-content: space-between;
@@ -16,8 +16,15 @@
   margin: 0 32px 0 32px;
 }
 
-.name {
-  width: 300px;
+.main span:nth-child(1){
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {  
+  width: 60%;
   max-height: 90%;
   /* font: normal normal 600 16px/20px IBM Plex Sans Hebrew; */
   font-size: 16px;

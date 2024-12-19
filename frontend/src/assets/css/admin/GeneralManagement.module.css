@@ -45,7 +45,7 @@
 
   .body{
     width: 100%;
-    height: calc(100% - 62px);
+    height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -61,11 +61,11 @@
     }
 
     .header {
-      display: flex;
+      /* display: flex;
       flex-direction: column;
       align-items: flex-start;
         margin-bottom: 20px;
-        padding: 0 0 12px 0;
+        padding: 0 0 12px 0; */
     }
 
     .title {
@@ -80,8 +80,14 @@
     }
 
     .headerButton{
-        height: 45px;
-        font-size: 14px;
+        padding: 5px;
+        min-width: 70px;
+        height: 40px;
+        font-size: 12px;
         text-align: center;
     }
+
+    .body{
+      height: 85%;
+  }
 }

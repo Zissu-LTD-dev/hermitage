@@ -84,11 +84,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-end
 }
 
 .sidebar .connectedBy div p {
   text-align: right;
-  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
   font-size: 15px;
   font-family: "IBM Plex Sans Hebrew";
   font-style: normal;
@@ -97,18 +97,8 @@
   letter-spacing: 0.3px;
   color: #ffffff;
   margin: 0;
-}
+  width: 70%;
 
-.sidebar .connectedBy div p .branch_name {
-  text-align: right;
-  /* font: normal normal bold 15px/19px IBM Plex Sans Hebrew; */
-  font-size: 15px;
-  font-family: "IBM Plex Sans Hebrew";
-  font-style: normal;
-  font-weight: bold;
-  line-height: 19px; 
-  lett-spacing: 2px;
-  color: #ffffff;
 }
 
 .sidebar .connectedBy div a {
@@ -123,6 +113,7 @@
     letter-spacing: 0.5px;
     color: #BE955D;
     cursor: pointer;
+    margin: 5px 0 0 0;
 }
 
 /* Media query for 10.9" tablet display (1180x820px) */

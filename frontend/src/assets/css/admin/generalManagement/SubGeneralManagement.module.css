@@ -126,7 +126,7 @@
 
 .listBranch{
     height: auto;
-    min-height: 100px;
+    /* min-height: 100px; */
 }
 
 .listTitle{
@@ -232,10 +232,6 @@
     .title{
         font-size: 22px;
         font-weight: 600;
-    }
-
-    .list{
-        height: 100px;
     }
 
     .list div{

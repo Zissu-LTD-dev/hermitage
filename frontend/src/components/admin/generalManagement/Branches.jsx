@@ -468,7 +468,7 @@ function Branches() {
           {!addBranch && !editBranch && (
             <>
               {branches.map((branch, index) => (
-                <div key={index} className={subGeneralManagement.list}>
+                <div key={index} className={subGeneralManagement.list + " " + subGeneralManagement.listBranch}>
                   <div className={subGeneralManagement.listTitle}>
                     {branch.name}
                   </div>

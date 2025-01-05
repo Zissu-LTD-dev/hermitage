@@ -256,13 +256,13 @@ const productsUpdate = async (sheet) => {
       let providerName = null ;
       let subGroupName  = null;
        
-      if (providers.find((provider) => provider.number === row[0])){
-        providerName = providers.find((provider) => provider.number === row[0]).name;
+      if (providers.find((provider) => provider.number === row[1])){
+        providerName = providers.find((provider) => provider.number === row[1]).name;
       } 
       
 
-      if(subGroups.find((subGroup) => subGroup.number === row[2])) {
-        subGroupName = subGroups.find((subGroup) => subGroup.number === row[2]).name;
+      if(subGroups.find((subGroup) => subGroup.number === row[3])) {
+        subGroupName = subGroups.find((subGroup) => subGroup.number === row[3]).name;
       }
       
       newProduct.barcode = row[4]; // "מס ברקוד (ראשי)"

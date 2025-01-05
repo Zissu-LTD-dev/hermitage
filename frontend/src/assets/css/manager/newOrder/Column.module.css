@@ -96,6 +96,11 @@
   padding: 20px;
 }
 
+.main__open .products_list{
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
 
 .products_list{
   width: 100%;

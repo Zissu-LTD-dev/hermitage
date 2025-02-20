@@ -64,6 +64,10 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
     }
   };
 
+  const handleFocus = (e) => {
+    setQuantityInput(""); // Clear the input field
+  };
+
   useEffect(() => {
     if (quantity > QuantityLimit && QuantityLimit > 0) {
       setIsQuantityLimit(true);
@@ -132,21 +136,14 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
                   className={productStyle.decrease}
                   onClick={() => onDecrease(product)}
                 ></button>
-                {/* Replace div with input */}
                 <input
-                  type='text'
+                  type='number'
                   value={quantityInput}
                   onChange={handleQuantityChange}
                   onBlur={handleQuantityBlur}
+                  onFocus={handleFocus}
                   className={productStyle.quantityInput}
-                  style={{
-                    width: "60px",
-                    textAlign: "center",
-                    padding: "4px",
-                    margin: "0 4px",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                  }}
+                  inputMode='numeric'
                 />
                 <button
                   className={productStyle.increase}

@@ -109,6 +109,10 @@ const ProductOrder = ({ productData }) => {
     }
   };
 
+  const handleFocus = (e) => {
+    setQuantity("");
+  };
+
   useEffect(() => {
     state.orderedProducts.forEach((product) => {
       if (product.barcode === barcode) {
@@ -152,12 +156,14 @@ const ProductOrder = ({ productData }) => {
           <>
             <button className={product.decrease} onClick={onIncrease}></button>
             <input
-              type='text'
+              type='number'
               value={quantity}
-              pattern='[0-9]*'
               onChange={handleQuantityChange}
               onBlur={handleQuantityBlur}
+              onFocus={handleFocus}
               className={product.quantityInput}
+              inputMode='numeric'
+              pattern='[0-9]*'
             />
             <button className={product.increase} onClick={onDecrease}></button>
           </>

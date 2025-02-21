@@ -257,10 +257,22 @@ function AddingProducts() {
       ...product,
       barcode: "",
       _id: null,
+      branchTypeConfig: product.branchTypeConfig.map((config) => ({
+        ...config,
+      })),
     };
 
     setSelectedProduct(newProduct);
     setShowAddDialog(true);
+  };
+
+  const handleSave = async (product) => {
+    if (product._id) {
+      await sendEditProduct(product);
+    } else {
+      await addProduct(product);
+    }
+    setShowAddDialog(false);
   };
 
   return (
@@ -345,11 +357,9 @@ function AddingProducts() {
       )}
       {showAddDialog && (
         <AddProduct
+          cancel={() => setShowAddDialog(false)}
+          save={handleSave}
           product={selectedProduct}
-          onClose={() => {
-            setShowAddDialog(false);
-            setSelectedProduct(null);
-          }}
         />
       )}
     </>

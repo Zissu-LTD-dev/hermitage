@@ -5,7 +5,7 @@ import { useAdminContext } from "../../../context/adminContext/AdminContext";
 function AddProduct({ cancel, save, product }) {
   const { state } = useAdminContext();
 
-  let initialProduct = {
+  const initialProduct = {
     barcode: "",
     name: product ? product.name : "",
     providerNumber: product ? product.providerNumber : "",
@@ -16,7 +16,7 @@ function AddProduct({ cancel, save, product }) {
     price: product ? product.price : "",
     packQuantity: product ? product.packQuantity : 1,
     isBlocked: product ? product.isBlocked : false,
-    branchTypeConfig: [],
+    branchTypeConfig: product ? product.branchTypeConfig : [],
   };
 
   const [newProduct, setNewProduct] = useState(initialProduct);
@@ -34,15 +34,22 @@ function AddProduct({ cancel, save, product }) {
   useEffect(() => {
     let branchTypeConfig = [];
     typeBranches.forEach((branch) => {
-      branchTypeConfig.push({
-        branchType: branch.typeId,
-        QuantityLimit: 0,
-        location: {
-          column: 0,
-          shelf: 0,
-          index: 0,
-        },
-      });
+      let config = product.branchTypeConfig.find(
+        (config) => config.branchType == branch.typeId
+      );
+      if (config) {
+        branchTypeConfig.push(config);
+      } else {
+        branchTypeConfig.push({
+          branchType: branch.typeId,
+          QuantityLimit: 0,
+          location: {
+            column: 0,
+            shelf: 0,
+            index: 0,
+          },
+        });
+      }
     });
     setBranchTypeConfig(branchTypeConfig);
   }, [typeBranches]);

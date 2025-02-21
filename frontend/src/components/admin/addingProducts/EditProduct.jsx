@@ -47,29 +47,12 @@ function EditProduct({ product, cancel, save }) {
     setSubGroups(state.subGroups);
     setTypeBranches(state.typeBranches.sort((a, b) => a.typeId - b.typeId));
   }, []);
-
-  const handleDuplicate = () => {
-    const newBarcode = prompt("Enter new barcode for the duplicated product:");
-    if (newBarcode) {
-      const duplicatedProduct = { ...newProduct, barcode: newBarcode };
-      // Open the edit page with the duplicated product details
-      // Assuming you have a function to handle this
-      save(duplicatedProduct);
-    }
-  };
-
   return (
     <>
       <div className={EditproductStyle.main}>
         <div className={EditproductStyle.content}>
           <div className={EditproductStyle.title}>
             עריכת פריט ברקוד : {barcode}{" "}
-            <button
-              onClick={handleDuplicate}
-              className={EditproductStyle.duplicateButton}
-            >
-              Duplicate
-            </button>
           </div>
           <div className={EditproductStyle.scrolling}>
             <div className={EditproductStyle.productDetails}>
@@ -186,149 +169,128 @@ function EditProduct({ product, cancel, save }) {
               }
             >
               <div className={EditproductStyle.Text}>:הגדרות לפי סניפים</div>
-              {/* select  branch */}
-              <select
-                className={EditproductStyle.input}
-                value={newProduct.branchType}
-                onChange={(e) => setCurrentBranchTypeConfig(e.target.value)}
-              >
-                {typeBranches.map((branch) => (
-                  <option key={branch._id} value={branch.typeId}>
-                    {branch.name} | {branch.typeId}
-                  </option>
-                ))}
-              </select>
               <div className={EditproductStyle.configByBranch}>
-                <div className={EditproductStyle.Text}>
-                  סניף{" "}
-                  {typeBranches.length > 0 &&
-                    typeBranches.find(
-                      (branch) => branch.typeId == currentBranchTypeConfig
-                    ).name}
-                </div>
-                {/* location */}
-                <div
-                  className={
-                    EditproductStyle.productDetails +
-                    " " +
-                    EditproductStyle.location
-                  }
-                >
-                  {/* פריט זמין*/}
-
-                  <div className={EditproductStyle.Text}>הגבל פריט</div>
-                  <input
-                    type='number'
-                    className={EditproductStyle.input}
-                    min='0'
-                    value={
-                      branchTypeConfig.length > 0 &&
-                      branchTypeConfig[currentBranchTypeConfig - 1]
-                        .QuantityLimit
-                        ? branchTypeConfig[currentBranchTypeConfig - 1]
-                            .QuantityLimit
-                        : 0
-                    }
-                    onChange={(e) => {
-                      let newConfig = branchTypeConfig.map((config) => {
-                        if (config.branchType == currentBranchTypeConfig) {
-                          return {
-                            ...config,
-                            QuantityLimit: e.target.value,
-                          };
-                        }
-                        return config;
-                      });
-                      setBranchTypeConfig(newConfig);
-                    }}
-                  />
-
-                  <div className={EditproductStyle.Text}>עמודה</div>
-                  <input
-                    type='number'
-                    className={EditproductStyle.input}
-                    value={
-                      branchTypeConfig.length > 0 &&
-                      branchTypeConfig[currentBranchTypeConfig - 1].location
-                        .column
-                        ? branchTypeConfig[currentBranchTypeConfig - 1].location
-                            .column
-                        : 0
-                    }
-                    onChange={(e) => {
-                      let newConfig = branchTypeConfig.map((config) => {
-                        if (config.branchType == currentBranchTypeConfig) {
-                          return {
-                            ...config,
-                            location: {
-                              ...config.location,
-                              column: e.target.value,
-                            },
-                          };
-                        }
-                        return config;
-                      });
-                      setBranchTypeConfig(newConfig);
-                    }}
-                  />
-                  <div className={EditproductStyle.Text}>מדף</div>
-                  <input
-                    type='number'
-                    className={EditproductStyle.input}
-                    value={
-                      branchTypeConfig.length > 0 &&
-                      branchTypeConfig[currentBranchTypeConfig - 1].location
-                        .shelf
-                        ? branchTypeConfig[currentBranchTypeConfig - 1].location
-                            .shelf
-                        : 0
-                    }
-                    onChange={(e) => {
-                      let newConfig = branchTypeConfig.map((config) => {
-                        if (config.branchType == currentBranchTypeConfig) {
-                          return {
-                            ...config,
-                            location: {
-                              ...config.location,
-                              shelf: e.target.value,
-                            },
-                          };
-                        }
-                        return config;
-                      });
-                      setBranchTypeConfig(newConfig);
-                    }}
-                  />
-
-                  <div className={EditproductStyle.Text}>מיקום</div>
-                  <input
-                    type='number'
-                    className={EditproductStyle.input}
-                    value={
-                      branchTypeConfig.length > 0 &&
-                      branchTypeConfig[currentBranchTypeConfig - 1].location
-                        .index
-                        ? branchTypeConfig[currentBranchTypeConfig - 1].location
-                            .index
-                        : 0
-                    }
-                    onChange={(e) => {
-                      let newConfig = branchTypeConfig.map((config) => {
-                        if (config.branchType == currentBranchTypeConfig) {
-                          return {
-                            ...config,
-                            location: {
-                              ...config.location,
-                              index: e.target.value,
-                            },
-                          };
-                        }
-                        return config;
-                      });
-                      setBranchTypeConfig(newConfig);
-                    }}
-                  />
-                </div>
+                {typeBranches.map((branch) => (
+                  <div key={branch._id} className={EditproductStyle.branchRow}>
+                    <div className={EditproductStyle.Text}>
+                      {branch.name} | {branch.typeId}
+                    </div>
+                    <div
+                      className={
+                        EditproductStyle.productDetails +
+                        " " +
+                        EditproductStyle.location
+                      }
+                    >
+                      <div>
+                        <div className={EditproductStyle.Text}>הגבל פריט</div>
+                        <input
+                          type='number'
+                          className={EditproductStyle.input}
+                          min='0'
+                          value={
+                            branchTypeConfig.find(
+                              (config) => config.branchType === branch.typeId
+                            )?.QuantityLimit || 0
+                          }
+                          onChange={(e) => {
+                            let newConfig = branchTypeConfig.map((config) => {
+                              if (config.branchType === branch.typeId) {
+                                return {
+                                  ...config,
+                                  QuantityLimit: e.target.value,
+                                };
+                              }
+                              return config;
+                            });
+                            setBranchTypeConfig(newConfig);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <div className={EditproductStyle.Text}>עמודה</div>
+                        <input
+                          type='number'
+                          className={EditproductStyle.input}
+                          value={
+                            branchTypeConfig.find(
+                              (config) => config.branchType === branch.typeId
+                            )?.location.column || 0
+                          }
+                          onChange={(e) => {
+                            let newConfig = branchTypeConfig.map((config) => {
+                              if (config.branchType === branch.typeId) {
+                                return {
+                                  ...config,
+                                  location: {
+                                    ...config.location,
+                                    column: e.target.value,
+                                  },
+                                };
+                              }
+                              return config;
+                            });
+                            setBranchTypeConfig(newConfig);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <div className={EditproductStyle.Text}>מדף</div>
+                        <input
+                          type='number'
+                          className={EditproductStyle.input}
+                          value={
+                            branchTypeConfig.find(
+                              (config) => config.branchType === branch.typeId
+                            )?.location.shelf || 0
+                          }
+                          onChange={(e) => {
+                            let newConfig = branchTypeConfig.map((config) => {
+                              if (config.branchType === branch.typeId) {
+                                return {
+                                  ...config,
+                                  location: {
+                                    ...config.location,
+                                    shelf: e.target.value,
+                                  },
+                                };
+                              }
+                              return config;
+                            });
+                            setBranchTypeConfig(newConfig);
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <div className={EditproductStyle.Text}>מיקום</div>
+                        <input
+                          type='number'
+                          className={EditproductStyle.input}
+                          value={
+                            branchTypeConfig.find(
+                              (config) => config.branchType === branch.typeId
+                            )?.location.index || 0
+                          }
+                          onChange={(e) => {
+                            let newConfig = branchTypeConfig.map((config) => {
+                              if (config.branchType === branch.typeId) {
+                                return {
+                                  ...config,
+                                  location: {
+                                    ...config.location,
+                                    index: e.target.value,
+                                  },
+                                };
+                              }
+                              return config;
+                            });
+                            setBranchTypeConfig(newConfig);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

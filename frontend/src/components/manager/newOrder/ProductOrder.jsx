@@ -110,7 +110,7 @@ const ProductOrder = ({ productData }) => {
   };
 
   const handleFocus = (e) => {
-    setQuantity("");
+    e.target.value = "";
   };
 
   useEffect(() => {
@@ -154,7 +154,7 @@ const ProductOrder = ({ productData }) => {
         {isBlocked && <span className={product.blocked}> מוצר חסום</span>}
         {!isBlocked && (
           <>
-            <button className={product.decrease} onClick={onIncrease}></button>
+            <button className={product.decrease} onClick={onDecrease}></button>
             <input
               type='number'
               value={quantity}
@@ -165,7 +165,7 @@ const ProductOrder = ({ productData }) => {
               inputMode='numeric'
               pattern='[0-9]*'
             />
-            <button className={product.increase} onClick={onDecrease}></button>
+            <button className={product.increase} onClick={onIncrease}></button>
           </>
         )}
       </div>

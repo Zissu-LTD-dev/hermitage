@@ -1,118 +1,162 @@
-.main{
-    height: 77px;
-background: #FFFFFF 0% 0% no-repeat padding-box;
-box-shadow: 0px 3px 6px #082A3A05;
-margin-bottom: 8px;
-display: flex;
-justify-content: space-between;
-align-items: center;
+.main {
+  height: 77px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .main span {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.productImg{
-    width: 95px;
-    height: 68px;
-    margin-left: 20px;
-    background-color: #FFFFFF;
+.productImg {
+  width: 95px;
+  height: 68px;
+  margin-left: 20px;
+  background-color: #ffffff;
 }
 
-.productImg img{
-    width: 100%;
-    height: 100%;
+.productImg img {
+  width: 100%;
+  height: 100%;
 }
 
-.productName{
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 18px;
-    font-family: "IBM Plex Sans Hebrew";
-    font-style: normal;
-color: #082A3A;
+.productName {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  color: #082a3a;
 }
 
-.productDetails{
-    width: 120px;
-    display: flex;
-    justify-content:right;
-    align-items: center;
-    margin: 15px;
+.productDetails {
+  width: 120px;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin: 15px;
 }
 
-.providerName{
-    width: 150px;
+.providerName {
+  width: 150px;
 }
 
-.Icon{
-    width: 35px;
-    height: 25px;
-    margin-left: 9px;
-    background: transparent url('../../../image/admin/Iconfeather-edit.svg') 50% 50% no-repeat padding-box;
-    cursor: pointer;
+.Icon {
+  width: 35px;
+  height: 25px;
+  margin-left: 9px;
+  background: transparent url("../../../image/admin/Iconfeather-edit.svg") 50%
+    50% no-repeat padding-box;
+  cursor: pointer;
 }
 
-.Text{
-    /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew; */
-    font-size: 11px;
-    font-family: "IBM Plex Sans Hebrew";
-    font-weight: normal;
-    line-height: 14px;
-    letter-spacing: 0px;
-    color: #9EAAAF;
+.Text {
+  /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew; */
+  font-size: 11px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 14px;
+  letter-spacing: 0px;
+  color: #9eaaaf;
 }
 
-.productDelete{
-    width: 25px;
-    height: 25px;
-    margin-left: 30px;
-    background: transparent url('../../../image/admin/Iconfeather-trash-2.svg') 50% 50% no-repeat padding-box;
-    cursor: pointer;
+.productDelete {
+  width: 25px;
+  height: 25px;
+  margin-left: 30px;
+  background: transparent url("../../../image/admin/Iconfeather-trash-2.svg")
+    50% 50% no-repeat padding-box;
+  cursor: pointer;
 }
 
-.blocked{
-    background: #ffebeb;
+.blocked {
+  background: #ffebeb;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 15px; /* Adjusted space between buttons for consistency */
+  align-items: center; /* Center align icons vertically */
+}
+
+.productDelete,
+.productDuplicate,
+.Icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icon */
+  padding: 8px; /* Add some padding for better click area */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.productDelete:hover,
+.productDuplicate:hover,
+.Icon:hover {
+  background-color: #e0e0e0; /* Light gray background on hover */
+}
+
+.newProductDelete,
+.newProductDuplicate,
+.newProductEdit {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the icon */
+  padding: 8px; /* Add some padding for better click area */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.newProductDelete:hover,
+.newProductDuplicate:hover,
+.newProductEdit:hover {
+  background-color: #e0e0e0; /* Light gray background on hover */
 }
 
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
-    .main{
-        min-height: 85px;
-        height: auto;
-        background: #FFFFFF 0% 0% no-repeat padding-box;
-        box-shadow: 0px 3px 6px #082A3A05;
-        margin-bottom: 8px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .productDetails{
-        width: 50px;
-    }
-    
-    .productDetails span{
-        display: none;
-    }
+  .main {
+    min-height: 85px;
+    height: auto;
+    background: #ffffff 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #082a3a05;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .Icon{
-        width: 20px;
-        height: 20px;
-    }
+  .productDetails {
+    width: 50px;
+  }
 
-    .productDelete{
-        width: 20px;
-        height: 20px;
-    }
+  .productDetails span {
+    display: none;
+  }
 
-    .productName{
-        font-size: 14px;
-    }
+  .Icon {
+    width: 20px;
+    height: 20px;
+  }
 
-    .Text{
-        font-size: 12px;
-    }
+  .productDelete {
+    width: 20px;
+    height: 20px;
+  }
+
+  .productName {
+    font-size: 14px;
+  }
+
+  .Text {
+    font-size: 12px;
+  }
 }

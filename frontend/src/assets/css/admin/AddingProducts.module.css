@@ -1,213 +1,181 @@
 .main {
-    height: 95%;
+  height: 95%;
   direction: rtl;
-  margin: 15px;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #eef0f2;
 }
 
-.title{
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 37px;
-    font-family: "IBM Plex Sans Hebrew";
-    font-style: normal;
-letter-spacing: 0px;
-color: #082A3A;
-
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #082a3a;
+  font-family: "IBM Plex Sans Hebrew";
 }
 
-.buttons{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.addProduct , .uploadProducts , .downloadProducts{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 7px;
+.buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
-.addProduct{
-    width: 181px;
-    height: 40px;
-    background: #BE955D 0% 0% no-repeat padding-box;
-    cursor: pointer;
+.addProduct,
+.uploadProducts,
+.downloadProducts {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.addProductIcon{
-    width: 20px;
-    height: 20px;
-    margin-left: 12px;
-    background: transparent url('../../image/admin/Iconfeather-plus.svg') 50% 50% no-repeat padding-box;
+.addProduct {
+  background-color: #be955d;
+  color: white;
 }
 
-.addProductText{
-    /* font: normal normal medium 16px/20px IBM Plex Sans Hebrew; */
-    font-size: 16px;
-    font-family: "IBM Plex Sans Hebrew";
-    font-weight: normal;
-    line-height: 20px;
-    letter-spacing: 0px;
-    color: #FFFFFF;
+.addProduct:hover {
+  background-color: #a17c4a;
+  transform: translateY(-1px);
 }
 
-.uploadProducts{
-    height: 40px;
-    padding: 0 30px;
-    cursor: pointer;
-    background: #082A3A 50% 50% no-repeat padding-box;
+.downloadProducts {
+  background-color: #082a3a;
+  color: white;
 }
 
-.uploadProductsIcon{
-    width: 25px;
-    height: 25px;
-    margin-left: 12px;
-    background: transparent url('../../image/admin/Iconawesome-file-excel.svg') 50% 50% no-repeat padding-box;
+.downloadProducts:hover {
+  background-color: #0e3c54;
+  transform: translateY(-1px);
 }
 
-.arrowIcon{
-    width: 20px;
-    height: 20px;
-    margin-right: 15px;
-    transform: rotate(270deg);
-    background: transparent url('../../image/manager/Iconionic-ios-arrow-back-2.svg')  50% 50% no-repeat padding-box;
-}
-.arrowIconUp{
-    transform: rotate(90deg);
+.uploadProducts {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  color: #082a3a;
 }
 
-.uploadProductsText{
-    /* font: normal normal medium 16px/20px IBM Plex Sans Hebrew; */
-    font-size: 16px;
-    font-family: "IBM Plex Sans Hebrew";
-    font-weight: normal;
-    line-height: 20px;
-    letter-spacing: 0px;
-    color: #FFFFFF;
+.uploadProducts:hover {
+  background-color: #f5f5f5;
+  border-color: #be955d;
 }
 
-.inputFile{
-    width: 255px;
-    height: 33px;
-    position: absolute;
-    top: 55px;
-    opacity: 0;
-    z-index: 10;
-    cursor: pointer;
+.addProductIcon,
+.downloadProductsIcon,
+.uploadProductsIcon {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
 }
 
-.body{
-    width: 100%;
-    height: 90%;
-    overflow-y: auto;
-    overflow-x: hidden;
+.addProductIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 4v16m8-8H4'/%3E%3C/svg%3E");
+}
+
+.downloadProductsIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4'/%3E%3C/svg%3E");
+}
+
+.uploadProductsIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23082A3A'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12'/%3E%3C/svg%3E");
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23082A3A'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  transition: transform 0.2s ease;
+}
+
+.arrowIconUp {
+  transform: rotate(180deg);
+}
+
+.body {
+  height: calc(100% - 80px);
+  overflow-y: auto;
+  padding-right: 1rem;
 }
 
 .body::-webkit-scrollbar {
-    width: 0;
+  width: 8px;
 }
 
-.downloadProducts{
-    height: 40px;
-    padding: 0 30px;
-    cursor: pointer;
-    background: #0e9273 50% 50% no-repeat padding-box;
+.body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
 }
 
-.downloadProductsIcon{
-    width: 25px;
-    height: 25px;
-    margin-left: 12px;
-    background: transparent url('../../image/admin/download.svg') 50% 50% no-repeat padding-box;
-}
-.downloadProductsText{
-    /* font: normal normal medium 16px/20px IBM Plex Sans Hebrew; */
-    font-size: 16px;
-    font-family: "IBM Plex Sans Hebrew";
-    font-weight: normal;
-    line-height: 20px;
-    letter-spacing: 0px;
-    color: #FFFFFF;
+.body::-webkit-scrollbar-thumb {
+  background: #be955d;
+  border-radius: 4px;
 }
 
+.productRow {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+  border: 1px solid #eef0f2;
+}
 
-/* Media query for 10.9" tablet display (1180x820px) */
+.productRow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
 @media screen and (max-width: 1180px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 
-    .header{
-        margin-bottom: 10px;
-    }
+  .buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
 
-    .title{
-        font-size: 24px;
-    }
+  .addProduct,
+  .uploadProducts,
+  .downloadProducts {
+    flex: 1;
+    justify-content: center;
+    min-width: 150px;
+  }
+}
 
-    .buttons{
-        padding: 8px 0
-    }
+@media screen and (max-width: 768px) {
+  .main {
+    padding: 1rem;
+  }
 
-    .addProduct , .uploadProducts , .downloadProducts{
-        margin-right: 5px;
-    }
+  .title {
+    font-size: 24px;
+  }
 
-    .addProduct{
-        width: 150px;
-        height: 33px;
-    }
+  .buttons {
+    gap: 0.5rem;
+  }
 
-    .addProductIcon{
-        width: 17px;
-        height: 17px;
-        margin-left: 10px;
-    }
-
-    .addProductText{
-        font-size: 14px;
-    }
-
-    .uploadProducts{
-        height: 33px;
-        padding: 0 25px;
-    }
-
-    .uploadProductsIcon{
-        width: 20px;
-        height: 20px;
-        margin-left: 10px;
-    }
-
-    .arrowIcon{
-        width: 15px;
-        height: 15px;
-        margin-right: 10px;
-    }
-
-    .uploadProductsText{
-        font-size: 14px;
-    }
-
-    .downloadProducts{
-        height: 33px;
-        padding: 0 25px;
-    }
-
-    .downloadProductsIcon{
-        width: 20px;
-        height: 20px;
-        margin-left: 10px;
-    }
-    .downloadProductsText{
-        font-size: 14px;
-    }
-
-    .body{
-        height: 80%;
-    }
+  .addProduct,
+  .uploadProducts,
+  .downloadProducts {
+    padding: 0.6rem 1rem;
+    font-size: 13px;
+  }
 }

@@ -47,18 +47,35 @@ function EditProduct({ product, cancel, save }) {
     setSubGroups(state.subGroups);
     setTypeBranches(state.typeBranches.sort((a, b) => a.typeId - b.typeId));
   }, []);
+
+  const handleDuplicate = () => {
+    const newBarcode = prompt("Enter new barcode for the duplicated product:");
+    if (newBarcode) {
+      const duplicatedProduct = { ...newProduct, barcode: newBarcode };
+      // Open the edit page with the duplicated product details
+      // Assuming you have a function to handle this
+      save(duplicatedProduct);
+    }
+  };
+
   return (
     <>
       <div className={EditproductStyle.main}>
         <div className={EditproductStyle.content}>
           <div className={EditproductStyle.title}>
             עריכת פריט ברקוד : {barcode}{" "}
+            <button
+              onClick={handleDuplicate}
+              className={EditproductStyle.duplicateButton}
+            >
+              Duplicate
+            </button>
           </div>
           <div className={EditproductStyle.scrolling}>
             <div className={EditproductStyle.productDetails}>
               <div className={EditproductStyle.Text}>שם</div>
               <input
-                type="text"
+                type='text'
                 className={EditproductStyle.input}
                 value={newProduct.name}
                 onChange={(e) =>
@@ -110,7 +127,7 @@ function EditProduct({ product, cancel, save }) {
             <div className={EditproductStyle.productDetails}>
               <div className={EditproductStyle.Text}>מחיר</div>
               <input
-                type="number"
+                type='number'
                 className={EditproductStyle.input}
                 value={newProduct.price}
                 onChange={(e) =>
@@ -121,7 +138,7 @@ function EditProduct({ product, cancel, save }) {
             <div className={EditproductStyle.productDetails}>
               <div className={EditproductStyle.Text}>כמות באריזה</div>
               <input
-                type="text"
+                type='text'
                 className={EditproductStyle.input}
                 value={!newProduct.packQuantity ? 1 : newProduct.packQuantity}
                 onChange={(e) =>
@@ -138,7 +155,7 @@ function EditProduct({ product, cancel, save }) {
             >
               <div className={EditproductStyle.Text}>פריט חסום </div>
               <input
-                type="checkbox"
+                type='checkbox'
                 className={EditproductStyle.input}
                 checked={newProduct.isBlocked}
                 onChange={(e) =>
@@ -198,36 +215,37 @@ function EditProduct({ product, cancel, save }) {
                   }
                 >
                   {/* פריט זמין*/}
-                
-                    <div className={EditproductStyle.Text}>הגבל פריט</div>
-                    <input
-                      type="number"
-                      className={EditproductStyle.input}
-                      min="0"
-                      value={
-                        branchTypeConfig.length > 0 &&
-                        branchTypeConfig[currentBranchTypeConfig - 1].QuantityLimit
-                          ? branchTypeConfig[currentBranchTypeConfig - 1]
-                              .QuantityLimit
-                          : 0
-                      }
-                      onChange={(e) => {
-                        let newConfig = branchTypeConfig.map((config) => {
-                          if (config.branchType == currentBranchTypeConfig) {
-                            return {
-                              ...config,
-                              QuantityLimit: e.target.value,
-                            };
-                          }
-                          return config;
-                        });
-                        setBranchTypeConfig(newConfig);
-                      }}
-                    />
+
+                  <div className={EditproductStyle.Text}>הגבל פריט</div>
+                  <input
+                    type='number'
+                    className={EditproductStyle.input}
+                    min='0'
+                    value={
+                      branchTypeConfig.length > 0 &&
+                      branchTypeConfig[currentBranchTypeConfig - 1]
+                        .QuantityLimit
+                        ? branchTypeConfig[currentBranchTypeConfig - 1]
+                            .QuantityLimit
+                        : 0
+                    }
+                    onChange={(e) => {
+                      let newConfig = branchTypeConfig.map((config) => {
+                        if (config.branchType == currentBranchTypeConfig) {
+                          return {
+                            ...config,
+                            QuantityLimit: e.target.value,
+                          };
+                        }
+                        return config;
+                      });
+                      setBranchTypeConfig(newConfig);
+                    }}
+                  />
 
                   <div className={EditproductStyle.Text}>עמודה</div>
                   <input
-                    type="number"
+                    type='number'
                     className={EditproductStyle.input}
                     value={
                       branchTypeConfig.length > 0 &&
@@ -255,7 +273,7 @@ function EditProduct({ product, cancel, save }) {
                   />
                   <div className={EditproductStyle.Text}>מדף</div>
                   <input
-                    type="number"
+                    type='number'
                     className={EditproductStyle.input}
                     value={
                       branchTypeConfig.length > 0 &&
@@ -284,7 +302,7 @@ function EditProduct({ product, cancel, save }) {
 
                   <div className={EditproductStyle.Text}>מיקום</div>
                   <input
-                    type="number"
+                    type='number'
                     className={EditproductStyle.input}
                     value={
                       branchTypeConfig.length > 0 &&

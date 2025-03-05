@@ -237,7 +237,7 @@ function EditProduct({ product, cancel, save }) {
                       <div>
                         <div className={EditproductStyle.Text}>מדף</div>
                         <input
-                          type='number'
+                          type='text'
                           className={EditproductStyle.input}
                           value={
                             branchTypeConfig.find(

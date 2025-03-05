@@ -3,10 +3,12 @@ import EditproductStyle from "../../../assets/css/admin/addingProducts/EditProdu
 import { useAdminContext } from "../../../context/adminContext/AdminContext";
 
 function AddProduct({ cancel, save, product }) {
+  // Added product prop
   const { state } = useAdminContext();
 
+  // Initialize with product data if provided (for duplication)
   const initialProduct = {
-    barcode: "",
+    barcode: "", // Always empty for new products
     name: product ? product.name : "",
     providerNumber: product ? product.providerNumber : "",
     providerName: product ? product.providerName : "",
@@ -26,50 +28,64 @@ function AddProduct({ cancel, save, product }) {
   const [typeBranches, setTypeBranches] = useState([]);
   const [branchTypeConfig, setBranchTypeConfig] = useState([]);
 
+  // Sync branchTypeConfig with newProduct
   useEffect(() => {
     let renderProduct = { ...newProduct, branchTypeConfig: branchTypeConfig };
     setNewProduct(renderProduct);
   }, [branchTypeConfig]);
 
+  // Initialize branchTypeConfig based on product data if available
   useEffect(() => {
-    let branchTypeConfig = [];
+    let config = [];
     typeBranches.forEach((branch) => {
-      let config = product.branchTypeConfig.find(
-        (config) => config.branchType == branch.typeId
-      );
-      if (config) {
-        branchTypeConfig.push(config);
-      } else {
-        branchTypeConfig.push({
-          branchType: branch.typeId,
-          QuantityLimit: 0,
-          location: {
-            column: 0,
-            shelf: 0,
-            index: 0,
-          },
-        });
+      if (product && product.branchTypeConfig) {
+        let existingConfig = product.branchTypeConfig.find(
+          (config) => config.branchType == branch.typeId
+        );
+        if (existingConfig) {
+          config.push(existingConfig);
+          return;
+        }
       }
+
+      // Default config if no product or matching branch config
+      config.push({
+        branchType: branch.typeId,
+        QuantityLimit: 0,
+        location: {
+          column: 0,
+          shelf: 0,
+          index: 0,
+        },
+      });
     });
-    setBranchTypeConfig(branchTypeConfig);
-  }, [typeBranches]);
+
+    setBranchTypeConfig(config);
+  }, [typeBranches, product]);
 
   useEffect(() => {
     setProviders(state.providers);
-    setCategories(state.categories.sort((a, b) => a.number - b.number));
-    setSubGroups(state.subGroups);
-    setTypeBranches(state.typeBranches.sort((a, b) => a.typeId - b.typeId));
-  }, []);
+    setCategories(state.categories?.sort((a, b) => a.number - b.number) || []);
+    setSubGroups(state.subGroups || []);
+    setTypeBranches(
+      state.typeBranches?.sort((a, b) => a.typeId - b.typeId) || []
+    );
+  }, [state]);
+
+  const handleScroll = (e) => {
+    e.preventDefault(); // Prevent scrolling when using number inputs
+  };
 
   return (
     <div className={EditproductStyle.main}>
       <div className={EditproductStyle.content}>
         <div className={EditproductStyle.title}>הוספת פריט חדש</div>
         <div className={EditproductStyle.scrolling}>
+          {/* Barcode */}
           <div className={EditproductStyle.productDetails}>
             <div className={EditproductStyle.Text}>ברקוד</div>
             <input
-              type='text'
+              type='text' // Using text instead of number for barcode
               className={EditproductStyle.input}
               value={newProduct.barcode}
               onChange={(e) =>
@@ -78,6 +94,7 @@ function AddProduct({ cancel, save, product }) {
               placeholder='הכנס ברקוד'
             />
           </div>
+          {/* Name */}
           <div className={EditproductStyle.productDetails}>
             <div className={EditproductStyle.Text}>שם</div>
             <input
@@ -89,20 +106,21 @@ function AddProduct({ cancel, save, product }) {
               }
             />
           </div>
+          {/* Provider */}
           <div className={EditproductStyle.productDetails}>
             <div className={EditproductStyle.Text}>ספק</div>
             <select
               className={EditproductStyle.input}
               value={newProduct.providerNumber}
-              onChange={(e) =>
+              onChange={(e) => {
                 setNewProduct({
                   ...newProduct,
                   providerNumber: e.target.value,
                   providerName: e.target.selectedOptions[0].text
                     .split("|")[0]
                     .trim(),
-                })
-              }
+                });
+              }}
             >
               <option value={newProduct.providerNumber}>
                 {newProduct.providerName} | {newProduct.providerNumber}
@@ -114,6 +132,7 @@ function AddProduct({ cancel, save, product }) {
               ))}
             </select>
           </div>
+          {/* Category */}
           <div className={EditproductStyle.productDetails}>
             <div className={EditproductStyle.Text}>קטגוריה</div>
             <select
@@ -137,20 +156,21 @@ function AddProduct({ cancel, save, product }) {
               ))}
             </select>
           </div>
+          {/* Subgroup */}
           <div className={EditproductStyle.productDetails}>
             <div className={EditproductStyle.Text}>קבוצת משנה</div>
             <select
               className={EditproductStyle.input}
-              value={newProduct.subGroupName}
-              onChange={(e) =>
+              value={newProduct.subGroupNumber}
+              onChange={(e) => {
                 setNewProduct({
                   ...newProduct,
                   subGroupNumber: e.target.value,
                   subGroupName: e.target.selectedOptions[0].text
                     .split("|")[0]
                     .trim(),
-                })
-              }
+                });
+              }}
             >
               <option value={newProduct.subGroupNumber}>
                 {newProduct.subGroupName} | {newProduct.subGroupNumber}
@@ -162,6 +182,7 @@ function AddProduct({ cancel, save, product }) {
               ))}
             </select>
           </div>
+          {/* Price */}
           <div className={EditproductStyle.productDetails}>
             <div className={EditproductStyle.Text}>מחיר</div>
             <input
@@ -171,8 +192,10 @@ function AddProduct({ cancel, save, product }) {
               onChange={(e) =>
                 setNewProduct({ ...newProduct, price: e.target.value })
               }
+              onWheel={handleScroll}
             />
           </div>
+          {/* Pack Quantity */}
           <div className={EditproductStyle.productDetails}>
             <div className={EditproductStyle.Text}>כמות באריזה</div>
             <input
@@ -182,8 +205,10 @@ function AddProduct({ cancel, save, product }) {
               onChange={(e) =>
                 setNewProduct({ ...newProduct, packQuantity: e.target.value })
               }
+              onWheel={handleScroll}
             />
           </div>
+          {/* Block Item */}
           <div
             className={
               EditproductStyle.productDetails + " " + EditproductStyle.checkbox
@@ -199,6 +224,7 @@ function AddProduct({ cancel, save, product }) {
               }
             />
           </div>
+          {/* Branch Type Configurations */}
           <div
             className={
               EditproductStyle.productDetails + " " + EditproductStyle.config
@@ -241,6 +267,7 @@ function AddProduct({ cancel, save, product }) {
                           });
                           setBranchTypeConfig(newConfig);
                         }}
+                        onWheel={handleScroll}
                       />
                     </div>
                     <div>
@@ -268,12 +295,13 @@ function AddProduct({ cancel, save, product }) {
                           });
                           setBranchTypeConfig(newConfig);
                         }}
+                        onWheel={handleScroll}
                       />
                     </div>
                     <div>
                       <div className={EditproductStyle.Text}>מדף</div>
                       <input
-                        type='number'
+                        type='text' // Using text type for shelf to avoid scrolling issues
                         className={EditproductStyle.input}
                         value={
                           branchTypeConfig.find(
@@ -281,19 +309,27 @@ function AddProduct({ cancel, save, product }) {
                           )?.location.shelf || 0
                         }
                         onChange={(e) => {
-                          let newConfig = branchTypeConfig.map((config) => {
-                            if (config.branchType === branch.typeId) {
-                              return {
-                                ...config,
-                                location: {
-                                  ...config.location,
-                                  shelf: e.target.value,
-                                },
-                              };
-                            }
-                            return config;
-                          });
-                          setBranchTypeConfig(newConfig);
+                          // Allow only numbers including negative
+                          const value = e.target.value;
+                          if (
+                            value === "" ||
+                            value === "-" ||
+                            /^-?\d+$/.test(value)
+                          ) {
+                            let newConfig = branchTypeConfig.map((config) => {
+                              if (config.branchType === branch.typeId) {
+                                return {
+                                  ...config,
+                                  location: {
+                                    ...config.location,
+                                    shelf: value,
+                                  },
+                                };
+                              }
+                              return config;
+                            });
+                            setBranchTypeConfig(newConfig);
+                          }
                         }}
                       />
                     </div>
@@ -322,6 +358,7 @@ function AddProduct({ cancel, save, product }) {
                           });
                           setBranchTypeConfig(newConfig);
                         }}
+                        onWheel={handleScroll}
                       />
                     </div>
                   </div>

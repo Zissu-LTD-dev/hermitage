@@ -58,7 +58,7 @@ export const SET_SHOW_WARNING = "SET_SHOW_WARNING";
 export const SET_USER_INFO = "SET_USER_INFO";
 export const READ_MESSAGE = "READ_MESSAGE";
 
-// SET_CURRENT_BRANCH for admin 
+// SET_CURRENT_BRANCH for admin
 export const SET_CURRENT_BRANCH = "SET_CURRENT_BRANCH";
 
 export const SET_ACTIVE_NAVBAR = "SET_ACTIVE_NAVBAR";
@@ -114,7 +114,9 @@ export const mainReducer = (state, action) => {
       return {
         ...state,
         userInfo: action.payload,
-        branchType: action.payload.branch?.branchTypeNumber ? action.payload.branch.branchTypeNumber : null,
+        branchType: action.payload.branch?.branchTypeNumber
+          ? action.payload.branch.branchTypeNumber
+          : null,
       };
 
     case READ_MESSAGE:
@@ -141,7 +143,7 @@ export const mainReducer = (state, action) => {
       }
       return {
         ...state,
-        branchType: action.payload.branchTypeNumber ,
+        branchType: action.payload.branchTypeNumber,
         userInfo: { ...state.userInfo, branch: action.payload },
       };
 
@@ -187,7 +189,7 @@ export const mainReducer = (state, action) => {
         let newConfig = {};
         let location = {};
         let QuantityLimit = 0;
-        
+
         product.branchTypeConfig.forEach((config) => {
           if (config.branchType === state.branchType) {
             QuantityLimit = config.QuantityLimit;
@@ -196,7 +198,12 @@ export const mainReducer = (state, action) => {
           }
         });
 
-        return { ...product, location: location, branchTypeConfig: newConfig, QuantityLimit: QuantityLimit };
+        return {
+          ...product,
+          location: location,
+          branchTypeConfig: newConfig,
+          QuantityLimit: QuantityLimit,
+        };
       });
 
       newProducts = newProducts.filter((row) => row);
@@ -221,6 +228,8 @@ export const mainReducer = (state, action) => {
 
     case SET_ACTIVE_CATEGORY:
       return { ...state, activeCategory: action.payload };
+    // Fix for SET_DISPLAY_PRODUCTS case in mainReducer.jsx
+    // Replace the current case with this implementation:
 
     case SET_DISPLAY_PRODUCTS:
       let products = state.allProducts.filter(
@@ -230,22 +239,27 @@ export const mainReducer = (state, action) => {
       let config = state.locationProductsConfig.filter(
         (config) => config.categoryNumber === state.activeCategory
       );
-      
+
       let newColumns = [];
       config.forEach((column) => {
-        if ( newColumns.some( (newColumn) => newColumn.columnsNumber === column.columnsNumber ) ) return;
-        
+        if (
+          newColumns.some(
+            (newColumn) => newColumn.columnsNumber === column.columnsNumber
+          )
+        )
+          return;
+
         newColumns.push({
           columnsName: column.columnsName,
           columnsNumber: column.columnsNumber,
           shelves: [],
         });
       });
-      
+
+      // Step 1: Initialize shelves based on config
       config.forEach((column) => {
         newColumns.forEach((newColumn) => {
           if (newColumn.columnsNumber === column.columnsNumber) {
-            
             if (
               column.shelvesNumber !== "פתוח" &&
               column.shelvesNumber.length > 1
@@ -274,13 +288,54 @@ export const mainReducer = (state, action) => {
         });
       });
 
+      // Step 2: Check for products with negative shelf numbers and add them to the configuration
+      products.forEach((product) => {
+        if (
+          product.location &&
+          product.location.shelf &&
+          product.location.shelf < 0
+        ) {
+          const columnNumber = product.location.column;
+          const shelfNumber = product.location.shelf;
+
+          // Find the column for this product
+          const column = newColumns.find(
+            (col) => col.columnsNumber === columnNumber
+          );
+
+          if (column) {
+            // Check if this negative shelf already exists in the column
+            const shelfExists = column.shelves.some(
+              (shelf) => parseInt(shelf.shelvesNumber) === shelfNumber
+            );
+
+            // If not, add it
+            if (!shelfExists) {
+              column.shelves.push({
+                shelvesName: `מדף ${shelfNumber}`,
+                shelvesNumber: shelfNumber,
+                currentBranch: column.shelves[0]?.currentBranch || null,
+              });
+            }
+          }
+        }
+      });
+
+      // Sort shelves within each column
+      newColumns.forEach((column) => {
+        column.shelves.sort((a, b) => {
+          if (a.shelvesNumber === "פתוח") return -1;
+          if (b.shelvesNumber === "פתוח") return 1;
+          return parseInt(a.shelvesNumber) - parseInt(b.shelvesNumber);
+        });
+      });
+
       newColumns.sort((a, b) => a.columnsNumber - b.columnsNumber);
       return {
         ...state,
         displayProducts: products,
         displayProductsConfig: newColumns,
       };
-
     case SET_FILTERS:
       return { ...state, filters: action.payload };
 
@@ -298,7 +353,11 @@ export const mainReducer = (state, action) => {
       let orderedProducts = state.orderedProducts.map((product) => {
         if (product.barcode === action.payload.barcode) {
           productExists = true;
-          return { ...product, quantity: action.payload.quantity, originalQuantity: action.payload.originalQuantity };
+          return {
+            ...product,
+            quantity: action.payload.quantity,
+            originalQuantity: action.payload.originalQuantity,
+          };
         } else {
           return product;
         }
@@ -344,7 +403,10 @@ export const mainReducer = (state, action) => {
       state.orderedProducts.forEach((product) => {
         let providerExists = false;
         summary.forEach((provider) => {
-          if (provider.providerNumber == product.providerNumber && product.quantity > 0) {
+          if (
+            provider.providerNumber == product.providerNumber &&
+            product.quantity > 0
+          ) {
             providerExists = true;
 
             provider.orderLines.products.push(product);
@@ -361,7 +423,7 @@ export const mainReducer = (state, action) => {
               products: [product],
               quantity: product.quantity,
             },
-            returnLines: { products: [], quantity: 0},
+            returnLines: { products: [], quantity: 0 },
             totalOrderQty: product.quantity,
             totalOrderAmount: product.price * product.quantity,
             totalReturnQty: 0,
@@ -375,7 +437,10 @@ export const mainReducer = (state, action) => {
       state.returnedProducts.forEach((product) => {
         let providerExists = false;
         summary.forEach((provider) => {
-          if (provider.providerNumber === product.providerNumber && product.quantity > 0) {
+          if (
+            provider.providerNumber === product.providerNumber &&
+            product.quantity > 0
+          ) {
             providerExists = true;
 
             provider.returnLines.products.push(product);
@@ -403,11 +468,8 @@ export const mainReducer = (state, action) => {
         }
       });
 
-
-
-
       return { ...state, summary: summary };
-    
+
     case UPDATE_SUMMARY:
       let { index, noteProvider, noteManager } = action.payload;
       let newSummary = state.summary.map((provider, i) => {
@@ -419,7 +481,6 @@ export const mainReducer = (state, action) => {
       });
 
       return { ...state, summary: newSummary };
-      
 
     case CLEAR_ORDER:
       return {
@@ -432,7 +493,7 @@ export const mainReducer = (state, action) => {
 
     case SET_DOCUMENTS:
       return { ...state, documents: action.payload };
-    
+
     case SET_UNREAD_MESSAGES:
       return { ...state, unreadMessages: action.payload };
 

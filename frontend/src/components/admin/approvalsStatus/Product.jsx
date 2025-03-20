@@ -7,164 +7,158 @@ const { REACT_APP_PROJECT_IMAGES } = import.meta.env;
 function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
   const { state, dispatch } = useMainContext();
   const [product, setProduct] = useState(productData);
+  const [quantityInput, setQuantityInput] = useState(
+    productData.quantity.toString()
+  );
+
   let { _id, name, price, subGroupName, barcode, quantity, QuantityLimit } =
     product;
   let originalQuantity = product.originalQuantity || quantity;
   let image = `${REACT_APP_PROJECT_IMAGES}${barcode}.png`;
   const [imageError, setImageError] = useState(false);
   const [isQuantityLimit, setIsQuantityLimit] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [inputValue, setInputValue] = useState(quantity.toString());
+  const [warningMessage, setWarningMessage] = useState("");
 
   const handleImageError = () => {
     setImageError(true);
   };
 
-  useEffect(() => {
-    if (quantity > 0 && QuantityLimit > 0 && quantity % QuantityLimit !== 0) {
-      setIsQuantityLimit(true);
+  // Add handlers for input
+  const handleQuantityChange = (e) => {
+    const value = e.target.value;
+    if (value === "" || /^\d*$/.test(value)) {
+      setQuantityInput(value);
+    }
+  };
+
+  const handleQuantityBlur = () => {
+    const newQuantity = quantityInput === "" ? 0 : parseInt(quantityInput);
+
+    // Check if the new quantity is between 0 and QuantityLimit
+    if (newQuantity > 0 && newQuantity < QuantityLimit) {
+      setQuantityInput(QuantityLimit.toString()); // Round up to QuantityLimit
+      setWarningMessage(
+        `הכמות עוגלה ל ${QuantityLimit} (מוצר זה מגיע במכפלות של ${QuantityLimit}).`
+      );
+    } else if (newQuantity % QuantityLimit !== 0) {
+      const roundedQuantity =
+        Math.floor(newQuantity / QuantityLimit) * QuantityLimit;
+      setQuantityInput(roundedQuantity.toString());
+      setWarningMessage(
+        `הכמות עוגלה ל ${roundedQuantity} (מוצר זה מגיע במכפלות של ${QuantityLimit}).`
+      );
     } else {
-      setIsQuantityLimit(false);
-    }
-  }, [quantity, QuantityLimit]);
-
-  useEffect(() => {
-    // Update input value when quantity changes from outside
-    if (!isEditing) {
-      setInputValue(quantity.toString());
-    }
-  }, [quantity]);
-
-  const handleInputChange = (e) => {
-    // Only allow numeric input
-    if (/^\d*$/.test(e.target.value)) {
-      setInputValue(e.target.value);
-    }
-  };
-
-  const handleInputFocus = () => {
-    setIsEditing(true);
-  };
-
-  const handleInputBlur = () => {
-    setIsEditing(false);
-    let newValue = parseInt(inputValue, 10) || 0;
-
-    // Handle quantity limits if applicable
-    if (QuantityLimit > 0 && newValue > 0) {
-      // If value is less than limit but not zero, round up to limit
-      if (newValue < QuantityLimit) {
-        newValue = QuantityLimit;
-      }
-      // If value is not a multiple of limit, round to nearest multiple
-      else if (newValue % QuantityLimit !== 0) {
-        newValue = Math.ceil(newValue / QuantityLimit) * QuantityLimit;
-      }
+      setWarningMessage(""); // Clear warning if valid
     }
 
-    // Update the displayed value
-    setInputValue(newValue.toString());
-
-    // Apply the changes by calling increase/decrease the appropriate number of times
-    const diff = newValue - quantity;
+    // Calculate difference and call appropriate handlers
+    const diff = newQuantity - quantity;
     if (diff > 0) {
       for (let i = 0; i < diff; i++) {
-        onIncrease(product);
+        onIncrease(product); // Call onIncrease for each increment
       }
     } else if (diff < 0) {
       for (let i = 0; i < Math.abs(diff); i++) {
-        onDecrease(product);
+        onDecrease(product); // Call onDecrease for each decrement
       }
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.target.blur(); // Trigger the blur event to apply changes
-    }
+  const handleFocus = (e) => {
+    setQuantityInput(""); // Clear the input field
   };
 
+  useEffect(() => {
+    if (quantity > QuantityLimit && QuantityLimit > 0) {
+      setIsQuantityLimit(true);
+    }
+  }, [quantity, QuantityLimit]);
+
+  // Add effect to update input when quantity changes
+  useEffect(() => {
+    setQuantityInput(quantity.toString());
+  }, [quantity]);
+
   return (
-    <div
-      className={productStyle.main}
-      style={{
-        backgroundColor: isQuantityLimit ? "rgba(255, 107, 107, 0.2)" : null,
-      }}
-    >
-      <span>
-        <div className={productStyle.img}>
-          <img
-            src={imageError ? imgProductDefault : image}
-            alt={name}
-            onError={handleImageError}
-          />
-        </div>
-        <div className={productStyle.name}>{name}</div>
-      </span>
-      <span>
-        <div className={productStyle.category}>{subGroupName}</div>
-        <div className={productStyle.barcode}>{barcode}</div>
-        <div className={productStyle.barcode}>{price}₪</div>
-
-        {QuantityLimit > 0 && (
-          <div className={productStyle.barcode}>
-            {isQuantityLimit ? (
-              <span style={{ color: "red" }}>
-                מוגבל ל-{QuantityLimit} פריטים למכפלה
-              </span>
-            ) : (
-              <span>מינימום כמות: {QuantityLimit} פריטים</span>
-            )}
+    <>
+      <div
+        className={productStyle.main}
+        style={{
+          backgroundColor: isQuantityLimit ? "rgba(255, 107, 107, 0.2)" : null,
+        }}
+      >
+        {/* Display warning message if exists */}
+        {warningMessage && (
+          <div
+            className={productStyle.warning}
+            style={{
+              textAlign: "right",
+              direction: "rtl",
+              color: "red",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              backgroundColor: "#f8d7da",
+            }}
+          >
+            {warningMessage}
           </div>
         )}
-
-        {orderBy !== "pending" && (
-          <div className={productStyle.barcode}>
-            {quantity} פריטים
-            <br />
-            (במקור {originalQuantity} פריטים)
+        <span>
+          <div className={productStyle.img}>
+            <img
+              src={imageError ? imgProductDefault : image}
+              alt={name}
+              onError={handleImageError}
+            />
           </div>
-        )}
-
-        {orderBy === "pending" && (
-          <>
-            <div className={productStyle.quantity}>
-              <button
-                className={productStyle.decrease}
-                onClick={() => onDecrease(product)}
-                disabled={quantity <= 0}
-              ></button>
-
-              <input
-                type='text'
-                className={productStyle.quantityNum}
-                value={inputValue}
-                onChange={handleInputChange}
-                onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
-                onKeyDown={handleKeyDown}
-                style={{
-                  textAlign: "center",
-                  width: "40px",
-                  border: isEditing ? "1px solid #007bff" : "none",
-                  outline: "none",
-                }}
-              />
-
-              <button
-                className={productStyle.increase}
-                onClick={() => onIncrease(product)}
-              ></button>
+          <div className={productStyle.name}>{name}</div>
+        </span>
+        <span>
+          <div className={productStyle.category}>{subGroupName}</div>
+          <div className={productStyle.barcode}>{barcode}</div>
+          <div className={productStyle.barcode}>{price}₪</div>
+          {quantity > QuantityLimit && QuantityLimit > 0 && (
+            <div className={productStyle.barcode}>
+              מוגבל ל: {QuantityLimit} פריטים
             </div>
-
-            <div
-              className={productStyle.buttonDelete}
-              onClick={() => onDelete(product)}
-            ></div>
-          </>
-        )}
-      </span>
-    </div>
+          )}
+          {orderBy != "pending" && (
+            <div className={productStyle.barcode}>
+              {" "}
+              {quantity} פריטים <br /> ( במקור {originalQuantity} פריטים ){" "}
+            </div>
+          )}
+          {orderBy == "pending" && (
+            <>
+              <div className={productStyle.quantity}>
+                <button
+                  className={productStyle.decrease}
+                  onClick={() => onDecrease(product)}
+                ></button>
+                <input
+                  type='number'
+                  value={quantityInput}
+                  onChange={handleQuantityChange}
+                  onBlur={handleQuantityBlur}
+                  onFocus={handleFocus}
+                  className={productStyle.quantityInput}
+                  inputMode='numeric'
+                />
+                <button
+                  className={productStyle.increase}
+                  onClick={() => onIncrease(product)}
+                ></button>
+              </div>
+              <div
+                className={productStyle.buttonDelete}
+                onClick={() => onDelete(product)}
+              ></div>
+            </>
+          )}
+        </span>
+      </div>
+    </>
   );
 }
 

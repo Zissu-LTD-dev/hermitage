@@ -126,8 +126,9 @@ const createOrder = async (req, res) => {
         returnStatus: order.returnLines.products.length > 0 ? "pending" : "",
         noteProvider: order.noteProvider,
         noteManager: order.noteManager,
-        blockReason: isAdmin ? "" : 
-          isBlocked
+        blockReason: isAdmin
+          ? ""
+          : isBlocked
           ? "ספק חסום"
           : hasLimitedProducts
           ? "מוצר מוגבל"
@@ -141,9 +142,9 @@ const createOrder = async (req, res) => {
 
   try {
     let orders = await Order.insertMany(allOrders);
-  
+
     let sendMail = true;
-  
+
     for (const order of orders) {
       let branchNumber = order.branchNumber;
       let providerNumber = order.providerNumber;
@@ -152,23 +153,24 @@ const createOrder = async (req, res) => {
       if (blockReason && blockReason !== "") {
         continue; // המשך להזמנה הבאה
       }
-  
-  
+
       // מציאת הספק
       let provider = await Provider.findOne({ number: providerNumber });
       if (!provider) {
         console.log(`Provider ${providerNumber} not found`);
         continue; // המשך להזמנה הבאה
       }
-  
+
       // יצירת רשימת אימיילים
       let emails = new Set([provider.email]);
       provider.branchEmails
         .filter((branch) => branch.branchNumber === branchNumber)
-        .forEach((branch) => branch.emails.forEach((email) => emails.add(email)));
-  
+        .forEach((branch) =>
+          branch.emails.forEach((email) => emails.add(email))
+        );
+
       emails = Array.from(emails).filter((email) => email); // ניקוי אימיילים ריקים
-  
+
       // שליחת מיילים
       for (const email of emails) {
         let sendMailResult = await weezmoMail.weezmoMail({
@@ -178,7 +180,7 @@ const createOrder = async (req, res) => {
           subjectLine: `הזמנה חדשה מסניף ${order.branchName}`,
           senderName: "הרמיטאז' הזמנות סניפים",
         });
-  
+
         if (sendMailResult) {
           console.log(`Mail sent successfully to ${email}`);
           await Order.updateOne(
@@ -191,7 +193,7 @@ const createOrder = async (req, res) => {
         }
       }
     }
-  
+
     // סיום פעולה ושליחת תגובה
     res.status(200).json({
       message: sendMail
@@ -200,21 +202,55 @@ const createOrder = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "There was an error processing the orders" });
+    res
+      .status(500)
+      .json({ message: "There was an error processing the orders" });
   }
-  
 };
 
 // getOrders
 const getOrders = async (req, res) => {
-  let branchNumber = req.params.branchNumber;
+  try {
+    const branchNumber = req.params.branchNumber;
+    const { page = 1, limit = 20, status } = req.query;
 
-  // get all orders for this branch from Order model
-  let orders = await Order.find({
-    branchNumber: branchNumber,
-  });
+    // Convert page and limit to numbers
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skip = (pageNum - 1) * limitNum;
 
-  res.status(200).json({ orders: orders });
+    // Build query object
+    const query = { branchNumber: branchNumber };
+
+    // Add status filter if provided
+    if (status) {
+      if (status === "returned") {
+        query.returnStatus = true;
+      } else {
+        query.orderStatus = status;
+      }
+    }
+
+    // Execute the query with pagination
+    const orders = await Order.find(query)
+      .sort({ createdDate: -1 })
+      .skip(skip)
+      .limit(limitNum)
+      .lean() // Convert to plain JavaScript objects for better performance
+      .exec();
+
+    return res.status(200).json({
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    return res.status(500).json({
+      success: false,
+      message: "אירעה שגיאה בטעינת ההזמנות",
+      error: error.message,
+    });
+  }
 };
 
 // allDocuments
@@ -230,7 +266,7 @@ const allDocuments = async (req, res) => {
 const downloadDocument = async (req, res) => {
   let documentId = req.params.documentId;
   let document = await Document.findById(documentId);
-  
+
   res.download(document.link);
 };
 

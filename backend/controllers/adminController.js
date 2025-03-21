@@ -1,8 +1,8 @@
 // body parser
 const bodyParser = require("body-parser");
 const weezmoMail = require("../functions/weezmoMail");
-const axios = require('axios');
-const linkImages = process.env.LINK_IMAGES
+const axios = require("axios");
+const linkImages = process.env.LINK_IMAGES;
 const {
   Branch,
   BranchType,
@@ -143,13 +143,61 @@ const updateLimitedProducts = async (req, res) => {
 
 // getAllOrders
 const getAllOrders = async (req, res) => {
-  let orders = await Order.find({}).sort({ orderNumber: -1 });
-  res.status(200).json({ orders: orders });
+  try {
+    const { page = 1, limit = 20, status } = req.query;
+
+    // Convert page and limit to numbers
+    const pageNum = parseInt(page);
+    const limitNum = parseInt(limit);
+    const skip = (pageNum - 1) * limitNum;
+
+    // Build query object based on filters
+    const query = {};
+
+    // Add status filter if provided
+    if (status) {
+      if (status === "returned") {
+        query.returnStatus = true;
+      } else {
+        query.orderStatus = status;
+      }
+    }
+
+    // Execute the query with pagination and allow disk use for sorting
+    const orders = await Order.find(query)
+      .sort({ createdDate: -1 })
+      .skip(skip)
+      .limit(limitNum)
+      .allowDiskUse(true) // Add this to handle large sorts
+      .lean() // Convert to plain JavaScript objects for better performance
+      .exec();
+
+    // Get total count for pagination info (optional)
+    const total = await Order.countDocuments(query);
+
+    return res.status(200).json({
+      success: true,
+      orders,
+      pagination: {
+        total,
+        page: pageNum,
+        limit: limitNum,
+        pages: Math.ceil(total / limitNum),
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching all orders:", error);
+    return res.status(500).json({
+      success: false,
+      message: "אירעה שגיאה בטעינת ההזמנות",
+      error: error.message,
+    });
+  }
 };
 
 // updateOrder
 const updateOrder = async (req, res) => {
-  // צריך לבדוק אם יש מייל  //TODO:  
+  // צריך לבדוק אם יש מייל  //TODO:
   let newOrder = req.body;
   let order = await Order.findOne({ _id: newOrder._id });
   order.orderStatus = newOrder.orderStatus;
@@ -167,9 +215,9 @@ const updateOrder = async (req, res) => {
     branchEmails.forEach((branch) => {
       emails = emails.concat(branch.emails);
     });
-    
+
     emails = emails.filter((email) => email !== "");
-    
+
     let mailPromises = emails.map(async (email) => {
       let sendMail = await weezmoMail.weezmoMail({
         target:
@@ -206,7 +254,7 @@ const getAllDocuments = async (req, res) => {
 const downloadDocument = async (req, res) => {
   let documentId = req.params.id;
   let document = await Document.findById(documentId);
-  
+
   res.download(document.link);
 };
 
@@ -232,7 +280,12 @@ const addProduct = async (req, res) => {
   let product = req.body;
   let newProduct = new Product(product);
   await newProduct.save();
-  res.status(200).json({ message: "The product was successfully added", _id: newProduct._id });
+  res
+    .status(200)
+    .json({
+      message: "The product was successfully added",
+      _id: newProduct._id,
+    });
 };
 
 // edit product
@@ -281,7 +334,12 @@ const newBranch = async (req, res) => {
     await provider.save();
   });
 
-  res.status(200).json({ message: "The branch was successfully added", _id: newBranchL._id });
+  res
+    .status(200)
+    .json({
+      message: "The branch was successfully added",
+      _id: newBranchL._id,
+    });
 };
 
 // edit branch
@@ -321,7 +379,7 @@ const deleteBranch = async (req, res) => {
     );
     await provider.save();
   });
-  
+
   res.status(200).json({ message: "The branch was successfully deleted" });
 };
 
@@ -330,7 +388,12 @@ const addTypeBranch = async (req, res) => {
   let typeBranch = req.body;
   let newTypeBranch = new BranchType(typeBranch);
   await newTypeBranch.save();
-  res.status(200).json({ message: "The type branch was successfully added", _id: newTypeBranch._id });
+  res
+    .status(200)
+    .json({
+      message: "The type branch was successfully added",
+      _id: newTypeBranch._id,
+    });
 };
 
 // edit type branch
@@ -373,7 +436,11 @@ const addUser = async (req, res) => {
   await newUser.save();
   res
     .status(200)
-    .json({ message: "The user was successfully added", error: false , _id: newUser._id});
+    .json({
+      message: "The user was successfully added",
+      error: false,
+      _id: newUser._id,
+    });
 };
 
 // edit user
@@ -409,10 +476,13 @@ const addProvider = async (req, res) => {
     await newProvider.save();
     return res
       .status(200)
-      .json({ message: "The provider was successfully added", _id: newProvider._id });
+      .json({
+        message: "The provider was successfully added",
+        _id: newProvider._id,
+      });
   }
 
-  res.status(200).json({ message: "The provider already exists", error: true});
+  res.status(200).json({ message: "The provider already exists", error: true });
 };
 
 // edit provider
@@ -458,12 +528,19 @@ const addSubGroup = async (req, res) => {
     await newSub.save();
     return res
       .status(200)
-      .json({ message: "The sub group was successfully added" , _id: newSub._id});
+      .json({
+        message: "The sub group was successfully added",
+        _id: newSub._id,
+      });
   }
 
   res
     .status(200)
-    .json({ message: "The sub group already exists", error: true , _id: newSub._id});
+    .json({
+      message: "The sub group already exists",
+      error: true,
+      _id: newSub._id,
+    });
 };
 
 // edit sub group
@@ -497,7 +574,10 @@ const addCategory = async (req, res) => {
     await newCategory.save();
     return res
       .status(200)
-      .json({ message: "The category was successfully added" , _id: newCategory._id});
+      .json({
+        message: "The category was successfully added",
+        _id: newCategory._id,
+      });
   }
 
   res.status(200).json({ message: "The category already exists", error: true });
@@ -538,7 +618,10 @@ const addLocationProductsConfig = async (req, res) => {
   await newLocationProductsConfig.save();
   res
     .status(200)
-    .json({ message: "The locationProductsConfig was successfully added" , _id: newLocationProductsConfig._id});
+    .json({
+      message: "The locationProductsConfig was successfully added",
+      _id: newLocationProductsConfig._id,
+    });
 };
 
 // edit locationProductsConfig
@@ -571,9 +654,14 @@ const deleteLocationProductsConfig = async (req, res) => {
 
 // add message to branchs
 const addMessageToBranchs = async (req, res) => {
-  let { branchesList, message,  sender } = req.body;
+  let { branchesList, message, sender } = req.body;
   let timestamp = new Date();
-  let newMessage = new Message({ content: message, branch_ids: branchesList, sender, timestamp });
+  let newMessage = new Message({
+    content: message,
+    branch_ids: branchesList,
+    sender,
+    timestamp,
+  });
   await newMessage.save();
   res.status(200).json({ message: "The message was successfully added" });
 };
@@ -592,11 +680,11 @@ const sendProviderReport = async (req, res) => {
     })
   );
   res.status(200).json({ message: "The report was successfully sent" });
-}; 
+};
 
 // update Product Images if avilable
 const updateProductImages = async (req, res) => {
-  let barcodesWithImage  = req.body.barcodesWithImage;
+  let barcodesWithImage = req.body.barcodesWithImage;
   let products = await Product.find({});
 
   products.map(async (product) => {
@@ -607,7 +695,7 @@ const updateProductImages = async (req, res) => {
   });
 
   res.status(200).json({ message: "The images was successfully updated" });
-} 
+};
 
 module.exports = {
   initialData,

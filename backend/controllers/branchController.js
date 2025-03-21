@@ -210,47 +210,14 @@ const createOrder = async (req, res) => {
 
 // getOrders
 const getOrders = async (req, res) => {
-  try {
-    const branchNumber = req.params.branchNumber;
-    const { page = 1, limit = 20, status } = req.query;
+  let branchNumber = req.params.branchNumber;
 
-    // Convert page and limit to numbers
-    const pageNum = parseInt(page);
-    const limitNum = parseInt(limit);
-    const skip = (pageNum - 1) * limitNum;
+  // get all orders for this branch from Order model
+  let orders = await Order.find({
+    branchNumber: branchNumber,
+  });
 
-    // Build query object
-    const query = { branchNumber: branchNumber };
-
-    // Add status filter if provided
-    if (status) {
-      if (status === "returned") {
-        query.returnStatus = true;
-      } else {
-        query.orderStatus = status;
-      }
-    }
-
-    // Execute the query with pagination
-    const orders = await Order.find(query)
-      .sort({ createdDate: -1 })
-      .skip(skip)
-      .limit(limitNum)
-      .lean() // Convert to plain JavaScript objects for better performance
-      .exec();
-
-    return res.status(200).json({
-      success: true,
-      orders,
-    });
-  } catch (error) {
-    console.error("Error fetching orders:", error);
-    return res.status(500).json({
-      success: false,
-      message: "אירעה שגיאה בטעינת ההזמנות",
-      error: error.message,
-    });
-  }
+  res.status(200).json({ orders: orders });
 };
 
 // allDocuments

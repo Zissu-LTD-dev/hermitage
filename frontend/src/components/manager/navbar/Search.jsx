@@ -17,12 +17,11 @@ function Search() {
     allProducts.forEach((product) => {
       if (!product || !product.name || !product.barcode) return;
 
-      // Only include products with valid location
+      // Only include products with valid location (any column number is valid)
       const isLocationValid =
         product.location &&
         typeof product.location === "object" &&
-        Object.keys(product.location).length > 0 &&
-        product.location.column > 0;
+        Object.keys(product.location).length > 0;
 
       if (!isLocationValid) return;
 
@@ -103,8 +102,7 @@ function Search() {
         const isLocationValid =
           product.location &&
           typeof product.location === "object" &&
-          Object.keys(product.location).length > 0 &&
-          product.location.column > 0;
+          Object.keys(product.location).length > 0;
 
         if (!isLocationValid) return;
 

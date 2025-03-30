@@ -22,7 +22,10 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
 
   // Update isQuantityLimit flag when quantity or QuantityLimit changes
   useEffect(() => {
-    if (quantity > 0 && QuantityLimit > 0 && quantity % QuantityLimit !== 0) {
+    if (
+      (quantity > 0 && QuantityLimit > 0 && quantity % QuantityLimit !== 0) ||
+      (QuantityLimit > 0 && quantity > QuantityLimit)
+    ) {
       setIsQuantityLimit(true);
     } else {
       setIsQuantityLimit(false);
@@ -97,6 +100,7 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
       className={productStyle.main}
       style={{
         backgroundColor: isQuantityLimit ? "rgba(255, 107, 107, 0.2)" : null,
+        border: isQuantityLimit ? "1px solid #ff6b6b" : null,
       }}
     >
       <span>
@@ -117,8 +121,9 @@ function Product({ productData, onDelete, onDecrease, onIncrease, orderBy }) {
         {QuantityLimit > 0 && (
           <div className={productStyle.barcode}>
             {isQuantityLimit ? (
-              <span style={{ color: "red" }}>
-                מוגבל ל-{QuantityLimit} פריטים למכפלה
+              <span style={{ color: "red", fontWeight: "bold" }}>
+                מוגבל ל-{QuantityLimit} פריטים{" "}
+                {quantity > QuantityLimit ? "(כמות חריגה)" : "(נדרשת מכפלה)"}
               </span>
             ) : (
               <span>מינימום כמות: {QuantityLimit} פריטים</span>

@@ -7,44 +7,50 @@ function OrderFilterProduct() {
   const { state, dispatch } = useMainContext();
   const [products, setProducts] = useState([]);
 
-  const filterProducts = () => {
-    let newProducts = [];
-    let allProducts = state.allProducts;
-    let displayFilters = state.displayFilters;
-
-    for (let i = 0; i < allProducts.length; i++) {
-      const isLocationValid = allProducts[i].location && 
-                              typeof allProducts[i].location === 'object' && 
-                              Object.keys(allProducts[i].location).length > 0;
-
-      if (!isLocationValid || allProducts[i].location.column == 0 ) continue;
-      if (
-        displayFilters["קבוצת משנה"] &&
-        displayFilters["קבוצת משנה"].includes(allProducts[i]["subGroupNumber"])
-      ) {
-        newProducts.push(allProducts[i]);
-      }
-      if (
-        displayFilters["ספק"] &&
-        displayFilters["ספק"].includes(allProducts[i]["providerNumber"])
-      ) {
-        if (!newProducts.includes(allProducts[i])) {
-          newProducts.push(allProducts[i]);
-        }
-      }
-    }
-    setProducts(newProducts);
-  };
-
-  const searchProducts = () => {
-    setProducts(state.searchResults);
-  };
-
   useEffect(() => {
-    if (state.displayFilters.length != 0) filterProducts();
-    if (state.search != '' ) searchProducts();
-  }, [state.displayFilters, state.search]);
+    // Use AND logic between filter categories
+    if (Object.keys(state.displayFilters).length > 0) {
+      let filteredProducts = state.allProducts.filter((product) => {
+        // Skip products without valid location
+        const isLocationValid =
+          product.location &&
+          typeof product.location === "object" &&
+          Object.keys(product.location).length > 0;
 
+        if (!isLocationValid || product.location.column == 0) return false;
+
+        // Check each filter category - product must match ALL categories (AND logic)
+        for (const category in state.displayFilters) {
+          const filterValues = state.displayFilters[category];
+
+          // Skip empty filter arrays
+          if (!filterValues || filterValues.length === 0) continue;
+
+          // Check if product matches any value in this category
+          const matchesCategory = filterValues.some((value) => {
+            if (category === "קבוצת משנה") {
+              return product.subGroupNumber === value;
+            } else if (category === "ספק") {
+              return product.providerNumber === value;
+            }
+            return false;
+          });
+
+          // If product doesn't match this category, exclude it
+          if (!matchesCategory) return false;
+        }
+
+        // Product passed all filter categories
+        return true;
+      });
+
+      setProducts(filteredProducts);
+    } else if (state.search !== "") {
+      setProducts(state.searchResults);
+    } else {
+      setProducts([]);
+    }
+  }, [state.displayFilters, state.search, state.allProducts]);
 
   return (
     <>

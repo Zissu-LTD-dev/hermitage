@@ -11,7 +11,7 @@ function Filters() {
   const [checkedList, setCheckedList] = useState({});
   const [search, setSearch] = useState("");
   const [searchFiltersResults, setSearchFiltersResults] = useState([]);
-  
+
   const wrapperRef = useRef(null);
   const filterRefs = useRef([]);
 
@@ -47,7 +47,11 @@ function Filters() {
   };
 
   const handleSubmit = () => {
-    if(Object.keys(filtersList).length === 0 && filtersList.constructor === Object) return setActive(false);
+    if (
+      Object.keys(filtersList).length === 0 &&
+      filtersList.constructor === Object
+    )
+      return setActive(false);
 
     let isEmpty = false;
     for (const key in filtersList) {
@@ -102,16 +106,19 @@ function Filters() {
   }, [filters]);
 
   useEffect(() => {
-    if(search !== "") {
+    if (search !== "") {
       let searchInFilters = filters;
       let results = [];
       searchInFilters.map((filter, i) => {
         filter.details.map((detail, j) => {
-          String(detail.name).startsWith(String(search)) && results.push(detail.number);
+          String(detail.name)
+            .toLowerCase()
+            .includes(String(search).toLowerCase()) &&
+            results.push(detail.number);
         });
       });
       setSearchFiltersResults(results);
-    }else {
+    } else {
       setSearchFiltersResults([]);
     }
   }, [search]);
@@ -139,7 +146,10 @@ function Filters() {
             : filtersStyle.filters
         }
       >
-        <div className={filtersStyle.filter} onClick={ state.activeNavbar ? () => setActive(!active) : null }>
+        <div
+          className={filtersStyle.filter}
+          onClick={state.activeNavbar ? () => setActive(!active) : null}
+        >
           <h4>סינון</h4>
           <i className={filtersStyle.icon}></i>
         </div>
@@ -150,74 +160,84 @@ function Filters() {
               {/* search input */}
               <div className={filtersStyle.list__search}>
                 <input
-                  type="text"
-                  placeholder="חיפוש"
+                  type='text'
+                  placeholder='חיפוש'
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <i className={filtersStyle.list__search__icon}></i>
               </div>
-              { !searchFiltersResults.length && filters.map((filter, index) => (
-                <div className={filtersStyle.list__filter} key={index}>
-                  <h5 onClick={() => openFilterDetails(index)}>{filter.title}
-                    <i className={filtersStyle.list__filter__icon}></i>
-                  </h5>
-                  <div style={{ display: "none" }} className={filtersStyle.list__filter__details + " " + `filtersStyle.list__filter__${index}`} ref={el => filterRefs.current[index] = el}>
-                    {filter.details.map((detail, i) => (
-                      <div
-                        className={filtersStyle.list__filter__detail}
-                        key={i}
-                      >
-                        <input
-                          {...(checkedList[filter.title] &&
-                            checkedList[filter.title].includes(
-                              detail.number
-                            ) && { checked: true })}
-
-                          onClick={() =>
-                            addFilterToList(filter.title, detail.number)
-                          }
-                          type="checkbox"
-                          name={detail.number + index + i}
-                          id={detail.number + index + i}
-                        />
-                        <label htmlFor={detail.number + index + i}>
-                          {detail.name}
-                        </label>
-                      </div>
-                    ))}
+              {!searchFiltersResults.length &&
+                filters.map((filter, index) => (
+                  <div className={filtersStyle.list__filter} key={index}>
+                    <h5 onClick={() => openFilterDetails(index)}>
+                      {filter.title}
+                      <i className={filtersStyle.list__filter__icon}></i>
+                    </h5>
+                    <div
+                      style={{ display: "none" }}
+                      className={
+                        filtersStyle.list__filter__details +
+                        " " +
+                        `filtersStyle.list__filter__${index}`
+                      }
+                      ref={(el) => (filterRefs.current[index] = el)}
+                    >
+                      {filter.details.map((detail, i) => (
+                        <div
+                          className={filtersStyle.list__filter__detail}
+                          key={i}
+                        >
+                          <input
+                            {...(checkedList[filter.title] &&
+                              checkedList[filter.title].includes(
+                                detail.number
+                              ) && { checked: true })}
+                            onClick={() =>
+                              addFilterToList(filter.title, detail.number)
+                            }
+                            type='checkbox'
+                            name={detail.number + index + i}
+                            id={detail.number + index + i}
+                          />
+                          <label htmlFor={detail.number + index + i}>
+                            {detail.name}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
 
               {/* search results */}
-              { searchFiltersResults.length > 0 && filters.map((filter, index) => (
-                filter.details.map((detail, i) => (
-                  searchFiltersResults.includes(detail.number) && (
-                    <div
-                    className={filtersStyle.list__filter__detail}
-                    key={i}
-                  >
-                    <input
-                      {...(checkedList[filter.title] &&
-                        checkedList[filter.title].includes(
-                          detail.number
-                        ) && { checked: true })}
-
-                      onClick={() =>
-                        addFilterToList(filter.title, detail.number)
-                      }
-                      type="checkbox"
-                      name={detail.number + index + i}
-                      id={detail.number + index + i}
-                    />
-                    <label htmlFor={detail.number + index + i}>
-                      {detail.name}
-                    </label>
-                  </div>
+              {searchFiltersResults.length > 0 &&
+                filters.map((filter, index) =>
+                  filter.details.map(
+                    (detail, i) =>
+                      searchFiltersResults.includes(detail.number) && (
+                        <div
+                          className={filtersStyle.list__filter__detail}
+                          key={i}
+                        >
+                          <input
+                            {...(checkedList[filter.title] &&
+                              checkedList[filter.title].includes(
+                                detail.number
+                              ) && { checked: true })}
+                            onClick={() =>
+                              addFilterToList(filter.title, detail.number)
+                            }
+                            type='checkbox'
+                            name={detail.number + index + i}
+                            id={detail.number + index + i}
+                          />
+                          <label htmlFor={detail.number + index + i}>
+                            {detail.name}
+                          </label>
+                        </div>
+                      )
                   )
-                ))
-              ))}
+                )}
             </div>
 
             <div onClick={handleSubmit} className={filtersStyle.list__submit}>

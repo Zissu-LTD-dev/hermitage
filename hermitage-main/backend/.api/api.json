@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "apis": [
+    {
+      "identifier": "weezmo",
+      "source": "@weezmo/v1.0#1qqvc2hlwjes4k1",
+      "integrity": "sha512-oqTHEC/i68ZCMcEuYCG9vnZ+kebi4sx6p5qJdfg2bdyNr3G5LANm2ZuMbcmx9Be9u6xvfFfu2eusCqI807NVYg==",
+      "installerVersion": "6.1.1"
+    }
+  ]
+}

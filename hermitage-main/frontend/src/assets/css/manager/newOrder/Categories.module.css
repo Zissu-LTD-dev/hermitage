@@ -1,0 +1,31 @@
+.categories{
+  width: 100%;
+    display: flex;
+    /* flex-wrap: wrap; */
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 5px;
+}
+
+/* width scoling */
+.categories::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+  background: #c7c5c5;
+}
+
+.categories::-webkit-scrollbar-thumb {
+  background: #082a3a;
+  border-radius: 10px;
+}
+
+.categories::-webkit-scrollbar-track {
+  background: #c7c5c5;
+  border-radius: 10px;
+}
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    
+
+}

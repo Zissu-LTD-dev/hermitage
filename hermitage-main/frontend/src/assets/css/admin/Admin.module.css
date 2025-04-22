@@ -1,0 +1,28 @@
+.main{
+    background-color: #EFF2F3 ;
+}
+
+.content{
+    width: 80%;
+    height: calc(100vh - 85px);
+    max-height: calc(100vh - 85px);
+    position: relative;
+    top: 85px;
+    left: 0;
+    background: #EFF2F3 0% 0% no-repeat padding-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.content::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .content{
+        width: 85%;
+        height: calc(100vh - 100px);
+        
+    }
+}

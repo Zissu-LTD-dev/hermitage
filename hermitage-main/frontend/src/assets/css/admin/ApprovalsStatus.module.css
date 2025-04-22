@@ -1,0 +1,127 @@
+.main {
+  height: 95%;
+  direction: rtl;
+  margin: 15px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.title{
+    /* font: normal normal medium 28px/37px IBM Plex Sans Hebrew; */
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 37px;
+    font-family: 'IBM Plex Sans Hebrew';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 37px;
+    color: #082A3A;
+}
+
+.body{
+    height: 93%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.body::-webkit-scrollbar {
+    width: 0;
+}
+
+
+.filter_buttons{
+  height: 100%;
+    display: flex;
+    align-items: center;
+}
+.pending_button{
+  width: 185px;
+  height: 38px;
+  margin: 0 10px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
+  font-size: 15px;
+  font-family: 'IBM Plex Sans Hebrew';
+  font-weight: normal;
+  line-height: 19px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  background: #cc7752 0% 0% no-repeat padding-box;
+  cursor: pointer;
+}
+.approved_button{
+  width: 150px;
+  height: 38px;
+  margin: 0 10px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
+  font-size: 15px;
+  font-family: 'IBM Plex Sans Hebrew';
+  font-weight: normal;
+  line-height: 19px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  background: #79B551 0% 0% no-repeat padding-box;
+  cursor: pointer;
+}
+.canceled_button{
+  width: 150px;
+  height: 38px;
+  margin: 0 10px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #082A3A 0% 0% no-repeat padding-box;
+  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
+  font-size: 15px;
+  font-family: 'IBM Plex Sans Hebrew';
+  font-weight: normal;
+  line-height: 19px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.returned_button{
+  width: 100px;
+  height: 38px;
+  margin: 0 10px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #007BFF 0% 0% no-repeat padding-box;
+  /* font: normal normal normal 15px/19px IBM Plex Sans Hebrew; */
+  font-size: 15px;
+  font-family: 'IBM Plex Sans Hebrew';
+  font-weight: normal;
+  line-height: 19px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+
+    .title{
+        font-size: 20px;    
+    }
+
+    .pending_button , .approved_button , .canceled_button , .returned_button{
+        font-size: 13px;
+    }
+
+    .body{
+      height: 83%;
+    }
+
+}

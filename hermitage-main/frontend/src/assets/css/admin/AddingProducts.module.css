@@ -1,0 +1,181 @@
+.main {
+  height: 95%;
+  direction: rtl;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #eef0f2;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #082a3a;
+  font-family: "IBM Plex Sans Hebrew";
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.addProduct,
+.uploadProducts,
+.downloadProducts {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.addProduct {
+  background-color: #be955d;
+  color: white;
+}
+
+.addProduct:hover {
+  background-color: #a17c4a;
+  transform: translateY(-1px);
+}
+
+.downloadProducts {
+  background-color: #082a3a;
+  color: white;
+}
+
+.downloadProducts:hover {
+  background-color: #0e3c54;
+  transform: translateY(-1px);
+}
+
+.uploadProducts {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  color: #082a3a;
+}
+
+.uploadProducts:hover {
+  background-color: #f5f5f5;
+  border-color: #be955d;
+}
+
+.addProductIcon,
+.downloadProductsIcon,
+.uploadProductsIcon {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+}
+
+.addProductIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 4v16m8-8H4'/%3E%3C/svg%3E");
+}
+
+.downloadProductsIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4'/%3E%3C/svg%3E");
+}
+
+.uploadProductsIcon {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23082A3A'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12'/%3E%3C/svg%3E");
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23082A3A'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  transition: transform 0.2s ease;
+}
+
+.arrowIconUp {
+  transform: rotate(180deg);
+}
+
+.body {
+  height: calc(100% - 80px);
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: #be955d;
+  border-radius: 4px;
+}
+
+.productRow {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+  border: 1px solid #eef0f2;
+}
+
+.productRow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+@media screen and (max-width: 1180px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .buttons {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .addProduct,
+  .uploadProducts,
+  .downloadProducts {
+    flex: 1;
+    justify-content: center;
+    min-width: 150px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .buttons {
+    gap: 0.5rem;
+  }
+
+  .addProduct,
+  .uploadProducts,
+  .downloadProducts {
+    padding: 0.6rem 1rem;
+    font-size: 13px;
+  }
+}

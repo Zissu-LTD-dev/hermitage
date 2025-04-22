@@ -1,0 +1,54 @@
+.main{
+    width: 100%;
+    height: 56px;
+background: #F4F6F7 0% 0% no-repeat padding-box;
+margin: 0 0 8px 0;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.selectBranch{
+    display: flex;
+align-items: center;
+/* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+font-size: 14px;
+font-weight: 600;
+line-height: 18px;
+font-family: "IBM Plex Sans Hebrew";
+font-style: normal;
+letter-spacing: 0px;
+color: #082A3A;
+}
+
+.main input[type="checkbox"] {
+    width: 22px;
+height: 22px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #082A3A;
+    margin-left: 14px;
+}
+
+.button{
+    width: 167px;
+    height: 33px;
+    /* font: normal normal medium 14px/18px IBM Plex Sans Hebrew; */
+    font-size: 14px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0px;
+color: #FFFFFF;
+cursor: pointer;
+}
+
+.approved{
+    background: #BE955D 0% 0% no-repeat padding-box;
+}
+
+.notApproved{
+    background: #082A3A 0% 0% no-repeat padding-box;
+}

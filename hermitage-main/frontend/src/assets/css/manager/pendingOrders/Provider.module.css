@@ -1,0 +1,174 @@
+.main_open {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 25px 0;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+}
+.main {
+  width: 100%;
+  height: auto;
+  min-height: 86px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* margin: 0 0  15px 0; */
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+}
+.main span {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* .main span:nth-child(1) div{
+  height: 29px;
+  padding: 0 35px ;
+    border-left: 1px solid #70707048;
+} */
+
+.main__open {
+  width: 100%;
+  height: auto;
+  display: flex;
+  margin: 0 0 15px 0;
+
+  flex-direction: column;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+}
+
+.orderNum {
+  text-align: right;
+  /* font: normal normal 600 18px/23px IBM Plex Sans Hebrew; */
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 23px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+  min-height: 29px;
+  padding: 0 35px;
+  border-left: 1px solid #70707048;
+  margin: 0 39px 0 0;
+  direction: rtl;
+}
+
+.date {
+  text-align: right;
+  /*font: normal normal normal 18px/23px IBM Plex Sans Hebrew;*/
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  min-height: 29px;
+  padding: 0 35px;
+  border-left: 1px solid #70707048;
+  color: #082a3a;
+}
+
+.provider {
+  padding: 0 35px;
+  /*font: normal normal normal 18px/23px IBM Plex Sans Hebrew;*/
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+
+.userName{
+  padding: 0 35px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  border-left: 1px solid #70707048;
+  letter-spacing: 0px;
+  color: #082a3a;
+
+}
+
+.status {
+  min-width: 106px;
+  min-height: 28px;
+  padding: 0 20px;
+  margin: 0 0 0 35px;
+  /* padding: 0 35px ; */
+  border-left: 1px solid #70707048;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*font: normal normal normal 15px/19px IBM Plex Sans Hebrew;*/
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 19px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #ffffff;
+  background: #cc7752 0% 0% no-repeat padding-box;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  margin: 0 0 0 25px;
+  background: transparent
+    url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    padding-box;
+}
+
+.close__icon {
+  transform: rotate(180deg);
+}
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main {
+        min-height: 90px;
+    }
+    
+    .orderNum{
+      /* height: auto; */
+      font-size: 14px;
+      padding: 0 10px;
+      margin: 0 10px 0 0;
+    }
+    .date{
+      /* height: auto; */
+      font-size: 14px;
+      padding: 0 10px;
+      margin: 0 10px 0 0;
+    }
+    .provider{
+      /* height: auto; */
+      max-width: 35%;
+      font-size: 14px;
+      padding: 10px;
+      margin: 0 10px 0 0;
+    }
+    .userName{
+      /* height: auto; */
+      font-size: 14px;
+      padding: 10px;
+      margin: 0 10px 0 0;
+    }
+    .status{
+      /* height: auto; */
+      font-size: 14px;
+      padding: 10px;
+      margin: 0 15px;
+    }
+}

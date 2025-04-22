@@ -1,0 +1,132 @@
+.main {
+  width: 100%;
+  height: 77px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 0 23px 0 29px;
+}
+
+.main span {
+  display: flex;
+  align-items: center;
+}
+
+.blocked {
+  background: #f6f8f8 0% 0% no-repeat padding-box;
+  /* opacity: 0.45; */
+}
+
+.checkboxSelect input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #082a3a;
+}
+
+.image {
+  width: 75px;
+  height: 68px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  margin: 0 0 0 20px;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+}
+
+.blocked .image {
+  opacity: 0.45;
+}
+
+.name {
+  /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+
+.provider,
+.category,
+.barcode {
+  /* font: normal normal normal 11px/14px IBM Plex Sans Hebrew; */
+  font-size: 11px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  line-height: 14px;
+  letter-spacing: 0px;
+  color: #9eaaaf;
+  margin-left: 45px;
+}
+.provider {
+}
+.category {
+}
+.barcode {
+}
+.button {
+  width: 133px;
+  height: 33px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #ffffff;
+  letter-spacing: 0px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.blockedIcon {
+  width: 15px;
+  height: 15px;
+  margin-left: 7px;
+  background: transparent url("../../../image/admin/blockw.svg") 50% 50%
+    no-repeat padding-box;
+}
+
+.blockedText,
+.unblockedText {
+}
+.blockedText {
+  background: #be955d 0% 0% no-repeat padding-box;
+}
+.unblockedText {
+  background: #082a3a 0% 0% no-repeat padding-box;
+}
+
+
+.limitedText{
+  background: #be955d 0% 0% no-repeat padding-box;
+}
+.unlimitedText{
+  background: #082a3a 0% 0% no-repeat padding-box;
+}
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+  .provider, .category, .barcode {
+    margin-left: 10px;
+  }
+
+  .button {
+    margin-right: 0px;
+    font-size: 12px;
+    width: 100px;
+  }
+
+}

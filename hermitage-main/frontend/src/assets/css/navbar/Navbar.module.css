@@ -1,0 +1,42 @@
+.navbar{
+    width: 80%;
+    height: 85px;
+    box-shadow: 0px 3px 18px #082A3A30;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.navbar .navbar__right{
+    max-width: calc(100% - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar__right__hidden{
+    opacity: 0.3;
+}
+
+.navbar .navbar__left{
+    height: 100%;
+}
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .navbar {
+        width: 85%;
+        height: 75px;
+    }
+
+    .navbar .navbar__right {
+        max-width: calc(100% - 80px);
+        gap: 15px;
+    }
+}

@@ -1,0 +1,159 @@
+.main {
+  min-height: 86px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 10px;
+  margin: 0 0 14px 0;
+
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .provider_name {
+      width: 32%;
+      font-size: 18px;
+      font-weight: 600;
+      font-family: "IBM Plex Sans Hebrew", sans-serif;
+      line-height: 23px;
+      color: #082a3a;
+    }
+    .order_summary {
+      width: 60%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+
+      .roder_data,
+      .return_data {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        font-size: 18px;
+        font-weight: 400;
+        font-family: "IBM Plex Sans Hebrew", sans-serif;
+        line-height: 23px;
+        padding: 0 5px;
+      }
+      .roder_data {
+        margin: 0 0 10px 0;
+        color: #082a3a;
+      }
+      .return_data {
+        color: #be955d;
+      }
+      .total_order_qty {
+        width: 45%;
+      }
+      .total_order_amount {
+        float: right;
+      }
+    }
+  }
+
+  .icon {
+    background: transparent
+      url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50%
+      no-repeat padding-box;
+    width: 24px;
+    height: 24px;
+    border: 0;
+    cursor: pointer;
+  }
+  .icon_close {
+    transform: rotate(180deg);
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+
+    .order_lines {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 0 0 10px 0;
+      padding: 0 5px;
+
+      .order_title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+        font-family: "IBM Plex Sans Hebrew", sans-serif;
+        padding: 0 10px;
+        margin: 0 0 5px 0;
+      }
+
+      .order_line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+        font-family: "IBM Plex Sans Hebrew", sans-serif;
+        padding: 0 10px;
+        margin: 0 0 5px 0;
+        background: #f7f7f7;
+
+        div {
+          width: 15%;
+          text-align: right;
+        }
+        .product_name {
+          width: 30%;
+        }
+        .product_img {
+          img {
+            width: 50px;
+            height: 50px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.notes{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0 10px 0;
+  padding: 0 5px;
+  
+  .provider_note , .manager_note{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    font-family: "IBM Plex Sans Hebrew", sans-serif;
+    padding: 0 10px;
+    margin: 0 0 15px 0;
+
+    label{
+      width: 20%;
+      text-align: right;
+    }
+    input{
+      width: 40%;
+      height: 30px;
+      padding: 5px;
+      border: 1px solid #be955d;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: 400;
+      font-family: "IBM Plex Sans Hebrew", sans-serif;
+      line-height: 23px;
+    }
+  }
+}

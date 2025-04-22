@@ -1,0 +1,190 @@
+.main {
+  /* width: 1541px; */
+  height: 53px;
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+}
+
+.main span{
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  /* justify-content: flex-start; */
+  align-items: center;
+}
+
+.main span:nth-child(1){
+  width: 92%;
+  
+}
+  .main span:nth-child(2){
+  /* width: 8%; */
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.main__icon {
+  width: 20px;
+  height: 20px;
+  margin: 0 20px 0 17px;
+  background: transparent url("../../../image/manager/Group9.svg") 50% 50%
+    no-repeat padding-box;
+}
+
+.title {
+  /* width: 1300px; */
+  height: 20px;
+  text-align: right;
+  font-size: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  font-weight: medium;
+  line-height: 23px;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+
+.imaging {
+  width: 35px;
+  height: 35px;
+  margin:  0 0 0 15px;
+  background: transparent url("../../../image/manager/Iconfeather-eye.svg") 50% 50%
+    no-repeat padding-box;
+}
+
+.opening__arrow {
+  width: 25px;
+  height: 25px;
+  margin: 0 15px 0 15px ;
+  border-radius: 1px solid #7070704b;
+  transform: rotate(180deg);
+  background: transparent
+    url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    padding-box;
+ 
+}
+
+/* open */
+.main__open {
+  margin: 0 0 12px 0;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #082a3a05;
+}
+
+
+.closing__arrow {
+  width: 25px;
+  height: 25px;
+  margin: 0 15px 0 15px ;
+  border-radius: 1px solid #7070704b;
+  background: transparent
+    url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    padding-box;
+
+}
+
+.rows {
+  padding: 20px;
+}
+
+.main__open .products_list{
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+
+.products_list{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.products_list::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+  background: #c7c5c5;
+}
+
+.arrow_right{
+  position: relative;
+  top: -290px;
+  width: 100px;
+  height: 290px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow_left {
+  position: relative;
+  top: -290px;
+  right: calc(100% - 100px);
+  width: 100px;
+  height: 290px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow_up{
+  top: -580px;
+}
+
+.arrow_icon_left , .arrow_icon_right{
+  margin: 0 22px;
+  width: 25px;
+  height: 25px;
+  background: transparent url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat padding-box;
+}
+
+.arrow_left{
+  background: transparent linear-gradient(90deg, #F4F6F7 0%, #F4F6F700 100%) 0% 0% no-repeat padding-box;
+}
+
+.arrow_right{
+  background: transparent linear-gradient(270deg, #F4F6F7 0%, #F4F6F700 100%) 0% 0% no-repeat padding-box;
+}
+
+.arrow_icon_left{
+  transform: rotate(-90deg);
+}
+.arrow_icon_right{
+  transform: rotate(90deg);
+}
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+ 
+
+  .title {
+    font-size: 13px;
+  }
+
+  .main__icon{
+    width: 20px;
+    height: 20px;
+    margin: 0 15px 0 10px;
+  }
+
+}

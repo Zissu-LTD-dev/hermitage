@@ -1,0 +1,36 @@
+.main {
+    height: 90%;
+    direction: rtl;
+    margin: 36px 43px 0 53px;
+  }
+  
+  .header {
+    /* height: 96px; */
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 28px;
+    font-weight: 500;
+    font-style: normal;
+    font-family: "IBM Plex Sans Hebrew";
+    letter-spacing: 0px;
+    color: #082a3a;
+  }
+  
+  .body{
+      height: 88%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .body::-webkit-scrollbar {
+      width: 0;
+  }
+  

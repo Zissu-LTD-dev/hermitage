@@ -1,0 +1,45 @@
+.main{
+display: flex;
+flex-direction: column;
+background: #F4F6F7 0% 0% no-repeat padding-box;
+margin-bottom: 11px;
+padding: 0 7.5px 0 0 ;
+}
+
+.title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 9px 0;
+    padding: 0 20px;
+}
+
+.title__text{
+    text-align: right;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: IBM Plex Sans Hebrew;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #082A3A;
+}
+
+.title__arrow{
+    width: 20px;
+    height: 20px;
+    background: transparent
+    url("../../../image/manager/Iconionic-ios-arrow-back.svg") 50% 50% no-repeat
+    padding-box;
+    cursor: pointer;
+}
+
+.title__arrow__close{
+    transform: rotate(180deg);
+}
+
+.products{
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+}

@@ -1,0 +1,101 @@
+.main {
+    height: 90%;
+  direction: rtl;
+  margin: 50px 43px 0 53px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.title{
+    /* font: normal normal medium 28px/37px IBM Plex Sans Hebrew; */
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 37px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-style: normal;
+    color: #082A3A;
+}
+
+.button{
+    min-width: 205px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #BE955D 0% 0% no-repeat padding-box;
+    cursor: pointer;
+
+}
+
+.icon{
+    width: 33px;
+    height: 30px;
+    margin-left: 9px;
+    background: transparent url('../../image/admin/Iconfeather-upload-cloud.svg') 50% 50% no-repeat padding-box;
+}
+
+.text{
+    /* font: normal normal medium 14px/18px IBM Plex Sans Hebrew; */
+    font-size: 14px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.send_file{
+    padding: 0 20px;
+}
+
+.inputFile{
+    width: 205px;
+    height: 33px;
+    position: absolute;
+    top: 55px;
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.body{
+    width: 100%;
+    height: calc(100% - 62px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.body::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main{
+        margin: 15px;
+        height: 85%;
+    }   
+
+    .header{
+        margin-bottom: 20px;
+        padding: 0 0 12px 0;
+    }
+
+    .title{
+        font-size: 24px;    
+    }
+
+    .body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+}

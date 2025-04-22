@@ -1,0 +1,157 @@
+.product {
+  /* width: 1541px; */
+  height: 77px;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 12px 0;
+}
+
+.product span{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+}
+
+.product .moreDetails{
+  width: 55%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product img {
+  width: 95px;
+  height: 68px;
+  margin: 5px 5px 4px 19px;
+}
+
+.product .details {
+  /* width: 983px; */
+  display: flex;
+  justify-content: flex;
+}
+
+.product h2 {
+  /* width: 90px; */
+  text-align: right;
+  /* font: normal normal 600 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+
+.product p {
+  /* max-width: 150px; */
+  width: 70px;
+  text-align: center;
+  /*font: normal normal normal 11px/14px IBM Plex Sans Hebrew;*/
+  font-size: 11px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 14px;
+  letter-spacing: 0px;
+  margin: 0 21px;
+  color: #9EAAAF;
+}
+
+.product .buttons {
+  min-width: 111px;
+  height: 30px;
+  margin-left: 21px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff 0% 0% no-repeat padding-box;
+  border: 1px solid #be955d;
+}
+
+.product .buttons button {
+  width: 31px;
+  height: 30px;
+  background: #be955d 0% 0% no-repeat padding-box;
+  border: none;
+}
+
+.product .buttons .quantityInput {
+  width: 70px;
+  border: none;
+  color: #082a3a;
+  /*font: normal normal normal 14px/18px IBM Plex Sans Hebrew;*/
+  font-size: 14px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+  font-weight: normal;
+  line-height: 18px;
+  text-align: center;
+}
+
+.product .buttons .quantityInput:focus {
+  outline: none;
+}
+
+/* decrease */
+.product .buttons .decrease {
+  width: 31px;
+  background-image: url("../../../image/manager/Group13.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 31% 31%;
+}
+
+/* increase */
+.product .buttons .increase {
+  width: 31px;
+  background-image: url("../../../image/manager/Line21.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 31% 31%;
+}
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+  .product {
+    min-height: 100px;
+    height: auto;
+    padding: 5px 0;
+  }
+
+  .product img {
+    width: 75px;
+    height: 75px;
+    margin: 5px 5px 4px 19px;
+  }
+
+  .product h2 {
+    width: 100px;
+    font-size: 13px;
+    line-height: 15px;
+  }
+
+  .product .moreDetails {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .product p {
+    width: 50px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .product .buttons .quantityInput {
+    width: 40px;
+  }
+  
+}

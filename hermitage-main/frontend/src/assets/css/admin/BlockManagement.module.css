@@ -1,0 +1,213 @@
+.main {
+    height: 100%;
+  direction: rtl;
+  margin: 10px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.header span {
+  /* height: 62px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  /* font: normal normal medium 28px/37px IBM Plex Sans Hebrew; */
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 37px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+
+  letter-spacing: 0px;
+  color: #082a3a;
+  padding-left: 25px;
+  height: 28px;
+  border-left: 1px solid #7070705e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.providerName {
+  height: 28px;
+  padding-right: 23px;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 28px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-style: normal;
+
+  letter-spacing: 0px;
+  color: #082a3a;
+}
+
+.headerButtons {
+  width: 205px;
+  height: 33px;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+  background: #be955d 0% 0% no-repeat padding-box;
+  /* font: normal normal medium 14px/18px IBM Plex Sans Hebrew; */
+  font-size: 14px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 18px;
+  letter-spacing: 0px;
+  color: #ffffff;
+    cursor: pointer;
+}
+
+.body {
+    height: 75%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.body::-webkit-scrollbar {
+    width: 0;
+}
+
+
+.footer {
+height: 61px;
+background: #FFFFFF 0% 0% no-repeat padding-box;
+box-shadow: 0px 3px 6px #082A3A05;
+display: flex;
+justify-content: space-between;
+align-items: center;
+/* padding: 0 23px 0 29px; */
+
+}
+
+.selectAll {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selectAll input[type="checkbox"] {
+    width: 22px;
+height: 22px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #082A3A;
+    margin-left: 14px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blockSelected {
+    width: 186px;
+height: 33px;
+background: #BE955D 0% 0% no-repeat padding-box;
+display: flex;
+justify-content: center;
+align-items: center;
+/* font: normal normal medium 14px/18px IBM Plex Sans Hebrew; */
+font-size: 14px;
+font-family: "IBM Plex Sans Hebrew";
+font-weight: normal;
+line-height: 18px;
+letter-spacing: 0px;
+color: #FFFFFF;
+cursor: pointer;
+
+}
+
+.blockSelectedIcon {
+    width: 15px;
+height: 15px;
+padding: 0 5px 0 5px;
+    background: transparent url('../../image/admin/blockw.svg') 50% 50% no-repeat padding-box;
+}
+
+
+.unblockSelected {
+    width: 233px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 8px 0 0;
+    background: #082A3A 0% 0% no-repeat padding-box;
+    /* font: normal normal medium 14px/18px IBM Plex Sans Hebrew; */
+    font-size: 14px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 18px;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+cursor: pointer;
+}
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+   
+
+
+    .title {
+        padding: 8px;
+        font-size: 24px;
+    }
+
+    .providerName{
+
+    }
+
+    .headerButtons {
+        width: 175px;
+        height: 33px;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .selectAll input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-left: 10px;
+    }
+
+    .buttons{
+        padding: 0 0 0 0;
+    }
+
+    .blockSelected {
+        width: 175px;
+        height: 33px;
+        font-size: 13px;
+    }
+
+    .blockSelectedIcon {
+        width: 15px;
+        height: 15px;
+        padding: 0 5px 0 5px;
+    }
+
+    .unblockSelected {
+        width: 200px;
+        height: 33px;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .body {
+        height: 65%;
+    }
+}

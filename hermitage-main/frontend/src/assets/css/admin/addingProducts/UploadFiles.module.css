@@ -1,0 +1,166 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.btnFile {
+  height: 40px;
+  margin: 0 5px 0 0;
+  padding:  0 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: "IBM Plex Sans Hebrew";
+  font-weight: normal;
+  line-height: 20px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+}
+
+.inputFile  {
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.upload {
+    background: #082A3A 0% 0% no-repeat padding-box;
+}
+.update {
+    background: #28566b 0% 0% no-repeat padding-box;
+}
+.delete {
+    background: #bd0f0f 0% 0% no-repeat padding-box;
+}
+.download {
+    background: #0e9273 0% 0% no-repeat padding-box;
+}
+
+.warning{
+    display: flex;
+    justify-content: end;
+    size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #bd0f0f;
+}
+
+.fileData{
+    height: calc(100vh - 400px);
+    padding: 0 10px;
+    margin: 5px 0 25px 0;
+    border: 1px solid #082A3A;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #082A3A;
+    /* גלילה  */
+    overflow: auto;
+}
+
+.fileData h3{
+    font-size: 20px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #082A3A;
+}
+
+.fileData table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 10px 0;
+}
+
+.fileData th {
+    min-width: 150px;
+    background-color: #082A3A;
+    color: white;
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+    padding: 10px;
+}
+
+.fileData td {
+    min-width: 150px;
+    border: 1px solid #082A3A;
+    padding: 10px;
+    font-size: 16px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+}
+
+.fileData tr:nth-child(even) {
+    background-color: #bbbbbb;
+}
+
+.fileData tr:hover {
+    background-color: #d7d7d7;
+}
+
+.uploadBtns button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: normal;
+    line-height: 20px;
+    letter-spacing: 0px;
+}
+
+.upload{
+    background-color: #082A3A;
+    color: white;
+}
+
+.uploadBtns button:hover {
+    background-color: #082A3A;
+    color: white;
+}
+
+.uploadBtns button:disabled {
+    background-color: #f2f2f2;
+    color: #082A3A;
+    cursor: not-allowed;
+}
+.items {
+   /* תעשה האתמות לטקסט לגודל ופונט */
+    font-size: 20px;
+    font-family: "IBM Plex Sans Hebrew";
+    font-weight: bold;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #082A3A;
+    margin: 20px;
+}
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+    .main {
+        justify-content: center;
+    }
+
+    .btnFile {
+        padding:  0 20px;
+    }
+
+}

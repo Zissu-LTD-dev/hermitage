@@ -1,0 +1,151 @@
+.main{
+    height: 95%;
+    direction: rtl;
+    margin: 15px;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header span{
+    display: flex;
+}
+
+.title{
+    /* font: normal normal medium 28px/37px IBM Plex Sans Hebrew; */
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 37px;
+    font-family: 'IBM Plex Sans Hebrew';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 37px;
+    color: #082A3A;
+    margin-left: 28px;
+}
+
+.headerButtons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.byProvider , .byBranch{
+    width: 205px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+font-size: 18px;
+font-weight: 500;
+line-height: 23px;
+font-family: 'IBM Plex Sans Hebrew';
+font-style: normal;
+
+letter-spacing: 0px;
+color: #FFFFFF;
+margin-left: 9px;
+cursor: pointer;
+}
+
+.byProvider{
+    background: #BE955D 0% 0% no-repeat padding-box;
+}
+.byProviderActive{
+    position: relative;
+    top: calc(100% - 18px);
+    /* Create me a triangle as downward arrow */
+    &::after {
+        content: '';
+        position: absolute;
+        /* top: 0; */
+        left: calc(50% + 10px);
+        /* transform: translateX(-50%); */
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 10px 10px 10px;
+        border-color:  #BE955D transparent transparent transparent;
+    }
+}
+
+
+.byBranch{
+    background: #082A3A 0% 0% no-repeat padding-box;
+}
+.byBranchActive{
+    position: relative;
+    top: calc(100% - 18px);
+    /* Create me a triangle as downward arrow */
+    &::after {
+        content: '';
+        position: absolute;
+        /* top: 0; */
+        left: calc(50% + 10px);
+        /* transform: translateX(-50%); */
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 10px 10px 10px;
+        border-color:  #082A3A transparent transparent transparent;
+    }
+}
+
+.blocked{
+    width: 205px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 23px;
+    font-family: 'IBM Plex Sans Hebrew';
+    font-style: normal;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    background: #082A3A 0% 0% no-repeat padding-box;
+    margin-left: 9px;
+    cursor: pointer;
+}
+
+.blockedByProvider{
+    opacity: 0.7;
+}
+
+.body{
+    height: 90%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.body::-webkit-scrollbar {
+    width: 0;
+}
+
+
+/* Media query for 10.9" tablet display (1180x820px) */
+@media screen and (max-width: 1180px) {
+  
+
+    .title{
+        /* padding: 8px 0; */
+        font-size: 24px;    
+    }
+
+    .byProvider , .byBranch , .blocked{
+        width: 150px;
+        height: 33px;
+        font-size: 16px;
+        margin-left: 9px;
+    }
+
+    .body{
+        height: 80%;
+    }
+}

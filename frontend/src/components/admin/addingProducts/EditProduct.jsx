@@ -6,6 +6,7 @@ function EditProduct({ product, cancel, save }) {
   const { state, dispatch } = useAdminContext();
 
   const [newProduct, setNewProduct] = useState(product);
+  const [providers, setProviders] = useState([]); // Add providers state
   const [categories, setCategories] = useState([]);
   const [subGroups, setSubGroups] = useState([]);
   const [typeBranches, setTypeBranches] = useState([]);
@@ -43,10 +44,16 @@ function EditProduct({ product, cancel, save }) {
   }, [typeBranches]);
 
   useEffect(() => {
+    setProviders(state.providers); // Set providers from state
     setCategories(state.categories.sort((a, b) => a.number - b.number));
     setSubGroups(state.subGroups);
     setTypeBranches(state.typeBranches.sort((a, b) => a.typeId - b.typeId));
   }, []);
+
+  const handleScroll = (e) => {
+    e.preventDefault(); // Prevent scrolling when using number inputs
+  };
+
   return (
     <>
       <div className={EditproductStyle.main}>
@@ -66,6 +73,35 @@ function EditProduct({ product, cancel, save }) {
                 }
               />
             </div>
+
+            {/* Provider dropdown - Add this section */}
+            <div className={EditproductStyle.productDetails}>
+              <div className={EditproductStyle.Text}>ספק</div>
+              <select
+                className={EditproductStyle.input}
+                value={newProduct.providerNumber}
+                onChange={(e) => {
+                  setNewProduct({
+                    ...newProduct,
+                    providerNumber: e.target.value,
+                    providerName: e.target.selectedOptions[0].text
+                      .split("|")[0]
+                      .trim(),
+                  });
+                }}
+              >
+                <option value={newProduct.providerNumber}>
+                  {newProduct.providerName} | {newProduct.providerNumber}
+                </option>
+                {providers.map((provider) => (
+                  <option key={provider._id} value={provider.number}>
+                    {provider.name} | {provider.number}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {/* End of Provider dropdown */}
+
             <div className={EditproductStyle.productDetails}>
               <div className={EditproductStyle.Text}>קטגוריה</div>
               <select
@@ -116,6 +152,7 @@ function EditProduct({ product, cancel, save }) {
                 onChange={(e) =>
                   setNewProduct({ ...newProduct, price: e.target.value })
                 }
+                onWheel={handleScroll}
               />
             </div>
             <div className={EditproductStyle.productDetails}>
@@ -146,23 +183,6 @@ function EditProduct({ product, cancel, save }) {
                 }
               />
             </div>
-            {/* <div
-              className={
-                EditproductStyle.productDetails +
-                " " +
-                EditproductStyle.checkbox
-              }
-            >
-              <div className={EditproductStyle.Text}>פריט מוגבל</div>
-              <input
-                type="checkbox"
-                className={EditproductStyle.input}
-                checked={newProduct.limited}
-                onChange={(e) =>
-                  setNewProduct({ ...newProduct, limited: e.target.checked })
-                }
-              />
-            </div> */}
             <div
               className={
                 EditproductStyle.productDetails + " " + EditproductStyle.config
@@ -205,6 +225,7 @@ function EditProduct({ product, cancel, save }) {
                             });
                             setBranchTypeConfig(newConfig);
                           }}
+                          onWheel={handleScroll}
                         />
                       </div>
                       <div>
@@ -232,6 +253,7 @@ function EditProduct({ product, cancel, save }) {
                             });
                             setBranchTypeConfig(newConfig);
                           }}
+                          onWheel={handleScroll}
                         />
                       </div>
                       <div>
@@ -245,19 +267,27 @@ function EditProduct({ product, cancel, save }) {
                             )?.location.shelf || 0
                           }
                           onChange={(e) => {
-                            let newConfig = branchTypeConfig.map((config) => {
-                              if (config.branchType === branch.typeId) {
-                                return {
-                                  ...config,
-                                  location: {
-                                    ...config.location,
-                                    shelf: e.target.value,
-                                  },
-                                };
-                              }
-                              return config;
-                            });
-                            setBranchTypeConfig(newConfig);
+                            // Allow only numbers including negative
+                            const value = e.target.value;
+                            if (
+                              value === "" ||
+                              value === "-" ||
+                              /^-?\d+$/.test(value)
+                            ) {
+                              let newConfig = branchTypeConfig.map((config) => {
+                                if (config.branchType === branch.typeId) {
+                                  return {
+                                    ...config,
+                                    location: {
+                                      ...config.location,
+                                      shelf: value,
+                                    },
+                                  };
+                                }
+                                return config;
+                              });
+                              setBranchTypeConfig(newConfig);
+                            }
                           }}
                         />
                       </div>
@@ -286,6 +316,7 @@ function EditProduct({ product, cancel, save }) {
                             });
                             setBranchTypeConfig(newConfig);
                           }}
+                          onWheel={handleScroll}
                         />
                       </div>
                     </div>

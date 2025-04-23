@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import sidebar from "../../assets/css/admin/Sidebar.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
 
@@ -11,7 +10,6 @@ import documents from "../../assets/image/admin/document.svg";
 import addingProducts from "../../assets/image/admin/Iconfeather-plus-circle.svg";
 import chat from "../../assets/image/admin/chat.svg";
 import generalManagement from "../../assets/image/admin/manage.svg";
-
 import connectedBy from "../../assets/image/manager/Layer3.svg";
 
 function Sidebar() {
@@ -33,7 +31,7 @@ function Sidebar() {
     if (status == "order execution") dispatch({ type: "CLEAR_ORDER" });
     if (status === "adding products" || status === "general management") {
       window.location.reload();
-    }else{
+    } else {
       dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
     }
   };
@@ -53,7 +51,7 @@ function Sidebar() {
     }
   }, [state.userInfo.role]);
 
-  useEffect(() => { 
+  useEffect(() => {
     let status = localStorage.getItem("statusSidebar");
     if (status) {
       dispatchAdmin({ type: "SET_STATUS_ADMIN", payload: status });
@@ -61,112 +59,261 @@ function Sidebar() {
   }, []);
 
   return (
-    <>
-      <div className={sidebar.sidebar}>
-        <div className={sidebar.logo}></div>
-        <div className={sidebar.menu}>
-          {isMaster && (
-            <>
-              <div onClick={() => changeStatus("order execution")}>
-                <div className={sidebar.icon}>
-                  <img src={store} alt="order execution" />
-                </div>
-                <span> ביצוע הזמנה לסניף</span>
+    <div className="sidebar flex flex-column align-center" style={{
+      width: '20%',
+      height: '100vh',
+      position: 'fixed',
+      top: 0,
+      right: 0,
+      background: '#082a3a',
+      padding: '1rem'
+    }}>
+      <div className="logo" style={{
+        width: '100%',
+        height: '85px',
+        backgroundImage: 'url(../../image/logo/logo.png)',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: '174px 31px',
+        borderBottom: '1px solid #25607e9a'
+      }}></div>
+      
+      <div className="menu flex flex-column align-center" style={{ width: '100%' }}>
+        {isMaster && (
+          <>
+            <div onClick={() => changeStatus("order execution")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={store} alt="order execution" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("approvals status")}>
-                <div className={sidebar.icon}>
-                  <img src={approvalsStatus} alt="approvals status" />
-                </div>
-                <span>ניהול אישורי הזמנה</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ביצוע הזמנה לסניף</span>
+            </div>
+            <div onClick={() => changeStatus("approvals status")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={approvalsStatus} alt="approvals status" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("branch management")}>
-                <div className={sidebar.icon}>
-                  <img src={branchManagement} alt="branch management" />
-                </div>
-                <span>ניהול והגבלת סניפים</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ניהול אישורי הזמנה</span>
+            </div>
+            <div onClick={() => changeStatus("branch management")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={branchManagement} alt="branch management" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("adding products")}>
-                <div className={sidebar.icon}>
-                  <img src={addingProducts} alt="adding products" />
-                </div>
-                <span>ניהול מוצרים</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ניהול והגבלת סניפים</span>
+            </div>
+            <div onClick={() => changeStatus("adding products")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={addingProducts} alt="adding products" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("block management")}>
-                <div className={sidebar.icon}>
-                  <img src={blockManagement} alt="block management" />
-                </div>
-                <span>ניהול מוצרים חסומים</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ניהול מוצרים</span>
+            </div>
+            <div onClick={() => changeStatus("block management")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={blockManagement} alt="block management" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("documents")}>
-                <div className={sidebar.icon}>
-                  <img src={documents} alt="documents" />
-                </div>
-                <span>מסמכים</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ניהול מוצרים חסומים</span>
+            </div>
+            <div onClick={() => changeStatus("documents")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={documents} alt="documents" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("message")}>
-                <div className={sidebar.icon}>
-                  <img src={chat} alt="message" />
-                </div>
-                <span>הודעות</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>מסמכים</span>
+            </div>
+            <div onClick={() => changeStatus("message")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={chat} alt="message" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("general management")}>
-                <div className={sidebar.icon}>
-                  <img src={generalManagement} alt="general management" />
-                </div>
-                <span>ניהול כללי</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>הודעות</span>
+            </div>
+            <div onClick={() => changeStatus("general management")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={generalManagement} alt="general management" style={{ width: '30px', height: '30px' }} />
               </div>
-            </>
-          )}
-          {!isMaster && (
-            <>
-              <div onClick={() => changeStatus("order execution")}>
-                <div className={sidebar.icon}>
-                  <img src={store} alt="order execution" />
-                </div>
-                <span> ביצוע הזמנה לסניף</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ניהול כללי</span>
+            </div>
+          </>
+        )}
+        {!isMaster && (
+          <>
+            <div onClick={() => changeStatus("order execution")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={store} alt="order execution" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("approvals status")}>
-                <div className={sidebar.icon}>
-                  <img src={approvalsStatus} alt="approvals status" />
-                </div>
-                <span>ניהול אישורי הזמנה</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ביצוע הזמנה לסניף</span>
+            </div>
+            <div onClick={() => changeStatus("approvals status")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={approvalsStatus} alt="approvals status" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("branch management")}>
-                <div className={sidebar.icon}>
-                  <img src={branchManagement} alt="branch management" />
-                </div>
-                <span>ניהול והגבלת סניפים</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ניהול אישורי הזמנה</span>
+            </div>
+            <div onClick={() => changeStatus("branch management")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={branchManagement} alt="branch management" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("message")}>
-                <div className={sidebar.icon}>
-                  <img src={chat} alt="message" />
-                </div>
-                <span>הודעות</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>ניהול והגבלת סניפים</span>
+            </div>
+            <div onClick={() => changeStatus("message")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={chat} alt="message" style={{ width: '30px', height: '30px' }} />
               </div>
-              <div onClick={() => changeStatus("documents")}>
-                <div className={sidebar.icon}>
-                  <img src={documents} alt="documents" />
-                </div>
-                <span>מסמכים</span>
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>הודעות</span>
+            </div>
+            <div onClick={() => changeStatus("documents")} className="flex flex-row-reverse align-center" style={{
+              width: '100%',
+              height: '61px',
+              borderBottom: '1px solid #25607e9a',
+              cursor: 'pointer'
+            }}>
+              <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+                <img src={documents} alt="documents" style={{ width: '30px', height: '30px' }} />
               </div>
-            </>
-          )}
+              <span style={{
+                fontFamily: 'IBM Plex Sans Hebrew',
+                fontSize: '18px',
+                color: '#ffffff'
+              }}>מסמכים</span>
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="connectedBy flex flex-row-reverse align-center" style={{
+        width: '100%',
+        height: '85px',
+        position: 'fixed',
+        bottom: 0,
+        borderTop: '1px solid #25607e9a',
+        padding: '0 1rem'
+      }}>
+        <div className="icon flex justify-center align-center" style={{ width: '65px', height: '100%' }}>
+          <img src={connectedBy} alt="connected by" style={{ width: '30px', height: '30px' }} />
         </div>
-        <div className={sidebar.connectedBy}>
-          <div className={sidebar.icon}>
-            <img src={connectedBy} alt="connected by" />
-          </div>
-          <div>
-            <p>
-              מחובר: <span className={sidebar.branch_name}> {branchName} </span>{" "}
-            </p>
-            <a onClick={logoutHandler} className={sidebar.logout}>
-              יציאה מהמערכת
-            </a>
-          </div>
+        <div className="flex flex-column justify-center align-end" style={{ width: '70%' }}>
+          <p style={{
+            fontFamily: 'IBM Plex Sans Hebrew',
+            fontSize: '15px',
+            color: '#ffffff',
+            margin: 0
+          }}>
+            מחובר: <span style={{ fontWeight: 'bold' }}>{branchName}</span>
+          </p>
+          <a onClick={logoutHandler} style={{
+            color: '#ffffff',
+            cursor: 'pointer',
+            textDecoration: 'underline'
+          }}>
+            יציאה מהמערכת
+          </a>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

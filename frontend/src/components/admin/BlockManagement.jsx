@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import apiRequest from "../../services/api.js"; //endpoint, method = "GET", payload = null
-import blockManagement from "../../assets/css/admin/BlockManagement.module.css";
 import { useMainContext } from "../../context/mainContext/MainContext";
 import { useAdminContext } from "../../context/adminContext/AdminContext";
 import Product from "./blockManagement/Product";
 
 function BlockManagement() {
-  const { state: stateMain, dispatch: dispatchMain  } = useMainContext();
+  const { state: stateMain, dispatch: dispatchMain } = useMainContext();
   const { state, dispatch } = useAdminContext();
   const [showProducts, setShowProducts] = useState([]);
   const [checkedAll, setCheckedAll] = useState(false);
@@ -131,46 +130,117 @@ function BlockManagement() {
   }, [state.search, showProducts]);
 
   return (
-    <>
-      <div className={blockManagement.main}>
-        <div className={blockManagement.header}>
-          <span>
-            <div className={blockManagement.title}>ניהול חסומים</div>
-            {/* <div className={blockManagement.providerName}>ספק</div>  */}
-          </span>
-          <div className={blockManagement.headerButtons} onClick={showBlockedProducts}>
-            הצג את כל הפריטים החסומים
-          </div>
+    <div className="admin-card" style={{ height: '100%', direction: 'rtl', margin: '10px' }}>
+      <div className="flex justify-between align-center mb-3">
+        <div className="flex align-center">
+          <h2 className="text-dark" style={{
+            fontSize: '28px',
+            fontWeight: '500',
+            lineHeight: '37px',
+            fontFamily: 'IBM Plex Sans Hebrew',
+            paddingLeft: '25px',
+            borderLeft: '1px solid #7070705e'
+          }}>
+            ניהול חסומים
+          </h2>
         </div>
-        <div className={blockManagement.body}>
-          {
-            showProducts.map((product, i) => {
-              return <Product product={product} key={product.barcode} block={product.isBlocked}
-                checkedAll={checkedAll} added={added} removed={removed}/>
-            })
-          }
-        </div>
-        {showProducts.length !== 0  && (
-          <div className={blockManagement.footer}>
-            <div className={blockManagement.selectAll}>
-              <input type="checkbox" onChange={() => setCheckedAll(!checkedAll)} checked={checkedAll}/>
-              <div>בחר הכל</div>
-            </div>
-
-            <div className={blockManagement.buttons}>
-              <div className={blockManagement.blockSelected} onClick={blockedProducts}>
-                <div className={blockManagement.blockSelectedIcon}></div>
-                <div>חסום פריטים מסומנים</div>
-              </div>
-
-              <div className={blockManagement.unblockSelected} onClick={unblockedProducts}> 
-                הוצאה מחסום של פריטים מסומנים
-              </div>
-            </div>
-          </div>
-        )}
+        <button 
+          className="btn" 
+          onClick={showBlockedProducts}
+          style={{
+            width: '205px',
+            height: '33px',
+            backgroundColor: '#BE955D',
+            fontSize: '14px',
+            color: '#ffffff'
+          }}
+        >
+          הצג את כל הפריטים החסומים
+        </button>
       </div>
-    </>
+
+      <div className="flex flex-wrap justify-between align-center mb-3" style={{
+        height: '75%',
+        overflowY: 'auto',
+        overflowX: 'hidden'
+      }}>
+        {showProducts.map((product, i) => (
+          <Product 
+            product={product} 
+            key={product.barcode} 
+            block={product.isBlocked}
+            checkedAll={checkedAll} 
+            added={added} 
+            removed={removed}
+          />
+        ))}
+      </div>
+
+      {showProducts.length !== 0 && (
+        <div className="flex justify-between align-center" style={{
+          height: '61px',
+          backgroundColor: '#FFFFFF',
+          boxShadow: '0px 3px 6px #082A3A05'
+        }}>
+          <div className="flex align-center">
+            <input 
+              type="checkbox" 
+              onChange={() => setCheckedAll(!checkedAll)} 
+              checked={checkedAll}
+              style={{
+                width: '22px',
+                height: '22px',
+                border: '1px solid #082A3A',
+                marginLeft: '14px'
+              }}
+            />
+            <span>בחר הכל</span>
+          </div>
+
+          <div className="flex align-center">
+            <button 
+              className="btn" 
+              onClick={blockedProducts}
+              style={{
+                width: '186px',
+                height: '33px',
+                backgroundColor: '#BE955D',
+                fontSize: '14px',
+                color: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <div style={{
+                width: '15px',
+                height: '15px',
+                padding: '0 5px',
+                backgroundImage: 'url(../../assets/image/admin/blockw.svg)',
+                backgroundPosition: '50% 50%',
+                backgroundRepeat: 'no-repeat'
+              }}></div>
+              חסום פריטים מסומנים
+            </button>
+
+            <button 
+              className="btn" 
+              onClick={unblockedProducts}
+              style={{
+                width: '233px',
+                height: '33px',
+                backgroundColor: '#082A3A',
+                fontSize: '14px',
+                color: '#FFFFFF',
+                marginRight: '8px'
+              }}
+            >
+              הוצאה מחסום של פריטים מסומנים
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

@@ -79,61 +79,106 @@ function Product({ product, block,  checkedAll, added, removed }) {
   }, [checkedAll, block]);
 
   return (
-    <>
-      <div
-        className={
-          block
-            ? productStyle.blocked + " " + productStyle.main
-            : productStyle.main
-        }
-      >
-        <span>
-          <div className={productStyle.checkboxSelect}>
-            <input type="checkbox" checked={checked} onChange={() => setChecked(!checked)}/>
-          </div>
-          <div className={productStyle.image}>
-            <img src={imageError ? imgProductDefault : image} alt={name} onError={handleImageError} />
-          </div>
-          <div className={productStyle.name}>{name}</div>
-        </span>
-        <span>
-          <div className={productStyle.provider}>{providerName}</div>
-          <div className={productStyle.category}>{categoryName}</div>
-          <div className={productStyle.barcode}>{barcode}</div>
-          {/* {!limited ? (
-            <div
-              className={productStyle.button + " " + productStyle.limitedText}
-              onClick={() => handleLimited(true)}
-            >
-              <div>הגבל פריט</div>
-            </div>
-          ) : (
-            <div
-              className={productStyle.button + " " + productStyle.unlimitedText}
-              onClick={() => handleLimited(false)}
-            >
-              <div>בטל הגבלה</div>
-            </div>
-          )} */}
-          {!block ? (
-            <div
-              className={productStyle.button + " " + productStyle.blockedText}
-              onClick={blockedProducts}
-            >
-              <div className={productStyle.blockedIcon}></div>
-              <div>חסום פריט</div>
-            </div>
-          ) : (
-            <div
-              className={productStyle.button + " " + productStyle.unblockedText}
-              onClick={unblockedProducts}
-            >
-              <div>הוצא מחסום</div>
-            </div>
-          )}
-        </span>
+    <div className={`flex justify-between align-center mb-2 ${block ? 'bg-light' : 'bg-white'}`} style={{
+      width: '100%',
+      height: '77px',
+      boxShadow: '0px 3px 6px #082a3a05',
+      padding: '0 23px 0 29px',
+      opacity: block ? 0.45 : 1
+    }}>
+      <div className="flex align-center">
+        <div className="flex align-center">
+          <input 
+            type="checkbox" 
+            checked={checked} 
+            onChange={() => setChecked(!checked)}
+            style={{
+              width: '22px',
+              height: '22px',
+              border: '1px solid #082a3a'
+            }}
+          />
+        </div>
+        <div style={{
+          width: '75px',
+          height: '68px',
+          margin: '0 0 0 20px'
+        }}>
+          <img 
+            src={imageError ? imgProductDefault : image} 
+            alt={name} 
+            onError={handleImageError}
+            style={{
+              width: '100%',
+              height: '100%',
+              opacity: block ? 0.45 : 1
+            }}
+          />
+        </div>
+        <div style={{
+          fontSize: '14px',
+          fontWeight: 600,
+          lineHeight: '18px',
+          fontFamily: 'IBM Plex Sans Hebrew',
+          color: '#082a3a'
+        }}>
+          {name}
+        </div>
       </div>
-    </>
+      <div className="flex align-center">
+        {['provider', 'category', 'barcode'].map((field) => (
+          <div key={field} style={{
+            fontSize: '11px',
+            fontFamily: 'IBM Plex Sans Hebrew',
+            lineHeight: '14px',
+            color: '#9eaaaf',
+            marginLeft: '45px'
+          }}>
+            {product[field + 'Name'] || product[field]}
+          </div>
+        ))}
+        {!block ? (
+          <button 
+            className="flex align-center justify-center"
+            onClick={blockedProducts}
+            style={{
+              width: '133px',
+              height: '33px',
+              backgroundColor: '#BE955D',
+              color: '#ffffff',
+              fontSize: '14px',
+              fontWeight: 500,
+              marginRight: '20px'
+            }}
+          >
+            <div style={{
+              width: '15px',
+              height: '15px',
+              marginLeft: '7px',
+              backgroundImage: 'url(../../../assets/image/admin/blockw.svg)',
+              backgroundPosition: '50% 50%',
+              backgroundRepeat: 'no-repeat'
+            }}></div>
+            חסום פריט
+          </button>
+        ) : (
+          <button 
+            onClick={unblockedProducts}
+            style={{
+              width: '133px',
+              height: '33px',
+              backgroundColor: '#082A3A',
+              color: '#ffffff',
+              fontSize: '14px',
+              fontWeight: 500,
+              marginRight: '20px'
+            }}
+          >
+            הוצא מחסום
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
 

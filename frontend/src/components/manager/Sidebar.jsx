@@ -21,7 +21,7 @@ function Sidebar() {
   };
 
   const changeStatus = (status) => {
-    if(status == "new order") dispatch({ type: "CLEAR_ORDER" });
+    if (status == "new order") dispatch({ type: "CLEAR_ORDER" });
     dispatch({ type: "SET_STATUS", payload: status });
   };
 
@@ -29,58 +29,60 @@ function Sidebar() {
     if (state.userInfo.branch) {
       setBranchName(state.userInfo.branch.name);
     }
-  } , [state.userInfo]);
+  }, [state.userInfo]);
 
   return (
-    <>
-      <div className={sidebar.sidebar}>
-        <div className={sidebar.logo}></div>
-        <div className={sidebar.menu}>
+    <div className={sidebar.sidebar}>
+      <div className={sidebar.logo}></div>
+      <div className={sidebar.menu}>
         <div onClick={() => changeStatus("messages")}>
-            <div className={sidebar.icon}>
-              <img src={massage} alt="massage" />
-            </div>
-            <span>הודעות</span>
-            {state.unreadMessages > 0 &&
-              <span className={sidebar.unread}>{state.unreadMessages}</span>
-            }
-          </div>
-          <div onClick={() => changeStatus("new order")}>
-            <div className={sidebar.icon}>
-              <img src={newOrder} alt="new order" />
-            </div>
-            <span>הזמנה חדשה</span>
-          </div>
-          <div onClick={() => changeStatus("pending orders")}>
-            <div className={sidebar.icon}>
-              <img src={waitingOrders} alt="waiting orders" />
-            </div>
-            <span>סטטוס הזמנות</span>
-          </div>
-          <div onClick={() => changeStatus("documents")}>
-            <div className={sidebar.icon}>
-              <img src={documents} alt="documents" />
-            </div>
-            <span>מסמכים</span>
-          </div>
-          {/* <div>
-            <div className={sidebar.icon}>
-              <img src={branchLayout} alt="branchLayout" />
-            </div>
-            <span>פריסת הסניף</span>
-          </div> */}
-        </div>
-        <div className={sidebar.connectedBy}>
           <div className={sidebar.icon}>
-            <img src={connectedBy} alt="connected by" />
+            <img src={massage} alt='massage' />
           </div>
-          <div>
-            <p>מחובר: <span className={sidebar.branch_name}> {branchName} </span> </p>
-            <a onClick={logoutHandler} className={sidebar.logout}>יציאה מהמערכת</a>
+          <span>הודעות</span>
+          {state.unreadMessages > 0 && (
+            <span className={sidebar.unread}>{state.unreadMessages}</span>
+          )}
+        </div>
+        <div onClick={() => changeStatus("new order")}>
+          <div className={sidebar.icon}>
+            <img src={newOrder} alt='new order' />
           </div>
+          <span>הזמנה חדשה</span>
+        </div>
+        <div onClick={() => changeStatus("pending orders")}>
+          <div className={sidebar.icon}>
+            <img src={waitingOrders} alt='waiting orders' />
+          </div>
+          <span>סטטוס הזמנות</span>
+        </div>
+        <div onClick={() => changeStatus("documents")}>
+          <div className={sidebar.icon}>
+            <img src={documents} alt='documents' />
+          </div>
+          <span>מסמכים</span>
+        </div>
+        {/* <div>
+          <div className={sidebar.icon}>
+            <img src={branchLayout} alt="branchLayout" />
+          </div>
+          <span>פריסת הסניף</span>
+        </div> */}
+      </div>
+      <div className={sidebar.connectedBy}>
+        <div className={sidebar.icon}>
+          <img src={connectedBy} alt='connected by' />
+        </div>
+        <div>
+          <p>
+            מחובר: <span className={sidebar.branch_name}>{branchName}</span>
+          </p>
+          <a onClick={logoutHandler} className={sidebar.logout}>
+            יציאה מהמערכת
+          </a>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

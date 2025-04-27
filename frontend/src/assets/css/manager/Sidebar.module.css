@@ -109,21 +109,20 @@
 }
 
 .sidebar .connectedBy div a {
-    text-align: right;
-    text-decoration: underline;
-    /*font: normal normal normal 13px/17px IBM Plex Sans Hebrew;*/
-    font-size: 13px;
-    font-weight: normal;
-    font-family: "IBM Plex Sans Hebrew";
-    line-height: 17px;
-    letter-spacing: 0.5px;
-    color: #BE955D; 
-    cursor: pointer;
+  text-align: right;
+  text-decoration: underline;
+  /*font: normal normal normal 13px/17px IBM Plex Sans Hebrew;*/
+  font-size: 13px;
+  font-weight: normal;
+  font-family: "IBM Plex Sans Hebrew";
+  line-height: 17px;
+  letter-spacing: 0.5px;
+  color: #be955d;
+  cursor: pointer;
 }
 
-
-.unread{
-  background-color: #BE955D;
+.unread {
+  background-color: #be955d;
   color: #ffffff;
   border-radius: 50%;
   width: 20px;
@@ -134,8 +133,6 @@
   margin: 0 10px;
 }
 
-
-
 /* Media query for 10.9" tablet display (1180x820px) */
 @media screen and (max-width: 1180px) {
   .sidebar {
@@ -143,8 +140,8 @@
   }
 
   .sidebar .logo {
-      height: 75px;
-      background-size: 150px 27px;
+    height: 75px;
+    background-size: 150px 27px;
   }
 
   .sidebar .menu div {
@@ -153,36 +150,35 @@
 
   .sidebar .menu div .icon,
   .sidebar .connectedBy .icon {
-      width: 40px;
+    width: 40px;
   }
 
   .sidebar .menu div img {
-      width: 25px;
-      height: 25px;
+    width: 25px;
+    height: 25px;
   }
 
   .sidebar .menu div span {
     font-size: 12px;
     line-height: 15px;
-}
-
-  .sidebar .connectedBy {
-      height: 75px;
   }
 
-  
+  .sidebar .connectedBy {
+    height: 75px;
+  }
+
   .sidebar .connectedBy div p {
     font-size: 12px;
     line-height: 15px;
-}
+  }
 
-.sidebar .connectedBy div p .branch_name {
+  .sidebar .connectedBy div p .branch_name {
     font-size: 12px;
     line-height: 15px;
-}
+  }
 
-.sidebar .connectedBy div a {
+  .sidebar .connectedBy div a {
     font-size: 10px;
     line-height: 13px;
-}
+  }
 }

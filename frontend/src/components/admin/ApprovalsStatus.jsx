@@ -12,11 +12,12 @@ function ApprovalsStatus() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [orderBy, setOrderBy] = useState("pending");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
-  // Modified to fetch orders with pagination and status filter
+  // Function to fetch orders with pagination and status filter
   const getOrders = async (statusFilter = null, reset = false) => {
     if ((loading && !reset) || (loadingMore && !reset)) return;
 
@@ -40,23 +41,29 @@ function ApprovalsStatus() {
       const data = await apiRequest(endpoint);
 
       if (data && data.orders) {
+        // Make sure we have orders array
+        const receivedOrders = Array.isArray(data.orders) ? data.orders : [];
+
         if (reset) {
-          setOrders(data.orders);
+          setOrders(receivedOrders);
+          setFilteredOrders(receivedOrders);
           dispatchAdmin({
             type: "SET_CONFIRMATION_ORDERS",
-            payload: data.orders,
+            payload: receivedOrders,
           });
           setPage(2);
         } else {
-          setOrders((prev) => [...prev, ...data.orders]);
+          const updatedOrders = [...(orders || []), ...receivedOrders];
+          setOrders(updatedOrders);
+          setFilteredOrders(updatedOrders);
           dispatchAdmin({
             type: "SET_CONFIRMATION_ORDERS",
-            payload: [...stateAdmin.confirmationOrders, ...data.orders],
+            payload: updatedOrders,
           });
           setPage((prev) => prev + 1);
         }
 
-        setHasMore(data.orders.length === 20);
+        setHasMore(receivedOrders.length === 20);
 
         dispatch({
           type: "SET_SHOW_SUCCESS",
@@ -88,14 +95,19 @@ function ApprovalsStatus() {
     }
   };
 
-  // Handle order by changes
+  // Handle order status changes
   useEffect(() => {
     getOrders(orderBy, true);
   }, [orderBy]);
 
-  // Effect for initial data fetch
+  // Initial setup and filters
   useEffect(() => {
-    if (stateAdmin.providers.length > 0 && stateAdmin.branches.length > 0) {
+    // Set up filters if they don't exist yet
+    if (
+      stateAdmin.providers.length > 0 &&
+      stateAdmin.branches.length > 0 &&
+      (!stateAdmin.filters || stateAdmin.filters.length === 0)
+    ) {
       dispatchAdmin({
         type: "SET_FILTERS",
         payload: [
@@ -111,6 +123,7 @@ function ApprovalsStatus() {
       });
     }
 
+    // Initial load
     getOrders("pending", true);
   }, [stateAdmin.providers, stateAdmin.branches]);
 
@@ -129,48 +142,84 @@ function ApprovalsStatus() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasMore, loadingMore, loading, orderBy]);
 
-  // Filter orders based on displayFilters
+  // Apply filters when displayFilters change
   useEffect(() => {
-    if (stateAdmin.displayFilters.length < 1) return;
+    if (!orders.length) return;
 
-    const filteredOrders = [...orders];
-    let result = [];
-
+    // If no filters are active, show all orders
     if (
-      stateAdmin.displayFilters["סניפים"] &&
-      stateAdmin.displayFilters["ספקים"]
+      !stateAdmin.displayFilters ||
+      Object.keys(stateAdmin.displayFilters).length === 0
     ) {
-      // Filter by both branch and provider
-      stateAdmin.displayFilters["סניפים"].forEach((branchFilter) => {
-        stateAdmin.displayFilters["ספקים"].forEach((providerFilter) => {
-          const matched = filteredOrders.filter(
-            (order) =>
-              order.branchNumber == branchFilter &&
-              order.providerNumber == providerFilter
-          );
-          result = [...result, ...matched];
-        });
-      });
-    } else if (stateAdmin.displayFilters["ספקים"]) {
-      // Filter by provider only
-      stateAdmin.displayFilters["ספקים"].forEach((providerFilter) => {
-        const matched = filteredOrders.filter(
-          (order) => order.providerNumber == providerFilter
-        );
-        result = [...result, ...matched];
-      });
-    } else if (stateAdmin.displayFilters["סניפים"]) {
-      // Filter by branch only
-      stateAdmin.displayFilters["סניפים"].forEach((branchFilter) => {
-        const matched = filteredOrders.filter(
-          (order) => order.branchNumber == branchFilter
-        );
-        result = [...result, ...matched];
-      });
+      setFilteredOrders(orders);
+      return;
     }
 
-    setOrders(result.length > 0 ? result : filteredOrders);
-  }, [stateAdmin.displayFilters]);
+    let result = [];
+    const branchFilters = stateAdmin.displayFilters["סניפים"];
+    const providerFilters = stateAdmin.displayFilters["ספקים"];
+
+    if (
+      branchFilters &&
+      branchFilters.length > 0 &&
+      providerFilters &&
+      providerFilters.length > 0
+    ) {
+      // Filter by both branch and provider
+      orders.forEach((order) => {
+        if (
+          branchFilters.includes(order.branchNumber) &&
+          providerFilters.includes(order.providerNumber)
+        ) {
+          result.push(order);
+        }
+      });
+    } else if (branchFilters && branchFilters.length > 0) {
+      // Filter by branch only
+      result = orders.filter((order) =>
+        branchFilters.includes(order.branchNumber)
+      );
+    } else if (providerFilters && providerFilters.length > 0) {
+      // Filter by provider only
+      result = orders.filter((order) =>
+        providerFilters.includes(order.providerNumber)
+      );
+    } else {
+      // No specific filters set
+      result = orders;
+    }
+
+    setFilteredOrders(result);
+  }, [stateAdmin.displayFilters, orders]);
+
+  // Handle search functionality
+  useEffect(() => {
+    if (!orders.length) return;
+
+    // If no search query, rely on the filters
+    if (!stateAdmin.search || stateAdmin.search.trim() === "") {
+      // If we're not actively filtering, show all orders
+      if (
+        !stateAdmin.displayFilters ||
+        Object.keys(stateAdmin.displayFilters).length === 0
+      ) {
+        setFilteredOrders(orders);
+      }
+      return;
+    }
+
+    // Search by order number, branch name, or provider name
+    const searchQuery = stateAdmin.search.toLowerCase().trim();
+    const results = orders.filter(
+      (order) =>
+        order.orderNumber.toString().includes(searchQuery) ||
+        order.branchName.toLowerCase().includes(searchQuery) ||
+        order.providerName.toLowerCase().includes(searchQuery) ||
+        order.userName.toLowerCase().includes(searchQuery)
+    );
+
+    setFilteredOrders(results);
+  }, [stateAdmin.search, orders]);
 
   return (
     <>
@@ -179,25 +228,33 @@ function ApprovalsStatus() {
           <div className={approvalsStatus.title}>סטטוס אישורים להזמנות</div>
           <div className={approvalsStatus.filter_buttons}>
             <div
-              className={approvalsStatus.pending_button}
+              className={`${approvalsStatus.pending_button} ${
+                orderBy === "pending" ? approvalsStatus.active : ""
+              }`}
               onClick={() => setOrderBy("pending")}
             >
               הזמנות ממתינות לאישור
             </div>
             <div
-              className={approvalsStatus.canceled_button}
+              className={`${approvalsStatus.canceled_button} ${
+                orderBy === "canceled" ? approvalsStatus.active : ""
+              }`}
               onClick={() => setOrderBy("canceled")}
             >
               הזמנות מבוטלות
             </div>
             <div
-              className={approvalsStatus.approved_button}
+              className={`${approvalsStatus.approved_button} ${
+                orderBy === "approved" ? approvalsStatus.active : ""
+              }`}
               onClick={() => setOrderBy("approved")}
             >
               הזמנות מאושרות
             </div>
             <div
-              className={approvalsStatus.returned_button}
+              className={`${approvalsStatus.returned_button} ${
+                orderBy === "returned" ? approvalsStatus.active : ""
+              }`}
               onClick={() => setOrderBy("returned")}
             >
               החזרות
@@ -205,14 +262,19 @@ function ApprovalsStatus() {
           </div>
         </div>
         <div className={approvalsStatus.body}>
-          {orders.length > 0 ? (
-            orders.map((order) => (
+          {filteredOrders.length > 0 ? (
+            filteredOrders.map((order) => (
               <Order key={order._id} orderData={order} orderBy={orderBy} />
             ))
           ) : loading ? (
             <div className={approvalsStatus.loading}>טוען...</div>
           ) : (
-            <div className={approvalsStatus.noOrders}>אין הזמנות להצגה</div>
+            <div className={approvalsStatus.noOrders}>
+              {stateAdmin.search ||
+              Object.keys(stateAdmin.displayFilters || {}).length > 0
+                ? "אין הזמנות התואמות את החיפוש או הסינון"
+                : "אין הזמנות להצגה"}
+            </div>
           )}
 
           {loadingMore && (

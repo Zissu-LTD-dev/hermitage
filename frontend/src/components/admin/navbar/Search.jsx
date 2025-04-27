@@ -4,33 +4,43 @@ import { useAdminContext } from "../../../context/adminContext/AdminContext";
 
 function Search() {
   const { state, dispatch } = useAdminContext();
-  const [allProducts, setAllProducts] = useState([]);
 
   const handleChange = (e) => {
-    let search = e.target.value;
-    dispatch({ type: "SET_SEARCH", payload: search });
+    const searchQuery = e.target.value;
 
-    if (search !== "") {
-      let results = allProducts.filter(
-        (product) =>
-          String(product.name)
-            .toLowerCase()
-            .includes(String(search).toLowerCase()) ||
-          String(product.barcode)
-            .toLowerCase()
-            .includes(String(search).toLowerCase())
-      );
-      dispatch({ type: "SET_SEARCH_RESULTS", payload: results });
-    } else {
+    // Store the search query in state
+    dispatch({ type: "SET_SEARCH", payload: searchQuery });
+
+    // If search is cleared and we're in ApprovalsStatus, no need to filter products
+    if (searchQuery === "" && state.status === "approvals status") {
       dispatch({ type: "SET_SEARCH_RESULTS", payload: [] });
+      return;
     }
-    dispatch({ type: "SET_ACTIVE_FILTERS", payload: [] });
+
+    // For product search (in other components)
+    if (
+      state.status !== "approvals status" &&
+      state.products &&
+      state.products.length > 0
+    ) {
+      if (searchQuery !== "") {
+        const results = state.products.filter(
+          (product) =>
+            String(product.name)
+              .toLowerCase()
+              .includes(String(searchQuery).toLowerCase()) ||
+            String(product.barcode)
+              .toLowerCase()
+              .includes(String(searchQuery).toLowerCase())
+        );
+        dispatch({ type: "SET_SEARCH_RESULTS", payload: results });
+      } else {
+        dispatch({ type: "SET_SEARCH_RESULTS", payload: [] });
+      }
+    }
   };
 
-  useEffect(() => {
-    setAllProducts(state.products);
-  }, [state.products]);
-
+  // Reset search when component status changes
   useEffect(() => {
     dispatch({ type: "SET_SEARCH", payload: "" });
     dispatch({ type: "SET_SEARCH_RESULTS", payload: [] });
@@ -41,8 +51,12 @@ function Search() {
       <div className={searchStyle.search}>
         <input
           type='text'
-          placeholder='חיפוש מוצרים'
-          value={state.search}
+          placeholder={
+            state.status === "approvals status"
+              ? "חיפוש הזמנות"
+              : "חיפוש מוצרים"
+          }
+          value={state.search || ""}
           onChange={handleChange}
         />
         <div className={searchStyle.icon}></div>
